@@ -1,0 +1,97 @@
+{
+  "version": "1.0.0",
+  "programas": [
+    {
+      "id": "claude",
+      "etapa": "01-guion",
+      "nombre": "Claude",
+      "modelos": ["Opus 4.7", "Sonnet 4.6", "Haiku 4.5"],
+      "rol": "Co-guionista, banco de ideas, direccion creativa.",
+      "url_web": "https://claude.ai",
+      "url_cli": "https://docs.anthropic.com/claude-code",
+      "costo": "$20/mes Pro - $200/mes Max",
+      "setup": "Crear cuenta en claude.ai. Pro recomendado para uso diario.",
+      "alternativas": ["ChatGPT (GPT-4o, GPT-5)", "Gemini 2.5 Pro"]
+    },
+    {
+      "id": "nano-banana",
+      "etapa": "02-imagen",
+      "nombre": "Nano Banana Pro",
+      "rol": "Imagen rapida con consistencia de personaje. Edicion conversacional.",
+      "url_web": "https://gemini.google.com",
+      "costo": "$20/mes Gemini Advanced",
+      "setup": "Activar Gemini Advanced. Habilitar generacion de imagenes en la app web.",
+      "alternativas": ["Midjourney V7", "Flux Pro"]
+    },
+    {
+      "id": "chatgpt-image",
+      "etapa": "02-imagen",
+      "nombre": "ChatGPT Image",
+      "rol": "Imagen editorial con tipografia perfecta dentro de la imagen. Multiples sujetos.",
+      "url_web": "https://chatgpt.com",
+      "costo": "$20/mes Plus",
+      "setup": "Cuenta ChatGPT Plus. Generar imagenes desde el chat con DALL-E o GPT-Image.",
+      "alternativas": ["Midjourney", "Ideogram"]
+    },
+    {
+      "id": "veo",
+      "etapa": "03-video",
+      "nombre": "Veo 3.1",
+      "rol": "Video fotorrealista con audio sincronizado. Personajes que actuan.",
+      "url_web": "https://labs.google/fx",
+      "costo": "Por tokens. Aproximadamente USD 0.50 por clip de 8s.",
+      "setup": "Acceso via Google Flow. Cuenta Google con creditos asignados.",
+      "alternativas": ["Sora 2", "Runway Gen-4"]
+    },
+    {
+      "id": "seedance",
+      "etapa": "03-video",
+      "nombre": "SeeDance 2",
+      "rol": "Video rapido para iterar B-roll, motion graphics y transiciones.",
+      "url_web": "https://higgsfield.ai",
+      "costo": "Plan Higgsfield mensual",
+      "setup": "Cuenta Higgsfield. SeeDance 2 esta integrado en la plataforma.",
+      "alternativas": ["Kling 2", "Runway Gen-4 Turbo"]
+    },
+    {
+      "id": "elevenlabs",
+      "etapa": "04-voz",
+      "nombre": "ElevenLabs",
+      "rol": "Clonacion de voz en 30s y voces de personaje multilenguaje.",
+      "url_web": "https://elevenlabs.io",
+      "costo": "USD 5 a 99 por mes segun plan",
+      "setup": "Crear cuenta. Subir 30s de voz limpia para clonarla. API key opcional.",
+      "alternativas": ["PlayHT", "Hume Octave"]
+    },
+    {
+      "id": "heygen",
+      "etapa": "05-avatar",
+      "nombre": "HeyGen",
+      "rol": "Avatar UGC con sincronizacion de labios y micro-gestos.",
+      "url_web": "https://heygen.com",
+      "costo": "USD 24 a 89 por mes",
+      "setup": "Subir 2 minutos de video tuyo a camara. Generan el avatar en horas.",
+      "alternativas": ["Synthesia", "D-ID"]
+    },
+    {
+      "id": "higgsfield",
+      "etapa": "05-avatar",
+      "nombre": "Higgsfield",
+      "rol": "Image-to-video con efectos cinematograficos premium (dolly-zoom, orbits).",
+      "url_web": "https://higgsfield.ai",
+      "costo": "Plan mensual",
+      "setup": "Cuenta Higgsfield. Subir imagen y elegir efecto.",
+      "alternativas": ["Runway Act-Two", "Pika 2.0"]
+    },
+    {
+      "id": "manychat",
+      "etapa": "06-dms",
+      "nombre": "ManyChat",
+      "rol": "Automatizacion de DMs en Instagram. Comment trigger a DM en menos de 1 min.",
+      "url_web": "https://manychat.com",
+      "costo": "Free hasta 1000 contactos. USD 15 a 25 por mes Pro.",
+      "setup": "Conectar cuenta Instagram Business. Configurar trigger por palabra clave.",
+      "alternativas": ["Chatfuel", "Botpenguin"]
+    }
+  ]
+}

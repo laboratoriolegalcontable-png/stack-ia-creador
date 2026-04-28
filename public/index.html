@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Stack IA Creador</title>
+<meta name="description" content="8 skills + 10 prompts copy-paste + 9 programas externos para crear contenido con IA. Tool-agnostic." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" href="/icon-192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Stack IA" />
+<meta property="og:title" content="Stack IA Creador" />
+<meta property="og:description" content="6 herramientas + Master Prompt para crear contenido con IA." />
+<meta property="og:type" content="website" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<header>
+  <h1>Stack IA Creador</h1>
+  <div class="subtitle">8 skills + 10 prompts copy-paste + 9 programas externos. Tool-agnostic.</div>
+  <div class="meta">
+    Pegalos en Claude, ChatGPT, Gemini, Perplexity. Funciona offline despues de la primera carga.
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button data-tab="skills" class="active">Skills</button>
+  <button data-tab="prompts">Prompts</button>
+  <button data-tab="programas">Programas</button>
+</nav>
+
+<section id="tab-skills">
+  <div class="toolbar">
+    <input type="search" id="skillsSearch" placeholder="Buscar por nombre, trigger o etapa..." aria-label="Buscar skills" />
+  </div>
+  <div id="skillsList"></div>
+</section>
+
+<section id="tab-prompts" class="hidden">
+  <div class="toolbar">
+    <input type="search" id="promptsSearch" placeholder="Buscar por titulo o contenido..." aria-label="Buscar prompts" />
+    <select id="promptsFilter" aria-label="Filtrar prompts por etapa">
+      <option value="">Todas las etapas</option>
+    </select>
+    <button class="btn" id="downloadAll">Descargar todos</button>
+  </div>
+  <div id="promptsList"></div>
+</section>
+
+<section id="tab-programas" class="hidden">
+  <div class="toolbar">
+    <input type="search" id="programasSearch" placeholder="Buscar herramienta..." aria-label="Buscar programas" />
+    <select id="programasFilter" aria-label="Filtrar programas por etapa">
+      <option value="">Todas las etapas</option>
+    </select>
+  </div>
+  <div id="programasList" class="grid"></div>
+</section>
+
+<footer>
+  <div>Stack IA Creador v1.0 · Skills auto-activos en Claude Code · Prompts tool-agnostic.</div>
+  <div style="margin-top:0.4rem">
+    <a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> · Hecho para creadores que viven de su contenido.
+  </div>
+</footer>
+
+<script type="application/json" id="skills-data">[
+  {"name":"stack-ia-creador","etapa":"meta","desc":"Orquestador del stack completo. Activa el dashboard.","triggers":["stack ia","flow reel","dashboard stack","/stack","/flow"],"prompts":[],"active":true},
+  {"name":"stack-claude-guion","etapa":"01-guion","desc":"Idea cruda a guion humanizado de Reel + banco de 10 ideas semanales.","triggers":["guion reel","script humanizado","banco de ideas","/guion","/script"],"prompts":["01-guion-humanizado","01-banco-10-ideas"],"active":true},
+  {"name":"stack-imagen","etapa":"02-imagen","desc":"3 variantes de prompt para Nano Banana Pro o adaptacion a ChatGPT Image.","triggers":["prompt nano banana","imagen para post","thumbnail","/imagen","/banana"],"prompts":["02-3-variantes-nano-banana","02-adapta-chatgpt"],"active":true},
+  {"name":"stack-video","etapa":"03-video","desc":"Guion a shot list cinematografica ruteada entre Veo 3.1 y SeeDance 2.","triggers":["shot list","prompt veo","video con ia","/video","/shotlist"],"prompts":["03-shot-list-ruteado"],"active":true},
+  {"name":"stack-voz","etapa":"04-voz","desc":"3 variantes de direccion de voz para ElevenLabs con voice settings exactos.","triggers":["prompt elevenlabs","direccion de voz","voiceover","/voz","/vo"],"prompts":["04-3-variantes-direccion-voz"],"active":true},
+  {"name":"stack-avatar","etapa":"05-avatar","desc":"Script doctor para HeyGen + 3 variantes de efecto cinematografico Higgsfield.","triggers":["guion heygen","prompt higgsfield","avatar habla","/avatar","/heygen","/higgsfield"],"prompts":["05-script-doctor-heygen","05-3-variantes-higgsfield"],"active":true},
+  {"name":"stack-manychat","etapa":"06-dms","desc":"Flow completo de ManyChat: trigger + auto-reply + DM #1 + DM #2 + tag + seguimiento.","triggers":["flow manychat","automatizar dm","comentario dispara dm","/dm","/manychat"],"prompts":["06-flow-manychat-completo"],"active":true},
+  {"name":"stack-master-prompt","etapa":"07-master","desc":"El prompt que escribe los demas prompts. 5 preguntas y devuelve prompt afilado.","triggers":["master prompt","afilar prompt","meta prompt","/master-prompt","/master","/afila"],"prompts":["07-template-master-prompt"],"active":true}
+]</script>
+
+<script src="/app.js"></script>
+</body>
+</html>
