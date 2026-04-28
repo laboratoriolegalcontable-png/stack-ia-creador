@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "npx --yes serve public -l 3000",
     "sync": "node scripts/sync-from-skills.mjs",
-    "build": "npm run sync"
+    "build": "node scripts/validate-public.mjs"
   },
   "engines": {
     "node": ">=18"
