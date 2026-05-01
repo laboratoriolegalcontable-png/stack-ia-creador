@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-05-01T00:00:00.000Z",
+  "description": "Agenda editorial semanal + comandos /schedule para automatizar contenido con IA",
+  "calendario_base": [
+    { "dia": "Lunes",    "plataforma": "Instagram Reel",      "horario": "9:00 AM",  "tema": "Penal",       "prompt_id": "01-guion-humanizado", "duracion": "45-55 seg" },
+    { "dia": "Martes",   "plataforma": "LinkedIn Post",        "horario": "10:30 AM", "tema": "Inmobiliario", "prompt_id": "01-banco-10-ideas",   "duracion": "Post largo" },
+    { "dia": "Miercoles","plataforma": "TikTok Short",         "horario": "6:00 PM",  "tema": "Tech-IA",     "prompt_id": "01-guion-humanizado", "duracion": "30-45 seg" },
+    { "dia": "Jueves",   "plataforma": "Instagram Carrusel",   "horario": "11:00 AM", "tema": "Patrimonial", "prompt_id": "01-guion-humanizado", "duracion": "5-8 slides" },
+    { "dia": "Viernes",  "plataforma": "LinkedIn Articulo",    "horario": "9:00 AM",  "tema": "Tributario",  "prompt_id": "01-banco-10-ideas",   "duracion": "Articulo largo" },
+    { "dia": "Sabado",   "plataforma": "Instagram Story+Post", "horario": "3:00 PM",  "tema": "Penal",       "prompt_id": "01-guion-humanizado", "duracion": "Story + Post" },
+    { "dia": "Domingo",  "plataforma": "TikTok Reel",          "horario": "8:00 PM",  "tema": "Inmobiliario", "prompt_id": "01-guion-humanizado", "duracion": "45-60 seg" }
+  ],
+  "schedule_commands": [
+    {
+      "id": "ultrathink-semana-completa",
+      "titulo": "Generar semana completa (Ultrathink)",
+      "descripcion": "Genera los 7 posts de la semana con Opus y extended thinking. Corre cada lunes a las 7 AM aunque la laptop este cerrada.",
+      "frecuencia": "Cada lunes 7 AM",
+      "modelo": "Opus 4.7 + extended thinking",
+      "comando": "/schedule every Monday at 7am, use extended thinking with high budget to generate a complete 7-day editorial calendar for Estudio Oro (Dr. Diego Orosa, penalista + corredor inmobiliario CABA Argentina). Alternacion de temas: Lunes Penal Instagram Reel, Martes Inmobiliario LinkedIn Post, Miercoles Tech-IA TikTok Short, Jueves Patrimonial Instagram Carrusel, Viernes Tributario LinkedIn Articulo, Sabado Penal Instagram Story, Domingo Inmobiliario TikTok Reel. Cada post: HOOK 3 segundos + CAPTION listo para copiar + 15-20 hashtags + CTA WhatsApp +54 11 6877-7777. Spanish, sin tildes, sin pa' usa para. Guardar en ~/Documents/agenda-semana.md"
+    },
+    {
+      "id": "ideas-banco-semanal",
+      "titulo": "Banco de 10 ideas semanales",
+      "descripcion": "Genera 10 ideas de Reel el lunes temprano para planificar toda la semana.",
+      "frecuencia": "Cada lunes 6 AM",
+      "modelo": "Sonnet 4.6",
+      "comando": "/schedule every Monday at 6am, generate 10 Reel ideas for this week for Estudio Oro. MARCA: Estudio Oro. AUDIENCIA: empresarios y profesionales CABA que necesitan asesoramiento penal o inmobiliario. GANCHO DIFERENCIAL: unico penalista + corredor inmobiliario de CABA. Formato: #N [HOOK provisional] - Pain real - Promesa concreta - Estructura sugerida (listicle/contraste/how-to/story). Minimo 3 con potencial viral, 2 educativos. Spanish, sin tildes. Guardar en ~/Documents/ideas-semana.md"
+    },
+    {
+      "id": "guion-reel-diario",
+      "titulo": "Guion de Reel del dia",
+      "descripcion": "Convierte la idea del dia en guion completo listo para grabar. Corre cada manana.",
+      "frecuencia": "Cada dia 7:30 AM",
+      "modelo": "Sonnet 4.6",
+      "comando": "/schedule daily at 7:30am, read the idea matching today day of week from ~/Documents/ideas-semana.md, then write a complete humanized Reel script of 45-55 seconds. NICHO: derecho penal + inmobiliario. TONO: experto cercano, no formal. AUDIENCIA: empresarios y profesionales CABA. Estructura: HOOK 6s + BODY listicle 40-46s + PAYOFF 4-6s + CTA 4-6s con palabra clave ManyChat. Cero emoji, cero hashtags en el guion, verbos concretos, incluir notas de camara. Guardar en ~/Documents/guion-hoy.md"
+    },
+    {
+      "id": "reporte-engagement",
+      "titulo": "Reporte de engagement semanal",
+      "descripcion": "Analiza que temas funcionaron mejor y recomienda para la proxima semana.",
+      "frecuencia": "Cada viernes 7 PM",
+      "modelo": "Haiku 4.5",
+      "comando": "/schedule every Friday at 7pm, review the posts published this week from ~/Documents/agenda-semana.md, evaluate which topic area (Penal / Inmobiliario / Tech-IA / Patrimonial / Tributario) had the strongest hooks and most compelling CTAs, write a brief insight report with 3 concrete recommendations for next week to ~/Documents/insights-semana.md"
+    },
+    {
+      "id": "reporte-whatsapp-domingo",
+      "titulo": "Resumen semanal por WhatsApp",
+      "descripcion": "Envia un resumen de la semana directamente a tu WhatsApp cada domingo.",
+      "frecuencia": "Cada domingo 9 PM",
+      "modelo": "Haiku 4.5",
+      "comando": "/schedule every Sunday at 9pm, read ~/Documents/agenda-semana.md and ~/Documents/insights-semana.md, create a 3-line summary: temas cubiertos esta semana, mejor hook, recomendacion para el lunes. Send via Make.com Oraculo scenario s4562335 to WhatsApp +54 11 6877-7777"
+    }
+  ]
+}
