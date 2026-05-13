@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/user/stack-ia-creador/.claude/hooks/ads-start.sh",
+            "timeout": 10,
+            "statusMessage": "Cargando Claude Ads v2.4.0..."
+          }
+        ]
+      }
+    ]
+  }
+}
