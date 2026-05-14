@@ -31,6 +31,7 @@
   <button data-tab="skills" class="active">Skills</button>
   <button data-tab="prompts">Prompts</button>
   <button data-tab="programas">Programas</button>
+  <button data-tab="agenda">Agenda</button>
 </nav>
 
 <section id="tab-skills">
@@ -61,14 +62,22 @@
   <div id="programasList" class="grid"></div>
 </section>
 
+<section id="tab-agenda" class="hidden">
+  <div class="toolbar">
+    <input type="search" id="agendaSearch" placeholder="Buscar comando /schedule..." aria-label="Buscar agenda" />
+  </div>
+  <div id="agendaList"></div>
+</section>
+
 <footer>
-  <div>Stack IA Creador v1.0 · Skills auto-activos en Claude Code · Prompts tool-agnostic.</div>
+  <div>Stack IA Creador v1.1 · Skills auto-activos en Claude Code · Prompts tool-agnostic.</div>
   <div style="margin-top:0.4rem">
     <a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> · Hecho para creadores que viven de su contenido.
   </div>
 </footer>
 
 <script type="application/json" id="skills-data">[
+  {"name":"stack-schedule","etapa":"meta","desc":"Agenda editorial automatica. Comandos /schedule listos para generar contenido semanal en la nube de Anthropic. Corre aunque cierres la laptop.","triggers":["agenda semana","calendario editorial","schedule contenido","/schedule","/agenda","automatizar publicacion"],"prompts":[],"active":true},
   {"name":"stack-ia-creador","etapa":"meta","desc":"Orquestador del stack completo. Activa el dashboard.","triggers":["stack ia","flow reel","dashboard stack","/stack","/flow"],"prompts":[],"active":true},
   {"name":"stack-claude-guion","etapa":"01-guion","desc":"Idea cruda a guion humanizado de Reel + banco de 10 ideas semanales.","triggers":["guion reel","script humanizado","banco de ideas","/guion","/script"],"prompts":["01-guion-humanizado","01-banco-10-ideas"],"active":true},
   {"name":"stack-imagen","etapa":"02-imagen","desc":"3 variantes de prompt para Nano Banana Pro o adaptacion a ChatGPT Image.","triggers":["prompt nano banana","imagen para post","thumbnail","/imagen","/banana"],"prompts":["02-3-variantes-nano-banana","02-adapta-chatgpt"],"active":true},

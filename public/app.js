@@ -15,7 +15,9 @@
     "07-master": "Master Prompt",
   };
 
-  let DATA = { prompts: [], programas: [], skills: [] };
+  const TABS = ["skills", "prompts", "programas", "agenda"];
+
+  let DATA = { prompts: [], programas: [], skills: [], agenda: { calendario_base: [], schedule_commands: [] } };
 
   async function loadJson(path) {
     const r = await fetch(path, { cache: "no-store" });
@@ -25,20 +27,23 @@
 
   async function loadData() {
     let prompts = [], programas = [], skills = [];
+    let agenda = { calendario_base: [], schedule_commands: [] };
     try {
-      const [pr, pg] = await Promise.all([
+      const [pr, pg, ag] = await Promise.all([
         loadJson("/prompts.json"),
         loadJson("/programas.json"),
+        loadJson("/agenda.json"),
       ]);
       prompts = pr.prompts || [];
       programas = pg.programas || [];
+      agenda = ag;
     } catch (err) {
       console.error("Error cargando data:", err);
     }
     try {
       skills = JSON.parse(document.getElementById("skills-data").textContent);
     } catch (e) { console.error(e); }
-    return { prompts, programas, skills };
+    return { prompts, programas, skills, agenda };
   }
 
   function escapeHtml(s) {
@@ -160,6 +165,61 @@
     `).join("");
   }
 
+  function renderAgenda(query) {
+    const container = document.getElementById("agendaList");
+    const q = (query || "").trim().toLowerCase();
+    const { calendario_base = [], schedule_commands = [] } = DATA.agenda;
+
+    const filteredCmds = schedule_commands.filter((c) => {
+      if (!q) return true;
+      const haystack = [c.titulo, c.descripcion, c.frecuencia, c.modelo, c.comando].join(" ").toLowerCase();
+      return haystack.includes(q);
+    });
+
+    const calHtml = q ? "" : `
+      <div class="card">
+        <h3>Calendario base semanal</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:0.6rem">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border)">
+              <th style="text-align:left;padding:0.4rem 0.6rem;opacity:0.6">Dia</th>
+              <th style="text-align:left;padding:0.4rem 0.6rem;opacity:0.6">Plataforma</th>
+              <th style="text-align:left;padding:0.4rem 0.6rem;opacity:0.6">Horario</th>
+              <th style="text-align:left;padding:0.4rem 0.6rem;opacity:0.6">Tema</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${calendario_base.map((d) => `
+              <tr style="border-bottom:1px solid var(--border)">
+                <td style="padding:0.45rem 0.6rem"><strong>${escapeHtml(d.dia)}</strong></td>
+                <td style="padding:0.45rem 0.6rem">${escapeHtml(d.plataforma)}</td>
+                <td style="padding:0.45rem 0.6rem">${escapeHtml(d.horario)}</td>
+                <td style="padding:0.45rem 0.6rem"><span class="tag">${escapeHtml(d.tema)}</span></td>
+              </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>`;
+
+    const cmdsHtml = filteredCmds.length
+      ? filteredCmds.map((c) => `
+      <div class="card">
+        <h3>${escapeHtml(c.titulo)}</h3>
+        <div class="tags">
+          <span class="tag">${escapeHtml(c.frecuencia)}</span>
+          <span class="tag ${c.modelo.includes("Opus") ? "active" : ""}">${escapeHtml(c.modelo)}</span>
+        </div>
+        <p>${escapeHtml(c.descripcion)}</p>
+        <pre><button class="copy-btn" data-copy="${encodeURIComponent(c.comando)}" aria-label="Copiar comando">Copiar</button><code>${escapeHtml(c.comando)}</code></pre>
+      </div>`).join("")
+      : '<div class="empty">Sin resultados.</div>';
+
+    container.innerHTML = calHtml
+      + `<h2 style="margin:1.2rem 0 0.5rem;font-size:0.95rem;opacity:0.6;text-transform:uppercase;letter-spacing:0.05em">Comandos /schedule</h2>`
+      + cmdsHtml;
+
+    attachCopyHandlers();
+  }
+
   function attachCopyHandlers() {
     document.querySelectorAll(".copy-btn").forEach((btn) => {
       if (btn.dataset.bound) return;
@@ -218,7 +278,7 @@
       btn.addEventListener("click", () => {
         document.querySelectorAll("nav.tabs button").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        ["skills", "prompts", "programas"].forEach((id) => {
+        TABS.forEach((id) => {
           document.getElementById(`tab-${id}`).classList.toggle("hidden", id !== btn.dataset.tab);
         });
       });
@@ -256,6 +316,7 @@
     renderSkills("");
     renderPrompts("", "");
     renderProgramas("", "");
+    renderAgenda("");
 
     document.getElementById("skillsSearch").addEventListener("input", (e) =>
       renderSkills(e.target.value));
@@ -267,6 +328,8 @@
       renderProgramas(e.target.value, document.getElementById("programasFilter").value));
     document.getElementById("programasFilter").addEventListener("change", (e) =>
       renderProgramas(document.getElementById("programasSearch").value, e.target.value));
+    document.getElementById("agendaSearch").addEventListener("input", (e) =>
+      renderAgenda(e.target.value));
     document.getElementById("downloadAll").addEventListener("click", downloadAllPrompts);
 
     registerServiceWorker();
