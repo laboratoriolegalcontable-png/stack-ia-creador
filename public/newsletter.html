@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Newsletter — Stack IA | Prompts & Herramientas de IA</title>
+<title>Newsletter &mdash; Stack IA | Prompts &amp; Herramientas de IA</title>
 <meta name="description" content="Los mejores prompts, herramientas y workflows de IA para profesionales. Cada semana, curado por Diego Orosa.">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0D0D14">
@@ -39,8 +39,6 @@
     pointer-events:none;
     z-index:0;
   }
-
-  /* NAV */
   nav {
     position:relative;
     z-index:10;
@@ -76,15 +74,8 @@
     -webkit-text-fill-color:transparent;
     background-clip:text;
   }
-  .nav-link {
-    font-size:13px;
-    color:var(--text2);
-    text-decoration:none;
-    transition:color 0.2s;
-  }
+  .nav-link { font-size:13px; color:var(--text2); text-decoration:none; transition:color 0.2s; }
   .nav-link:hover { color:var(--gold); }
-
-  /* HERO */
   .hero {
     position:relative;
     z-index:10;
@@ -129,25 +120,9 @@
     -webkit-text-fill-color:transparent;
     background-clip:text;
   }
-  .hero-sub {
-    font-size:17px;
-    color:var(--text2);
-    line-height:1.7;
-    max-width:540px;
-    margin:0 auto 40px;
-  }
-
-  /* STATS */
-  .stats {
-    display:flex;
-    justify-content:center;
-    gap:40px;
-    flex-wrap:wrap;
-    margin-bottom:56px;
-  }
-  .stat-item {
-    text-align:center;
-  }
+  .hero-sub { font-size:17px; color:var(--text2); line-height:1.7; max-width:540px; margin:0 auto 40px; }
+  .stats { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; margin-bottom:56px; }
+  .stat-item { text-align:center; }
   .stat-num {
     font-size:28px;
     font-weight:800;
@@ -156,13 +131,7 @@
     -webkit-text-fill-color:transparent;
     background-clip:text;
   }
-  .stat-label {
-    font-size:12px;
-    color:var(--text2);
-    margin-top:4px;
-  }
-
-  /* MAIN LAYOUT */
+  .stat-label { font-size:12px; color:var(--text2); margin-top:4px; }
   .main-layout {
     position:relative;
     z-index:10;
@@ -174,16 +143,7 @@
     gap:40px;
     align-items:start;
   }
-
-  /* TOPICS */
-  .topics-col {}
-  .topics-title {
-    font-size:12px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin-bottom:20px;
-  }
+  .topics-title { font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
   .topic-card {
     display:flex;
     align-items:flex-start;
@@ -212,9 +172,6 @@
   .topic-icon.green { background:rgba(22,163,74,0.1); }
   .topic-content h3 { font-size:14px; font-weight:600; margin-bottom:4px; }
   .topic-content p { font-size:12px; color:var(--text2); line-height:1.5; }
-
-  /* FORM */
-  .form-col {}
   .form-card {
     background:var(--dark2);
     border:1px solid var(--border);
@@ -232,26 +189,10 @@
     border-radius:2px;
     margin-bottom:24px;
   }
-  .form-card h2 {
-    font-size:20px;
-    font-weight:700;
-    margin-bottom:6px;
-  }
-  .form-card .form-sub {
-    font-size:13px;
-    color:var(--text2);
-    margin-bottom:28px;
-    line-height:1.5;
-  }
+  .form-card h2 { font-size:20px; font-weight:700; margin-bottom:6px; }
+  .form-card .form-sub { font-size:13px; color:var(--text2); margin-bottom:28px; line-height:1.5; }
   .form-group { margin-bottom:16px; }
-  label {
-    display:block;
-    font-size:11px;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:var(--text2);
-    margin-bottom:6px;
-  }
+  label { display:block; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--text2); margin-bottom:6px; }
   input, select {
     width:100%;
     padding:12px 16px;
@@ -267,11 +208,7 @@
   input:focus, select:focus { border-color:var(--gold); }
   input::placeholder { color:rgba(255,255,255,0.2); }
   select option { background:var(--dark3); }
-  .interests-grid {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  }
+  .interests-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .interest-chip {
     padding:8px 12px;
     background:var(--dark3);
@@ -320,13 +257,7 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .btn.loading .btn-text { display:none; }
   .btn.loading .spinner { display:block; }
-  .privacy-note {
-    font-size:11px;
-    color:var(--text2);
-    text-align:center;
-    margin-top:12px;
-    opacity:0.7;
-  }
+  .privacy-note { font-size:11px; color:var(--text2); text-align:center; margin-top:12px; opacity:0.7; }
   .error-msg {
     display:none;
     padding:10px 14px;
@@ -339,19 +270,9 @@
     text-align:center;
   }
   .error-msg.show { display:block; }
-
-  /* SUCCESS */
-  .success-state {
-    display:none;
-    text-align:center;
-    padding:20px 0;
-  }
+  .success-state { display:none; text-align:center; padding:20px 0; }
   .success-state.show { display:block; }
-  .success-icon {
-    font-size:48px;
-    margin-bottom:16px;
-    animation:bounceIn 0.5s ease;
-  }
+  .success-icon { font-size:48px; margin-bottom:16px; animation:bounceIn 0.5s ease; }
   @keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.1)}100%{transform:scale(1)}}
   .success-title {
     font-size:22px;
@@ -363,8 +284,6 @@
     background-clip:text;
   }
   .success-sub { font-size:14px; color:var(--text2); line-height:1.6; }
-
-  /* FOOTER */
   footer {
     position:relative;
     z-index:10;
@@ -374,7 +293,6 @@
   }
   footer p { font-size:12px; color:var(--text2); opacity:0.6; line-height:1.8; }
   footer a { color:var(--gold); text-decoration:none; }
-
   @media(max-width:768px){
     .main-layout { grid-template-columns:1fr; }
     .stats { gap:24px; }
@@ -392,14 +310,14 @@
     <div class="nav-logo-icon">K</div>
     <span class="nav-logo-text">Stack IA</span>
   </a>
-  <a href="/" class="nav-link">← Volver</a>
+  <a href="/" class="nav-link">&larr; Volver</a>
 </nav>
 
 <section class="hero">
   <div class="hero-tag">Newsletter semanal</div>
-  <h1>La <span class="gradient">IA que necesitás</span><br>en tu trabajo</h1>
+  <h1>La <span class="gradient">IA que necesit&aacute;s</span><br>en tu trabajo</h1>
   <p class="hero-sub">
-    Prompts probados, herramientas nuevas y workflows de automatización.
+    Prompts probados, herramientas nuevas y workflows de automatizaci&oacute;n.
     Curado cada semana por Diego Orosa para profesionales que quieren resultados reales.
   </p>
   <div class="stats">
@@ -409,7 +327,7 @@
     </div>
     <div class="stat-item">
       <div class="stat-num">2/sem</div>
-      <div class="stat-label">Envíos semanales</div>
+      <div class="stat-label">Env&iacute;os semanales</div>
     </div>
     <div class="stat-item">
       <div class="stat-num">0</div>
@@ -420,33 +338,33 @@
 
 <div class="main-layout">
   <div class="topics-col">
-    <p class="topics-title">Lo que recibís cada semana</p>
+    <p class="topics-title">Lo que recib&iacute;s cada semana</p>
     <div class="topic-card">
-      <div class="topic-icon purple">🧠</div>
+      <div class="topic-icon purple">&#x1F9E0;</div>
       <div class="topic-content">
         <h3>Prompts de alto impacto</h3>
-        <p>Prompts probados en casos reales: redacción legal, análisis inmobiliario, estrategia, marketing.</p>
+        <p>Prompts probados en casos reales: redacci&oacute;n legal, an&aacute;lisis inmobiliario, estrategia, marketing.</p>
       </div>
     </div>
     <div class="topic-card">
-      <div class="topic-icon gold">⚡</div>
+      <div class="topic-icon gold">&#x26A1;</div>
       <div class="topic-content">
         <h3>Herramientas nuevas</h3>
-        <p>Las mejores apps de IA de la semana, con casos de uso específicos para profesionales.</p>
+        <p>Las mejores apps de IA de la semana, con casos de uso espec&iacute;ficos para profesionales.</p>
       </div>
     </div>
     <div class="topic-card">
-      <div class="topic-icon blue">🔄</div>
+      <div class="topic-icon blue">&#x1F504;</div>
       <div class="topic-content">
         <h3>Automatizaciones Make.com</h3>
-        <p>Workflows listos para implementar: leads automáticos, reportes, respuestas de WhatsApp.</p>
+        <p>Workflows listos para implementar: leads autom&aacute;ticos, reportes, respuestas de WhatsApp.</p>
       </div>
     </div>
     <div class="topic-card">
-      <div class="topic-icon green">📊</div>
+      <div class="topic-icon green">&#x1F4CA;</div>
       <div class="topic-content">
         <h3>Casos de uso reales</h3>
-        <p>Cómo Diego usa IA en su estudio jurídico e inmobiliaria. Sin teoría, solo práctica.</p>
+        <p>C&oacute;mo Diego usa IA en su estudio jur&iacute;dico e inmobiliaria. Sin teor&iacute;a, solo pr&aacute;ctica.</p>
       </div>
     </div>
   </div>
@@ -455,7 +373,7 @@
     <div class="form-card">
       <div id="formContent">
         <h2>Unite al stack</h2>
-        <p class="form-sub">Gratis, sin compromiso. Cancelás cuando querés.</p>
+        <p class="form-sub">Gratis, sin compromiso. Cancel&aacute;s cuando quer&eacute;s.</p>
         <form id="newsletterForm" novalidate>
           <div class="form-group">
             <label for="nombre">Nombre *</label>
@@ -470,14 +388,14 @@
             <input type="tel" id="whatsapp" placeholder="+54 9 11 0000 0000" autocomplete="tel">
           </div>
           <div class="form-group">
-            <label>¿Qué te interesa más? (elegí varios)</label>
+            <label>&iquest;Qu&eacute; te interesa m&aacute;s? (eleg&iacute; varios)</label>
             <div class="interests-grid">
-              <div class="interest-chip" data-val="prompts" onclick="toggleChip(this)">🧠 Prompts IA</div>
-              <div class="interest-chip" data-val="legal-ia" onclick="toggleChip(this)">⚖️ Legal + IA</div>
-              <div class="interest-chip" data-val="automatizacion" onclick="toggleChip(this)">🔄 Automatización</div>
-              <div class="interest-chip" data-val="inmobiliario-ia" onclick="toggleChip(this)">🏠 Inmobiliario + IA</div>
-              <div class="interest-chip" data-val="make" onclick="toggleChip(this)">⚙️ Make.com</div>
-              <div class="interest-chip" data-val="marketing-ia" onclick="toggleChip(this)">📈 Marketing + IA</div>
+              <div class="interest-chip" data-val="prompts" onclick="toggleChip(this)">&#x1F9E0; Prompts IA</div>
+              <div class="interest-chip" data-val="legal-ia" onclick="toggleChip(this)">&#x2696;&#xFE0F; Legal + IA</div>
+              <div class="interest-chip" data-val="automatizacion" onclick="toggleChip(this)">&#x1F504; Automatizaci&oacute;n</div>
+              <div class="interest-chip" data-val="inmobiliario-ia" onclick="toggleChip(this)">&#x1F3E0; Inmobiliario + IA</div>
+              <div class="interest-chip" data-val="make" onclick="toggleChip(this)">&#x2699;&#xFE0F; Make.com</div>
+              <div class="interest-chip" data-val="marketing-ia" onclick="toggleChip(this)">&#x1F4C8; Marketing + IA</div>
             </div>
           </div>
           <button type="submit" class="btn" id="submitBtn">
@@ -485,14 +403,14 @@
             <div class="spinner"></div>
           </button>
           <div class="error-msg" id="errorMsg"></div>
-          <p class="privacy-note">Sin spam · Cancelás cuando querés · Ley 25.326</p>
+          <p class="privacy-note">Sin spam &middot; Cancel&aacute;s cuando quer&eacute;s &middot; Ley 25.326</p>
         </form>
       </div>
       <div class="success-state" id="successState">
-        <div class="success-icon">🎉</div>
-        <h3 class="success-title">¡Ya estás dentro!</h3>
+        <div class="success-icon">&#x1F389;</div>
+        <h3 class="success-title">&iexcl;Ya est&aacute;s dentro!</h3>
         <p class="success-sub">
-          Revisá tu email para confirmar.<br>
+          Revis&aacute; tu email para confirmar.<br>
           El primer stack llega esta semana.<br><br>
           <strong style="color:var(--gold)">Bienvenido al futuro.</strong>
         </p>
@@ -503,8 +421,8 @@
 
 <footer>
   <p>
-    Stack IA · por <a href="https://estudiooro.com">Diego Orosa</a> · 2026<br>
-    Ley 25.326 · Tus datos son privados y no se comparten<br>
+    Stack IA &middot; por <a href="https://estudiooro.com">Diego Orosa</a> &middot; 2026<br>
+    Ley 25.326 &middot; Tus datos son privados y no se comparten<br>
     Powered by KAIROS ORO v5.0
   </p>
 </footer>
@@ -512,6 +430,7 @@
 <script>
 const SUPABASE_URL = 'https://moljmujlfvtsgkjbtwss.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vbGptdWpsZnZ0c2dramJ0d3NzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMzExNjAsImV4cCI6MjA4OTgwNzE2MH0.SLzQYtec6J39H7gA-XWQFprpIK9f7wpoRwQ4IhfZbhs';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const selectedChips = new Set();
 
@@ -531,13 +450,19 @@ document.getElementById('newsletterForm').addEventListener('submit', async (e) =
   const btn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   errorMsg.classList.remove('show');
+  errorMsg.textContent = '';
 
-  const nombre = document.getElementById('nombre').value.trim();
-  const email = document.getElementById('email').value.trim();
+  const nombre   = document.getElementById('nombre').value.trim();
+  const email    = document.getElementById('email').value.trim().toLowerCase();
   const whatsapp = document.getElementById('whatsapp').value.trim();
 
-  if (!nombre || !email) {
-    errorMsg.textContent = 'Completá nombre y email para continuar.';
+  if (!nombre) {
+    errorMsg.textContent = 'El nombre es requerido.';
+    errorMsg.classList.add('show');
+    return;
+  }
+  if (!EMAIL_RE.test(email)) {
+    errorMsg.textContent = 'Ingresá un email válido.';
     errorMsg.classList.add('show');
     return;
   }
@@ -556,7 +481,7 @@ document.getElementById('newsletterForm').addEventListener('submit', async (e) =
       },
       body: JSON.stringify({
         nombre,
-        email: email.toLowerCase(),
+        email,
         whatsapp: whatsapp || null,
         area_interes: [...selectedChips].join(',') || null,
         fuente: 'stack-ia-newsletter',
@@ -567,8 +492,7 @@ document.getElementById('newsletterForm').addEventListener('submit', async (e) =
     if (res.ok || res.status === 201) {
       document.getElementById('formContent').style.display = 'none';
       document.getElementById('successState').classList.add('show');
-
-      await fetch(`${SUPABASE_URL}/rest/v1/newsletter_log`, {
+      fetch(`${SUPABASE_URL}/rest/v1/newsletter_log`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -577,19 +501,19 @@ document.getElementById('newsletterForm').addEventListener('submit', async (e) =
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify({
-          email: email.toLowerCase(),
+          email,
           tipo: 'alta',
           canal: whatsapp ? 'email+whatsapp' : 'email',
           estado: 'pendiente'
         })
-      });
+      }).catch(() => {});
     } else if (res.status === 409) {
       errorMsg.textContent = '¡Ya estás registrado! Revisá tu email.';
       errorMsg.classList.add('show');
     } else {
       throw new Error(`${res.status}`);
     }
-  } catch (err) {
+  } catch {
     errorMsg.textContent = 'Error de conexión. Intentá nuevamente.';
     errorMsg.classList.add('show');
   } finally {
