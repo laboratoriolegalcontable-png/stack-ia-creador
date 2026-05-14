@@ -1,6 +1,6 @@
 // Service worker minimal para PWA Stack IA Creador
 // cache-first para JSON y assets, network-first para HTML.
-const CACHE_NAME = "stack-ia-creador-v1";
+const CACHE_NAME = "stack-ia-creador-v2";
 const PRECACHE = [
   "/",
   "/index.html",
@@ -9,8 +9,10 @@ const PRECACHE = [
   "/manifest.json",
   "/icon-192.png",
   "/icon-512.png",
+  "/apple-touch-icon.png",
   "/prompts.json",
   "/programas.json",
+  "/agenda.json",
 ];
 
 self.addEventListener("install", (event) => {

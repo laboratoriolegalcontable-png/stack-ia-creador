@@ -14,24 +14,33 @@
 - **Tests**: Jest
 - **Módulos**: ES Modules nativos del browser (type="module")
 
-## Estructura
+## Estructura real del proyecto
 ```
-index.html    → Entry point
-sw.js         → Service Worker (cache + offline)
-manifest.json → Web App Manifest (PWA)
-styles.css    → Estilos globales con CSS custom properties
-script.js     → Lógica principal
-src/          → Módulos JavaScript
-public/       → Assets estáticos (íconos, imágenes)
-scripts/      → Automatizaciones
-vercel.json   → Configuración Vercel
+public/
+  index.html    → Entry point (sirve app.js, registra sw.js)
+  app.js        → Toda la lógica JS (IIFE, Vanilla, ES2022)
+  sw.js         → Service Worker (cache-first assets, network-first HTML)
+  manifest.json → Web App Manifest (PWA installable)
+  styles.css    → Estilos globales con CSS custom properties
+  prompts.json  → Data de prompts
+  programas.json → Data de programas/herramientas
+  agenda.json   → Calendario y comandos /schedule
+  icon-192.png, icon-512.png, apple-touch-icon.png → Íconos PWA
+scripts/
+  validate-public.mjs → Build script (verifica archivos requeridos)
+  sync-from-skills.mjs → Sincroniza data desde ~/.claude/skills/
+  gen-icons.mjs → Genera íconos PNG
+vercel.json     → Configuración Vercel (outputDirectory: public)
+package.json    → Solo scripts de tooling; CERO dependencias runtime
 ```
+
+**Nota**: NO existe `src/`, `script.js` ni Jest configurado. Los tests se agregan cuando el backend esté activo.
 
 ## Comandos
 ```bash
-npm run dev      # Servidor local de desarrollo
-npm test         # Suite de tests con Jest
-npm run build    # Build (si aplica)
+npm run dev      # Servidor local con `serve public` en puerto 3000
+npm run sync     # Sincroniza prompts/programas desde skills locales
+npm run build    # Valida que public/ tenga todos los archivos requeridos
 ```
 
 ## Skills Activas — ACTIVACION AUTOMATICA
