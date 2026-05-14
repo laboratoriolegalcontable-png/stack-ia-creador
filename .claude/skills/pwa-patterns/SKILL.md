@@ -7,27 +7,37 @@ Se activa cuando el usuario menciona: PWA, Service Worker, manifest, offline, ca
 
 ```
 Runtime:     Vanilla HTML5 / CSS3 / JavaScript (ES2022+)
-PWA:         Service Workers (sw.js) + Web App Manifest (manifest.json)  
-Hosting:     Vercel
-Build:       Sin bundler — archivos estáticos directos
-Tests:       Jest (jest.config.js) + scripts/
-Structure:   public/ (assets) + src/ (lógica) + scripts/ (automatización)
+PWA:         Service Workers (sw.js) + Web App Manifest (manifest.json)
+Hosting:     Vercel (outputDirectory: public)
+Build:       Sin bundler — archivos estáticos directos en public/
+Tests:       Sin Jest — validación via scripts/validate-public.mjs
+Structure:   public/ (toda la app web) + scripts/ (tooling)
 ```
 
-## Estructura del Proyecto
+## Estructura Real del Proyecto
 ```
 stack-ia-creador/
-  index.html        → Entry point principal
-  sw.js             → Service Worker
-  manifest.json     → Web App Manifest
-  styles.css        → Estilos globales
-  script.js         → Lógica principal
-  src/              → Módulos JS
-  public/           → Assets estáticos (íconos, imágenes)
-  scripts/          → Scripts de automatización
-  vercel.json       → Configuración de Vercel
-  package.json      → Dependencies y scripts npm
+  public/
+    index.html        → Entry point principal
+    app.js            → Toda la lógica JS (IIFE, ES2022)
+    sw.js             → Service Worker (cache-first assets, network-first HTML)
+    manifest.json     → Web App Manifest (PWA installable)
+    styles.css        → Estilos globales con CSS custom properties
+    prompts.json      → Data de prompts de IA
+    programas.json    → Data de herramientas y programas
+    agenda.json       → Calendario editorial y comandos /schedule
+    icon-192.png      → Ícono PWA 192x192
+    icon-512.png      → Ícono PWA 512x512
+    apple-touch-icon.png → Ícono iOS
+  scripts/
+    validate-public.mjs → Verifica archivos requeridos (npm run build)
+    sync-from-skills.mjs → Sincroniza data desde ~/.claude/skills/
+    gen-icons.mjs       → Genera íconos PNG
+  vercel.json           → Config Vercel con CSP, HSTS, headers de seguridad
+  package.json          → Solo scripts de tooling; CERO dependencias runtime
 ```
+
+**IMPORTANTE**: NO existe `src/`, `script.js` ni Jest. Si necesitás agregar lógica, editá `public/app.js` directamente.
 
 ## Patrón de Service Worker (Stale-While-Revalidate)
 

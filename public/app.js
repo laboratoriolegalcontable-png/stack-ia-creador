@@ -280,15 +280,47 @@
   }
 
   function setupTabs() {
-    document.querySelectorAll("nav.tabs button").forEach((btn) => {
+    const nav = document.querySelector("nav.tabs");
+    if (nav) nav.setAttribute("role", "tablist");
+
+    const buttons = document.querySelectorAll("nav.tabs button");
+    buttons.forEach((btn) => {
+      btn.setAttribute("role", "tab");
+      const tab = btn.dataset.tab;
+      btn.setAttribute("aria-controls", `tab-${tab}`);
+      btn.setAttribute("aria-selected", btn.classList.contains("active") ? "true" : "false");
+      btn.setAttribute("tabindex", btn.classList.contains("active") ? "0" : "-1");
+
       btn.addEventListener("click", () => {
-        document.querySelectorAll("nav.tabs button").forEach((b) => b.classList.remove("active"));
+        buttons.forEach((b) => {
+          b.classList.remove("active");
+          b.setAttribute("aria-selected", "false");
+          b.setAttribute("tabindex", "-1");
+        });
         btn.classList.add("active");
+        btn.setAttribute("aria-selected", "true");
+        btn.setAttribute("tabindex", "0");
         TABS.forEach((id) => {
-          document.getElementById(`tab-${id}`).classList.toggle("hidden", id !== btn.dataset.tab);
+          const panel = document.getElementById(`tab-${id}`);
+          if (panel) {
+            panel.classList.toggle("hidden", id !== tab);
+            panel.setAttribute("role", "tabpanel");
+            panel.setAttribute("aria-labelledby", `tab-btn-${id}`);
+          }
         });
       });
     });
+
+    // Navegacion con teclado ←/→ en tabs
+    if (nav) {
+      nav.addEventListener("keydown", (e) => {
+        const tabs = [...nav.querySelectorAll('[role="tab"]')];
+        const idx = tabs.indexOf(document.activeElement);
+        if (idx === -1) return;
+        if (e.key === "ArrowRight") { e.preventDefault(); tabs[(idx + 1) % tabs.length].focus(); }
+        if (e.key === "ArrowLeft")  { e.preventDefault(); tabs[(idx - 1 + tabs.length) % tabs.length].focus(); }
+      });
+    }
   }
 
   function populateEtapaFilter(selectId, items) {
