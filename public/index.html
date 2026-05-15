@@ -56,23 +56,27 @@
     <span id="coordinator-badge" class="ia-meta"></span>
     <span id="cost-badge"        class="ia-meta"></span>
     <span id="anomaly-badge"     class="ia-meta"></span>
-    <button class="ia-cmd" id="ctx-viz-btn"    title="/ctx-viz (Ctrl+K)">/ctx-viz</button>
-    <button class="ia-cmd" id="dream-btn"      title="/dream (Ctrl+D)">/dream</button>
-    <button class="ia-cmd" id="stats-btn"      title="/stats (Ctrl+S)">/stats</button>
-    <button class="ia-cmd" id="gc-btn"         title="/gc (Ctrl+G)">/gc</button>
-    <button class="ia-cmd" id="plan-btn"       title="/plan">/plan</button>
-    <button class="ia-cmd" id="timeline-btn"   title="/timeline (Ctrl+T)">/timeline</button>
-    <button class="ia-cmd" id="journal-btn"    title="/journal (Ctrl+J)">/journal</button>
-    <button class="ia-cmd" id="export-btn"     title="/export (Ctrl+E)">/export</button>
-    <button class="ia-cmd" id="lb-btn"         title="/leaderboard">/lb</button>
-    <button class="ia-cmd" id="drift-btn"      title="/drift">/drift</button>
-    <button class="ia-cmd" id="tags-btn"       title="/tags">/tags</button>
-    <button class="ia-cmd" id="compress-btn"   title="/compress">/compress</button>
-    <button class="ia-cmd" id="goals-btn"      title="/goals (Ctrl+O)">/goals</button>
-    <button class="ia-cmd" id="insights-btn"   title="/insights">/insights</button>
+    <button class="ia-cmd" id="ctx-viz-btn"     title="/ctx-viz (Ctrl+K)">/ctx-viz</button>
+    <button class="ia-cmd" id="dream-btn"       title="/dream (Ctrl+D)">/dream</button>
+    <button class="ia-cmd" id="stats-btn"       title="/stats (Ctrl+S)">/stats</button>
+    <button class="ia-cmd" id="gc-btn"          title="/gc (Ctrl+G)">/gc</button>
+    <button class="ia-cmd" id="plan-btn"        title="/plan">/plan</button>
+    <button class="ia-cmd" id="timeline-btn"    title="/timeline (Ctrl+T)">/timeline</button>
+    <button class="ia-cmd" id="journal-btn"     title="/journal (Ctrl+J)">/journal</button>
+    <button class="ia-cmd" id="export-btn"      title="/export (Ctrl+E)">/export</button>
+    <button class="ia-cmd" id="lb-btn"          title="/leaderboard">/lb</button>
+    <button class="ia-cmd" id="drift-btn"       title="/drift">/drift</button>
+    <button class="ia-cmd" id="tags-btn"        title="/tags">/tags</button>
+    <button class="ia-cmd" id="compress-btn"    title="/compress">/compress</button>
+    <button class="ia-cmd" id="goals-btn"       title="/goals (Ctrl+O)">/goals</button>
+    <button class="ia-cmd" id="insights-btn"    title="/insights">/insights</button>
     <button class="ia-cmd" id="timemachine-btn" title="/time-machine">/time</button>
-    <button class="ia-cmd" id="patterns-btn"   title="/patterns">/patterns</button>
-    <button class="ia-cmd" id="hotkeys-btn"    title="Atajos (Ctrl+?)">?</button>
+    <button class="ia-cmd" id="patterns-btn"    title="/patterns">/patterns</button>
+    <button class="ia-cmd" id="habits-btn"      title="/habits (Ctrl+H)">/habits</button>
+    <button class="ia-cmd" id="focus-btn"       title="/focus (Ctrl+F)">/focus</button>
+    <button class="ia-cmd" id="kb-btn"          title="/kb (Ctrl+B)">/kb</button>
+    <button class="ia-cmd" id="heatmap-btn"     title="/heatmap">/heatmap</button>
+    <button class="ia-cmd" id="hotkeys-btn"     title="Atajos (Ctrl+?)">?</button>
   </div>
 </header>
 <nav class="tabs" role="tablist">
@@ -97,7 +101,7 @@
   <div class="newsletter-banner"><h3>&#x1F4E9; Newsletter de IA</h3><p>Las mejores herramientas cada semana.</p><a class="escudo-cta" href="/newsletter.html">Suscribirme gratis</a></div>
 </section>
 <footer>
-  <div>Stack IA Creador v1.7 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
+  <div>Stack IA Creador v1.8 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
   <div style="margin-top:0.4rem"><a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> &middot; Para creadores que viven de su contenido.</div>
   <div style="margin-top:0.4rem"><a href="/newsletter.html">Newsletter de IA</a> &middot; <a href="https://deploy-oro.vercel.app/escudo">Escudo Patrimonial</a></div>
 </footer>
@@ -132,6 +136,10 @@
   import { renderInsightPanel, generateInsights }         from '/insight-engine.js';
   import { renderTimeMachine }                            from '/time-machine.js';
   import { renderPatternReport, analyzeText }             from '/pattern-recognizer.js';
+  import { renderHabitPanel }                             from '/habit-tracker.js';
+  import { renderFocusTimer, startTimer }                 from '/focus-timer.js';
+  import { renderKnowledgeBase }                          from '/knowledge-base.js';
+  import { renderHeatmap, recordActivity }                from '/session-heatmap.js';
   import { getFlags }                                     from '/flags.js';
 
   const flags = getFlags();
@@ -153,13 +161,11 @@
   if (flags.CONTEXT_COMPRESSOR_ENABLED) { setTimeout(() => compressKairosMemory(), 5000); }
   if (flags.AUTO_TAGGER_ENABLED)        { tagSession(document.title + ' ' + location.href); }
 
-  // Analizar patrones en cada carga
+  recordActivity();
   analyzeText(document.title + ' ' + location.href);
-
-  // Generar insights al inicio
   generateInsights();
 
-  // Registrar hotkeys
+  // Hotkeys
   registerHotkey('ctrl+d', '/dream',    () => { localStorage.setItem('kairos:sessions','5'); runDreamCycle().then(() => { notify('KAIROS completado','4 fases ejecutadas','kairos'); trackUsage('dream'); }); });
   registerHotkey('ctrl+g', '/gc',       () => document.getElementById('gc-btn')?.click());
   registerHotkey('ctrl+s', '/stats',    () => { renderStats(); trackUsage('stats'); });
@@ -168,14 +174,14 @@
   registerHotkey('ctrl+k', '/ctx-viz',  () => toggleCtxViz());
   registerHotkey('ctrl+j', '/journal',  () => { renderDreamJournal(); trackUsage('journal'); });
   registerHotkey('ctrl+o', '/goals',    () => { renderGoalPanel(); trackUsage('goals'); });
+  registerHotkey('ctrl+h', '/habits',   () => { renderHabitPanel(); trackUsage('habits'); });
+  registerHotkey('ctrl+f', '/focus',    () => { renderFocusTimer(); trackUsage('focus'); });
+  registerHotkey('ctrl+b', '/kb',       () => { renderKnowledgeBase(); trackUsage('kb'); });
   registerHotkey('ctrl+?', 'hotkeys',   () => showHotkeysHelp());
 
   // Botones existentes
   document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
-  document.getElementById('dream-btn')?.addEventListener('click', () => {
-    localStorage.setItem('kairos:sessions','5');
-    runDreamCycle().then(() => { notify('KAIROS completado','4 fases','kairos'); trackUsage('dream'); });
-  });
+  document.getElementById('dream-btn')?.addEventListener('click', () => { localStorage.setItem('kairos:sessions','5'); runDreamCycle().then(() => { notify('KAIROS completado','4 fases','kairos'); trackUsage('dream'); }); });
   document.getElementById('stats-btn')?.addEventListener('click',  () => { renderStats(); trackUsage('stats'); });
   document.getElementById('gc-btn')?.addEventListener('click', () => {
     const keys = Object.keys(localStorage).filter(k => k.startsWith('kairos:event:'));
@@ -202,11 +208,15 @@
     const btn = document.getElementById('compress-btn');
     if (btn) { btn.textContent = `✅ ${Math.round(saved/1024)}KB`; setTimeout(() => { btn.textContent = '/compress'; }, 3000); }
   });
-  // Botones nuevos
   document.getElementById('goals-btn')?.addEventListener('click',       () => { renderGoalPanel(); trackUsage('goals'); });
   document.getElementById('insights-btn')?.addEventListener('click',    () => { renderInsightPanel(); trackUsage('insights'); });
   document.getElementById('timemachine-btn')?.addEventListener('click', () => { renderTimeMachine(); trackUsage('time-machine'); });
   document.getElementById('patterns-btn')?.addEventListener('click',    () => { renderPatternReport(); trackUsage('patterns'); });
+  // Nuevos botones
+  document.getElementById('habits-btn')?.addEventListener('click',      () => { renderHabitPanel(); trackUsage('habits'); });
+  document.getElementById('focus-btn')?.addEventListener('click',       () => { renderFocusTimer(); trackUsage('focus'); });
+  document.getElementById('kb-btn')?.addEventListener('click',          () => { renderKnowledgeBase(); trackUsage('kb'); });
+  document.getElementById('heatmap-btn')?.addEventListener('click',     () => { renderHeatmap(); trackUsage('heatmap'); });
   document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 </script>
 </body>
