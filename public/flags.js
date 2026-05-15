@@ -1,7 +1,17 @@
 /**
- * Feature flags para KAIROS + Coordinator + Daemon + Buddy + PROACTIVE + ctx-viz.
+ * Feature flags para todos los módulos KAIROS.
  *
- * @typedef {{ KAIROS_ENABLED: boolean, DREAM_CYCLE_ENABLED: boolean, FRUSTRATION_DETECTION: boolean, COORDINATOR_ENABLED: boolean, BUDDY_ENABLED: boolean, PROACTIVE_ENABLED: boolean }} Flags
+ * @typedef {{
+ *   KAIROS_ENABLED: boolean,
+ *   DREAM_CYCLE_ENABLED: boolean,
+ *   FRUSTRATION_DETECTION: boolean,
+ *   COORDINATOR_ENABLED: boolean,
+ *   BUDDY_ENABLED: boolean,
+ *   PROACTIVE_ENABLED: boolean,
+ *   BRIDGE_ENABLED: boolean,
+ *   ULTRAPLAN_ENABLED: boolean,
+ *   TOKEN_BUDGET_ENABLED: boolean,
+ * }} Flags
  */
 
 const FLAGS_KEY = 'kairos:flags';
@@ -15,6 +25,9 @@ function defaultFlags() {
     COORDINATOR_ENABLED:   true,
     BUDDY_ENABLED:         true,
     PROACTIVE_ENABLED:     true,
+    BRIDGE_ENABLED:        true,
+    ULTRAPLAN_ENABLED:     true,
+    TOKEN_BUDGET_ENABLED:  true,
   };
 }
 
