@@ -24,6 +24,12 @@ function defaultFlags() {
     SESSION_WARMUP_ENABLED:    true,
     ANOMALY_DETECTION_ENABLED: true,
     HOTKEYS_ENABLED:           true,
+    CONTEXT_COMPRESSOR_ENABLED:true,
+    AUTO_TAGGER_ENABLED:       true,
+    LEADERBOARD_ENABLED:       true,
+    DRIFT_DETECTOR_ENABLED:    true,
+    OFFLINE_INDICATOR_ENABLED: true,
+    SMART_SEARCH_ENABLED:      true,
   };
 }
 
