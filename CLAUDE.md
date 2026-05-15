@@ -41,6 +41,24 @@ package.json    → Solo scripts de tooling; CERO dependencias runtime
 npm run dev      # Servidor local con `serve public` en puerto 3000
 npm run sync     # Sincroniza prompts/programas desde skills locales
 npm run build    # Valida que public/ tenga todos los archivos requeridos
+## Estructura
+```
+index.html    → Entry point
+sw.js         → Service Worker (cache + offline)
+manifest.json → Web App Manifest (PWA)
+styles.css    → Estilos globales con CSS custom properties
+script.js     → Lógica principal
+src/          → Módulos JavaScript
+public/       → Assets estáticos (íconos, imágenes)
+scripts/      → Automatizaciones
+vercel.json   → Configuración Vercel
+```
+
+## Comandos
+```bash
+npm run dev      # Servidor local de desarrollo
+npm test         # Suite de tests con Jest
+npm run build    # Build (si aplica)
 ```
 
 ## Skills Activas — ACTIVACION AUTOMATICA

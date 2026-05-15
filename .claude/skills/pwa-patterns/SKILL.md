@@ -39,6 +39,28 @@ stack-ia-creador/
 
 **IMPORTANTE**: NO existe `src/`, `script.js` ni Jest. Si necesitás agregar lógica, editá `public/app.js` directamente.
 
+PWA:         Service Workers (sw.js) + Web App Manifest (manifest.json)  
+Hosting:     Vercel
+Build:       Sin bundler — archivos estáticos directos
+Tests:       Jest (jest.config.js) + scripts/
+Structure:   public/ (assets) + src/ (lógica) + scripts/ (automatización)
+```
+
+## Estructura del Proyecto
+```
+stack-ia-creador/
+  index.html        → Entry point principal
+  sw.js             → Service Worker
+  manifest.json     → Web App Manifest
+  styles.css        → Estilos globales
+  script.js         → Lógica principal
+  src/              → Módulos JS
+  public/           → Assets estáticos (íconos, imágenes)
+  scripts/          → Scripts de automatización
+  vercel.json       → Configuración de Vercel
+  package.json      → Dependencies y scripts npm
+```
+
 ## Patrón de Service Worker (Stale-While-Revalidate)
 
 ```javascript

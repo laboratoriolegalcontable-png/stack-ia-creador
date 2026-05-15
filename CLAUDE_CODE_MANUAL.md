@@ -1943,3 +1943,5 @@ SUBAGENT_TYPE=$(echo $HOOK_INPUT | python3 -c "import sys,json; d=json.load(sys.
 
 *Manual generado el 2026-05-14 | Claude Code v2.1.141 | Ecosistema Stack-IA-Creador*
 *Repositorio: laboratoriolegalcontable-png/stack-ia-creador*
+*Manual generado el 2026-05-14 | Claude Code v2.1.141 | Ecosistema Diego-Orosa*
+*Repositorio: laboratoriolegalcontable-png/diego-orosa*
