@@ -7,19 +7,23 @@ const FLAGS_KEY = 'kairos:flags';
 
 function defaultFlags() {
   return {
-    KAIROS_ENABLED:        true,
-    DREAM_CYCLE_ENABLED:   true,
-    FRUSTRATION_DETECTION: true,
-    COORDINATOR_ENABLED:   true,
-    BUDDY_ENABLED:         true,
-    PROACTIVE_ENABLED:     true,
-    BRIDGE_ENABLED:        true,
-    ULTRAPLAN_ENABLED:     true,
-    TOKEN_BUDGET_ENABLED:  true,
-    NOTIFICATIONS_ENABLED: true,
-    COST_BADGE_ENABLED:    true,
-    EXPORT_ENABLED:        true,
-    TIMELINE_ENABLED:      true,
+    KAIROS_ENABLED:            true,
+    DREAM_CYCLE_ENABLED:       true,
+    FRUSTRATION_DETECTION:     true,
+    COORDINATOR_ENABLED:       true,
+    BUDDY_ENABLED:             true,
+    PROACTIVE_ENABLED:         true,
+    BRIDGE_ENABLED:            true,
+    ULTRAPLAN_ENABLED:         true,
+    TOKEN_BUDGET_ENABLED:      true,
+    NOTIFICATIONS_ENABLED:     true,
+    COST_BADGE_ENABLED:        true,
+    EXPORT_ENABLED:            true,
+    TIMELINE_ENABLED:          true,
+    MOOD_RING_ENABLED:         true,
+    SESSION_WARMUP_ENABLED:    true,
+    ANOMALY_DETECTION_ENABLED: true,
+    HOTKEYS_ENABLED:           true,
   };
 }
 
