@@ -15,7 +15,7 @@
     "07-master": "Master Prompt",
   };
 
-  const TABS = ["skills", "prompts", "programas", "agenda"];
+  const TABS = ["skills", "prompts", "programas", "agenda", "servicios"];
 
   let DATA = { prompts: [], programas: [], skills: [], agenda: { calendario_base: [], schedule_commands: [] } };
 

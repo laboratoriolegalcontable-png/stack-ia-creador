@@ -4,6 +4,28 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Stack IA Creador</title>
+<style>
+.servicios-banner{background:linear-gradient(135deg,#1e1b4b,#312e81);border:1px solid #4338ca;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;text-align:center}
+.servicios-banner h2{color:#a5b4fc;margin:0 0 0.5rem;font-size:1.1rem}
+.servicios-banner p{color:#c7d2fe;font-size:0.88rem;margin:0 0 1rem}
+.servicios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
+.plan-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:0.5rem}
+.plan-card:hover{border-color:#4338ca;transition:border-color 0.2s}
+.plan-nombre{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.5rem;border-radius:4px;display:inline-block;margin-bottom:0.25rem}
+.plan-nombre.bronce{background:#78350f;color:#fef3c7}
+.plan-nombre.plata{background:#374151;color:#e5e7eb}
+.plan-nombre.oro{background:#713f12;color:#fef9c3}
+.plan-nombre.platino{background:#1e1b4b;color:#e0e7ff}
+.plan-card h3{margin:0;font-size:1rem;color:var(--text)}
+.plan-precio{font-size:1.3rem;font-weight:700;color:#a5b4fc}
+.plan-precio span{font-size:0.75rem;font-weight:400;color:#9ca3af}
+.plan-card p{font-size:0.82rem;color:#9ca3af;margin:0;flex:1}
+.escudo-cta{display:inline-block;padding:0.55rem 1.2rem;background:linear-gradient(135deg,#4338ca,#6d28d9);color:#fff;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;text-align:center;margin-top:0.5rem}
+.escudo-cta:hover{opacity:0.9}
+.newsletter-banner{background:linear-gradient(135deg,#4a044e,#701a75);border:1px solid #a21caf;border-radius:12px;padding:1.25rem;text-align:center}
+.newsletter-banner h3{color:#f0abfc;margin:0 0 0.4rem;font-size:1rem}
+.newsletter-banner p{color:#e879f9;font-size:0.82rem;margin:0 0 0.8rem}
+</style>
 <meta name="description" content="8 skills + 10 prompts copy-paste + 9 programas externos para crear contenido con IA. Tool-agnostic." />
 <meta name="theme-color" content="#0a0a0a" />
 <link rel="manifest" href="/manifest.json" />
@@ -35,6 +57,7 @@
   <button data-tab="prompts">Prompts</button>
   <button data-tab="programas">Programas</button>
   <button data-tab="agenda">Agenda</button>
+  <button data-tab="servicios">Servicios</button>
 </nav>
 
 <section id="tab-skills">
@@ -72,13 +95,56 @@
   <div id="agendaList"></div>
 </section>
 
+<section id="tab-servicios" class="hidden">
+  <div class="servicios-banner">
+    <h2>🛡️ Escudo Patrimonial</h2>
+    <p>Proteccion juridica mensual para tu patrimonio personal y empresarial. 4 planes disponibles.</p>
+  </div>
+  <div class="servicios-grid">
+    <div class="plan-card">
+      <span class="plan-nombre bronce">Bronce</span>
+      <h3>Plan Bronce</h3>
+      <div class="plan-precio">$99.000 <span>ARS/mes</span></div>
+      <p>Consultas ilimitadas por WhatsApp, revision de contratos simples, asesoramiento basico.</p>
+      <a class="escudo-cta" href="https://deploy-oro.vercel.app/escudo" target="_blank" rel="noopener">Suscribirme</a>
+    </div>
+    <div class="plan-card">
+      <span class="plan-nombre plata">Plata</span>
+      <h3>Plan Plata</h3>
+      <div class="plan-precio">$199.000 <span>ARS/mes</span></div>
+      <p>Todo Bronce + revision de contratos complejos, representacion en cartas documento y mediaciones.</p>
+      <a class="escudo-cta" href="https://deploy-oro.vercel.app/escudo" target="_blank" rel="noopener">Suscribirme</a>
+    </div>
+    <div class="plan-card">
+      <span class="plan-nombre oro">Oro</span>
+      <h3>Plan Oro</h3>
+      <div class="plan-precio">$299.000 <span>ARS/mes</span></div>
+      <p>Todo Plata + auditoria legal trimestral, compliance UIF, due diligence inmobiliario.</p>
+      <a class="escudo-cta" href="https://deploy-oro.vercel.app/escudo" target="_blank" rel="noopener">Suscribirme</a>
+    </div>
+    <div class="plan-card">
+      <span class="plan-nombre platino">Platino</span>
+      <h3>Plan Platino</h3>
+      <div class="plan-precio">$499.000 <span>ARS/mes</span></div>
+      <p>Todo Oro + asistencia prioritaria 24/7, estrategia patrimonial internacional, acceso directo al Dr. Orosa.</p>
+      <a class="escudo-cta" href="https://deploy-oro.vercel.app/escudo" target="_blank" rel="noopener">Suscribirme</a>
+    </div>
+  </div>
+  <div class="newsletter-banner">
+    <h3>📩 Newsletter de IA</h3>
+    <p>Recibe cada semana las mejores herramientas, prompts y estrategias de IA para tu negocio.</p>
+    <a class="escudo-cta" href="/newsletter.html">Suscribirme gratis</a>
+  </div>
+</section>
+
 <footer>
-  <div>Stack IA Creador v1.1 · Skills auto-activos en Claude Code · Prompts tool-agnostic.</div>
+  <div>Stack IA Creador v1.2 · Skills auto-activos en Claude Code · Prompts tool-agnostic.</div>
   <div style="margin-top:0.4rem">
     <a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> · Hecho para creadores que viven de su contenido.
   </div>
   <div style="margin-top:0.4rem">
-    <a href="/newsletter.html">Suscribite al Newsletter de IA</a>
+    <a href="/newsletter.html">Suscribite al Newsletter de IA</a> ·
+    <a href="https://deploy-oro.vercel.app/escudo">Escudo Patrimonial</a>
   </div>
 </footer>
 
