@@ -287,6 +287,7 @@
     buttons.forEach((btn) => {
       btn.setAttribute("role", "tab");
       const tab = btn.dataset.tab;
+      btn.setAttribute("id", `tab-btn-${tab}`);
       btn.setAttribute("aria-controls", `tab-${tab}`);
       btn.setAttribute("aria-selected", btn.classList.contains("active") ? "true" : "false");
       btn.setAttribute("tabindex", btn.classList.contains("active") ? "0" : "-1");
