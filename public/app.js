@@ -20,7 +20,7 @@
   let DATA = { prompts: [], programas: [], skills: [], agenda: { calendario_base: [], schedule_commands: [] } };
 
   async function loadJson(path) {
-    const r = await fetch(path, { cache: "no-store" });
+    const r = await fetch(path, { cache: "default" });
     if (!r.ok) throw new Error(`fetch ${path}: ${r.status}`);
     return r.json();
   }
@@ -28,18 +28,17 @@
   async function loadData() {
     let prompts = [], programas = [], skills = [];
     let agenda = { calendario_base: [], schedule_commands: [] };
-    try {
-      const [pr, pg, ag] = await Promise.all([
-        loadJson("/prompts.json"),
-        loadJson("/programas.json"),
-        loadJson("/agenda.json"),
-      ]);
-      prompts = pr.prompts || [];
-      programas = pg.programas || [];
-      agenda = ag;
-    } catch (err) {
-      console.error("Error cargando data:", err);
-    }
+    const [pr, pg, ag] = await Promise.allSettled([
+      loadJson("/prompts.json"),
+      loadJson("/programas.json"),
+      loadJson("/agenda.json"),
+    ]);
+    if (pr.status === "fulfilled") prompts = pr.value.prompts || [];
+    else console.error("prompts.json:", pr.reason);
+    if (pg.status === "fulfilled") programas = pg.value.programas || [];
+    else console.error("programas.json:", pg.reason);
+    if (ag.status === "fulfilled") agenda = ag.value;
+    else console.error("agenda.json:", ag.reason);
     try {
       skills = JSON.parse(document.getElementById("skills-data").textContent);
     } catch (e) { console.error(e); }
@@ -50,6 +49,13 @@
     return String(s).replace(/[&<>"']/g, (c) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
     })[c]);
+  }
+
+  function safeUrl(u) {
+    try {
+      const x = new URL(String(u), location.origin);
+      return ["http:", "https:", "mailto:"].includes(x.protocol) ? x.href : "#";
+    } catch { return "#"; }
   }
 
   function renderPromptBody(p) {
@@ -158,8 +164,8 @@
         <p><strong>Costo:</strong> ${escapeHtml(p.costo || "n/d")}</p>
         ${p.setup ? `<p style="font-size:0.8rem"><strong>Setup:</strong> ${escapeHtml(p.setup)}</p>` : ""}
         <div style="margin-top:0.6rem;display:flex;gap:0.4rem;flex-wrap:wrap">
-          <a class="btn" href="${escapeHtml(p.url_web)}" target="_blank" rel="noopener">Abrir</a>
-          ${p.url_cli ? `<a class="btn btn-secondary" href="${escapeHtml(p.url_cli)}" target="_blank" rel="noopener">CLI / docs</a>` : ""}
+          <a class="btn" href="${safeUrl(p.url_web)}" target="_blank" rel="noopener noreferrer">Abrir</a>
+          ${p.url_cli ? `<a class="btn btn-secondary" href="${safeUrl(p.url_cli)}" target="_blank" rel="noopener noreferrer">CLI / docs</a>` : ""}
         </div>
       </div>
     `).join("");
@@ -274,15 +280,48 @@
   }
 
   function setupTabs() {
-    document.querySelectorAll("nav.tabs button").forEach((btn) => {
+    const nav = document.querySelector("nav.tabs");
+    if (nav) nav.setAttribute("role", "tablist");
+
+    const buttons = document.querySelectorAll("nav.tabs button");
+    buttons.forEach((btn) => {
+      btn.setAttribute("role", "tab");
+      const tab = btn.dataset.tab;
+      btn.setAttribute("id", `tab-btn-${tab}`);
+      btn.setAttribute("aria-controls", `tab-${tab}`);
+      btn.setAttribute("aria-selected", btn.classList.contains("active") ? "true" : "false");
+      btn.setAttribute("tabindex", btn.classList.contains("active") ? "0" : "-1");
+
       btn.addEventListener("click", () => {
-        document.querySelectorAll("nav.tabs button").forEach((b) => b.classList.remove("active"));
+        buttons.forEach((b) => {
+          b.classList.remove("active");
+          b.setAttribute("aria-selected", "false");
+          b.setAttribute("tabindex", "-1");
+        });
         btn.classList.add("active");
+        btn.setAttribute("aria-selected", "true");
+        btn.setAttribute("tabindex", "0");
         TABS.forEach((id) => {
-          document.getElementById(`tab-${id}`).classList.toggle("hidden", id !== btn.dataset.tab);
+          const panel = document.getElementById(`tab-${id}`);
+          if (panel) {
+            panel.classList.toggle("hidden", id !== tab);
+            panel.setAttribute("role", "tabpanel");
+            panel.setAttribute("aria-labelledby", `tab-btn-${id}`);
+          }
         });
       });
     });
+
+    // Navegacion con teclado ←/→ en tabs
+    if (nav) {
+      nav.addEventListener("keydown", (e) => {
+        const tabs = [...nav.querySelectorAll('[role="tab"]')];
+        const idx = tabs.indexOf(document.activeElement);
+        if (idx === -1) return;
+        if (e.key === "ArrowRight") { e.preventDefault(); tabs[(idx + 1) % tabs.length].focus(); }
+        if (e.key === "ArrowLeft")  { e.preventDefault(); tabs[(idx - 1 + tabs.length) % tabs.length].focus(); }
+      });
+    }
   }
 
   function populateEtapaFilter(selectId, items) {

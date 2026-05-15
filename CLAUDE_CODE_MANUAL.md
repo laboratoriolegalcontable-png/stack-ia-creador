@@ -1837,5 +1837,111 @@ Haiku 4.5           claude-haiku-4-5-20251001    $1/$5  /MTok        200K
 
 ---
 
+## 25. Novedades v2.1.139 – v2.1.141
+
+Esta seccion documenta las funcionalidades incorporadas en las versiones mas recientes y como aprovecharlas en el ecosistema Diego-Orosa / Stack-IA-Creador.
+
+### 25.1 Agent View — `claude agents`
+
+**Novedad v2.1.139.** El comando `claude agents` abre una vista operacional de todas las sesiones de agentes activas o recientes.
+
+```bash
+claude agents          # Abre Agent View en el terminal
+```
+
+Desde Agent View se puede:
+- Ver que subagentes estan en ejecucion y su estado
+- Navegar entre sesiones paralelas
+- Enviar mensajes a sesiones especificas con `SendMessage`
+- Monitorear output en tiempo real
+
+**Uso en Stack-IA-Creador:** Cuando se generan multiples assets PWA en paralelo o se ejecutan auditorias con subagentes, usar `claude agents` para supervisar sin interrumpir.
+
+### 25.2 Comando `/goal`
+
+**Novedad v2.1.139.** Define una condicion de finalizacion: Claude sigue trabajando hasta que se cumpla el objetivo especificado.
+
+```
+/goal Service Worker actualizado con estrategia cache-first, tests pasando, LCP < 2.5s verificado
+```
+
+Claude no se detiene hasta que:
+1. Los tests pasen (`npm test`)
+2. El build sea exitoso
+3. La funcionalidad este completa segun la descripcion
+
+### 25.3 `continueOnBlock: true` en PostToolUse
+
+**Novedad v2.1.139.** Cuando un hook PostToolUse bloquea una operacion (exit code 2), por defecto Claude se detiene. Con `continueOnBlock: true`, Claude continua la sesion aunque el hook haya bloqueado.
+
+```json
+{
+  "PostToolUse": [{
+    "matcher": "Edit|Write",
+    "hooks": [{
+      "type": "command",
+      "command": "npx prettier --write \"$FILE\" 2>/dev/null || true",
+      "timeout": 15,
+      "continueOnBlock": true
+    }]
+  }]
+}
+```
+
+**Configurado en este proyecto:** Activo. Ver `.claude/settings.json`
+
+### 25.4 Variable de Entorno `CLAUDE_PROJECT_DIR`
+
+**Novedad v2.1.139.** Los servidores MCP stdio y los comandos de hooks pueden usar `$CLAUDE_PROJECT_DIR` para referenciar el directorio raiz del proyecto actual de forma dinamica.
+
+```bash
+# En un hook command:
+command: "cd $CLAUDE_PROJECT_DIR && npx eslint --fix $FILE"
+```
+
+**Uso en Stack-IA-Creador:** Los hooks de Prettier y Jest usan `$CLAUDE_PROJECT_DIR` para garantizar que siempre ejecutan desde la raiz del proyecto.
+
+### 25.5 `subagent_type` en Hook Input de Agentes
+
+**Novedad v2.1.139-140.** El payload de entrada (`HOOK_INPUT`) para hooks que se ejecutan en contexto de agentes ahora incluye el campo `subagent_type`. Permite logica condicional segun el tipo de agente activo.
+
+```bash
+SUBAGENT_TYPE=$(echo $HOOK_INPUT | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('subagent_type',''))" 2>/dev/null)
+```
+
+### 25.6 `args: string[]` para Command Hooks
+
+**Novedad v2.1.139.** Los hooks de tipo `command` ahora aceptan el campo `args` (array de strings) ademas de `command` (string).
+
+```json
+{
+  "type": "command",
+  "command": "node",
+  "args": ["$CLAUDE_PROJECT_DIR/scripts/post-edit-check.js", "--file", "$FILE"],
+  "timeout": 10
+}
+```
+
+### 25.7 Correcciones Importantes v2.1.140
+
+- **ConfigChange hooks no disparaban** — Ahora funcionan correctamente
+- **`disableAllHooks` sin otras configuraciones** — No deshabilitaba si no habia otros hooks. Corregido
+- **Composicion `allowManagedHooksOnly` + `disableAllHooks`** — La jerarquia global -> proyecto -> local ahora se respeta
+- **Variables de entorno en dialogos de permisos** — Los dialogos ahora solo muestran informacion relevante
+- **`/scroll-speed` no funcionaba** — Corregido en v2.1.140
+
+### 25.8 Resumen de Cambios en la Configuracion del Proyecto
+
+| Archivo | Cambio |
+|---------|--------|
+| `~/.claude/settings.json` | `continueOnBlock: true` en PostToolUse hook |
+| `Diego-Orosa/.claude/settings.json` | `continueOnBlock: true` + `$CLAUDE_PROJECT_DIR` en hooks |
+| `stack-ia-creador/.claude/settings.json` | `continueOnBlock: true` + `$CLAUDE_PROJECT_DIR` en hooks |
+| `IMPLEMENTATION_PLAN.md` | Seccion explicita de estrategia de auto-activacion |
+
+---
+
+*Manual generado el 2026-05-14 | Claude Code v2.1.141 | Ecosistema Stack-IA-Creador*
+*Repositorio: laboratoriolegalcontable-png/stack-ia-creador*
 *Manual generado el 2026-05-14 | Claude Code v2.1.141 | Ecosistema Diego-Orosa*
 *Repositorio: laboratoriolegalcontable-png/diego-orosa*

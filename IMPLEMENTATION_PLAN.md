@@ -263,4 +263,81 @@ API_BASE_URL=http://localhost:3000
 
 ---
 
+## Estrategia de Auto-Activacion
+
+Este ecosistema esta disenado para que **todo se active automaticamente sin intervencion manual**. Hay dos mecanismos complementarios:
+
+### Mecanismo 1: Hooks — Activacion Deterministica
+
+Los hooks se ejecutan en respuesta a **eventos del ciclo de vida** de Claude Code. No dependen del modelo ni del LLM: se activan siempre, sin excepcion.
+
+| Evento | Cuando se activa | Uso en este proyecto |
+|--------|-----------------|---------------------|
+| `PreToolUse` | Antes de CADA operacion de herramienta | Proteccion de secretos: bloquea acceso a `.env`, `*.pem`, `*.key` |
+| `PostToolUse` | Despues de CADA Edit o Write | Formateo automatico con Prettier para JS/CSS/HTML |
+| `Stop` | Al terminar cada turno | Verificacion de estado git |
+
+**Garantia:** Los hooks SIEMPRE se ejecutan. No requieren que el usuario diga nada. Son el mecanismo mas confiable de automatizacion.
+
+**Nuevo en v2.1.139:** Con `continueOnBlock: true` en los hooks PostToolUse, si el formateo falla (archivo no soportado), Claude no se interrumpe y continua trabajando sin friccion.
+
+**Nuevo en v2.1.139:** Los hooks pueden usar `$CLAUDE_PROJECT_DIR` para referenciar la raiz del proyecto dinamicamente, eliminando problemas de paths relativos.
+
+### Mecanismo 2: Skills — Activacion Contextual por LLM
+
+Las skills se activan cuando el **LLM reconoce** que el contexto de la conversacion coincide con las frases de activacion del campo `description` de la skill.
+
+**Como funciona:**
+1. El usuario hace una pregunta o da una instruccion
+2. Claude lee el campo `description` de cada skill disponible
+3. Si detecta coincidencia semantica, activa la skill automaticamente
+4. La skill se ejecuta sin que el usuario tenga que escribir `/skill-name`
+
+**Frases de activacion por skill:**
+
+| Skill | Se activa automaticamente cuando... |
+|-------|-------------------------------------|
+| `security-reviewer` | Se revisa codigo de auth, APIs, JWT, validacion de input |
+| `code-reviewer` | Se pide revision de PR, code review, calidad de codigo |
+| `frontend-expert` | Se trabaja con PWA, Service Workers, CSS, accesibilidad |
+| `api-designer` | Se disenan endpoints, rutas REST, comunicacion con backend |
+| `pwa-patterns` | Se trabaja con Service Workers, manifest, offline, Vercel |
+
+**Como optimizar la descripcion para auto-activacion:**
+
+```markdown
+---
+description: >
+  Se activa automaticamente cuando se trabaja con Service Workers,
+  Web App Manifest, estrategias de cache offline, instalacion de PWA,
+  performance de Lighthouse, Vercel deployment, o cuando se menciona
+  "funcionamiento offline", "cache-first", "app instalable".
+---
+```
+
+Cuanto mas especificas sean las frases de activacion en `description`, mas precisa es la auto-activacion.
+
+### Regla de Oro
+
+- **Para automatizacion garantizada** (formateo, proteccion, verificaciones): usar **hooks**
+- **Para conocimiento especializado** (dominio, patrones, arquitectura): usar **skills**
+- **Para tareas complejas de larga duracion**: combinar `/goal` + hooks Stop para verificacion automatica
+
+### Verificacion de la Auto-Activacion
+
+```bash
+# Verificar que los hooks esten configurados
+cat ~/.claude/settings.json | python3 -m json.tool | grep -A5 "hooks"
+
+# Verificar que las skills esten presentes
+ls ~/.claude/skills/
+ls .claude/skills/
+
+# Test de skill auto-activacion:
+# Escribir "el Service Worker no esta cacheando los assets correctamente"
+# La skill pwa-patterns debe activarse sola
+```
+
+---
+
 *Plan generado el 2026-05-14 | Claude Code v2.1.141*
