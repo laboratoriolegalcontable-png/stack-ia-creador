@@ -25,8 +25,12 @@
 .newsletter-banner{background:linear-gradient(135deg,#4a044e,#701a75);border:1px solid #a21caf;border-radius:12px;padding:1.25rem;text-align:center}
 .newsletter-banner h3{color:#f0abfc;margin:0 0 0.4rem;font-size:1rem}
 .newsletter-banner p{color:#e879f9;font-size:0.82rem;margin:0 0 0.8rem}
-.ia-badges{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.4rem;font-size:0.72rem;opacity:0.65}
+.ia-badges{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.4rem;font-size:0.72rem;opacity:0.65;align-items:center}
 #kairos-badge,#coordinator-badge{letter-spacing:0.02em;min-height:1em;color:#6366f1}
+#ctx-viz-btn{background:none;border:1px solid #374151;border-radius:4px;color:#6b7280;cursor:pointer;font-size:0.68rem;padding:0.15rem 0.4rem;transition:border-color 0.2s}
+#ctx-viz-btn:hover{border-color:#6366f1;color:#a5b4fc}
+#dream-btn{background:none;border:1px solid #374151;border-radius:4px;color:#6b7280;cursor:pointer;font-size:0.68rem;padding:0.15rem 0.4rem;transition:border-color 0.2s}
+#dream-btn:hover{border-color:#6366f1;color:#a5b4fc}
 </style>
 <meta name="description" content="8 skills + 10 prompts copy-paste + 9 programas externos para crear contenido con IA. Tool-agnostic." />
 <meta name="theme-color" content="#0a0a0a" />
@@ -55,6 +59,8 @@
   <div class="ia-badges">
     <span id="kairos-badge"></span>
     <span id="coordinator-badge"></span>
+    <button id="ctx-viz-btn" title="Visualizar uso de contexto (/ctx-viz)">/ctx-viz</button>
+    <button id="dream-btn" title="Disparar ciclo KAIROS manualmente (/dream)">/dream</button>
   </div>
 </header>
 
@@ -161,25 +167,25 @@
   import { runDreamCycle, incrementSession } from '/kairos.js';
   import { runCoordinatorCycle } from '/coordinator.js';
   import { attachFrustrationDetection } from '/frustration.js';
+  import { initBuddy } from '/buddy.js';
+  import { toggleCtxViz } from '/ctx-viz.js';
+  import { renderProactiveBanner } from '/proactive.js';
   import { getFlags } from '/flags.js';
 
   const flags = getFlags();
 
-  // KAIROS: registrar sesión y consolidar memoria si corresponde
-  if (flags.KAIROS_ENABLED) {
-    incrementSession();
+  if (flags.KAIROS_ENABLED)        { incrementSession(); runDreamCycle(); }
+  if (flags.COORDINATOR_ENABLED)   { runCoordinatorCycle('Optimización automática del dashboard'); }
+  if (flags.FRUSTRATION_DETECTION) { attachFrustrationDetection(document.body); }
+  if (flags.BUDDY_ENABLED)         { initBuddy(); }
+  if (flags.PROACTIVE_ENABLED)     { renderProactiveBanner(); }
+
+  // Botones /ctx-viz y /dream en el header
+  document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
+  document.getElementById('dream-btn')?.addEventListener('click', () => {
+    localStorage.setItem('kairos:sessions', '5');
     runDreamCycle();
-  }
-
-  // Coordinator: optimizar estado del dashboard
-  if (flags.COORDINATOR_ENABLED) {
-    runCoordinatorCycle('Optimización automática del dashboard');
-  }
-
-  // Frustration detection en inputs de búsqueda
-  if (flags.FRUSTRATION_DETECTION) {
-    attachFrustrationDetection(document.body);
-  }
+  });
 </script>
 </body>
 </html>
