@@ -25,7 +25,8 @@
 .newsletter-banner{background:linear-gradient(135deg,#4a044e,#701a75);border:1px solid #a21caf;border-radius:12px;padding:1.25rem;text-align:center}
 .newsletter-banner h3{color:#f0abfc;margin:0 0 0.4rem;font-size:1rem}
 .newsletter-banner p{color:#e879f9;font-size:0.82rem;margin:0 0 0.8rem}
-#kairos-badge{font-size:0.72rem;color:#6366f1;opacity:0.7;margin-top:0.35rem;letter-spacing:0.02em;min-height:1em}
+.ia-badges{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.4rem;font-size:0.72rem;opacity:0.65}
+#kairos-badge,#coordinator-badge{letter-spacing:0.02em;min-height:1em;color:#6366f1}
 </style>
 <meta name="description" content="8 skills + 10 prompts copy-paste + 9 programas externos para crear contenido con IA. Tool-agnostic." />
 <meta name="theme-color" content="#0a0a0a" />
@@ -51,7 +52,10 @@
   <div style="margin-top:1rem">
     <a href="/newsletter.html" style="display:inline-block;padding:0.5rem 1.25rem;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">Newsletter IA &rarr;</a>
   </div>
-  <div id="kairos-badge"></div>
+  <div class="ia-badges">
+    <span id="kairos-badge"></span>
+    <span id="coordinator-badge"></span>
+  </div>
 </header>
 
 <nav class="tabs" role="tablist">
@@ -155,13 +159,24 @@
 <script src="/app.js"></script>
 <script type="module">
   import { runDreamCycle, incrementSession } from '/kairos.js';
+  import { runCoordinatorCycle } from '/coordinator.js';
   import { attachFrustrationDetection } from '/frustration.js';
   import { getFlags } from '/flags.js';
 
-  incrementSession();
-  runDreamCycle();
-
   const flags = getFlags();
+
+  // KAIROS: registrar sesión y consolidar memoria si corresponde
+  if (flags.KAIROS_ENABLED) {
+    incrementSession();
+    runDreamCycle();
+  }
+
+  // Coordinator: optimizar estado del dashboard
+  if (flags.COORDINATOR_ENABLED) {
+    runCoordinatorCycle('Optimización automática del dashboard');
+  }
+
+  // Frustration detection en inputs de búsqueda
   if (flags.FRUSTRATION_DETECTION) {
     attachFrustrationDetection(document.body);
   }

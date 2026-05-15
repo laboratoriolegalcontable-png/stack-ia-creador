@@ -1,15 +1,20 @@
 /**
- * Sistema de feature flags para KAIROS.
- * Los flags se leen/escriben en localStorage.
+ * Feature flags para KAIROS + Coordinator Mode.
+ * Se leen y escriben en localStorage.
  *
- * @typedef {{ KAIROS_ENABLED: boolean, DREAM_CYCLE_ENABLED: boolean, FRUSTRATION_DETECTION: boolean }} Flags
+ * @typedef {{ KAIROS_ENABLED: boolean, DREAM_CYCLE_ENABLED: boolean, FRUSTRATION_DETECTION: boolean, COORDINATOR_ENABLED: boolean }} Flags
  */
 
 const FLAGS_KEY = 'kairos:flags';
 
 /** @returns {Flags} */
 function defaultFlags() {
-  return { KAIROS_ENABLED: true, DREAM_CYCLE_ENABLED: true, FRUSTRATION_DETECTION: true };
+  return {
+    KAIROS_ENABLED: true,
+    DREAM_CYCLE_ENABLED: true,
+    FRUSTRATION_DETECTION: true,
+    COORDINATOR_ENABLED: true,
+  };
 }
 
 /** @returns {Flags} */
