@@ -25,12 +25,10 @@
 .newsletter-banner{background:linear-gradient(135deg,#4a044e,#701a75);border:1px solid #a21caf;border-radius:12px;padding:1.25rem;text-align:center}
 .newsletter-banner h3{color:#f0abfc;margin:0 0 0.4rem;font-size:1rem}
 .newsletter-banner p{color:#e879f9;font-size:0.82rem;margin:0 0 0.8rem}
-.ia-badges{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.4rem;font-size:0.72rem;opacity:0.65;align-items:center}
+.ia-badges{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.4rem;font-size:0.72rem;opacity:0.65;align-items:center}
 #kairos-badge,#coordinator-badge{letter-spacing:0.02em;min-height:1em;color:#6366f1}
-#ctx-viz-btn{background:none;border:1px solid #374151;border-radius:4px;color:#6b7280;cursor:pointer;font-size:0.68rem;padding:0.15rem 0.4rem;transition:border-color 0.2s}
-#ctx-viz-btn:hover{border-color:#6366f1;color:#a5b4fc}
-#dream-btn{background:none;border:1px solid #374151;border-radius:4px;color:#6b7280;cursor:pointer;font-size:0.68rem;padding:0.15rem 0.4rem;transition:border-color 0.2s}
-#dream-btn:hover{border-color:#6366f1;color:#a5b4fc}
+.ia-cmd{background:none;border:1px solid #374151;border-radius:4px;color:#6b7280;cursor:pointer;font-size:0.68rem;padding:0.15rem 0.4rem;transition:border-color 0.2s}
+.ia-cmd:hover{border-color:#6366f1;color:#a5b4fc}
 </style>
 <meta name="description" content="8 skills + 10 prompts copy-paste + 9 programas externos para crear contenido con IA. Tool-agnostic." />
 <meta name="theme-color" content="#0a0a0a" />
@@ -59,8 +57,11 @@
   <div class="ia-badges">
     <span id="kairos-badge"></span>
     <span id="coordinator-badge"></span>
-    <button id="ctx-viz-btn" title="Visualizar uso de contexto (/ctx-viz)">/ctx-viz</button>
-    <button id="dream-btn" title="Disparar ciclo KAIROS manualmente (/dream)">/dream</button>
+    <button class="ia-cmd" id="ctx-viz-btn"  title="/ctx-viz">/ctx-viz</button>
+    <button class="ia-cmd" id="dream-btn"    title="/dream">/dream</button>
+    <button class="ia-cmd" id="stats-btn"    title="/stats">/stats</button>
+    <button class="ia-cmd" id="gc-btn"       title="/gc">/gc</button>
+    <button class="ia-cmd" id="plan-btn"     title="/plan">/plan</button>
   </div>
 </header>
 
@@ -150,7 +151,7 @@
 </section>
 
 <footer>
-  <div>Stack IA Creador v1.2 &middot; Skills auto-activos en Claude Code &middot; Prompts tool-agnostic.</div>
+  <div>Stack IA Creador v1.3 &middot; Skills auto-activos en Claude Code &middot; Prompts tool-agnostic.</div>
   <div style="margin-top:0.4rem">
     <a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> &middot; Hecho para creadores que viven de su contenido.
   </div>
@@ -165,12 +166,16 @@
 <script src="/app.js"></script>
 <script type="module">
   import { runDreamCycle, incrementSession } from '/kairos.js';
-  import { runCoordinatorCycle } from '/coordinator.js';
-  import { attachFrustrationDetection } from '/frustration.js';
-  import { initBuddy } from '/buddy.js';
-  import { toggleCtxViz } from '/ctx-viz.js';
-  import { renderProactiveBanner } from '/proactive.js';
-  import { getFlags } from '/flags.js';
+  import { runCoordinatorCycle }             from '/coordinator.js';
+  import { attachFrustrationDetection }      from '/frustration.js';
+  import { initBuddy }                       from '/buddy.js';
+  import { toggleCtxViz }                    from '/ctx-viz.js';
+  import { renderProactiveBanner }           from '/proactive.js';
+  import { initBridge, sendBridgeCommand }   from '/bridge.js';
+  import { createUltraPlan }                 from '/ultraplan.js';
+  import { initTokenBudget }                 from '/token-budget.js';
+  import { renderStats }                     from '/stats.js';
+  import { getFlags }                        from '/flags.js';
 
   const flags = getFlags();
 
@@ -179,12 +184,36 @@
   if (flags.FRUSTRATION_DETECTION) { attachFrustrationDetection(document.body); }
   if (flags.BUDDY_ENABLED)         { initBuddy(); }
   if (flags.PROACTIVE_ENABLED)     { renderProactiveBanner(); }
+  if (flags.BRIDGE_ENABLED)        { initBridge(); }
+  if (flags.TOKEN_BUDGET_ENABLED)  { initTokenBudget(); }
 
-  // Botones /ctx-viz y /dream en el header
+  // /ctx-viz
   document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
+
+  // /dream — fuerza ciclo KAIROS
   document.getElementById('dream-btn')?.addEventListener('click', () => {
     localStorage.setItem('kairos:sessions', '5');
     runDreamCycle();
+  });
+
+  // /stats — panel de métricas completo
+  document.getElementById('stats-btn')?.addEventListener('click', renderStats);
+
+  // /gc — limpieza de claves huérfanas
+  document.getElementById('gc-btn')?.addEventListener('click', () => {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith('kairos:event:'));
+    keys.forEach(k => localStorage.removeItem(k));
+    localStorage.setItem('kairos:sessions', '0');
+    if (flags.BRIDGE_ENABLED) sendBridgeCommand('gc');
+    const btn = document.getElementById('gc-btn');
+    if (btn) { btn.textContent = `✅ ${keys.length} borradas`; setTimeout(() => { btn.textContent = '/gc'; }, 3000); }
+  });
+
+  // /plan — crear ULTRAPLAN
+  document.getElementById('plan-btn')?.addEventListener('click', () => {
+    if (!flags.ULTRAPLAN_ENABLED) return;
+    const goal = prompt('¿Cuál es tu objetivo para ULTRAPLAN?');
+    if (goal?.trim()) createUltraPlan(goal.trim());
   });
 </script>
 </body>
