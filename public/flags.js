@@ -1,22 +1,10 @@
 /**
  * Feature flags para todos los módulos KAIROS.
- *
- * @typedef {{
- *   KAIROS_ENABLED: boolean,
- *   DREAM_CYCLE_ENABLED: boolean,
- *   FRUSTRATION_DETECTION: boolean,
- *   COORDINATOR_ENABLED: boolean,
- *   BUDDY_ENABLED: boolean,
- *   PROACTIVE_ENABLED: boolean,
- *   BRIDGE_ENABLED: boolean,
- *   ULTRAPLAN_ENABLED: boolean,
- *   TOKEN_BUDGET_ENABLED: boolean,
- * }} Flags
+ * @module flags
  */
 
 const FLAGS_KEY = 'kairos:flags';
 
-/** @returns {Flags} */
 function defaultFlags() {
   return {
     KAIROS_ENABLED:        true,
@@ -28,10 +16,13 @@ function defaultFlags() {
     BRIDGE_ENABLED:        true,
     ULTRAPLAN_ENABLED:     true,
     TOKEN_BUDGET_ENABLED:  true,
+    NOTIFICATIONS_ENABLED: true,
+    COST_BADGE_ENABLED:    true,
+    EXPORT_ENABLED:        true,
+    TIMELINE_ENABLED:      true,
   };
 }
 
-/** @returns {Flags} */
 export function getFlags() {
   try {
     const stored = localStorage.getItem(FLAGS_KEY);
@@ -40,7 +31,6 @@ export function getFlags() {
   return defaultFlags();
 }
 
-/** @param {Partial<Flags>} overrides */
 export function setFlags(overrides) {
   try {
     localStorage.setItem(FLAGS_KEY, JSON.stringify({ ...getFlags(), ...overrides }));
