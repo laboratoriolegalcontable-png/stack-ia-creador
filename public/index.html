@@ -26,6 +26,7 @@
 .ia-meta{color:#6366f1;min-height:1em;letter-spacing:0.02em}
 .ia-cmd{background:none;border:1px solid #374151;border-radius:4px;color:#6b7280;cursor:pointer;font-size:0.68rem;padding:0.15rem 0.4rem;transition:border-color 0.2s}
 .ia-cmd:hover{border-color:#6366f1;color:#a5b4fc}
+.header-nav{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1rem;align-items:center}
 @keyframes slideInRight{from{transform:translateX(100%)}to{transform:translateX(0)}}
 @keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 </style>
@@ -47,8 +48,10 @@
   <h1>Stack IA Creador</h1>
   <div class="subtitle">8 skills + 10 prompts copy-paste + 9 programas externos. Tool-agnostic.</div>
   <div class="meta">Pegalos en Claude, ChatGPT, Gemini, Perplexity. Funciona offline.</div>
-  <div style="margin-top:1rem">
+  <div class="header-nav">
     <a href="/newsletter.html" style="display:inline-block;padding:0.5rem 1.25rem;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">Newsletter IA &rarr;</a>
+    <a href="/dashboard.html" style="display:inline-block;padding:0.5rem 1.25rem;background:linear-gradient(135deg,#1d4ed8,#4338ca);color:#fff;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">Dashboard &rarr;</a>
+    <a href="/crm.html" style="display:inline-block;padding:0.5rem 1.25rem;background:linear-gradient(135deg,#047857,#059669);color:#fff;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">CRM Leads &rarr;</a>
   </div>
   <div class="ia-badges">
     <span id="mood-badge"        class="ia-meta"></span>
@@ -97,11 +100,11 @@
   <div class="newsletter-banner"><h3>&#x1F4E9; Newsletter de IA</h3><p>Las mejores herramientas cada semana.</p><a class="escudo-cta" href="/newsletter.html">Suscribirme gratis</a></div>
 </section>
 <footer>
-  <div>Stack IA Creador v1.7 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
+  <div>Stack IA Creador v1.8 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
   <div style="margin-top:0.4rem"><a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> &middot; Para creadores que viven de su contenido.</div>
-  <div style="margin-top:0.4rem"><a href="/newsletter.html">Newsletter de IA</a> &middot; <a href="https://deploy-oro.vercel.app/escudo">Escudo Patrimonial</a></div>
+  <div style="margin-top:0.4rem"><a href="/newsletter.html">Newsletter de IA</a> &middot; <a href="/dashboard.html">Dashboard</a> &middot; <a href="/crm.html">CRM</a> &middot; <a href="https://deploy-oro.vercel.app/escudo">Escudo Patrimonial</a></div>
 </footer>
-<script type="application/json" id="skills-data">[{"name":"stack-schedule","etapa":"meta","desc":"Agenda editorial automatica.","triggers":["agenda semana","/schedule"],"prompts":[],"active":true},{"name":"stack-ia-creador","etapa":"meta","desc":"Orquestador del stack.","triggers":["stack ia","/stack"],"prompts":[],"active":true},{"name":"stack-claude-guion","etapa":"01-guion","desc":"Guion humanizado de Reel.","triggers":["guion reel","/guion"],"prompts":["01-guion-humanizado","01-banco-10-ideas"],"active":true},{"name":"stack-imagen","etapa":"02-imagen","desc":"Prompts Nano Banana Pro.","triggers":["prompt nano banana","/imagen"],"prompts":["02-3-variantes-nano-banana"],"active":true},{"name":"stack-video","etapa":"03-video","desc":"Shot list Veo 3.1.","triggers":["shot list","/video"],"prompts":["03-shot-list-ruteado"],"active":true},{"name":"stack-voz","etapa":"04-voz","desc":"Voz ElevenLabs.","triggers":["prompt elevenlabs","/voz"],"prompts":["04-3-variantes-direccion-voz"],"active":true},{"name":"stack-avatar","etapa":"05-avatar","desc":"HeyGen + Higgsfield.","triggers":["guion heygen","/avatar"],"prompts":["05-script-doctor-heygen"],"active":true},{"name":"stack-manychat","etapa":"06-dms","desc":"Flow ManyChat completo.","triggers":["flow manychat","/dm"],"prompts":["06-flow-manychat-completo"],"active":true},{"name":"stack-master-prompt","etapa":"07-master","desc":"El prompt que escribe los demas.","triggers":["master prompt","/master"],"prompts":["07-template-master-prompt"],"active":true}]</script>
+<script type="application/json" id="skills-data">[{"name":"stack-schedule","etapa":"meta","desc":"Agenda editorial automatica.","triggers":["agenda semana","/schedule"],"prompts":[],"active":true},{"name":"stack-ia-creador","etapa":"meta","desc":"Orquestador del stack.","triggers":["stack ia","/stack"],"prompts":[],"active":true},{"name":"stack-claude-guion","etapa":"01-guion","desc":"Guion humanizado de Reel.","triggers":["guion reel","/guion"],"prompts":["01-guion-humanizado","01-banco-10-ideas"],"active":true},{"name":"stack-imagen","etapa":"02-imagen","desc":"Prompts Nano Banana Pro.","triggers":["prompt nano banana","/imagen"],"prompts":["02-3-variantes-nano-banana"],"active":true},{"name":"stack-video","etapa":"03-video","desc":"Shot list Veo 3.1.","triggers":["shot list","/video"],"prompts":["03-shot-list-ruteado"],"active":true},{"name":"stack-voz","etapa":"04-voz","desc":"Voz ElevenLabs.","triggers":["prompt elevenlabs","/voz"],"prompts":["04-3-variantes-direccion-voz"],"active":true},{"name":"stack-avatar","etapa":"05-avatar","desc":"HeyGen + Higgsfield.","triggers":["guion heygen","/avatar"],"prompts":["05-script-doctor-heygen"],"active":true},{"name":"stack-manychat","etapa":"06-dms","desc":"Flow ManyChat completo.","triggers":["flow manychat","/dm"],"prompts":["06-flow-manychat-completo"],"active":true},{"name":"stack-master-prompt","etapa":"07-master","desc":"El prompt que escribe los demas.","triggers":["master prompt","/master"],"prompts":["07-template-master-prompt"],"active":true},{"name":"prompt-master","etapa":"meta","desc":"Afila prompts: 9 dimensiones, 10 pilares Anthropic, 35 anti-patrones. /prompt-master","triggers":["prompt master","/prompt-master","afila prompt","mejora prompt","audita prompt"],"prompts":[],"active":true}]</script>
 <script src="/app.js"></script>
 <script type="module">
   import { runDreamCycle, incrementSession }              from '/kairos.js';
@@ -153,13 +156,9 @@
   if (flags.CONTEXT_COMPRESSOR_ENABLED) { setTimeout(() => compressKairosMemory(), 5000); }
   if (flags.AUTO_TAGGER_ENABLED)        { tagSession(document.title + ' ' + location.href); }
 
-  // Analizar patrones en cada carga
   analyzeText(document.title + ' ' + location.href);
-
-  // Generar insights al inicio
   generateInsights();
 
-  // Registrar hotkeys
   registerHotkey('ctrl+d', '/dream',    () => { localStorage.setItem('kairos:sessions','5'); runDreamCycle().then(() => { notify('KAIROS completado','4 fases ejecutadas','kairos'); trackUsage('dream'); }); });
   registerHotkey('ctrl+g', '/gc',       () => document.getElementById('gc-btn')?.click());
   registerHotkey('ctrl+s', '/stats',    () => { renderStats(); trackUsage('stats'); });
@@ -170,7 +169,6 @@
   registerHotkey('ctrl+o', '/goals',    () => { renderGoalPanel(); trackUsage('goals'); });
   registerHotkey('ctrl+?', 'hotkeys',   () => showHotkeysHelp());
 
-  // Botones existentes
   document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
   document.getElementById('dream-btn')?.addEventListener('click', () => {
     localStorage.setItem('kairos:sessions','5');
@@ -202,7 +200,6 @@
     const btn = document.getElementById('compress-btn');
     if (btn) { btn.textContent = `✅ ${Math.round(saved/1024)}KB`; setTimeout(() => { btn.textContent = '/compress'; }, 3000); }
   });
-  // Botones nuevos
   document.getElementById('goals-btn')?.addEventListener('click',       () => { renderGoalPanel(); trackUsage('goals'); });
   document.getElementById('insights-btn')?.addEventListener('click',    () => { renderInsightPanel(); trackUsage('insights'); });
   document.getElementById('timemachine-btn')?.addEventListener('click', () => { renderTimeMachine(); trackUsage('time-machine'); });
