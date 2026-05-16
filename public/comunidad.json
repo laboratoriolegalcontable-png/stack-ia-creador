@@ -1,0 +1,319 @@
+{
+  "version": "2026-05-16",
+  "total": 274,
+  "instalados": 53,
+  "nuevos_esta_sesion": 5,
+  "fuente": "boveda comunidad tododeia",
+  "categorias": [
+    {
+      "id": "memoria",
+      "nombre": "Memoria y Aprendizaje",
+      "emoji": "🧠",
+      "items": [
+        {
+          "id": "aprende",
+          "nombre": "aprende",
+          "tipo": "skill",
+          "estado": "nuevo",
+          "descripcion": "Sistema de memoria persistente entre sesiones usando patron Reflexion (Shinn et al. 2023). 5 fases + confirmacion obligatoria.",
+          "repo": "Hainrixz/aprende-skill",
+          "install": "npx skills@latest add Hainrixz/aprende-skill",
+          "prioridad": "alta",
+          "tags": ["memoria", "reflexion", "sesiones", "aprendizaje"]
+        },
+        {
+          "id": "mempalace",
+          "nombre": "MemPalace",
+          "tipo": "skill+mcp",
+          "estado": "nuevo",
+          "descripcion": "CLI 100% local para memoria persistente. 96.6% R@5 en LongMemEval. Control total sobre cuando guarda y cuando busca.",
+          "repo": "mempalace/mempalace",
+          "install": "uv tool install mempalace",
+          "prioridad": "alta",
+          "tags": ["memoria", "local", "privacidad", "persistencia"]
+        },
+        {
+          "id": "claude-mem",
+          "nombre": "Claude-Mem",
+          "tipo": "plugin",
+          "estado": "disponible",
+          "descripcion": "Plugin que captura observaciones por hooks con dashboard local en localhost:37777 y storage SQLite.",
+          "repo": "thedotmack/claude-mem",
+          "install": "npx claude-mem install",
+          "prioridad": "media",
+          "tags": ["memoria", "automatico", "dashboard", "sqlite"]
+        },
+        {
+          "id": "gbrain",
+          "nombre": "GBrain",
+          "tipo": "repo",
+          "estado": "disponible",
+          "descripcion": "Sistema de memoria persistente de proyecto — segundo cerebro con estructura profesional.",
+          "repo": "garrytan/gbrain",
+          "install": "git clone https://github.com/garrytan/gbrain",
+          "prioridad": "media",
+          "tags": ["memoria", "proyecto", "segundo-cerebro"]
+        }
+      ]
+    },
+    {
+      "id": "skills-nuevas",
+      "nombre": "Skills Nuevas — Alta Prioridad",
+      "emoji": "⚡",
+      "items": [
+        {
+          "id": "agency-agents",
+          "nombre": "Agency Agents",
+          "tipo": "skill",
+          "estado": "nuevo",
+          "descripcion": "144 sub-agentes especializados en 14 divisiones: Marketing, Engineering, Design, Sales, Product, Finance, Legal, Support, PM, Testing, Game Dev, Paid Media, Academic, Spatial.",
+          "repo": "msitarzewski/agency-agents",
+          "install": "npx skills@latest add msitarzewski/agency-agents",
+          "prioridad": "alta",
+          "tags": ["agentes", "especialistas", "equipo", "divisiones"]
+        },
+        {
+          "id": "graphify",
+          "nombre": "Graphify",
+          "tipo": "skill",
+          "estado": "nuevo",
+          "descripcion": "Convierte cualquier carpeta en grafo de conocimiento. 71.5x menos tokens en preguntas de arquitectura. 25 lenguajes.",
+          "repo": "safishamsi/graphify",
+          "install": "pip install graphify-ai",
+          "prioridad": "alta",
+          "tags": ["arquitectura", "grafo", "codigo", "tokens"]
+        },
+        {
+          "id": "community-discovery",
+          "nombre": "Community Discovery",
+          "tipo": "skill",
+          "estado": "nuevo",
+          "descripcion": "Meta-skill para descubrir e instalar proyectos de la boveda tododeia. Detecta gaps y genera comandos de instalacion.",
+          "repo": "laboratoriolegalcontable-png/diego-orosa",
+          "install": "ya instalado en .claude/skills/community-discovery/",
+          "prioridad": "alta",
+          "tags": ["meta", "descubrimiento", "instalacion", "catalogo"]
+        },
+        {
+          "id": "matt-pocock",
+          "nombre": "Matt Pocock Skills",
+          "tipo": "skill",
+          "estado": "disponible",
+          "descripcion": "16 skills de ingenieria real: Grill Me (interroga antes de codear), Caveman (respuestas cortas -75% tokens), Diagnose (debug paso a paso), TDD y mas.",
+          "repo": "mattpocock/skills",
+          "install": "npx skills@latest add mattpocock/skills",
+          "prioridad": "alta",
+          "tags": ["ingenieria", "debug", "tokens", "tdd"]
+        },
+        {
+          "id": "agent-browser",
+          "nombre": "Agent Browser",
+          "tipo": "skill",
+          "estado": "disponible",
+          "descripcion": "Navegador de Vercel Labs para Claude Code. Reduce hasta 10x el costo en tokens al navegar internet con menu numerado.",
+          "repo": "vercel-labs/agent-browser",
+          "install": "npx skills@latest add vercel-labs/agent-browser",
+          "prioridad": "alta",
+          "tags": ["navegacion", "web", "tokens", "browser"]
+        },
+        {
+          "id": "browser-harness",
+          "nombre": "Browser Harness",
+          "tipo": "skill",
+          "estado": "disponible",
+          "descripcion": "Skill que abre Chrome real, ejecuta tareas web y guarda lo aprendido como skill por sitio. Catálogo de 95+ sitios pre-escritos.",
+          "repo": "browser-use/browser-harness",
+          "install": "npx skills@latest add browser-use/browser-harness",
+          "prioridad": "alta",
+          "tags": ["chrome", "automatizacion", "web", "aprendizaje"]
+        },
+        {
+          "id": "g-stack",
+          "nombre": "G-Stack",
+          "tipo": "skill",
+          "estado": "disponible",
+          "descripcion": "31 skills de desarrollo que piensan, disenan, testean y publican tu proyecto completo.",
+          "repo": "garrytan/gstack",
+          "install": "npx skills@latest add garrytan/gstack",
+          "prioridad": "media",
+          "tags": ["desarrollo", "stack", "31-skills", "completo"]
+        },
+        {
+          "id": "open-design",
+          "nombre": "Open Design",
+          "tipo": "skill",
+          "estado": "disponible",
+          "descripcion": "Alternativa open-source a Claude Design. 71 estilos de marca (Linear, Stripe, Apple, Tesla...) + 19 skills de diseno.",
+          "repo": "nexu-io/open-design",
+          "install": "npx skills@latest add nexu-io/open-design",
+          "prioridad": "media",
+          "tags": ["diseno", "estilos", "marca", "open-source"]
+        },
+        {
+          "id": "context-mode",
+          "nombre": "Context Mode",
+          "tipo": "skill",
+          "estado": "disponible",
+          "descripcion": "Aplasta el contexto innecesario del chat para que la sesion dure 3 horas en lugar de 30 minutos. 56 KB a 299 bytes.",
+          "repo": "mksglu/context-mode",
+          "install": "npx skills@latest add mksglu/context-mode",
+          "prioridad": "media",
+          "tags": ["contexto", "tokens", "sesion", "optimizacion"]
+        }
+      ]
+    },
+    {
+      "id": "mcp-servers",
+      "nombre": "MCP Servers Disponibles",
+      "emoji": "🔌",
+      "items": [
+        {
+          "id": "n8n-mcp",
+          "nombre": "n8n MCP",
+          "tipo": "mcp",
+          "estado": "disponible",
+          "descripcion": "Conecta Claude a n8n con 1505 nodos de automatizacion. Arma agentes de WhatsApp, emails y webhooks sin codigo.",
+          "repo": "czlonkowski/n8n-mcp",
+          "install": "Ver guia n8n MCP en boveda",
+          "prioridad": "alta",
+          "tags": ["automatizacion", "n8n", "whatsapp", "webhooks"]
+        },
+        {
+          "id": "context7",
+          "nombre": "Context7 MCP",
+          "tipo": "mcp",
+          "estado": "disponible",
+          "descripcion": "Docs siempre actualizadas de cualquier libreria. Claude trae la documentacion al dia antes de responder.",
+          "repo": "upstash/context7",
+          "install": "Ver docs context7",
+          "prioridad": "alta",
+          "tags": ["docs", "actualizadas", "libreria", "desarrollo"]
+        },
+        {
+          "id": "excel-mcp",
+          "nombre": "Excel MCP",
+          "tipo": "mcp",
+          "estado": "disponible",
+          "descripcion": "Da a Claude acceso completo a archivos Excel — lee y edita celdas, hojas y formulas.",
+          "repo": "haris-musa/excel-mcp-server",
+          "install": "Ver docs excel-mcp",
+          "prioridad": "media",
+          "tags": ["excel", "datos", "hojas", "formulas"]
+        },
+        {
+          "id": "blender-mcp",
+          "nombre": "Blender MCP",
+          "tipo": "mcp",
+          "estado": "disponible",
+          "descripcion": "Conecta Blender con Claude para modelado 3D usando lenguaje natural.",
+          "repo": "ahujasid/blender-mcp",
+          "install": "Clone repo + seguir guia",
+          "prioridad": "baja",
+          "tags": ["3d", "blender", "modelado", "visual"]
+        }
+      ]
+    },
+    {
+      "id": "diseno-frontend",
+      "nombre": "Diseño y Frontend",
+      "emoji": "🎨",
+      "items": [
+        {
+          "id": "cult-ui",
+          "nombre": "Cult UI",
+          "tipo": "repo",
+          "estado": "disponible",
+          "descripcion": "75 componentes premium para shadcn con animaciones tipo Silicon Valley. Texto animado, botones brillantes, dynamic island, hero liquido metalico.",
+          "repo": "nolly-studio/cult-ui",
+          "install": "Ver guia Cult UI en boveda",
+          "prioridad": "media",
+          "tags": ["componentes", "shadcn", "animaciones", "premium"]
+        },
+        {
+          "id": "awesome-design-md",
+          "nombre": "Awesome Design MD",
+          "tipo": "repo",
+          "estado": "disponible",
+          "descripcion": "55 archivos DESIGN.md de marcas famosas (Linear, Stripe, Vercel, Apple...). Copia uno y Claude diseña con ese estilo.",
+          "repo": "VoltAgent/awesome-design-md",
+          "install": "git clone https://github.com/VoltAgent/awesome-design-md",
+          "prioridad": "media",
+          "tags": ["diseno", "marca", "estilos", "design-md"]
+        }
+      ]
+    },
+    {
+      "id": "skills-instaladas",
+      "nombre": "Skills Ya Instaladas (53+)",
+      "emoji": "✅",
+      "items": [
+        { "id": "scrapling", "nombre": "Scrapling", "tipo": "skill", "estado": "instalado", "comando": "/scrapling", "descripcion": "Fabrica de leads con 16 habilidades de sabueso para 5 nichos" },
+        { "id": "higgsfield-mcp", "nombre": "Higgsfield MCP", "tipo": "skill", "estado": "instalado", "comando": "/higgsfield", "descripcion": "Video cinematografico Seedance 2.0 + imagen GPT Images" },
+        { "id": "orosa-jarvis", "nombre": "Orosa JARVIS", "tipo": "skill", "estado": "instalado", "comando": "/orosa-jarvis", "descripcion": "Copiloto maestro del Dr. Diego Orosa — 16 comandos" },
+        { "id": "arquitecto-prompts", "nombre": "Arquitecto de Prompts", "tipo": "skill", "estado": "instalado", "comando": "/arquitecto-prompts", "descripcion": "Sistema multi-agente de 9 subagentes para el prompt perfecto" },
+        { "id": "restore-blurry-photos", "nombre": "Restore Blurry Photos", "tipo": "skill", "estado": "instalado", "comando": "/foto-hd", "descripcion": "12 superpoderes fotograficos — Express, Pro, Batch, Forense" },
+        { "id": "markitdown", "nombre": "MarkItDown", "tipo": "skill", "estado": "instalado", "comando": "automatico", "descripcion": "Convierte PDF, Word, Excel, PowerPoint a Markdown — ahorra 90% tokens" },
+        { "id": "orchestration", "nombre": "Orchestration", "tipo": "skill", "estado": "instalado", "comando": "/orchestration", "descripcion": "28+ orquestadores especializados con generacion dinamica de skills" },
+        { "id": "maia-skill", "nombre": "MAIA", "tipo": "skill", "estado": "instalado", "comando": "/maia", "descripcion": "Multi-agente de analisis de inversion — cripto, acciones, forex, commodities" }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "total_catalogado": 274,
+    "skills_instaladas": 53,
+    "skills_nuevas": 5,
+    "skills_disponibles": 47,
+    "mcp_activos": 3,
+    "mcp_disponibles": 9,
+    "agentes_activos": 5,
+    "agentes_disponibles": 144,
+    "top_prioridad": [
+      "aprende",
+      "agency-agents",
+      "matt-pocock",
+      "graphify",
+      "mempalace",
+      "agent-browser",
+      "browser-harness",
+      "gstack",
+      "open-design",
+      "context7"
+    ]
+  },
+  "proximos_pasos": [
+    {
+      "semana": 1,
+      "titulo": "Memoria y Aprendizaje",
+      "comandos": [
+        "npx skills@latest add Hainrixz/aprende-skill",
+        "uv tool install mempalace",
+        "mempalace init --with-hook --wing estudio-oro"
+      ]
+    },
+    {
+      "semana": 2,
+      "titulo": "Ampliar Equipo de Agentes",
+      "comandos": [
+        "npx skills@latest add msitarzewski/agency-agents",
+        "npx skills@latest add mattpocock/skills"
+      ]
+    },
+    {
+      "semana": 3,
+      "titulo": "Diseno y Arquitectura",
+      "comandos": [
+        "pip install graphify-ai",
+        "npx skills@latest add nexu-io/open-design"
+      ]
+    },
+    {
+      "semana": 4,
+      "titulo": "Navegacion y Automatizacion",
+      "comandos": [
+        "npx skills@latest add vercel-labs/agent-browser",
+        "npx skills@latest add browser-use/browser-harness",
+        "npx skills@latest add garrytan/gstack"
+      ]
+    }
+  ]
+}
