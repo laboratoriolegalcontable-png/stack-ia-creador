@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>CRM — Estudio Oro</title>
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" href="/icon-192.png" sizes="192x192" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.crm-stats{display:flex;gap:0.625rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.stat-pill{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:0.5rem 0.875rem;text-align:center;flex:1;min-width:90px}
+.stat-pill .num{font-size:1.4rem;font-weight:800;line-height:1}
+.stat-pill .lbl{font-size:0.7rem;color:var(--muted);margin-top:0.15rem}
+.crm-toolbar{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.crm-toolbar input,.crm-toolbar select{padding:0.5rem 0.75rem;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.88rem;background:white;color:#1a1a1a;min-height:44px}
+.crm-toolbar input{flex:1;min-width:160px}
+.kanban{display:flex;gap:0.625rem;overflow-x:auto;padding-bottom:1rem;-webkit-overflow-scrolling:touch}
+.kanban-col{min-width:210px;flex-shrink:0;background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:0.75rem}
+.col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
+.col-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+.col-badge{font-size:0.65rem;font-weight:700;background:var(--border);border-radius:999px;padding:0.1rem 0.45rem;color:var(--muted)}
+.lead-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.7rem;margin-bottom:0.5rem;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+.lead-card:hover{border-color:#6366f1;box-shadow:0 0 0 2px rgba(99,102,241,0.1)}
+.lead-name{font-size:0.88rem;font-weight:600;margin-bottom:0.2rem}
+.lead-biz{font-size:0.7rem;color:var(--muted);margin-bottom:0.3rem;display:flex;align-items:center;gap:0.25rem}
+.biz-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+.biz-dot.abogacia{background:#6366f1}.biz-dot.inmobiliaria{background:#16a34a}.biz-dot.ia{background:#f59e0b}
+.lead-foot{display:flex;justify-content:space-between;align-items:center;margin-top:0.35rem}
+.lead-source{font-size:0.63rem;padding:0.1rem 0.4rem;background:var(--code-bg);border-radius:4px;color:var(--muted)}
+.lead-date{font-size:0.63rem;color:var(--muted)}
+.col-nuevo .col-title{color:#6366f1}
+.col-contactado .col-title{color:#0ea5e9}
+.col-calificado .col-title{color:#f59e0b}
+.col-propuesta .col-title{color:#8b5cf6}
+.col-ganado .col-title{color:#16a34a}
+.col-perdido .col-title{color:#ef4444}
+.col-empty{text-align:center;padding:1rem 0.5rem;color:var(--muted);font-size:0.78rem;border:1px dashed var(--border);border-radius:6px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
+.modal-overlay.hidden{display:none!important}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1.5rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:1.05rem;margin-bottom:1.25rem}
+.form-group{margin-bottom:0.8rem}
+.form-group label{display:block;font-size:0.78rem;font-weight:600;margin-bottom:0.28rem;color:var(--muted)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:0.52rem 0.75rem;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.88rem;background:var(--bg);color:var(--text)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:2px solid #6366f1;outline-offset:-1px}
+.form-group textarea{resize:vertical;min-height:75px}
+.form-row{display:flex;gap:0.625rem}
+.form-row .form-group{flex:1}
+.modal-actions{display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1.25rem;flex-wrap:wrap}
+@media(max-width:480px){.form-row{flex-direction:column}}
+@media(prefers-color-scheme:dark){.crm-toolbar input,.crm-toolbar select{background:#111;color:#f5f5f5}.form-group input,.form-group select,.form-group textarea{background:#111;color:#f5f5f5}.modal{background:#111}.lead-card{background:#111}.kanban-col{background:#0f0f0f}}
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:0.75rem">
+    <div>
+      <h1>CRM — Estudio Oro</h1>
+      <div class="subtitle">Abogacía &middot; Inmobiliaria &middot; Estudio Oro IA</div>
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap">
+      <a href="/" class="btn btn-secondary" style="font-size:0.82rem">&larr; Inicio</a>
+      <a href="/dashboard.html" class="btn btn-secondary" style="font-size:0.82rem">Dashboard</a>
+      <button class="btn" id="addLeadBtn" style="background:linear-gradient(135deg,#4338ca,#6d28d9)">+ Lead</button>
+    </div>
+  </div>
+</header>
+
+<div class="crm-stats" id="statsBar"></div>
+
+<div class="crm-toolbar">
+  <input type="search" id="leadSearch" placeholder="Buscar por nombre o asunto..." />
+  <select id="bizFilter">
+    <option value="">Todos los negocios</option>
+    <option value="abogacia">Abogacía</option>
+    <option value="inmobiliaria">Inmobiliaria</option>
+    <option value="ia">Estudio Oro IA</option>
+  </select>
+  <select id="srcFilter">
+    <option value="">Todas las fuentes</option>
+    <option value="whatsapp">WhatsApp</option>
+    <option value="meta-ads">Meta Ads</option>
+    <option value="web">Web</option>
+    <option value="instagram">Instagram</option>
+    <option value="referido">Referido</option>
+  </select>
+</div>
+
+<div class="kanban" id="kanbanBoard"></div>
+
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal">
+    <h2 id="modalTitle">Nuevo Lead</h2>
+    <form id="leadForm">
+      <input type="hidden" id="leadId" />
+      <div class="form-row">
+        <div class="form-group"><label>Nombre *</label><input type="text" id="fName" required placeholder="María González" /></div>
+        <div class="form-group"><label>Teléfono</label><input type="tel" id="fPhone" placeholder="+54 11..." /></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="fEmail" placeholder="mail@ejemplo.com" /></div>
+      <div class="form-row">
+        <div class="form-group"><label>Negocio *</label>
+          <select id="fBiz" required>
+            <option value="">Seleccionar...</option>
+            <option value="abogacia">Abogacía</option>
+            <option value="inmobiliaria">Inmobiliaria</option>
+            <option value="ia">Estudio Oro IA</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Fuente</label>
+          <select id="fSource">
+            <option value="whatsapp">WhatsApp</option>
+            <option value="meta-ads">Meta Ads</option>
+            <option value="web">Web</option>
+            <option value="instagram">Instagram</option>
+            <option value="referido">Referido</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Estado</label>
+        <select id="fStatus">
+          <option value="nuevo">Nuevo</option>
+          <option value="contactado">Contactado</option>
+          <option value="calificado">Calificado</option>
+          <option value="propuesta">Propuesta enviada</option>
+          <option value="ganado">Ganado</option>
+          <option value="perdido">Perdido</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Empresa / Asunto del caso</label><input type="text" id="fCompany" placeholder="Empresa o descripción del caso" /></div>
+      <div class="form-group"><label>Notas</label><textarea id="fNotes" placeholder="Detalles del lead, próximos pasos..."></textarea></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+        <button type="button" class="btn btn-secondary" id="deleteBtn" style="color:#ef4444;border-color:#fca5a5;display:none">Eliminar</button>
+        <button type="submit" class="btn" style="background:linear-gradient(135deg,#4338ca,#6d28d9)">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div>CRM Estudio Oro &middot; <a href="/">Stack IA</a> &middot; <a href="/dashboard.html">Dashboard</a></div>
+</footer>
+
+<script>
+const STATUSES=[{id:'nuevo',label:'Nuevo',cls:'col-nuevo'},{id:'contactado',label:'Contactado',cls:'col-contactado'},{id:'calificado',label:'Calificado',cls:'col-calificado'},{id:'propuesta',label:'Propuesta',cls:'col-propuesta'},{id:'ganado',label:'Ganado',cls:'col-ganado'},{id:'perdido',label:'Perdido',cls:'col-perdido'}];
+const BIZ={abogacia:'Abogacía',inmobiliaria:'Inmobiliaria',ia:'Estudio Oro IA'};
+const SRC={whatsapp:'WhatsApp','meta-ads':'Meta Ads',web:'Web',instagram:'Instagram',referido:'Referido'};
+const DEMO=[{id:'l1',name:'María González',phone:'+54 11 4500-1234',email:'maria@gmail.com',biz:'abogacia',source:'whatsapp',status:'nuevo',company:'Caso sucesorio',notes:'Heredera en disputa familiar. Consulta urgente.',date:'2026-05-14'},{id:'l2',name:'Carlos Rodríguez',phone:'+54 11 3300-5678',email:'carlos@empresa.com',biz:'inmobiliaria',source:'meta-ads',status:'calificado',company:'Corp. Azul SA',notes:'Busca local comercial en Palermo. Budget $200k USD.',date:'2026-05-12'},{id:'l3',name:'Laura Martínez',phone:'+54 11 5500-9012',email:'laura@startup.io',biz:'ia',source:'instagram',status:'contactado',company:'LauraDesigns',notes:'Quiere automatizar su agencia con IA. 3 clientes activos.',date:'2026-05-13'},{id:'l4',name:'Juan Pérez',phone:'+54 11 2200-3456',email:'juan@outlook.com',biz:'abogacia',source:'referido',status:'propuesta',company:'Accidente laboral',notes:'Referido por María G. Propuesta de honorarios enviada.',date:'2026-05-10'},{id:'l5',name:'Ana García',phone:'+54 11 1100-7890',email:'ana@correo.com',biz:'inmobiliaria',source:'web',status:'ganado',company:'Depto. 3 amb. Recoleta',notes:'Compra cerrada. Escritura en proceso.',date:'2026-05-08'},{id:'l6',name:'Rodrigo Silva',phone:'+54 11 6600-2345',email:'rsilva@empresa.ar',biz:'abogacia',source:'meta-ads',status:'perdido',company:'Divorcio conflictivo',notes:'Eligió otro estudio por precio.',date:'2026-05-05'},{id:'l7',name:'Valeria Torres',phone:'+54 11 7700-6789',email:'val@freelance.com',biz:'ia',source:'whatsapp',status:'nuevo',company:'Agencia de contenido',notes:'5 reels/semana. Quiere stack IA completo.',date:'2026-05-15'},{id:'l8',name:'Martín López',phone:'+54 11 8800-0123',email:'martin@gmail.com',biz:'inmobiliaria',source:'referido',status:'contactado',company:'Casa unifamiliar GBA',notes:'Zona norte. Referido por Ana G.',date:'2026-05-14'}];
+
+const load=()=>{const r=localStorage.getItem('crm:leads');if(!r){save(DEMO);return DEMO;}return JSON.parse(r);};
+const save=l=>localStorage.setItem('crm:leads',JSON.stringify(l));
+const uid=()=>'l'+Date.now()+Math.random().toString(36).slice(2,5);
+const today=()=>new Date().toISOString().slice(0,10);
+const fmtDate=d=>{if(!d)return'';const[y,m,day]=d.split('-');return`${day}/${m}/${y.slice(2)}`;};
+
+function renderStats(leads){
+  const t=leads.length,g=leads.filter(l=>l.status==='ganado').length,a=leads.filter(l=>!['ganado','perdido'].includes(l.status)).length;
+  const conv=t?Math.round(g/t*100):0;
+  const biz={abogacia:leads.filter(l=>l.biz==='abogacia').length,inmobiliaria:leads.filter(l=>l.biz==='inmobiliaria').length,ia:leads.filter(l=>l.biz==='ia').length};
+  document.getElementById('statsBar').innerHTML=
+    `<div class="stat-pill"><div class="num">${t}</div><div class="lbl">Total leads</div></div>`+
+    `<div class="stat-pill"><div class="num">${a}</div><div class="lbl">Activos</div></div>`+
+    `<div class="stat-pill"><div class="num">${conv}%</div><div class="lbl">Conversión</div></div>`+
+    `<div class="stat-pill"><div class="num" style="color:#6366f1">${biz.abogacia}</div><div class="lbl">Abogacía</div></div>`+
+    `<div class="stat-pill"><div class="num" style="color:#16a34a">${biz.inmobiliaria}</div><div class="lbl">Inmob.</div></div>`+
+    `<div class="stat-pill"><div class="num" style="color:#f59e0b">${biz.ia}</div><div class="lbl">IA</div></div>`;
+}
+
+function renderBoard(leads){
+  const q=(document.getElementById('leadSearch').value||'').toLowerCase();
+  const bf=document.getElementById('bizFilter').value;
+  const sf=document.getElementById('srcFilter').value;
+  const filtered=leads.filter(l=>{
+    if(q&&!l.name.toLowerCase().includes(q)&&!(l.company||'').toLowerCase().includes(q))return false;
+    if(bf&&l.biz!==bf)return false;
+    if(sf&&l.source!==sf)return false;
+    return true;
+  });
+  document.getElementById('kanbanBoard').innerHTML=STATUSES.map(s=>{
+    const cols=filtered.filter(l=>l.status===s.id);
+    return`<div class="kanban-col ${s.cls}">`+
+      `<div class="col-header"><span class="col-title">${s.label}</span><span class="col-badge">${cols.length}</span></div>`+
+      (cols.length===0?`<div class="col-empty">Sin leads</div>`:cols.map(l=>
+        `<div class="lead-card" onclick="openLead('${l.id}')">`+
+        `<div class="lead-name">${l.name}</div>`+
+        `<div class="lead-biz"><span class="biz-dot ${l.biz}"></span>${BIZ[l.biz]||l.biz}${l.company?` · ${l.company}`:''}</div>`+
+        `<div class="lead-foot"><span class="lead-source">${SRC[l.source]||l.source}</span><span class="lead-date">${fmtDate(l.date)}</span></div>`+
+        `</div>`).join(''))+
+      `</div>`;
+  }).join('');
+}
+
+function render(){const l=load();renderStats(l);renderBoard(l);}
+
+function openModal(lead=null){
+  const overlay=document.getElementById('modalOverlay');
+  overlay.classList.remove('hidden');
+  document.getElementById('modalTitle').textContent=lead?'Editar Lead':'Nuevo Lead';
+  document.getElementById('deleteBtn').style.display=lead?'':'none';
+  document.getElementById('leadId').value=lead?.id||'';
+  document.getElementById('fName').value=lead?.name||'';
+  document.getElementById('fPhone').value=lead?.phone||'';
+  document.getElementById('fEmail').value=lead?.email||'';
+  document.getElementById('fBiz').value=lead?.biz||'';
+  document.getElementById('fSource').value=lead?.source||'whatsapp';
+  document.getElementById('fStatus').value=lead?.status||'nuevo';
+  document.getElementById('fCompany').value=lead?.company||'';
+  document.getElementById('fNotes').value=lead?.notes||'';
+}
+function closeModal(){document.getElementById('modalOverlay').classList.add('hidden');}
+
+window.openLead=id=>{const l=load().find(x=>x.id===id);if(l)openModal(l);};
+
+document.getElementById('addLeadBtn').addEventListener('click',()=>openModal());
+document.getElementById('cancelBtn').addEventListener('click',closeModal);
+document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('modalOverlay'))closeModal();});
+
+document.getElementById('deleteBtn').addEventListener('click',()=>{
+  const id=document.getElementById('leadId').value;
+  if(!id||!confirm('¿Eliminar este lead?'))return;
+  save(load().filter(l=>l.id!==id));closeModal();render();
+});
+
+document.getElementById('leadForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const id=document.getElementById('leadId').value;
+  const leads=load();
+  const data={id:id||uid(),name:document.getElementById('fName').value.trim(),phone:document.getElementById('fPhone').value.trim(),email:document.getElementById('fEmail').value.trim(),biz:document.getElementById('fBiz').value,source:document.getElementById('fSource').value,status:document.getElementById('fStatus').value,company:document.getElementById('fCompany').value.trim(),notes:document.getElementById('fNotes').value.trim(),date:id?(leads.find(l=>l.id===id)?.date||today()):today(),updatedAt:today()};
+  if(id){const i=leads.findIndex(l=>l.id===id);if(i!==-1)leads[i]=data;}else leads.push(data);
+  save(leads);closeModal();render();
+});
+
+['leadSearch','bizFilter','srcFilter'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+
+if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.querySelectorAll('.crm-toolbar select,.crm-toolbar input').forEach(el=>{el.style.background='#111';el.style.color='#f5f5f5';});
+
+render();
+</script>
+</body>
+</html>
