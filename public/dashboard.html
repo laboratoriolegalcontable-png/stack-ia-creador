@@ -22,7 +22,7 @@
 .f-row{display:flex;align-items:center;gap:0.625rem}
 .f-lbl{font-size:0.75rem;color:var(--muted);width:85px;text-align:right;flex-shrink:0}
 .f-track{flex:1;height:26px;background:var(--code-bg);border-radius:4px;overflow:hidden}
-.f-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:0.5rem;font-size:0.7rem;font-weight:700;color:white;transition:width 0.6s ease;min-width:26px}
+.f-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:0.5rem;font-size:0.7rem;font-weight:700;color:white;min-width:26px}
 .f-count{font-size:0.75rem;font-weight:700;width:20px;text-align:center;flex-shrink:0}
 .lead-row{display:flex;align-items:center;gap:0.625rem;padding:0.55rem 0;border-bottom:1px solid var(--border)}
 .lead-row:last-child{border-bottom:none}
@@ -31,19 +31,16 @@
 .lead-info .n{font-size:0.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lead-info .m{font-size:0.7rem;color:var(--muted)}
 .chip{font-size:0.63rem;padding:0.12rem 0.45rem;border-radius:999px;font-weight:600;flex-shrink:0}
-.chip-nuevo{background:rgba(99,102,241,.12);color:#6366f1}
-.chip-contactado{background:rgba(14,165,233,.12);color:#0ea5e9}
-.chip-calificado{background:rgba(245,158,11,.12);color:#f59e0b}
-.chip-propuesta{background:rgba(139,92,246,.12);color:#8b5cf6}
-.chip-ganado{background:rgba(22,163,74,.12);color:#16a34a}
-.chip-perdido{background:rgba(239,68,68,.12);color:#ef4444}
-.action-link{display:flex;align-items:center;gap:0.6rem;padding:0.7rem 0.875rem;border:1px solid var(--border);border-radius:8px;background:var(--bg);width:100%;margin-bottom:0.45rem;font-family:inherit;font-size:0.85rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;cursor:pointer}
+.chip-nuevo{background:rgba(99,102,241,.12);color:#6366f1}.chip-contactado{background:rgba(14,165,233,.12);color:#0ea5e9}
+.chip-calificado{background:rgba(245,158,11,.12);color:#f59e0b}.chip-propuesta{background:rgba(139,92,246,.12);color:#8b5cf6}
+.chip-ganado{background:rgba(22,163,74,.12);color:#16a34a}.chip-perdido{background:rgba(239,68,68,.12);color:#ef4444}
+.action-link{display:flex;align-items:center;gap:0.6rem;padding:0.7rem 0.875rem;border:1px solid var(--border);border-radius:8px;background:var(--bg);width:100%;margin-bottom:0.45rem;font-family:inherit;font-size:0.85rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s}
 .action-link:hover{border-color:#6366f1}
 .action-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
 .biz-row{margin-bottom:0.5rem}
 .biz-hdr{display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem}
 .biz-track{height:8px;background:var(--code-bg);border-radius:4px;overflow:hidden}
-.biz-fill{height:100%;border-radius:4px;transition:width 0.6s ease}
+.biz-fill{height:100%;border-radius:4px}
 @media(prefers-color-scheme:dark){.kpi-card{background:#111}.action-link{background:#111}}
 </style>
 </head>
@@ -60,9 +57,7 @@
     </div>
   </div>
 </header>
-
 <div class="kpi-grid" id="kpiGrid"></div>
-
 <div class="two-col">
   <div>
     <div class="card" style="margin-bottom:1rem">
@@ -92,75 +87,7 @@
     </div>
   </div>
 </div>
-
-<footer>
-  <div>Dashboard Estudio Oro &middot; <a href="/">Stack IA</a> &middot; <a href="/crm.html">CRM</a></div>
-</footer>
-
-<script>
-const SL={nuevo:'Nuevo',contactado:'Contactado',calificado:'Calificado',propuesta:'Propuesta',ganado:'Ganado',perdido:'Perdido'};
-const BL={abogacia:'Abogacía',inmobiliaria:'Inmobiliaria',ia:'Estudio Oro IA'};
-const BC={abogacia:'#6366f1',inmobiliaria:'#16a34a',ia:'#f59e0b'};
-const SC={nuevo:'#6366f1',contactado:'#0ea5e9',calificado:'#f59e0b',propuesta:'#8b5cf6',ganado:'#16a34a',perdido:'#ef4444'};
-
-const loadLeads=()=>{const r=localStorage.getItem('crm:leads');return r?JSON.parse(r):[];};
-const initials=n=>n.split(' ').slice(0,2).map(x=>x[0]).join('').toUpperCase();
-const fmtDate=d=>{if(!d)return'';const[y,m,day]=d.split('-');return`${day}/${m}/${y.slice(2)}`;};
-
-function renderDate(){
-  const d=new Date();
-  document.getElementById('dashDate').textContent=d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-}
-
-function renderKPIs(leads){
-  const total=leads.length,ganados=leads.filter(l=>l.status==='ganado').length;
-  const activos=leads.filter(l=>!['ganado','perdido'].includes(l.status)).length;
-  const conv=total?(ganados/total*100).toFixed(0):0;
-  const tod=new Date().toISOString().slice(0,10);
-  const hoy=leads.filter(l=>l.date===tod).length;
-  const w=new Date();w.setDate(w.getDate()-7);
-  const semana=leads.filter(l=>new Date(l.date)>=w).length;
-  document.getElementById('kpiGrid').innerHTML=
-    `<div class="kpi-card" style="border-color:#6366f1"><div class="kpi-num" style="color:#6366f1">${total}</div><div class="kpi-lbl">Leads totales</div><div class="kpi-sub up">&uarr; ${semana} esta semana</div></div>`+
-    `<div class="kpi-card"><div class="kpi-num">${activos}</div><div class="kpi-lbl">Activos</div><div class="kpi-sub neutral">En proceso</div></div>`+
-    `<div class="kpi-card" style="border-color:#16a34a"><div class="kpi-num" style="color:#16a34a">${conv}%</div><div class="kpi-lbl">Conversión</div><div class="kpi-sub ${conv>=20?'up':'neutral'}">${ganados} cerrados</div></div>`+
-    `<div class="kpi-card" style="border-color:#f59e0b"><div class="kpi-num" style="color:#f59e0b">${hoy}</div><div class="kpi-lbl">Nuevos hoy</div><div class="kpi-sub neutral">Del día</div></div>`;
-}
-
-function renderFunnel(leads){
-  const ss=['nuevo','contactado','calificado','propuesta','ganado'];
-  const counts=ss.map(s=>leads.filter(l=>l.status===s).length);
-  const mx=Math.max(...counts,1);
-  document.getElementById('funnelViz').innerHTML=ss.map((s,i)=>{
-    const c=counts[i],pct=Math.max(8,Math.round(c/mx*100));
-    return`<div class="f-row"><div class="f-lbl">${SL[s]}</div><div class="f-track"><div class="f-bar" style="width:${pct}%;background:${SC[s]}">${c>0?c:''}</div></div><div class="f-count">${c}</div></div>`;
-  }).join('');
-}
-
-function renderRecent(leads){
-  const sorted=[...leads].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,6);
-  if(!sorted.length){document.getElementById('recentLeads').innerHTML='<div class="empty">Sin leads aún. <a href="/crm.html">Agregar el primero &rarr;</a></div>';return;}
-  document.getElementById('recentLeads').innerHTML=sorted.map(l=>
-    `<a href="/crm.html" style="text-decoration:none;color:inherit">`+
-    `<div class="lead-row">`+
-    `<div class="avatar" style="background:${BC[l.biz]||'#6366f1'}">${initials(l.name)}</div>`+
-    `<div class="lead-info"><div class="n">${l.name}</div><div class="m">${BL[l.biz]||l.biz} · ${fmtDate(l.date)}</div></div>`+
-    `<span class="chip chip-${l.status}">${SL[l.status]}</span>`+
-    `</div></a>`).join('');
-}
-
-function renderBiz(leads){
-  const total=leads.length||1;
-  const counts={abogacia:0,inmobiliaria:0,ia:0};
-  leads.forEach(l=>{if(counts[l.biz]!==undefined)counts[l.biz]++;});
-  document.getElementById('bizBars').innerHTML=Object.entries(counts).map(([b,c])=>{
-    const pct=Math.round(c/total*100);
-    return`<div class="biz-row"><div class="biz-hdr"><span>${BL[b]}</span><span style="font-weight:700">${c} <span style="font-weight:400;color:var(--muted)">(${pct}%)</span></span></div><div class="biz-track"><div class="biz-fill" style="width:${pct}%;background:${BC[b]}"></div></div></div>`;
-  }).join('');
-}
-
-function render(){const l=loadLeads();renderDate();renderKPIs(l);renderFunnel(l);renderRecent(l);renderBiz(l);}
-render();
-</script>
+<footer><div>Dashboard Estudio Oro &middot; <a href="/">Stack IA</a> &middot; <a href="/crm.html">CRM</a></div></footer>
+<script src="/dashboard.js"></script>
 </body>
 </html>
