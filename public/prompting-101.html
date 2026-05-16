@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Prompting 101 — Anthropic Applied AI</title>
+<meta name="description" content="10 pilares, flujo v1→v5, XML tags, extended thinking, prefill y 4 plantillas copiables. Metodología del equipo Applied AI de Anthropic." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" href="/icon-192.png" sizes="192x192" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+/* ---- Layout ---- */
+.page-nav{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;margin-bottom:0.25rem}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81);border:1px solid #4338ca;border-radius:12px;padding:1.5rem;margin-bottom:1.75rem}
+.hero h2{color:#a5b4fc;font-size:1.05rem;margin:0 0 0.4rem}
+.hero p{color:#c7d2fe;font-size:0.85rem;margin:0 0 0.875rem;line-height:1.6}
+.hero-tags{display:flex;gap:0.4rem;flex-wrap:wrap}
+.hero-tag{background:rgba(99,102,241,0.2);border:1px solid #4338ca;border-radius:6px;color:#a5b4fc;font-size:0.72rem;font-weight:600;padding:0.25rem 0.6rem}
+
+/* ---- Tabs ---- */
+.p101-tabs{display:flex;gap:0.25rem;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:1.5rem;position:sticky;top:0;background:var(--bg);z-index:5;padding-top:0.25rem}
+.p101-tab{background:transparent;border:0;padding:0.55rem 0.85rem;cursor:pointer;font-family:inherit;font-size:0.88rem;color:var(--muted);border-bottom:2px solid transparent;min-height:44px}
+.p101-tab.active{color:var(--text);border-bottom-color:#6366f1;font-weight:600}
+.p101-tab:hover{color:var(--text)}
+.p101-section{display:none}
+.p101-section.active{display:block}
+
+/* ---- Pillars ---- */
+.pillar-grid{display:flex;flex-direction:column;gap:0.75rem}
+.pillar{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.pillar-head{display:flex;align-items:flex-start;gap:0.875rem;padding:0.875rem 1rem;cursor:pointer;user-select:none}
+.pillar-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800;flex-shrink:0;color:white}
+.pillar-title{font-size:0.95rem;font-weight:700;margin-bottom:0.15rem}
+.pillar-sub{font-size:0.78rem;color:var(--muted)}
+.pillar-arrow{margin-left:auto;color:var(--muted);font-size:0.85rem;flex-shrink:0;transition:transform 0.2s}
+.pillar.open .pillar-arrow{transform:rotate(90deg)}
+.pillar-body{display:none;padding:0 1rem 1rem 3.5rem;border-top:1px solid var(--border)}
+.pillar.open .pillar-body{display:block}
+.pillar-body p{font-size:0.85rem;color:var(--muted);margin:0.625rem 0}
+.pillar-body .when{font-size:0.78rem;background:var(--yellow);padding:0.3rem 0.6rem;border-radius:5px;display:inline-block;margin-bottom:0.5rem}
+.pillar-body code{font-family:ui-monospace,monospace;font-size:0.8rem;background:var(--code-bg);padding:0.1rem 0.3rem;border-radius:3px}
+.system-badge{font-size:0.65rem;background:#1e1b4b;color:#a5b4fc;border-radius:4px;padding:0.1rem 0.4rem;margin-left:0.4rem;vertical-align:middle;font-weight:600}
+.user-badge{font-size:0.65rem;background:#052e16;color:#4ade80;border-radius:4px;padding:0.1rem 0.4rem;margin-left:0.4rem;vertical-align:middle;font-weight:600}
+
+/* ---- Versions ---- */
+.versions{display:flex;flex-direction:column;gap:0.625rem}
+.version{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.version-head{display:flex;align-items:center;gap:0.75rem;padding:0.875rem 1rem;cursor:pointer}
+.v-badge{font-size:0.72rem;font-weight:800;padding:0.25rem 0.65rem;border-radius:6px;flex-shrink:0}
+.v1 .v-badge{background:#fee2e2;color:#b91c1c}
+.v2 .v-badge{background:#fef3c7;color:#92400e}
+.v3 .v-badge{background:#fef9c3;color:#713f12}
+.v4 .v-badge{background:#dbeafe;color:#1e40af}
+.v5 .v-badge{background:#dcfce7;color:#166534}
+.version-head h3{font-size:0.9rem;font-weight:600;margin:0}
+.version-head .pillars-added{font-size:0.72rem;color:var(--muted);margin-left:auto;text-align:right}
+.version-body{display:none;padding:0 1rem 1rem;border-top:1px solid var(--border)}
+.version.open .version-body{display:block}
+.version-body .what{font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem}
+.version-body .error{background:var(--red);border-radius:6px;padding:0.5rem 0.75rem;font-size:0.8rem;margin-bottom:0.5rem}
+.version-body .fix{background:var(--green-bg);border-radius:6px;padding:0.5rem 0.75rem;font-size:0.8rem}
+.version-arrow{color:var(--muted);font-size:0.85rem;transition:transform 0.2s}
+.version.open .version-arrow{transform:rotate(90deg)}
+
+/* ---- Templates ---- */
+.template-cards{display:flex;flex-direction:column;gap:1rem}
+.tpl-card{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.tpl-head{padding:0.875rem 1rem;background:var(--code-bg)}
+.tpl-head h3{font-size:0.95rem;font-weight:700;margin:0 0 0.25rem}
+.tpl-head p{font-size:0.8rem;color:var(--muted);margin:0}
+.tpl-body{padding:0}
+.tpl-body pre{margin:0;border:none;border-radius:0;border-top:1px solid var(--border)}
+.tpl-usage{padding:0.75rem 1rem;font-size:0.78rem;color:var(--muted);border-top:1px solid var(--border);background:var(--code-bg)}
+.tpl-usage strong{color:var(--text)}
+
+/* ---- Techniques ---- */
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem}
+@media(max-width:560px){.tech-grid{grid-template-columns:1fr}}
+.tech-card{border:1px solid var(--border);border-radius:8px;padding:0.875rem}
+.tech-card h4{font-size:0.85rem;font-weight:700;margin:0 0 0.3rem}
+.tech-card p{font-size:0.78rem;color:var(--muted);margin:0}
+.tech-ok{border-color:#16a34a}
+.tech-ok h4{color:#16a34a}
+.tech-no{border-color:#ef4444}
+.tech-no h4{color:#ef4444}
+.anti-list{display:flex;flex-direction:column;gap:0.4rem;margin-top:0.75rem}
+.anti-item{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:var(--code-bg);border-radius:6px}
+.anti-cat{font-size:0.65rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:4px;flex-shrink:0;margin-top:0.1rem}
+.cat-tarea{background:#fef3c7;color:#92400e}
+.cat-output{background:#dbeafe;color:#1e40af}
+.cat-ctx{background:#f3e8ff;color:#6b21a8}
+.cat-tokens{background:#fce7f3;color:#9d174d}
+.cat-tool{background:#fee2e2;color:#b91c1c}
+.cat-agent{background:#ecfdf5;color:#065f46}
+
+/* ---- Summary table ---- */
+.summary-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.summary-table th{text-align:left;padding:0.5rem 0.75rem;border-bottom:2px solid var(--border);font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+.summary-table td{padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);vertical-align:top}
+.summary-table tr:last-child td{border-bottom:none}
+.summary-table tr:hover td{background:var(--code-bg)}
+
+@media(prefers-color-scheme:dark){
+  .pillar-body .when{background:#422006}
+  .v1 .v-badge{background:#450a0a;color:#fca5a5}
+  .v2 .v-badge{background:#422006;color:#fcd34d}
+  .v3 .v-badge{background:#422006;color:#fef08a}
+  .v4 .v-badge{background:#1e3a5f;color:#93c5fd}
+  .v5 .v-badge{background:#052e16;color:#86efac}
+}
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:0.75rem">
+    <div>
+      <h1>Prompting 101</h1>
+      <div class="subtitle">10 pilares &middot; flujo v1&rarr;v5 &middot; 4 plantillas copiables &middot; Anthropic Applied AI</div>
+    </div>
+    <div class="page-nav">
+      <a href="/" class="btn btn-secondary" style="font-size:0.82rem">&larr; Inicio</a>
+      <a href="/dashboard.html" class="btn btn-secondary" style="font-size:0.82rem">Dashboard</a>
+      <a href="/crm.html" class="btn" style="background:linear-gradient(135deg,#4338ca,#6d28d9);font-size:0.82rem">CRM</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <h2>Prompting es ciencia empírica, no magia</h2>
+  <p>Hannah y Christian del equipo Applied AI de Anthropic destilan la metodología que usan con sus clientes reales: 10 pilares en orden, un caso de seguros suecos que pasa de confundir un choque con un accidente de esquí a entregar el veredicto en <code>&lt;final_verdict&gt;</code> listo para parsear, y cuándo usar XML tags, extended thinking y prefill.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">10 pilares</span>
+    <span class="hero-tag">v1 &rarr; v5</span>
+    <span class="hero-tag">XML tags</span>
+    <span class="hero-tag">Extended thinking</span>
+    <span class="hero-tag">Prefill</span>
+    <span class="hero-tag">Prompt caching</span>
+    <span class="hero-tag">4 plantillas</span>
+  </div>
+</div>
+
+<div class="p101-tabs" role="tablist">
+  <button class="p101-tab active" data-sec="pilares">10 Pilares</button>
+  <button class="p101-tab" data-sec="v1v5">v1 &rarr; v5</button>
+  <button class="p101-tab" data-sec="tecnicas">Técnicas</button>
+  <button class="p101-tab" data-sec="plantillas">Plantillas</button>
+</div>
+
+<!-- ===== PILARES ===== -->
+<section id="sec-pilares" class="p101-section active">
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem">Construye el prompt en este orden. <span style="background:#1e1b4b;color:#a5b4fc;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.7rem;font-weight:700">SYSTEM</span> = cacheable, va en el system prompt. <span style="background:#052e16;color:#4ade80;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.7rem;font-weight:700">USER</span> = cambia por llamada.</p>
+  <div class="pillar-grid" id="pillarGrid"></div>
+</section>
+
+<!-- ===== V1 -> V5 ===== -->
+<section id="sec-v1v5" class="p101-section">
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem">El mismo prompt para revisar partes de accidente sueco en 5 versiones. Cada versión añade exactamente un pilar y resuelve el error de la anterior. No intentes escribir v5 de un golpe.</p>
+  <div class="versions" id="versionsGrid"></div>
+  <div class="card" style="margin-top:1rem">
+    <p style="font-size:0.82rem;color:var(--muted);margin:0"><strong style="color:var(--text)">Lección operativa:</strong> Cada pilar deja evidencia escrita de por qué está ahí. En producción, si un caso falla, miras el historial de versiones y entiendes qué constraint le faltaba al prompt. Lanza, lee el output, identifica el error específico, añade UN pilar, vuelve a correr.</p>
+  </div>
+</section>
+
+<!-- ===== TÉCNICAS ===== -->
+<section id="sec-tecnicas" class="p101-section">
+  <h2 style="font-size:1rem;margin-bottom:1rem">Técnicas permitidas (solo estas 5)</h2>
+  <div class="tech-grid">
+    <div class="tech-card tech-ok"><h4>✅ Role Assignment</h4><p>Asigna identidad de experto cuando importa el tono o vocabulario técnico. Calibra antes de pedir el output.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ Few-Shot Examples (2-5)</h4><p>Cuando consistencia de formato importa más que la instrucción. 2-5 ejemplos cierran el patrón sin saturar contexto.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ XML Structural Tags</h4><p>Para Claude y prompts complejos con varias secciones. Claude está fine-tuneado para leer bloques XML como intenciones separadas.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ Grounding Anchors</h4><p>Para tareas factuales. Regla tipo <em>&ldquo;marca [uncertain] si no estás seguro&rdquo;</em> previene alucinaciones sin saturar el prompt.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ Chain of Thought</h4><p>Para lógica multi-paso, debugging, matemáticas. <strong>NUNCA en thinking-native</strong> (o3, o4-mini, DeepSeek-R1, Qwen3) &mdash; degrada el output.</p></div>
+  </div>
+
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">Técnicas prohibidas (nunca en single-prompt)</h2>
+  <div class="tech-grid">
+    <div class="tech-card tech-no"><h4>❌ Mixture of Experts</h4><p>El modelo simula personajes en una sola pasada — no hay routing real. Suena bien, fabrica resultados.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Tree of Thought</h4><p>Genera texto lineal y simula ramificación. No hay paralelismo real, solo apariencia de exploración.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Graph of Thought</h4><p>Necesita un motor de grafos externo. En single-prompt es fabricación pura.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Universal Self-Consistency</h4><p>Requiere muestreo independiente. En un solo prompt los caminos posteriores contaminan los anteriores.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Prompt chaining capa-a-capa</h4><p>En cadenas largas empuja al modelo a fabricar. Usar prompts secuenciales con checkpoints explícitos.</p></div>
+  </div>
+
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">Extended thinking — la muleta del prompt engineer</h2>
+  <div class="card" style="margin-bottom:0.75rem">
+    <p style="font-size:0.85rem;color:var(--muted);margin:0 0 0.75rem">Extended thinking es herramienta de <strong style="color:var(--text)">diagnóstico</strong>, no optimización permanente. El flujo:</p>
+    <ol style="font-size:0.85rem;color:var(--muted);padding-left:1.25rem;margin:0">
+      <li style="margin-bottom:0.4rem">Activas extended thinking y corres el prompt fallido.</li>
+      <li style="margin-bottom:0.4rem">Lees el scratchpad y ves en qué paso Claude se desvía.</li>
+      <li style="margin-bottom:0.4rem">Metes esa intuición de regreso al system prompt como regla explícita.</li>
+      <li>Después de 2-3 iteraciones, apagás thinking &mdash; el razonamiento ya vive en el prompt.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <p style="font-size:0.82rem;margin:0"><strong>No lo prendas en tareas simples</strong> &mdash; clasificación directa, extracción puntual. Solo mete latencia y costo sin mejorar el output.</p>
+  </div>
+
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">Prefill — pone palabras en boca de Claude</h2>
+  <table class="summary-table" style="margin-bottom:0.75rem">
+    <thead><tr><th>Prefill</th><th>Fuerza</th><th>Cuándo</th></tr></thead>
+    <tbody>
+      <tr><td><code>{</code></td><td>JSON estricto sin preamble</td><td>Output entra a un parser</td></tr>
+      <tr><td><code>&lt;final_verdict&gt;</code></td><td>Claude va directo al XML</td><td>Quieres solo el bloque final</td></tr>
+      <tr><td><code>1.</code></td><td>Lista numerada sin intro</td><td>N items sin decoración</td></tr>
+      <tr><td><code>[Como ajustador senior]:</code></td><td>Mantiene el personaje</td><td>Modelo se sale del rol</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">Prompt caching &mdash; sistema vs usuario</h2>
+  <table class="summary-table">
+    <thead><tr><th>Bloque</th><th>Cambia entre llamadas</th><th>Cachear</th></tr></thead>
+    <tbody>
+      <tr><td>Pilares 1-6 (role, tone, background, rules, examples, history)</td><td>No</td><td>Sí &mdash; pagas ~10% en llamadas 2+</td></tr>
+      <tr><td>Pilar 7 (immediate task)</td><td>Sí</td><td>No</td></tr>
+      <tr><td>Pilar 8 (thinking)</td><td>Según la tarea</td><td>Rara vez</td></tr>
+      <tr><td>Pilar 9 (output format)</td><td>No</td><td>Sí, junto con los pilares estáticos</td></tr>
+      <tr><td>Pilar 10 (prefill)</td><td>No</td><td>Va en el assistant message</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">35 anti-patrones detectados</h2>
+  <div class="anti-list" id="antiList"></div>
+</section>
+
+<!-- ===== PLANTILLAS ===== -->
+<section id="sec-plantillas" class="p101-section">
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem">4 plantillas listas para copiar. Empieza con la del sistema de 10 pilares y después audita tu prompt actual.</p>
+  <div class="template-cards" id="templateCards"></div>
+</section>
+
+<footer>
+  <div>Prompting 101 &middot; Anthropic Applied AI (Hannah &middot; Christian) &middot; <a href="/">Stack IA</a> &middot; <a href="/crm.html">CRM</a> &middot; <a href="/dashboard.html">Dashboard</a></div>
+  <div style="margin-top:0.4rem"><a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">Docs oficiales</a> &middot; <a href="https://docs.claude.com/en/docs/build-with-claude/extended-thinking" target="_blank" rel="noopener">Extended thinking</a> &middot; <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-caching" target="_blank" rel="noopener">Prompt caching</a></div>
+</footer>
+
+<script>
+// ---- Tabs ----
+document.querySelectorAll('.p101-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.p101-tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.p101-section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('sec-'+btn.dataset.sec).classList.add('active');
+  });
+});
+
+// ---- Copy button helper ----
+function makeCopyBtn(text){
+  const btn=document.createElement('button');
+  btn.className='copy-btn';btn.textContent='Copiar';
+  btn.addEventListener('click',()=>{
+    navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copiado ✓';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('copied');},2200);});
+  });
+  return btn;
+}
+
+// ---- Pillar accordion ----
+const PILLARS=[
+  {num:1,color:'#6366f1',title:'Task description / role',when:'system',sub:'Siempre, al inicio del system prompt',body:'Le dices a Claude qué papel toma y para qué está aquí. Sin esto, el modelo adivina el dominio entero — en el demo del seguro sueco terminó hablando de un accidente de esquí en una calle sueca.',example:'Eres un asistente AI de un ajustador humano de seguros. Revisás partes de accidente de auto en sueco y determinás responsabilidad.'},
+  {num:2,color:'#0ea5e9',title:'Tone context',when:'system',sub:'Cuando el output no tolera invenciones',body:'Cómo debe sonar Claude. En tareas factuales como esta: confiado, conciso, sin adivinar. Si no está seguro de algo, lo dice explícitamente en lugar de rellenar con creatividad.',example:'Mantenete factual y confiado. Si no podés determinar algo con certeza desde la evidencia, decílo en lugar de adivinar.'},
+  {num:3,color:'#f59e0b',title:'Background data, documents & images',when:'system',sub:'Si tu app llama más de una vez con el mismo contexto',body:'La parte que NO cambia entre llamadas. Estructura del formulario, glosario, ejemplos del dominio, imágenes de referencia. Va en el system prompt y es ideal para activar prompt caching porque pagas el costo completo solo la primera vez.',example:'El formulario sueco tiene 17 filas numeradas y dos columnas (vehículo A, vehículo B). Los humanos lo llenan a mano con X, círculos o tachones — no esperes formato perfecto.'},
+  {num:4,color:'#8b5cf6',title:'Detailed task description & rules',when:'system',sub:'Cuando hay varios artefactos o decisiones intermedias',body:'Paso a paso de cómo razonar sobre la tarea. El ORDEN importa: en el demo, leer primero el formulario y después el sketch sube la calidad del veredicto porque el sketch sin contexto son solo cajas y líneas.',example:'1) Lee el formulario fila por fila y listá qué vehículo marcó qué. 2) Cruzá esa lista con el sketch. 3) Solo si la evidencia es consistente, emitir veredicto.'},
+  {num:5,color:'#ec4899',title:'Examples (few-shot)',when:'system',sub:'Cuando hay casos límite recurrentes o el formato importa más que la instrucción',body:'Casos en gris donde tu intuición humana ya tiene la verdad. Le pasás a Claude los ejemplos difíciles que ya viste. En producción esto puede ser decenas o cientos de ejemplos etiquetados.',example:'<example>\n  <input>Formulario: Véhicule A: fila 1, 4. Véhicule B: fila 12.</input>\n  <output><final_verdict>Vehículo B responsable por no ceder el paso.</final_verdict></output>\n</example>'},
+  {num:6,color:'#64748b',title:'Conversation history',when:'system',sub:'Apps user-facing con sesión larga. No en batch jobs.',body:'Solo si hay historia que cargue contexto real. En apps con conversación viva: turnos previos, decisiones del usuario, preferencias. No abuses si los turnos previos no aportan.',example:'<conversation_history>\n  El usuario confirmó que el vehículo A es del cliente.\n</conversation_history>'},
+  {num:7,color:'#6366f1',title:'Immediate task description',when:'user',sub:'Siempre, al inicio o fin del user message',body:'El recordatorio del aquí-y-ahora. Después de toda la preamábula, le decís a Claude qué querés EN ESTA llamada. Reduce la deriva en prompts largos.',example:'Para este parte específico: leé el formulario, después el sketch, y emití el veredicto siguiendo las reglas de arriba.'},
+  {num:8,color:'#14b8a6',title:'Thinking step-by-step',when:'user',sub:'Tareas multi-paso, debugging, matemáticas. NUNCA en thinking-native.',body:'Chain of thought explícito o extended thinking. Pedirle a Claude que muestre su razonamiento antes de concluir sube la calidad en tareas con lógica compleja y te da traza para diagnosticar errores.',example:'Antes del veredicto, escribí tu razonamiento dentro de <thinking></thinking>: qué viste, qué descartaste y por qué.'},
+  {num:9,color:'#f97316',title:'Output formatting',when:'user',sub:'Siempre que el output entre a otro sistema',body:'Cómo querés el resultado: JSON, XML, Markdown, longitud, tipo de archivo. Si lo dejás libre, Claude elige — y rara vez coincide con lo que tu parser espera.',example:'Envuelvé tu veredicto final dentro de <final_verdict>...</final_verdict>. El resto puede ser preamábulo, lo ignoro.'},
+  {num:10,color:'#a855f7',title:'Prefilled response',when:'user',sub:'JSON estricto, XML sin preamble o cuando el modelo se sale de personaje',body:'Empezar a hablar por Claude. Ponés la primera palabra en su mensaje y obligás la forma del output sin tener que pedirla en prosa. La forma más barata de garantizar el formato correcto.',example:'Pre-llená el assistant message con "{" para JSON, o con "<final_verdict>" para XML directo.'},
+];
+
+document.getElementById('pillarGrid').innerHTML=PILLARS.map(p=>{
+  const badge=p.when==='system'
+    ?'<span class="system-badge">SYSTEM</span>'
+    :'<span class="user-badge">USER</span>';
+  return`<div class="pillar" data-id="p${p.num}">`+
+    `<div class="pillar-head">`+
+    `<div class="pillar-num" style="background:${p.color}">${p.num}</div>`+
+    `<div><div class="pillar-title">${p.title}${badge}</div><div class="pillar-sub">${p.sub}</div></div>`+
+    `<span class="pillar-arrow">›</span></div>`+
+    `<div class="pillar-body">`+
+    `<p>${p.body}</p>`+
+    `<div class="when">⏱ Cuándo: ${p.sub}</div>`+
+    `<pre><code>${p.example.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`+
+    `</div></div>`;
+}).join('');
+
+document.querySelectorAll('.pillar-head').forEach(h=>{
+  h.addEventListener('click',()=>h.closest('.pillar').classList.toggle('open'));
+});
+
+// Inject copy buttons into pre elements inside pillar bodies
+document.querySelectorAll('.pillar-body pre').forEach(pre=>{
+  const btn=makeCopyBtn(pre.querySelector('code').textContent);
+  pre.appendChild(btn);
+});
+
+// ---- Versions ----
+const VERSIONS=[
+  {cls:'v1',label:'v1',title:'Prompt vago',pillars:'(ninguno)',
+    what:'Solo \"revisá este parte y decíme quién tuvo la culpa\".',
+    error:'Claude lo confunde con un accidente de esquí en una calle sueca. Sin contexto, adivina el dominio entero.',
+    fix:null},
+  {cls:'v2',label:'v2',title:'+ Role + Tone context',pillars:'Pilares 1, 2',
+    what:'Se añade el rol (asistente de un ajustador que revisa partes en sueco) y el tono (no adivines si no estás seguro).',
+    error:'Aún no sabe qué significa cada fila del formulario ni para qué sirve. Responde inseguro y sin veredicto claro.',
+    fix:'Identifica que es un choque vehicular. Lee correctamente qué vehículo marcó qué. Ya no inventa el dominio.'},
+  {cls:'v3',label:'v3',title:'+ Background en system prompt',pillars:'Pilar 3',
+    what:'La estructura del formulario sueco se mete en el system prompt: 17 filas, dos columnas, cómo se llena, propósito.',
+    error:'El output es libre y narrativo. No es parseable por un sistema downstream.',
+    fix:'Lee el formulario con confianza y da veredicto: vehículo B responsable. El system prompt estático se cachea.'},
+  {cls:'v4',label:'v4',title:'+ Rules + Immediate task + Thinking',pillars:'Pilares 4, 7, 8',
+    what:'Se añaden reglas paso a paso: 1) leer formulario fila por fila, 2) listar checkboxes, 3) cruzar con sketch, 4) veredicto solo si hay consistencia.',
+    error:'Sigue narrando demasiado para un parser. Útil para humanos, no para máquinas.',
+    fix:'Razonamiento ordenado: primero lista cada checkbox, después cruza con el sketch, después emite. La calidad sube en casos difíciles.'},
+  {cls:'v5',label:'v5',title:'+ Output formatting + Prefill',pillars:'Pilares 9, 10',
+    what:'Se añade regla de output: envolver el veredicto en XML. Opcional: prefill del assistant con <final_verdict> para forzar la forma.',
+    error:null,
+    fix:'Veredicto en <final_verdict>...</final_verdict>, listo para parser. Toda la preamábula la ignorás desde tu app.'},
+];
+
+document.getElementById('versionsGrid').innerHTML=VERSIONS.map(v=>{
+  return`<div class="version ${v.cls}" data-id="${v.cls}">`+
+    `<div class="version-head">`+
+    `<span class="v-badge">${v.label}</span>`+
+    `<h3>${v.title}</h3>`+
+    `<span class="pillars-added">${v.pillars}</span>`+
+    `<span class="version-arrow">›</span></div>`+
+    `<div class="version-body">`+
+    `<p class="what">${v.what}</p>`+
+    (v.error?`<div class="error"><strong>❌ Error que seguía:</strong> ${v.error}</div>`:'')+
+    (v.fix?`<div class="fix"><strong>✅ Lo que mejoró:</strong> ${v.fix}</div>`:'')+
+    `</div></div>`;
+}).join('');
+
+document.querySelectorAll('.version-head').forEach(h=>{
+  h.addEventListener('click',()=>h.closest('.version').classList.toggle('open'));
+});
+
+// Auto-open first version
+document.querySelector('.version').classList.add('open');
+
+// ---- Anti-patterns ----
+const ANTI=[
+  {cat:'TAREA',cls:'cat-tarea',items:['Verbo vago: \"ayudáme\", \"mejorá\", \"hacé algo con\"','Dos tareas en un prompt: \"explicáme Y reescribí\"','Sin criterios de éxito: \"hacelo mejor\", \"que quede bien\"','Agente con permisos abiertos: \"hacé lo que sea necesario\"','Descripción emocional: \"está totalmente roto\", \"es un desastre\"','Build-it-all: \"haceme la app entera\"','Referencia implícita: \"agrega lo otro que comentamos\"']},
+  {cat:'OUTPUT',cls:'cat-output',items:['Sin output format especificado','Sin target tool — el modelo elige y suele equivocarse','Sin constraints de longitud','Pedir disclaimer en cada respuesta','Formato contradictorio: \"hacelo corto pero que cubra todo\"','Output imposible: \"el código completo Y explicámelo línea a línea en 100 palabras\"']},
+  {cat:'CONTEXTO',cls:'cat-ctx',items:['Contexto sin demarcar: no se sabe dónde termina y empieza la instrucción','No anclar el dominio: \"hacelo profesional\" sin decir para quién','Historia implícita: asumir que el modelo recuerda conversaciones previas','Contexto contradictorio: instrucciones que se anulan entre sí','Sobre-contextualización: páginas de background para una tarea simple']},
+  {cat:'TOKENS',cls:'cat-tokens',items:['Padding promocional: \"Por favor, si podés, sería genial...\"','Adverbios decorativos: \"normalmente\", \"generalmente\", \"usualmente\"','Sinónimos repetidos: misma idea con palabras distintas','Hedging innecesario: \"no sé si será posible pero...\"','Reverse psychology: \"no hagas X\" cuando querés X','Meta-instrucción vaga: \"sé creativo\", \"pensá fuera de la caja\"','Longitud sin propósito: 2000 palabras para una tarea simple']},
+  {cat:'TOOL',cls:'cat-tool',items:['CoT en thinking-native: \"pensá paso a paso\" a o3/DeepSeek-R1','Mixture of Experts simulado: múltiples personajes expertos en un prompt','Tree of Thought single-prompt: pedir explorar ramas en paralelo','Few-shot con ejemplos incorrectos que contradicen la instrucción','Role sin anclaje: \"sos un experto\" sin especificar dominio ni tono']},
+  {cat:'AGENTE',cls:'cat-agent',items:['Stop conditions ausentes: el agente puede seguir para siempre','File scope abierto: puede modificar cualquier archivo','Permisos implícitos: \"usá las herramientas que necesités\"','Sin checkpoints: tarea larga sin puntos de verificación intermedios','Objetivo ambiguo: el agente no puede saber cuándo terminó']},
+];
+
+document.getElementById('antiList').innerHTML=ANTI.map(g=>
+  g.items.map(item=>
+    `<div class="anti-item"><span class="anti-cat ${g.cls}">${g.cat}</span><span>${item}</span></div>`
+  ).join('')
+).join('');
+
+// ---- Templates ----
+const TEMPLATES=[
+  {
+    title:'1. System prompt de los 10 pilares',
+    desc:'Esqueleto en blanco con cada pilar marcado. Pegálo, llená los placeholders, tenés una v3-v4 lista de salida.',
+    usage:'<strong>Cómo usar:</strong> Empezá llenando pilar 1 (role) y pilar 3 (background). Después pilar 4 (rules). Los demás son opcionales según la tarea.',
+    code:`<role>
+[Pilar 1] Sos un [rol específico] que [misión clara, una línea].
+</role>
+
+<tone>
+[Pilar 2] Mantenete [factual / cálido / técnico]. Si [condición de incertidumbre], [acción explícita en lugar de adivinar].
+</tone>
+
+<background>
+[Pilar 3] Contexto que NO cambia entre llamadas:
+- Estructura del input que vas a recibir.
+- Glosario o convenciones del dominio.
+- Reglas de negocio fijas.
+</background>
+
+<examples>
+[Pilar 5] Casos difíciles ya resueltos:
+<example>
+  <input>...</input>
+  <output>...</output>
+</example>
+</examples>
+
+<rules>
+[Pilar 4] Cómo razonar sobre la tarea, paso a paso:
+1) [Primer paso, el más simple]
+2) [Segundo paso, depende del primero]
+3) [Veredicto / output, solo si los pasos previos son consistentes]
+</rules>
+
+<output_format>
+[Pilar 9] Envuelvé el resultado final dentro de [<tag>...</tag> o JSON].
+[Pilar 8] Antes del resultado, razoná dentro de <thinking></thinking>.
+</output_format>
+
+<task>
+[Pilar 7] Para este input, ejecutá el flujo de <rules>.
+</task>
+
+<!-- Pilar 10 (prefill): en el assistant message pone "{" o "<tu-tag>" -->`
+  },
+  {
+    title:'2. Audita tu prompt actual contra los 10 pilares',
+    desc:'Pegá tu prompt en producción. Claude lo califica pilar por pilar y entrega la versión afilada.',
+    usage:'<strong>Cómo usar:</strong> Reemplazá los placeholders y pegálo directo en Claude. Tarda menos de 1 minuto.',
+    code:`Voy a pegarte mi prompt actual. Auditálo contra los 10 pilares de Prompting 101 de Anthropic Applied AI:
+
+1) Task description / role
+2) Tone context
+3) Background data, documents & images
+4) Detailed task description & rules
+5) Examples (few-shot)
+6) Conversation history
+7) Immediate task description
+8) Thinking step-by-step
+9) Output formatting
+10) Prefilled response
+
+PROMPT ACTUAL:
+"""
+[pegá aquí tu prompt completo]
+"""
+
+CASO DE USO:
+[describí en 1-2 líneas qué hace este prompt en producción]
+
+ENTREGAME:
+1. Tabla con los 10 pilares marcando ✅ presente / ⚠️ débil / ❌ ausente + una línea de evidencia.
+2. Los 3 pilares con mayor impacto al añadirlos en este prompt específico.
+3. La versión afilada del prompt, lista para copiar, con XML tags si aplica.
+4. Una línea de estrategia: qué cambió y por qué.`
+  },
+  {
+    title:'3. Flujo v1 → v5 para tu caso',
+    desc:'Mismo patrón del demo del seguro sueco aplicado a TU tarea. Claude entrega 5 versiones, cada una sumando un pilar.',
+    usage:'<strong>Cómo usar:</strong> Describí tu tarea en 2-3 líneas. No necesitás tener nada escrito aún.',
+    code:`Quiero aplicar el flujo iterativo V1 → V5 de Prompting 101 de Anthropic a MI caso de uso.
+
+MI TAREA:
+"""
+[describí en 2-3 líneas qué querés que Claude haga, qué inputs recibe y qué output esperan]
+"""
+
+ENTREGAME LAS 5 VERSIONES:
+
+v1 — Prompt vago en una sola línea (para mostrar el modo error).
+v2 — v1 + role + tone context.
+v3 — v2 + background data en system prompt (estructura del input, glosario, reglas fijas).
+v4 — v3 + reglas paso a paso de cómo razonar + immediate task + thinking.
+v5 — v4 + output formatting (XML o JSON) + sugerencia de prefill.
+
+Para cada versión:
+- Marcá qué pilar se agregó respecto a la previa.
+- Pegá el prompt completo en bloque copiable.
+- En una línea: qué error de v(n-1) corrige esta versión.
+
+Cerrá con: cuál versión recomendás para producción y por qué.`
+  },
+  {
+    title:'4. Refactor: mensaje único → system + user',
+    desc:'Partir un prompt monolítico en system prompt cacheable + user message con placeholders + sugerencia de prefill.',
+    usage:'<strong>Cómo usar:</strong> Pegá tu prompt actual (aunque sea largo). El output es directamente código.',
+    code:`Tengo este prompt todo en un solo mensaje de usuario. Quiero refactorizarlo a la estructura system + user que recomienda Anthropic Applied AI.
+
+PROMPT ACTUAL (todo junto):
+"""
+[pegálo entero aquí]
+"""
+
+ENTREGAME:
+
+1) SYSTEM PROMPT — lo que NO cambia entre llamadas:
+<role>...</role>
+<tone>...</tone>
+<background>...</background>
+<rules>...</rules>
+<examples>...</examples>
+<output_format>...</output_format>
+
+2) USER MESSAGE TEMPLATE — lo que SÍ cambia por cada llamada:
+- Placeholders {{...}} marcados.
+- Pilar 7 (immediate task) al inicio o al final.
+
+3) NOTA DE PROMPT CACHING — qué bloque te conviene cachear y cuanto ahorra aproximado.
+
+4) PREFILL SUGERIDO — qué meter en el primer mensaje del assistant para forzar el formato.`
+  },
+];
+
+document.getElementById('templateCards').innerHTML=TEMPLATES.map((t,i)=>{
+  const escaped=t.code.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return`<div class="tpl-card">`+
+    `<div class="tpl-head"><h3>${t.title}</h3><p>${t.desc}</p></div>`+
+    `<div class="tpl-body"><pre><code>${escaped}</code></pre></div>`+
+    `<div class="tpl-usage">${t.usage}</div>`+
+    `</div>`;
+}).join('');
+
+// Add copy buttons to template pre elements
+document.querySelectorAll('.tpl-body pre').forEach((pre,i)=>{
+  const btn=makeCopyBtn(TEMPLATES[i].code);
+  pre.appendChild(btn);
+});
+
+// Auto-open first pillar
+document.querySelector('.pillar-head').click();
+</script>
+</body>
+</html>
