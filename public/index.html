@@ -46,13 +46,12 @@
 <body>
 <header>
   <h1>Stack IA Creador</h1>
-  <div class="subtitle">8 skills + 13 prompts copy-paste + 9 programas externos. Tool-agnostic.</div>
+  <div class="subtitle">8 skills + 10 prompts copy-paste + 9 programas externos. Tool-agnostic.</div>
   <div class="meta">Pegalos en Claude, ChatGPT, Gemini, Perplexity. Funciona offline.</div>
   <div class="header-nav">
-    <a href="/newsletter.html" style="display:inline-block;padding:0.5rem 1.1rem;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:8px;font-size:0.88rem;font-weight:600;text-decoration:none;">Newsletter &rarr;</a>
-    <a href="/prompting-101.html" style="display:inline-block;padding:0.5rem 1.1rem;background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #4338ca;color:#a5b4fc;border-radius:8px;font-size:0.88rem;font-weight:600;text-decoration:none;">Prompting 101 &rarr;</a>
-    <a href="/dashboard.html" style="display:inline-block;padding:0.5rem 1.1rem;background:linear-gradient(135deg,#1d4ed8,#4338ca);color:#fff;border-radius:8px;font-size:0.88rem;font-weight:600;text-decoration:none;">Dashboard &rarr;</a>
-    <a href="/crm.html" style="display:inline-block;padding:0.5rem 1.1rem;background:linear-gradient(135deg,#047857,#059669);color:#fff;border-radius:8px;font-size:0.88rem;font-weight:600;text-decoration:none;">CRM &rarr;</a>
+    <a href="/newsletter.html" style="display:inline-block;padding:0.5rem 1.25rem;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">Newsletter IA &rarr;</a>
+    <a href="/dashboard.html" style="display:inline-block;padding:0.5rem 1.25rem;background:linear-gradient(135deg,#1d4ed8,#4338ca);color:#fff;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">Dashboard &rarr;</a>
+    <a href="/crm.html" style="display:inline-block;padding:0.5rem 1.25rem;background:linear-gradient(135deg,#047857,#059669);color:#fff;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">CRM Leads &rarr;</a>
   </div>
   <div class="ia-badges">
     <span id="mood-badge"        class="ia-meta"></span>
@@ -60,135 +59,23 @@
     <span id="coordinator-badge" class="ia-meta"></span>
     <span id="cost-badge"        class="ia-meta"></span>
     <span id="anomaly-badge"     class="ia-meta"></span>
-    <button class="ia-cmd" id="ctx-viz-btn"     title="/ctx-viz (Ctrl+K)">/ctx-viz</button>
-    <button class="ia-cmd" id="dream-btn"       title="/dream (Ctrl+D)">/dream</button>
-    <button class="ia-cmd" id="stats-btn"       title="/stats (Ctrl+S)">/stats</button>
-    <button class="ia-cmd" id="gc-btn"          title="/gc (Ctrl+G)">/gc</button>
-    <button class="ia-cmd" id="plan-btn"        title="/plan">/plan</button>
-    <button class="ia-cmd" id="timeline-btn"    title="/timeline (Ctrl+T)">/timeline</button>
-    <button class="ia-cmd" id="journal-btn"     title="/journal (Ctrl+J)">/journal</button>
-    <button class="ia-cmd" id="export-btn"      title="/export (Ctrl+E)">/export</button>
-    <button class="ia-cmd" id="lb-btn"          title="/leaderboard">/lb</button>
-    <button class="ia-cmd" id="drift-btn"       title="/drift">/drift</button>
-    <button class="ia-cmd" id="tags-btn"        title="/tags">/tags</button>
-    <button class="ia-cmd" id="compress-btn"    title="/compress">/compress</button>
-    <button class="ia-cmd" id="goals-btn"       title="/goals (Ctrl+O)">/goals</button>
-    <button class="ia-cmd" id="insights-btn"    title="/insights">/insights</button>
+    <button class="ia-cmd" id="ctx-viz-btn"    title="/ctx-viz (Ctrl+K)">/ctx-viz</button>
+    <button class="ia-cmd" id="dream-btn"      title="/dream (Ctrl+D)">/dream</button>
+    <button class="ia-cmd" id="stats-btn"      title="/stats (Ctrl+S)">/stats</button>
+    <button class="ia-cmd" id="gc-btn"         title="/gc (Ctrl+G)">/gc</button>
+    <button class="ia-cmd" id="plan-btn"       title="/plan">/plan</button>
+    <button class="ia-cmd" id="timeline-btn"   title="/timeline (Ctrl+T)">/timeline</button>
+    <button class="ia-cmd" id="journal-btn"    title="/journal (Ctrl+J)">/journal</button>
+    <button class="ia-cmd" id="export-btn"     title="/export (Ctrl+E)">/export</button>
+    <button class="ia-cmd" id="lb-btn"         title="/leaderboard">/lb</button>
+    <button class="ia-cmd" id="drift-btn"      title="/drift">/drift</button>
+    <button class="ia-cmd" id="tags-btn"       title="/tags">/tags</button>
+    <button class="ia-cmd" id="compress-btn"   title="/compress">/compress</button>
+    <button class="ia-cmd" id="goals-btn"      title="/goals (Ctrl+O)">/goals</button>
+    <button class="ia-cmd" id="insights-btn"   title="/insights">/insights</button>
     <button class="ia-cmd" id="timemachine-btn" title="/time-machine">/time</button>
-    <button class="ia-cmd" id="patterns-btn"    title="/patterns">/patterns</button>
-    <button class="ia-cmd" id="habits-btn"      title="/habits (Ctrl+H)">/habits</button>
-    <button class="ia-cmd" id="focus-btn"       title="/focus">/focus</button>
-    <button class="ia-cmd" id="kb-btn"          title="/kb (Ctrl+B)">/kb</button>
-    <button class="ia-cmd" id="heatmap-btn"     title="/heatmap">/heatmap</button>
-    <button class="ia-cmd" id="retro-btn"          title="/retro (Ctrl+Alt+R)">/retro</button>
-    <button class="ia-cmd" id="energy-btn"         title="/energy">/energy</button>
-    <button class="ia-cmd" id="vocab-btn"          title="/vocab">/vocab</button>
-    <button class="ia-cmd" id="accountability-btn" title="/accountability">/acc</button>
-    <button class="ia-cmd" id="decision-btn"       title="/decisions">/dec</button>
-    <button class="ia-cmd" id="weekly-btn"         title="/weekly">/weekly</button>
-    <button class="ia-cmd" id="learning-btn"       title="/learning">/learn</button>
-    <button class="ia-cmd" id="capsule-btn"        title="/capsule">/capsule</button>
-    <button class="ia-cmd" id="project-btn"   title="/projects (Ctrl+Alt+P)">/proj</button>
-    <button class="ia-cmd" id="meeting-btn"   title="/meetings (Ctrl+Alt+M)">/meet</button>
-    <button class="ia-cmd" id="gratitude-btn" title="/gratitude (Ctrl+Alt+G)">/grat</button>
-    <button class="ia-cmd" id="wins-btn"      title="/wins">/wins</button>
-    <button class="ia-cmd" id="ideas-btn"   title="/ideas (Ctrl+Alt+I)">/ideas</button>
-    <button class="ia-cmd" id="standup-btn" title="/standup (Ctrl+Alt+S)">/standup</button>
-    <button class="ia-cmd" id="budget-btn"  title="/budget (Ctrl+Alt+B)">/budget</button>
-    <button class="ia-cmd" id="reading-btn" title="/reading">/reading</button>
-    <button class="ia-cmd" id="mood-btn"       title="/mood (Ctrl+Alt+O)">/mood</button>
-    <button class="ia-cmd" id="checkpoint-btn" title="/checkpoint (Ctrl+Alt+C)">/check</button>
-    <button class="ia-cmd" id="template-btn"   title="/templates (Ctrl+Alt+T)">/tmpl</button>
-    <button class="ia-cmd" id="contact-btn"    title="/contacts (Ctrl+Alt+N)">/contacts</button>
-    <button class="ia-cmd" id="sprint-btn"     title="/sprint (Ctrl+Alt+Q)">/sprint</button>
-    <button class="ia-cmd" id="kpi-btn"        title="/kpis (Ctrl+Alt+K)">/kpis</button>
-    <button class="ia-cmd" id="eventlog-btn"   title="/events (Ctrl+Alt+E)">/events</button>
-    <button class="ia-cmd" id="reflect-btn"    title="/reflect (Ctrl+Alt+F)">/reflect</button>
-    <button class="ia-cmd" id="skills-btn"       title="/skills (Ctrl+Alt+S2)">/skills</button>
-    <button class="ia-cmd" id="okr-btn"          title="/okrs (Ctrl+Alt+V)">/okrs</button>
-    <button class="ia-cmd" id="timelog-btn"      title="/timelog (Ctrl+Alt+X)">/time</button>
-    <button class="ia-cmd" id="affirmations-btn" title="/affirmations (Ctrl+Alt+A)">/affirm</button>
-    <button class="ia-cmd" id="milestone-btn" title="/milestones (Ctrl+Alt+3)">/miles</button>
-    <button class="ia-cmd" id="fsession-btn"  title="/focus-session (Ctrl+Alt+4)">/fsess</button>
-    <button class="ia-cmd" id="quotes-btn"    title="/quotes (Ctrl+Alt+5)">/quotes</button>
-    <button class="ia-cmd" id="pnotes-btn"    title="/pnotes (Ctrl+Alt+6)">/pnotes</button>
-    <button class="ia-cmd" id="content-cal-btn" title="/content-cal (Ctrl+Alt+7)">/cal</button>
-    <button class="ia-cmd" id="netlog-btn"      title="/netlog (Ctrl+Alt+8)">/net</button>
-    <button class="ia-cmd" id="sleep-btn"       title="/sleep (Ctrl+Alt+9)">/sleep</button>
-    <button class="ia-cmd" id="rnotes-btn"      title="/rnotes (Ctrl+Alt+0)">/rnotes</button>
-    <button class="ia-cmd" id="lang-btn"        title="/lang (Ctrl+Alt+1)">/lang</button>
-    <button class="ia-cmd" id="expenses-btn"    title="/expenses (Ctrl+Alt+H)">/expenses</button>
-    <button class="ia-cmd" id="tasks-btn"       title="/tasks (Ctrl+Alt+J)">/tasks</button>
-    <button class="ia-cmd" id="wellness-btn"    title="/wellness (Ctrl+Alt+U)">/wellness</button>
-    <button class="ia-cmd" id="water-btn"       title="/water (Ctrl+Alt+Y)">/water</button>
-    <button class="ia-cmd" id="weight-btn"      title="/weight (Ctrl+Alt+Z)">/weight</button>
-    <button class="ia-cmd" id="intention-btn"   title="/intention (Ctrl+Shift+I)">/intention</button>
-    <button class="ia-cmd" id="roadmap-btn"     title="/roadmap (Ctrl+Shift+R)">/roadmap</button>
-    <button class="ia-cmd" id="jar-btn"         title="/jar (Ctrl+Shift+G)">/jar</button>
-    <button class="ia-cmd" id="timer-btn"       title="/timer (Ctrl+Shift+T)">/timer</button>
-    <button class="ia-cmd" id="mentor-btn"      title="/mentor (Ctrl+Shift+M)">/mentor</button>
-    <button class="ia-cmd" id="snippets-btn"    title="/snippets (Ctrl+Shift+S)">/snippets</button>
-    <button class="ia-cmd" id="vision-btn"      title="/vision (Ctrl+Shift+V)">/vision</button>
-    <button class="ia-cmd" id="quotes2-btn"     title="/quotes2 (Ctrl+Shift+Q)">/quotes2</button>
-    <button class="ia-cmd" id="netgoals-btn"    title="/netgoals (Ctrl+Shift+N)">/netgoals</button>
-    <button class="ia-cmd" id="jobs-btn"        title="/jobs (Ctrl+Shift+J)">/jobs</button>
-    <button class="ia-cmd" id="fblocks-btn"     title="/fblocks (Ctrl+Shift+F)">/fblocks</button>
-    <button class="ia-cmd" id="crm-btn"         title="/crm (Ctrl+Shift+C)">/crm</button>
-    <button class="ia-cmd" id="invoices-btn"    title="/invoices (Ctrl+Shift+P)">/invoices</button>
-    <button class="ia-cmd" id="lgoals-btn"      title="/lgoals (Ctrl+Shift+L)">/lgoals</button>
-    <button class="ia-cmd" id="brand-btn"       title="/brand (Ctrl+Shift+B)">/brand</button>
-    <button class="ia-cmd" id="wins2-btn"       title="/wins2 (Ctrl+Shift+W)">/wins2</button>
-    <button class="ia-cmd" id="portfolio-btn"   title="/portfolio (Ctrl+Shift+O)">/portfolio</button>
-    <button class="ia-cmd" id="plog-btn"        title="/plog (Ctrl+Shift+E)">/plog</button>
-    <button class="ia-cmd" id="cideas-btn"      title="/c-ideas (Ctrl+Shift+D)">/c-ideas</button>
-    <button class="ia-cmd" id="outreach-btn"    title="/outreach (Ctrl+Shift+U)">/outreach</button>
-    <button class="ia-cmd" id="sales-btn"       title="/sales (Ctrl+Shift+A)">/sales</button>
-    <button class="ia-cmd" id="feedback2-btn"   title="/feedback2 (Ctrl+Shift+K)">/feedback2</button>
-    <button class="ia-cmd" id="sproof-btn"      title="/sproof (Ctrl+Shift+Y)">/sproof</button>
-    <button class="ia-cmd" id="ecampaigns-btn"  title="/ecampaigns (Ctrl+Shift+G)">/ecampaigns</button>
-    <button class="ia-cmd" id="taudit-btn"      title="/taudit (Ctrl+Shift+T)">/taudit</button>
-    <button class="ia-cmd" id="detox-btn"       title="/detox (Ctrl+Shift+X)">/detox</button>
-    <button class="ia-cmd" id="readlist-btn"    title="/readlist (Ctrl+Shift+R)">/readlist</button>
-    <button class="ia-cmd" id="courses-btn"     title="/courses (Ctrl+Shift+H)">/courses</button>
-    <button class="ia-cmd" id="savings-btn"     title="/savings (Ctrl+Shift+Z)">/savings</button>
-    <button class="ia-cmd" id="meals-btn"       title="/meals (Ctrl+Shift+M)">/meals</button>
-    <button class="ia-cmd" id="bmetrics-btn"    title="/bmetrics (Ctrl+Alt+B)">/bmetrics</button>
-    <button class="ia-cmd" id="bnotes-btn"      title="/bnotes (Ctrl+Alt+N)">/bnotes</button>
-    <button class="ia-cmd" id="subs-btn"        title="/subs (Ctrl+Alt+S)">/subs</button>
-    <button class="ia-cmd" id="travel-btn"      title="/travel (Ctrl+Alt+T)">/travel</button>
-    <button class="ia-cmd" id="events-btn"      title="/events (Ctrl+Alt+E)">/events</button>
-    <button class="ia-cmd" id="interview-btn"   title="/interview (Ctrl+Alt+I)">/interview</button>
-    <button class="ia-cmd" id="newsletters-btn" title="/newsletters (Ctrl+Alt+L)">/newsletters</button>
-    <button class="ia-cmd" id="words-btn"       title="/words (Ctrl+Alt+W)">/words</button>
-    <button class="ia-cmd" id="checkpoint-btn"  title="/checkpoint (Ctrl+Alt+A)">/checkpoint</button>
-    <button class="ia-cmd" id="patterns-btn"    title="/patterns (Ctrl+Alt+P)">/patterns</button>
-    <button class="ia-cmd" id="timemachine-btn" title="/timemachine (Ctrl+Alt+Y)">/timemachine</button>
-    <button class="ia-cmd" id="tbudget-btn"     title="/tbudget (Ctrl+Alt+O)">/tbudget</button>
-    <button class="ia-cmd" id="buglog-btn"      title="/buglog">/buglog</button>
-    <button class="ia-cmd" id="hjournal-btn"    title="/hjournal">/hjournal</button>
-    <button class="ia-cmd" id="mjournal-btn"    title="/mjournal">/mjournal</button>
-    <button class="ia-cmd" id="medialog-btn"    title="/medialog">/medialog</button>
-    <button class="ia-cmd" id="costtracker-btn" title="/costtracker">/costtracker</button>
-    <button class="ia-cmd" id="dailyreview-btn" title="/dailyreview">/dailyreview</button>
-    <button class="ia-cmd" id="feedbacklog-btn" title="/feedbacklog">/feedbacklog</button>
-    <button class="ia-cmd" id="rchallenge-btn"  title="/rchallenge">/rchallenge</button>
-    <button class="ia-cmd" id="anomaly-btn"     title="/anomaly">/anomaly</button>
-    <button class="ia-cmd" id="cplog-btn"       title="/cplog">/cplog</button>
-    <button class="ia-cmd" id="cnotes-btn"      title="/cnotes">/cnotes</button>
-    <button class="ia-cmd" id="preslog-btn"     title="/preslog">/preslog</button>
-    <button class="ia-cmd" id="sreplay-btn"     title="/sreplay">/sreplay</button>
-    <button class="ia-cmd" id="changelog-btn"   title="/changelog">/changelog</button>
-    <button class="ia-cmd" id="linkvault-btn"   title="/linkvault">/linkvault</button>
-    <button class="ia-cmd" id="researchlog-btn" title="/researchlog">/researchlog</button>
-    <button class="ia-cmd" id="sreminder-btn"   title="/sreminder">/sreminder</button>
-    <button class="ia-cmd" id="promptlib-btn"   title="/promptlib">/promptlib</button>
-    <button class="ia-cmd" id="achievements-btn" title="/achievements">/achievements</button>
-    <button class="ia-cmd" id="errorlog-btn"    title="/errorlog">/errorlog</button>
-    <button class="ia-cmd" id="convjournal-btn"   title="/convjournal">/convjournal</button>
-    <button class="ia-cmd" id="decmatrix-btn"     title="/decmatrix">/decmatrix</button>
-    <button class="ia-cmd" id="explog-btn"        title="/explog">/explog</button>
-    <button class="ia-cmd" id="weeklydigest-btn"  title="/weeklydigest">/weeklydigest</button>
-    <button class="ia-cmd" id="hotkeys-btn"     title="Atajos (Ctrl+Shift+?)">?</button>
+    <button class="ia-cmd" id="patterns-btn"   title="/patterns">/patterns</button>
+    <button class="ia-cmd" id="hotkeys-btn"    title="Atajos (Ctrl+?)">?</button>
   </div>
 </header>
 <nav class="tabs" role="tablist">
@@ -213,12 +100,111 @@
   <div class="newsletter-banner"><h3>&#x1F4E9; Newsletter de IA</h3><p>Las mejores herramientas cada semana.</p><a class="escudo-cta" href="/newsletter.html">Suscribirme gratis</a></div>
 </section>
 <footer>
-  <div>Stack IA Creador v2.1 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
-  <div style="margin-top:0.4rem"><a href="https://github.com/diego-orosa" target="_blank" rel="noopener noreferrer">Diego Orosa</a> &middot; Para creadores que viven de su contenido.</div>
-  <div style="margin-top:0.4rem"><a href="/newsletter.html">Newsletter</a> &middot; <a href="/prompting-101.html">Prompting 101</a> &middot; <a href="/dashboard.html">Dashboard</a> &middot; <a href="/crm.html">CRM</a> &middot; <a href="https://deploy-oro.vercel.app/escudo">Escudo Patrimonial</a></div>
+  <div>Stack IA Creador v1.8 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
+  <div style="margin-top:0.4rem"><a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> &middot; Para creadores que viven de su contenido.</div>
+  <div style="margin-top:0.4rem"><a href="/newsletter.html">Newsletter de IA</a> &middot; <a href="/dashboard.html">Dashboard</a> &middot; <a href="/crm.html">CRM</a> &middot; <a href="https://deploy-oro.vercel.app/escudo">Escudo Patrimonial</a></div>
 </footer>
-<script type="application/json" id="skills-data">[{"name":"stack-schedule","etapa":"00-schedule","desc":"Agentes /schedule en la nube Anthropic. Corren aunque cierres la laptop. 3 presets Estudio Oro listos para copiar: ultrathink lunes, banco ideas y reporte dominical WhatsApp.","triggers":["agenda semana","calendario editorial","schedule contenido","/schedule","/agenda","automatizar publicacion","programar tarea","agente semanal"],"prompts":["00-schedule-ultrathink","00-schedule-banco-ideas","00-schedule-reporte-whatsapp"],"active":true},{"name":"stack-ia-creador","etapa":"meta","desc":"Orquestador del stack.","triggers":["stack ia","/stack"],"prompts":[],"active":true},{"name":"stack-claude-guion","etapa":"01-guion","desc":"Guion humanizado de Reel.","triggers":["guion reel","/guion"],"prompts":["01-guion-humanizado","01-banco-10-ideas"],"active":true},{"name":"stack-imagen","etapa":"02-imagen","desc":"Prompts Nano Banana Pro.","triggers":["prompt nano banana","/imagen"],"prompts":["02-3-variantes-nano-banana"],"active":true},{"name":"stack-video","etapa":"03-video","desc":"Shot list Veo 3.1.","triggers":["shot list","/video"],"prompts":["03-shot-list-ruteado"],"active":true},{"name":"stack-voz","etapa":"04-voz","desc":"Voz ElevenLabs.","triggers":["prompt elevenlabs","/voz"],"prompts":["04-3-variantes-direccion-voz"],"active":true},{"name":"stack-avatar","etapa":"05-avatar","desc":"HeyGen + Higgsfield.","triggers":["guion heygen","/avatar"],"prompts":["05-script-doctor-heygen"],"active":true},{"name":"stack-manychat","etapa":"06-dms","desc":"Flow ManyChat completo.","triggers":["flow manychat","/dm"],"prompts":["06-flow-manychat-completo"],"active":true},{"name":"stack-master-prompt","etapa":"07-master","desc":"El prompt que escribe los demas.","triggers":["master prompt","/master"],"prompts":["07-template-master-prompt"],"active":true},{"name":"prompt-master","etapa":"meta","desc":"Afila prompts: 9 dimensiones, 10 pilares Anthropic, 35 anti-patrones. /prompt-master","triggers":["prompt master","/prompt-master","afila prompt","mejora prompt","audita prompt"],"prompts":[],"active":true},{"name":"prompting-101","etapa":"meta","desc":"10 pilares Anthropic Applied AI. Flujo v1-v5, XML tags, extended thinking, prefill.","triggers":["prompting 101","10 pilares","/p101"],"prompts":[],"active":true}]</script>
+<script type="application/json" id="skills-data">[{"name":"stack-schedule","etapa":"meta","desc":"Agenda editorial automatica.","triggers":["agenda semana","/schedule"],"prompts":[],"active":true},{"name":"stack-ia-creador","etapa":"meta","desc":"Orquestador del stack.","triggers":["stack ia","/stack"],"prompts":[],"active":true},{"name":"stack-claude-guion","etapa":"01-guion","desc":"Guion humanizado de Reel.","triggers":["guion reel","/guion"],"prompts":["01-guion-humanizado","01-banco-10-ideas"],"active":true},{"name":"stack-imagen","etapa":"02-imagen","desc":"Prompts Nano Banana Pro.","triggers":["prompt nano banana","/imagen"],"prompts":["02-3-variantes-nano-banana"],"active":true},{"name":"stack-video","etapa":"03-video","desc":"Shot list Veo 3.1.","triggers":["shot list","/video"],"prompts":["03-shot-list-ruteado"],"active":true},{"name":"stack-voz","etapa":"04-voz","desc":"Voz ElevenLabs.","triggers":["prompt elevenlabs","/voz"],"prompts":["04-3-variantes-direccion-voz"],"active":true},{"name":"stack-avatar","etapa":"05-avatar","desc":"HeyGen + Higgsfield.","triggers":["guion heygen","/avatar"],"prompts":["05-script-doctor-heygen"],"active":true},{"name":"stack-manychat","etapa":"06-dms","desc":"Flow ManyChat completo.","triggers":["flow manychat","/dm"],"prompts":["06-flow-manychat-completo"],"active":true},{"name":"stack-master-prompt","etapa":"07-master","desc":"El prompt que escribe los demas.","triggers":["master prompt","/master"],"prompts":["07-template-master-prompt"],"active":true},{"name":"prompt-master","etapa":"meta","desc":"Afila prompts: 9 dimensiones, 10 pilares Anthropic, 35 anti-patrones. /prompt-master","triggers":["prompt master","/prompt-master","afila prompt","mejora prompt","audita prompt"],"prompts":[],"active":true}]</script>
 <script src="/app.js"></script>
-<script type="module" src="/init.js"></script>
+<script type="module">
+  import { runDreamCycle, incrementSession }              from '/kairos.js';
+  import { runCoordinatorCycle }                          from '/coordinator.js';
+  import { attachFrustrationDetection }                   from '/frustration.js';
+  import { initBuddy }                                    from '/buddy.js';
+  import { toggleCtxViz }                                 from '/ctx-viz.js';
+  import { renderProactiveBanner }                        from '/proactive.js';
+  import { initBridge, sendBridgeCommand }                from '/bridge.js';
+  import { createUltraPlan }                              from '/ultraplan.js';
+  import { initTokenBudget }                              from '/token-budget.js';
+  import { renderStats }                                  from '/stats.js';
+  import { initNotifications, notify }                    from '/notifications.js';
+  import { renderExportPanel }                            from '/export.js';
+  import { renderMemoryTimeline }                         from '/memory-timeline.js';
+  import { initCostBadge }                                from '/cost-badge.js';
+  import { initMoodRing }                                 from '/mood-ring.js';
+  import { showWarmupCard }                               from '/session-warmup.js';
+  import { initHotkeys, registerHotkey, showHotkeysHelp } from '/hotkeys.js';
+  import { renderAnomalyBadge }                           from '/anomaly.js';
+  import { renderDreamJournal }                           from '/dream-journal.js';
+  import { compressKairosMemory }                         from '/context-compressor.js';
+  import { tagSession, renderTagCloud }                   from '/auto-tagger.js';
+  import { renderLeaderboard, trackUsage }                from '/leaderboard.js';
+  import { renderDriftReport }                            from '/drift-detector.js';
+  import { initOfflineIndicator }                         from '/offline-indicator.js';
+  import { renderGoalPanel }                              from '/goal-tracker.js';
+  import { renderInsightPanel, generateInsights }         from '/insight-engine.js';
+  import { renderTimeMachine }                            from '/time-machine.js';
+  import { renderPatternReport, analyzeText }             from '/pattern-recognizer.js';
+  import { getFlags }                                     from '/flags.js';
+
+  const flags = getFlags();
+
+  if (flags.KAIROS_ENABLED)             { incrementSession(); runDreamCycle(); }
+  if (flags.COORDINATOR_ENABLED)        { runCoordinatorCycle('Optimización automática'); }
+  if (flags.FRUSTRATION_DETECTION)      { attachFrustrationDetection(document.body); }
+  if (flags.BUDDY_ENABLED)              { initBuddy(); }
+  if (flags.PROACTIVE_ENABLED)          { renderProactiveBanner(); }
+  if (flags.BRIDGE_ENABLED)             { initBridge(); }
+  if (flags.TOKEN_BUDGET_ENABLED)       { initTokenBudget(); }
+  if (flags.NOTIFICATIONS_ENABLED)      { initNotifications(); }
+  if (flags.COST_BADGE_ENABLED)         { initCostBadge(); }
+  if (flags.MOOD_RING_ENABLED)          { initMoodRing(); }
+  if (flags.ANOMALY_DETECTION_ENABLED)  { renderAnomalyBadge(); }
+  if (flags.SESSION_WARMUP_ENABLED)     { setTimeout(showWarmupCard, 2000); }
+  if (flags.HOTKEYS_ENABLED)            { initHotkeys(); }
+  if (flags.OFFLINE_INDICATOR_ENABLED)  { initOfflineIndicator(); }
+  if (flags.CONTEXT_COMPRESSOR_ENABLED) { setTimeout(() => compressKairosMemory(), 5000); }
+  if (flags.AUTO_TAGGER_ENABLED)        { tagSession(document.title + ' ' + location.href); }
+
+  analyzeText(document.title + ' ' + location.href);
+  generateInsights();
+
+  registerHotkey('ctrl+d', '/dream',    () => { localStorage.setItem('kairos:sessions','5'); runDreamCycle().then(() => { notify('KAIROS completado','4 fases ejecutadas','kairos'); trackUsage('dream'); }); });
+  registerHotkey('ctrl+g', '/gc',       () => document.getElementById('gc-btn')?.click());
+  registerHotkey('ctrl+s', '/stats',    () => { renderStats(); trackUsage('stats'); });
+  registerHotkey('ctrl+t', '/timeline', () => { renderMemoryTimeline(); trackUsage('timeline'); });
+  registerHotkey('ctrl+e', '/export',   () => renderExportPanel());
+  registerHotkey('ctrl+k', '/ctx-viz',  () => toggleCtxViz());
+  registerHotkey('ctrl+j', '/journal',  () => { renderDreamJournal(); trackUsage('journal'); });
+  registerHotkey('ctrl+o', '/goals',    () => { renderGoalPanel(); trackUsage('goals'); });
+  registerHotkey('ctrl+?', 'hotkeys',   () => showHotkeysHelp());
+
+  document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
+  document.getElementById('dream-btn')?.addEventListener('click', () => {
+    localStorage.setItem('kairos:sessions','5');
+    runDreamCycle().then(() => { notify('KAIROS completado','4 fases','kairos'); trackUsage('dream'); });
+  });
+  document.getElementById('stats-btn')?.addEventListener('click',  () => { renderStats(); trackUsage('stats'); });
+  document.getElementById('gc-btn')?.addEventListener('click', () => {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith('kairos:event:'));
+    keys.forEach(k => localStorage.removeItem(k));
+    localStorage.setItem('kairos:sessions','0');
+    if (flags.BRIDGE_ENABLED) sendBridgeCommand('gc');
+    trackUsage('gc');
+    const btn = document.getElementById('gc-btn');
+    if (btn) { btn.textContent = `✅ ${keys.length}`; setTimeout(() => { btn.textContent = '/gc'; }, 2500); }
+  });
+  document.getElementById('plan-btn')?.addEventListener('click', () => {
+    if (!flags.ULTRAPLAN_ENABLED) return;
+    const goal = prompt('¿Cuál es tu objetivo?');
+    if (goal?.trim()) { createUltraPlan(goal.trim()).then(() => { notify('ULTRAPLAN creado',goal,'ultraplan'); trackUsage('ultraplan'); }); }
+  });
+  document.getElementById('timeline-btn')?.addEventListener('click',     () => { renderMemoryTimeline(); trackUsage('timeline'); });
+  document.getElementById('journal-btn')?.addEventListener('click',      () => { renderDreamJournal(); trackUsage('journal'); });
+  document.getElementById('export-btn')?.addEventListener('click',       renderExportPanel);
+  document.getElementById('lb-btn')?.addEventListener('click',           () => { renderLeaderboard(); trackUsage('stats'); });
+  document.getElementById('drift-btn')?.addEventListener('click',        renderDriftReport);
+  document.getElementById('tags-btn')?.addEventListener('click',         renderTagCloud);
+  document.getElementById('compress-btn')?.addEventListener('click', () => {
+    const saved = compressKairosMemory();
+    const btn = document.getElementById('compress-btn');
+    if (btn) { btn.textContent = `✅ ${Math.round(saved/1024)}KB`; setTimeout(() => { btn.textContent = '/compress'; }, 3000); }
+  });
+  document.getElementById('goals-btn')?.addEventListener('click',       () => { renderGoalPanel(); trackUsage('goals'); });
+  document.getElementById('insights-btn')?.addEventListener('click',    () => { renderInsightPanel(); trackUsage('insights'); });
+  document.getElementById('timemachine-btn')?.addEventListener('click', () => { renderTimeMachine(); trackUsage('time-machine'); });
+  document.getElementById('patterns-btn')?.addEventListener('click',    () => { renderPatternReport(); trackUsage('patterns'); });
+  document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
+</script>
 </body>
 </html>
