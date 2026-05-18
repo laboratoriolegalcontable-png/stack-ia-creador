@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Browser Harness — Dashboard</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #141414;
+    --bg-card-hover: #1c1c1c;
+    --border: #262626;
+    --fg: #ededed;
+    --fg-dim: #999;
+    --accent: #f5a623;
+    --green: #4ade80;
+    --red: #ef4444;
+    --blue: #60a5fa;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+    background: var(--bg); color: var(--fg);
+    padding: 24px; max-width: 1200px; margin: 0 auto;
+  }
+  h1 { font-size: 28px; margin-bottom: 4px; }
+  h2 { font-size: 18px; margin: 32px 0 12px; color: var(--fg-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  .subtitle { color: var(--fg-dim); margin-bottom: 32px; }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; transition: background 0.15s;
+  }
+  .card:hover { background: var(--bg-card-hover); }
+  .card-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .card-desc { color: var(--fg-dim); font-size: 13px; margin-bottom: 12px; }
+  .pill {
+    display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 500;
+    border-radius: 100px; background: rgba(255,255,255,0.06); color: var(--fg-dim);
+    margin-right: 6px;
+  }
+  .pill.green { background: rgba(74,222,128,0.15); color: var(--green); }
+  .pill.orange { background: rgba(245,166,35,0.15); color: var(--accent); }
+  .pill.blue { background: rgba(96,165,250,0.15); color: var(--blue); }
+
+  pre {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; font-size: 12px; overflow-x: auto;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  }
+  code { font-family: inherit; }
+
+  .stat-row { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .stat {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 20px; flex: 1; min-width: 140px;
+  }
+  .stat-value { font-size: 28px; font-weight: 600; color: var(--accent); }
+  .stat-label { color: var(--fg-dim); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  .job-list { display: flex; flex-direction: column; gap: 8px; }
+  .job {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .job-name { font-weight: 500; }
+  .job-cron { color: var(--fg-dim); font-family: "JetBrains Mono", monospace; font-size: 12px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  th { color: var(--fg-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  td { font-size: 13px; }
+  td code { background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--fg-dim); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>Browser Harness</h1>
+<p class="subtitle">Tu Chrome real, con tus sesiones, ejecutando tareas que aprende y guarda como skills.</p>
+
+<div class="stat-row">
+  <div class="stat">
+    <div class="stat-value">95+5</div>
+    <div class="stat-label">Domain skills</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">24</div>
+    <div class="stat-label">Tareas LATAM listas</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">7</div>
+    <div class="stat-label">Jobs autonomos</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">3</div>
+    <div class="stat-label">Modos de corrida</div>
+  </div>
+</div>
+
+<h2>Instalacion en 1 comando</h2>
+<pre><code>bash .claude/skills/browser-harness/scripts/install.sh</code></pre>
+<p class="subtitle" style="margin-top:8px;">Detecta tu OS, clona el repo upstream, instala dependencias con uv, copia las 5 seed skills LATAM, y te dice como abrir Chrome con debugging port.</p>
+
+<h2>Activar los 7 jobs autonomos (Diego Orosa)</h2>
+<pre><code>bash .claude/skills/browser-harness/scripts/setup-jobs-diego.sh</code></pre>
+
+<h2>Domain skills LATAM nuevas</h2>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-title">📷 Instagram</div>
+    <div class="card-desc">Feed, top reels, hashtags, ads activos, story highlights.</div>
+    <div>
+      <span class="pill">account-feed</span>
+      <span class="pill">top-reels</span>
+      <span class="pill">hashtag-monitor</span>
+      <span class="pill">ads-active</span>
+      <span class="pill">story-highlights</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛒 Mercado Libre</div>
+    <div class="card-desc">Busqueda, ofertas dia, price tracker, listings de seller, inmuebles.</div>
+    <div>
+      <span class="pill">search</span>
+      <span class="pill">ofertas-dia</span>
+      <span class="pill">price-tracker</span>
+      <span class="pill">seller-listings</span>
+      <span class="pill">vertical-search</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛍 Tienda Nube</div>
+    <div class="card-desc">Catalogo publico, comparar precios, admin ordenes, descubrir tiendas.</div>
+    <div>
+      <span class="pill">public-catalog</span>
+      <span class="pill">price-comparison</span>
+      <span class="pill">admin-orders</span>
+      <span class="pill">discover-stores</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✈️ Despegar</div>
+    <div class="card-desc">Vuelos, hoteles, paquetes, monitor de precio recurrente.</div>
+    <div>
+      <span class="pill">flights</span>
+      <span class="pill">hotels</span>
+      <span class="pill">packages</span>
+      <span class="pill">price-monitor</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛵 Rappi</div>
+    <div class="card-desc">Restaurantes, comparar supers, monitor competencia, ofertas hoy.</div>
+    <div>
+      <span class="pill">restaurants</span>
+      <span class="pill">supermercados</span>
+      <span class="pill">competencia-restaurante</span>
+      <span class="pill">ofertas-hoy</span>
+    </div>
+  </div>
+
+</div>
+
+<h2>Jobs autonomos pre-configurados</h2>
+<div class="job-list">
+  <div class="job">
+    <div>
+      <div class="job-name">🌅 briefing-matutino</div>
+      <div style="color:var(--fg-dim);font-size:12px;">5 tareas en paralelo: Lobo IG + Rappi + Boletin Oficial + Zonaprop + GitHub PRs</div>
+    </div>
+    <span class="pill orange">L-V 6:30 AM</span>
+  </div>
+  <div class="job">
+    <div>
+      <div class="job-name">🛵 lobo-radar-rappi</div>
+      <div style="color:var(--fg-dim);font-size:12px;">8 competidores de Lobo Confiteria en Rappi</div>
+    </div>
+    <span class="pill orange">Diario 10 AM</span>
+  </div>
+  <div class="job">
+    <div>
+      <div class="job-name">🛒 lobo-canasta-super</div>
+      <div style="color:var(--fg-dim);font-size:12px;">Comparar 10 productos en 5 supermercados</div>
+    </div>
+    <span class="pill orange">Lunes 9 AM</span>
+  </div>
+  <div class="job">
+    <div>
+      <div class="job-name">🏢 triple-matricula</div>
+      <div style="color:var(--fg-dim);font-size:12px;">USD/m2 Palermo / Madrid / Punta del Este</div>
+    </div>
+    <span class="pill orange">Jueves 9 AM</span>
+  </div>
+  <div class="job">
+    <div>
+      <div class="job-name">📢 ads-competencia</div>
+      <div style="color:var(--fg-dim);font-size:12px;">8 competidores en FB Ads Library</div>
+    </div>
+    <span class="pill blue">Cada 6h</span>
+  </div>
+  <div class="job">
+    <div>
+      <div class="job-name">🔄 narakia-prs</div>
+      <div style="color:var(--fg-dim);font-size:12px;">Status PRs en repos Estudio Oro</div>
+    </div>
+    <span class="pill blue">Cada 30min L-V 9-18</span>
+  </div>
+  <div class="job">
+    <div>
+      <div class="job-name">✈️ vuelo-buemad-jun</div>
+      <div style="color:var(--fg-dim);font-size:12px;">Alerta cuando precio &lt; USD 700</div>
+    </div>
+    <span class="pill blue">Cada 6h</span>
+  </div>
+</div>
+
+<h2>Comandos clave</h2>
+<table>
+<thead><tr><th>Comando</th><th>Que hace</th></tr></thead>
+<tbody>
+<tr><td><code>bash scripts/install.sh</code></td><td>Instalacion autonoma</td></tr>
+<tr><td><code>browser-harness --doctor</code></td><td>Verificar setup</td></tr>
+<tr><td><code>uv run browser-harness "PROMPT"</code></td><td>Correr un prompt one-off</td></tr>
+<tr><td><code>bash scripts/schedule.sh --cron "..." --name X --prompt-file Y.md</code></td><td>Agendar job</td></tr>
+<tr><td><code>bash scripts/briefing-matutino.sh</code></td><td>5 tareas paralelo</td></tr>
+<tr><td><code>bash scripts/setup-jobs-diego.sh</code></td><td>Activar los 7 jobs</td></tr>
+</tbody>
+</table>
+
+<h2>3 modos de ejecucion</h2>
+<div class="grid">
+  <div class="card">
+    <div class="card-title">💻 Local Mac</div>
+    <div class="card-desc">launchd + Chrome real. Sesiones logueadas. Requiere Mac prendida.</div>
+    <span class="pill green">Free</span>
+  </div>
+  <div class="card">
+    <div class="card-title">☁️ Cowork sandbox</div>
+    <div class="card-desc">Chromium headless. 24/7 sin Mac. Sin sesiones logueadas.</div>
+    <span class="pill green">Plan Cowork</span>
+  </div>
+  <div class="card">
+    <div class="card-title">🤖 VPS 24/7 (bux)</div>
+    <div class="card-desc">Chrome real + Telegram bot. Sesiones via VNC. 24/7.</div>
+    <span class="pill orange">$5/mes</span>
+  </div>
+</div>
+
+<div class="footer">
+  <p>
+    Skill basada en <a href="https://github.com/browser-use/browser-harness">browser-use/browser-harness</a> (MIT) — sibling 24/7: <a href="https://github.com/browser-use/bux">bux</a> — cloud gratis: <a href="https://browser-use.com">browser-use.com</a>.
+  </p>
+  <p style="margin-top:8px;">
+    Ubicacion: <code>.claude/skills/browser-harness/</code> — 24 archivos LATAM nuevos + 7 jobs pre-configurados.
+  </p>
+</div>
+
+</body>
+</html>
