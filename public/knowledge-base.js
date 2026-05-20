@@ -13,7 +13,8 @@ function escapeHtml(str) {
 /** @param {string} title @param {string} body @param {string[]} [tags] @returns {object} */
 export function addEntry(title, body, tags = []) {
   const kb = loadKB();
-  const id = `kb-${Date.now()}`;
+  // Date.now() + random suffix prevents millisecond-level ID collisions
+  const id = `kb-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
   const now = new Date().toISOString();
   kb[id] = { id, title, body, tags, createdAt: now, updatedAt: now, useCount: 0 };
   saveKB(kb);
@@ -49,7 +50,6 @@ export function renderKnowledgeBase() {
     const entries = query ? searchEntries(query) : listEntries();
     const stats = getKBStats();
 
-    // Build header
     panel.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
         <h3 style="margin:0;color:#a5b4fc;font-size:1rem">📚 Knowledge Base <span style="font-size:0.75rem;color:#6b7280">${stats.total} entradas</span></h3>
@@ -67,10 +67,8 @@ export function renderKnowledgeBase() {
       </details>
       <div id="kb-entries"></div>`;
 
-    // Set search value safely via property (not innerHTML attribute)
     panel.querySelector('#kb-search').value = query;
 
-    // Render entries using DOM (not innerHTML) to avoid XSS
     const entriesEl = panel.querySelector('#kb-entries');
     if (entries.length === 0) {
       entriesEl.innerHTML = '<p style="color:#6b7280;font-size:0.85rem">Sin entradas.</p>';
