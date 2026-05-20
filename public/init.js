@@ -29,6 +29,7 @@ import { renderLeaderboard, trackUsage }                from '/leaderboard.js';
 import { renderDriftReport, startDriftMonitor }         from '/drift-detector.js';
 import { initOfflineIndicator }                         from '/offline-indicator.js';
 import { renderGoalPanel, renderGoalTracker }            from '/goal-tracker.js';
+import { renderChangelogLog }                            from '/changelog-log.js';
 import { renderInsightPanel, generateInsights }         from '/insight-engine.js';
 import { renderTimeMachine }                            from '/time-machine.js';
 import { renderPatternReport, analyzeText }             from '/pattern-recognizer.js';
@@ -472,3 +473,7 @@ document.getElementById('contactcrm-btn')?.addEventListener('click',     () => {
 document.getElementById('projecttracker-btn')?.addEventListener('click', () => { renderProjectTracker(); trackUsage('projecttracker'); });
 document.getElementById('readinglist-btn')?.addEventListener('click',    () => { renderReadingList();    trackUsage('readinglist'); });
 document.getElementById('goaltracker-btn')?.addEventListener('click',    () => { renderGoalTracker();    trackUsage('goaltracker'); });
+document.getElementById('invoicetracker-btn')?.addEventListener('click',      () => { renderInvoiceTracker();      trackUsage('invoicetracker'); });
+document.getElementById('subscriptiontracker-btn')?.addEventListener('click', () => { renderSubscriptionTracker(); trackUsage('subscriptiontracker'); });
+document.getElementById('changeloglog-btn')?.addEventListener('click',         () => { renderChangelogLog();        trackUsage('changeloglog'); });
+document.getElementById('eventplanner-btn')?.addEventListener('click',         () => { renderEventPlanner();        trackUsage('eventplanner'); });
