@@ -104,6 +104,10 @@ import { renderSocialProof }     from '/social-proof.js';
 import { renderEmailCampaigns }  from '/email-campaigns.js';
 import { renderTimeAudit }       from '/time-audit.js';
 import { renderDigitalDetox }    from '/digital-detox.js';
+import { renderReadingList }     from '/reading-list.js';
+import { renderCourseTracker }   from '/course-tracker.js';
+import { renderSavingsTracker }  from '/savings-tracker.js';
+import { renderMealPlanner }     from '/meal-planner.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -219,6 +223,10 @@ registerHotkey('ctrl+shift+y', '/sproof',   () => { renderSocialProof();       t
 registerHotkey('ctrl+shift+g', '/ecampaigns',() => { renderEmailCampaigns();   trackUsage('ecampaigns'); });
 registerHotkey('ctrl+shift+t', '/taudit',   () => { renderTimeAudit();         trackUsage('taudit'); });
 registerHotkey('ctrl+shift+x', '/detox',    () => { renderDigitalDetox();      trackUsage('detox'); });
+registerHotkey('ctrl+shift+r', '/readlist', () => { renderReadingList();       trackUsage('readlist'); });
+registerHotkey('ctrl+shift+h', '/courses',  () => { renderCourseTracker();     trackUsage('courses'); });
+registerHotkey('ctrl+shift+z', '/savings',  () => { renderSavingsTracker();    trackUsage('savings'); });
+registerHotkey('ctrl+shift+m', '/meals',    () => { renderMealPlanner();       trackUsage('meals'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -330,6 +338,10 @@ document.getElementById('sproof-btn')?.addEventListener('click',      () => { re
 document.getElementById('ecampaigns-btn')?.addEventListener('click',  () => { renderEmailCampaigns();   trackUsage('ecampaigns'); });
 document.getElementById('taudit-btn')?.addEventListener('click',      () => { renderTimeAudit();         trackUsage('taudit'); });
 document.getElementById('detox-btn')?.addEventListener('click',       () => { renderDigitalDetox();      trackUsage('detox'); });
+document.getElementById('readlist-btn')?.addEventListener('click',    () => { renderReadingList();       trackUsage('readlist'); });
+document.getElementById('courses-btn')?.addEventListener('click',     () => { renderCourseTracker();     trackUsage('courses'); });
+document.getElementById('savings-btn')?.addEventListener('click',     () => { renderSavingsTracker();    trackUsage('savings'); });
+document.getElementById('meals-btn')?.addEventListener('click',       () => { renderMealPlanner();       trackUsage('meals'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
