@@ -72,6 +72,10 @@ import { renderContentCalendar } from '/content-calendar.js';
 import { renderNetworkingLog }   from '/networking-log.js';
 import { renderSleepTracker }    from '/sleep-tracker.js';
 import { renderReadingNotes }    from '/reading-notes.js';
+import { renderLanguageLog }     from '/language-log.js';
+import { renderExpenseTracker }  from '/expense-tracker.js';
+import { renderTaskInbox }       from '/task-inbox.js';
+import { renderWellnessCheck }   from '/wellness-check.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -155,6 +159,10 @@ registerHotkey('ctrl+alt+7', '/content-cal', () => { renderContentCalendar(); tr
 registerHotkey('ctrl+alt+8', '/netlog',       () => { renderNetworkingLog();   trackUsage('netlog'); });
 registerHotkey('ctrl+alt+9', '/sleep',        () => { renderSleepTracker();    trackUsage('sleep'); });
 registerHotkey('ctrl+alt+0', '/rnotes',       () => { renderReadingNotes();    trackUsage('rnotes'); });
+registerHotkey('ctrl+alt+1', '/lang',         () => { renderLanguageLog();     trackUsage('lang'); });
+registerHotkey('ctrl+alt+h', '/expenses',     () => { renderExpenseTracker();  trackUsage('expenses'); });
+registerHotkey('ctrl+alt+j', '/tasks',        () => { renderTaskInbox();       trackUsage('tasks'); });
+registerHotkey('ctrl+alt+u', '/wellness',     () => { renderWellnessCheck();   trackUsage('wellness'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -234,6 +242,10 @@ document.getElementById('content-cal-btn')?.addEventListener('click', () => { re
 document.getElementById('netlog-btn')?.addEventListener('click',       () => { renderNetworkingLog();   trackUsage('netlog'); });
 document.getElementById('sleep-btn')?.addEventListener('click',        () => { renderSleepTracker();    trackUsage('sleep'); });
 document.getElementById('rnotes-btn')?.addEventListener('click',       () => { renderReadingNotes();    trackUsage('rnotes'); });
+document.getElementById('lang-btn')?.addEventListener('click',         () => { renderLanguageLog();     trackUsage('lang'); });
+document.getElementById('expenses-btn')?.addEventListener('click',     () => { renderExpenseTracker();  trackUsage('expenses'); });
+document.getElementById('tasks-btn')?.addEventListener('click',        () => { renderTaskInbox();       trackUsage('tasks'); });
+document.getElementById('wellness-btn')?.addEventListener('click',     () => { renderWellnessCheck();   trackUsage('wellness'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
