@@ -140,6 +140,10 @@ import { renderAchievementTracker } from '/achievement-tracker.js';
 import { renderErrorLog }          from '/error-log.js';
 import { renderRetroBoard }        from '/retro-board.js';
 import { renderIncidentLog }       from '/incident-log.js';
+import { renderStandupLog }      from '/standup-log.js';
+import { renderMeetingAgenda }   from '/meeting-agenda.js';
+import { renderBudgetTracker }   from '/budget-tracker.js';
+import { renderFeedbackJournal } from '/feedback-journal.js';
 import { renderTimeTracker }    from '/time-tracker.js';
 import { renderIdeaBoard }      from '/idea-board.js';
 import { renderSkillsInventory } from '/skills-inventory.js';
@@ -459,3 +463,7 @@ document.getElementById('okrtracker-btn')?.addEventListener('click',    () => { 
 document.getElementById('retroboard-btn')?.addEventListener('click',    () => { renderRetroBoard();    trackUsage('retroboard'); });
 document.getElementById('knowledgebase-btn')?.addEventListener('click', () => { renderKnowledgeBase(); trackUsage('knowledgebase'); });
 document.getElementById('incidentlog-btn')?.addEventListener('click',   () => { renderIncidentLog();   trackUsage('incidentlog'); });
+document.getElementById('standuplog-btn')?.addEventListener('click',    () => { renderStandupLog();      trackUsage('standup'); });
+document.getElementById('meetagenda-btn')?.addEventListener('click',    () => { renderMeetingAgenda();   trackUsage('meetagenda'); });
+document.getElementById('budgettracker-btn')?.addEventListener('click', () => { renderBudgetTracker();   trackUsage('budget'); });
+document.getElementById('feedbackj-btn')?.addEventListener('click',     () => { renderFeedbackJournal(); trackUsage('feedbackj'); });
