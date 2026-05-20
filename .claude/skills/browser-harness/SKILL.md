@@ -109,10 +109,18 @@ Si corre Linux:
 google-chrome --remote-debugging-port=9222 &
 ```
 
-Si corre Windows (WSL):
+Si corre Windows nativo (PowerShell / cmd, no WSL):
 
 ```cmd
 start "" chrome.exe --remote-debugging-port=9222
+```
+
+Si corre WSL (terminal Linux dentro de Windows), `start` no existe en bash
+— hay que invocar el `cmd.exe` del host para lanzar Chrome de Windows en
+background:
+
+```bash
+cmd.exe /C start "" chrome.exe --remote-debugging-port=9222
 ```
 
 Despues del install, verifica con:

@@ -38,7 +38,10 @@ verticales tienen filtros propios y estructura distinta.
    - Inmobiliaria / Particular
    - Fecha de publicacion
    - URL
-6. Calcular USD/m2 para cada uno
+6. Calcular `Precio/m2` para cada listing **en la misma moneda** que el precio
+   extraído (NO convertir a USD acá). El listing queda con dos campos: `precio`
+   y `moneda`. La conversión a USD es opcional y se hace después en la sección
+   "Conversión opcional a USD" del Output.
 
 ## Output
 
@@ -81,7 +84,9 @@ Si el usuario menciona "triple matricula" o "comparativo BUE-MAD-MVD":
    - inmuebles.mercadolibre.com.ar / Palermo
    - idealista.com (NO ML, usar otra skill) / Madrid Centro
    - mercadolibre.com.uy / Punta Carretas Montevideo
-2. Devolver tabla comparativa unificada con USD/m2 por ciudad.
+2. Devolver tabla comparativa unificada con USD/m2 por ciudad (esta es la
+   única sub-tarea donde se hace conversión forzada a USD; citar la tasa
+   de cambio usada y la fecha).
 
 ## Gotchas
 
