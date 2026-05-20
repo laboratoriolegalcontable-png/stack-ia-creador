@@ -16,6 +16,7 @@
   };
 
   const TABS = ["skills", "prompts", "programas", "agenda", "servicios"];
+  const TABS = ["skills", "prompts", "programas", "agenda"];
 
   let DATA = { prompts: [], programas: [], skills: [], agenda: { calendario_base: [], schedule_commands: [] } };
 
@@ -39,6 +40,18 @@
     else console.error("programas.json:", pg.reason);
     if (ag.status === "fulfilled") agenda = ag.value;
     else console.error("agenda.json:", ag.reason);
+    try {
+      const [pr, pg, ag] = await Promise.all([
+        loadJson("/prompts.json"),
+        loadJson("/programas.json"),
+        loadJson("/agenda.json"),
+      ]);
+      prompts = pr.prompts || [];
+      programas = pg.programas || [];
+      agenda = ag;
+    } catch (err) {
+      console.error("Error cargando data:", err);
+    }
     try {
       skills = JSON.parse(document.getElementById("skills-data").textContent);
     } catch (e) { console.error(e); }
@@ -308,6 +321,8 @@
             panel.setAttribute("role", "tabpanel");
             panel.setAttribute("aria-labelledby", `tab-btn-${id}`);
           }
+        TABS.forEach((id) => {
+          document.getElementById(`tab-${id}`).classList.toggle("hidden", id !== btn.dataset.tab);
         });
       });
     });
