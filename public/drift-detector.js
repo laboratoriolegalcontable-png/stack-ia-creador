@@ -45,6 +45,33 @@ export function getDriftHistory() {
   return JSON.parse(localStorage.getItem(DRIFT_KEY) || '[]').reverse();
 }
 
+let _monitorInterval = null;
+let _baseline = [];
+
+export function setBaseline(insights) {
+  _baseline = Array.isArray(insights) ? insights : [];
+}
+
+export function startDriftMonitor(intervalMs = 60_000) {
+  if (_monitorInterval) return;
+  _monitorInterval = setInterval(() => {
+    const currentRaw = localStorage.getItem('kairos:insights');
+    if (!currentRaw || !_baseline.length) return;
+    let current;
+    try { current = JSON.parse(currentRaw); } catch { return; }
+    if (!Array.isArray(current)) return;
+    const report = detectDrift(_baseline, current);
+    if (report.driftScore > 0.6) {
+      document.dispatchEvent(new CustomEvent('drift:critical', { detail: report }));
+    }
+  }, intervalMs);
+}
+
+export function stopDriftMonitor() {
+  clearInterval(_monitorInterval);
+  _monitorInterval = null;
+}
+
 export function renderDriftReport() {
   const history = getDriftHistory();
   const existing = document.getElementById('drift-panel');
