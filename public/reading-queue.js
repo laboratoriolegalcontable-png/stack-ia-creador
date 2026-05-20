@@ -37,7 +37,7 @@ export function getReadingStats() {
 
 export function renderReadingPanel() {
   let panel = document.getElementById('kairos-reading-panel');
-  if (panel) { panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; if (panel.style.display === 'block') renderReadingList(); return; }
+  if (panel) { panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; if (panel.style.display === 'block') { const activeBtn = panel.querySelector('.filter-tabs button.active'); const f = activeBtn?.dataset.filter; renderReadingList(f && f !== 'all' ? f : undefined); } return; }
   panel = document.createElement('section'); panel.id = 'kairos-reading-panel'; panel.className = 'kairos-panel';
   const h2 = document.createElement('h2'); h2.textContent = '📚 Reading Queue'; panel.appendChild(h2);
   const statsEl = document.createElement('p'); statsEl.id = 'reading-stats'; panel.appendChild(statsEl);

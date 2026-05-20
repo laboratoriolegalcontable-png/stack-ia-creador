@@ -61,7 +61,9 @@ export function renderIdeaPanel() {
     const tags = tagsIn.value.split(',').map(s => s.trim()).filter(Boolean);
     addIdea(t, descIn.value.trim(), tags);
     titleIn.value = ''; descIn.value = ''; tagsIn.value = '';
-    renderIdeaList();
+    const activeBtn = panel.querySelector('.filter-tabs button.active');
+    const f = activeBtn?.dataset.filter;
+    renderIdeaList(f && f !== 'all' ? f : undefined);
   });
   panel.appendChild(form);
 
