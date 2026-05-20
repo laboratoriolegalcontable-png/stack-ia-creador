@@ -30,6 +30,10 @@ function defaultFlags() {
     DRIFT_DETECTOR_ENABLED:    true,
     OFFLINE_INDICATOR_ENABLED: true,
     SMART_SEARCH_ENABLED:      true,
+    BOT_RULES_ENABLED:         true,
+    BOT_CONFIG_ENABLED:        true,
+    BOT_SUPERVISOR_ENABLED:    true,
+    SEGMENTED_MEMORY_ENABLED:  true,
   };
 }
 

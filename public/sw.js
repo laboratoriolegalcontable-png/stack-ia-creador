@@ -1,11 +1,12 @@
 // Service worker minimal para PWA Stack IA Creador
 // cache-first para JSON y assets, network-first para HTML.
-const CACHE_NAME = "stack-ia-creador-v2";
+const CACHE_NAME = "stack-ia-creador-v3";
 const PRECACHE = [
   "/",
   "/index.html",
   "/styles.css",
   "/app.js",
+  "/init.js",
   "/manifest.json",
   "/icon-192.png",
   "/icon-512.png",
@@ -51,7 +52,6 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) {
-        // Revalidar en background
         fetch(req).then((res) => {
           if (res.ok) caches.open(CACHE_NAME).then((c) => c.put(req, res));
         }).catch(() => {});
