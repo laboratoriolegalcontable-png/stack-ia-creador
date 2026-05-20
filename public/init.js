@@ -112,6 +112,10 @@ import { renderBodyMetrics }      from '/body-metrics.js';
 import { renderBookNotes }        from '/book-notes.js';
 import { renderSubscriptionTracker } from '/subscription-tracker.js';
 import { renderTravelLog }        from '/travel-log.js';
+import { renderEventPlanner }     from '/event-planner.js';
+import { renderInterviewPrep }    from '/interview-prep.js';
+import { renderNewsletterTracker } from '/newsletter-tracker.js';
+import { renderWordTracker }      from '/word-tracker.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -235,6 +239,10 @@ registerHotkey('ctrl+alt+b',   '/bmetrics', () => { renderBodyMetrics();        
 registerHotkey('ctrl+alt+n',   '/bnotes',   () => { renderBookNotes();          trackUsage('bnotes'); });
 registerHotkey('ctrl+alt+s',   '/subs',     () => { renderSubscriptionTracker(); trackUsage('subs'); });
 registerHotkey('ctrl+alt+t',   '/travel',   () => { renderTravelLog();          trackUsage('travel'); });
+registerHotkey('ctrl+alt+e',   '/events',   () => { renderEventPlanner();        trackUsage('events'); });
+registerHotkey('ctrl+alt+i',   '/interview',() => { renderInterviewPrep();       trackUsage('interview'); });
+registerHotkey('ctrl+alt+l',   '/newsletters',() => { renderNewsletterTracker(); trackUsage('newsletters'); });
+registerHotkey('ctrl+alt+w',   '/words',    () => { renderWordTracker();         trackUsage('words'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -354,6 +362,10 @@ document.getElementById('bmetrics-btn')?.addEventListener('click',    () => { re
 document.getElementById('bnotes-btn')?.addEventListener('click',      () => { renderBookNotes();          trackUsage('bnotes'); });
 document.getElementById('subs-btn')?.addEventListener('click',        () => { renderSubscriptionTracker(); trackUsage('subs'); });
 document.getElementById('travel-btn')?.addEventListener('click',      () => { renderTravelLog();          trackUsage('travel'); });
+document.getElementById('events-btn')?.addEventListener('click',      () => { renderEventPlanner();        trackUsage('events'); });
+document.getElementById('interview-btn')?.addEventListener('click',   () => { renderInterviewPrep();       trackUsage('interview'); });
+document.getElementById('newsletters-btn')?.addEventListener('click', () => { renderNewsletterTracker();   trackUsage('newsletters'); });
+document.getElementById('words-btn')?.addEventListener('click',       () => { renderWordTracker();         trackUsage('words'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
