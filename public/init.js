@@ -44,6 +44,10 @@ import { renderDecisionPanel }                          from '/decision-journal.
 import { renderWeeklyPanel }                            from '/weekly-planner.js';
 import { renderLearningPanel }                          from '/learning-tracker.js';
 import { renderCapsulePanel }                           from '/context-capsule.js';
+import { renderIdeaPanel }    from '/idea-bank.js';
+import { renderStandupPanel } from '/daily-standup.js';
+import { renderBudgetPanel }  from '/budget-tracker.js';
+import { renderReadingPanel } from '/reading-queue.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -101,6 +105,9 @@ registerHotkey('ctrl+alt+r', '/retro', () => { renderRetroPanel(); trackUsage('r
 registerHotkey('ctrl+alt+d', '/decisions', () => { renderDecisionPanel(); trackUsage('decisions'); });
 registerHotkey('ctrl+alt+w', '/weekly',    () => { renderWeeklyPanel(); trackUsage('weekly'); });
 registerHotkey('ctrl+alt+l', '/learning',  () => { renderLearningPanel(); trackUsage('learning'); });
+registerHotkey('ctrl+alt+i', '/ideas',   () => { renderIdeaPanel();    trackUsage('ideas'); });
+registerHotkey('ctrl+alt+s', '/standup', () => { renderStandupPanel(); trackUsage('standup'); });
+registerHotkey('ctrl+alt+b', '/budget',  () => { renderBudgetPanel();  trackUsage('budget'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -152,6 +159,10 @@ document.getElementById('decision-btn')?.addEventListener('click', () => { rende
 document.getElementById('weekly-btn')?.addEventListener('click',   () => { renderWeeklyPanel(); trackUsage('weekly'); });
 document.getElementById('learning-btn')?.addEventListener('click', () => { renderLearningPanel(); trackUsage('learning'); });
 document.getElementById('capsule-btn')?.addEventListener('click',  () => { renderCapsulePanel(); trackUsage('capsule'); });
+document.getElementById('ideas-btn')  ?.addEventListener('click', () => { renderIdeaPanel();    trackUsage('ideas'); });
+document.getElementById('standup-btn')?.addEventListener('click', () => { renderStandupPanel(); trackUsage('standup'); });
+document.getElementById('budget-btn') ?.addEventListener('click', () => { renderBudgetPanel();  trackUsage('budget'); });
+document.getElementById('reading-btn')?.addEventListener('click', () => { renderReadingPanel(); trackUsage('reading'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
