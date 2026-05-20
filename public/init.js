@@ -61,7 +61,7 @@ import { renderKpiPanel }        from '/kpi-tracker.js';
 import { renderEventLogPanel }   from '/event-log.js';
 import { renderReflectionPanel } from '/reflection-journal.js';
 import { renderSkillPanel }       from '/skill-matrix.js';
-import { renderOkrPanel }         from '/okr-tracker.js';
+import { renderOkrPanel, renderOkrTracker } from '/okr-tracker.js';
 import { renderTimeLogPanel }     from '/time-log.js';
 import { renderAffirmationPanel } from '/affirmations.js';
 import { renderMilestonePanel } from '/milestone-tracker.js';
@@ -138,6 +138,8 @@ import { renderPromptLibrary }     from '/prompt-library.js';
 import { renderPromptStudio }      from '/prompt-studio.js';
 import { renderAchievementTracker } from '/achievement-tracker.js';
 import { renderErrorLog }          from '/error-log.js';
+import { renderRetroBoard }        from '/retro-board.js';
+import { renderIncidentLog }       from '/incident-log.js';
 import { renderTimeTracker }    from '/time-tracker.js';
 import { renderIdeaBoard }      from '/idea-board.js';
 import { renderSkillsInventory } from '/skills-inventory.js';
@@ -453,3 +455,7 @@ document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
 document.getElementById('mem-stats-btn')?.addEventListener('click',  () => {
   document.dispatchEvent(new CustomEvent('memory:show-stats'));
 });
+document.getElementById('okrtracker-btn')?.addEventListener('click',    () => { renderOkrTracker();    trackUsage('okrtracker'); });
+document.getElementById('retroboard-btn')?.addEventListener('click',    () => { renderRetroBoard();    trackUsage('retroboard'); });
+document.getElementById('knowledgebase-btn')?.addEventListener('click', () => { renderKnowledgeBase(); trackUsage('knowledgebase'); });
+document.getElementById('incidentlog-btn')?.addEventListener('click',   () => { renderIncidentLog();   trackUsage('incidentlog'); });
