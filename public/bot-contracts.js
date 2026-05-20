@@ -813,7 +813,7 @@ export class DeterministicKernel {
       },
       {
         categoria: 'telecomunicaciones',
-        keywords: ['internet', 'telefonía', 'telefonia', 'cable', 'fibra', óptica', 'optica', 'wi-fi', 'wifi', 'claro', 'personal', 'movistar', 'telecom', 'fibertel', 'cablevision', 'flow', 'directv'],
+        keywords: ['internet', 'telefonía', 'telefonia', 'cable', 'fibra', 'óptica', 'optica', 'wi-fi', 'wifi', 'claro', 'personal', 'movistar', 'telecom', 'fibertel', 'cablevision', 'flow', 'directv'],
         organismo: 'ENACOM / Defensa del Consumidor',
         articulos: ['Ley 24.240 art. 19', 'Res. ENACOM 1900/2020'],
         plazoMaximoDias: 30
