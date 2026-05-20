@@ -59,6 +59,111 @@ export function getGoalStats() {
   return { total: goals.length, active: goals.filter(g => g.status === 'active').length, completed: goals.filter(g => g.status === 'completed').length, paused: goals.filter(g => g.status === 'paused').length };
 }
 
+export function renderGoalTracker() {
+  const GT2_KEY = 'kairos:goals2';
+  function _load2() { const d = JSON.parse(localStorage.getItem(GT2_KEY) || '[]'); return Array.isArray(d) ? d : []; }
+  function _save2(d) { localStorage.setItem(GT2_KEY, JSON.stringify(d)); }
+  function _uid2() { return crypto.randomUUID(); }
+  function _now2() { return new Date().toISOString(); }
+
+  let panel = document.getElementById('goaltracker-panel');
+  if (panel) { panel.style.display = panel.style.display === 'none' ? '' : 'none'; if (panel.style.display !== 'none') _refresh2(); return; }
+  panel = document.createElement('div');
+  panel.id = 'goaltracker-panel';
+  panel.className = 'ia-panel';
+  panel.innerHTML = `
+    <h3>Goal Tracker</h3>
+    <form id="goaltracker-form">
+      <input id="gt2-title"    placeholder="Título del objetivo *" required style="margin:2px">
+      <textarea id="gt2-desc"  placeholder="Descripción" rows="2" style="margin:2px;width:100%;box-sizing:border-box"></textarea>
+      <input id="gt2-category" placeholder="Categoría (ej: salud, carrera)" style="margin:2px">
+      <input id="gt2-date"     type="date" style="margin:2px">
+      <input id="gt2-target"   type="number" placeholder="Valor objetivo (ej: 100)" min="0" step="any" style="margin:2px">
+      <input id="gt2-unit"     placeholder="Unidad (ej: km, páginas, %)" style="margin:2px">
+      <button type="submit">Agregar Objetivo</button>
+    </form>
+    <div class="ia-stats" id="goaltracker-stats"></div>
+    <ul id="goaltracker-list" style="list-style:none;padding:0;margin-top:0.5rem"></ul>
+  `;
+  document.body.appendChild(panel);
+
+  function _refresh2() {
+    const goals = _load2();
+    const list  = document.getElementById('goaltracker-list');
+    const stats = document.getElementById('goaltracker-stats');
+    if (!list || !stats) return;
+    list.innerHTML = '';
+    goals.slice().reverse().forEach(g => {
+      const li = document.createElement('li');
+      li.style.cssText = 'border:1px solid #374151;border-radius:6px;padding:0.5rem;margin-bottom:0.5rem';
+      const top = document.createElement('div');
+      top.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.4rem';
+      const titleEl = document.createElement('strong');
+      titleEl.textContent = g.title;
+      const catEl = document.createElement('span');
+      catEl.style.cssText = 'color:#9ca3af;font-size:0.78rem';
+      catEl.textContent = g.category || '';
+      const completed = g.currentValue >= g.targetValue && g.targetValue > 0;
+      const statusBadge = document.createElement('span');
+      statusBadge.style.cssText = `background:${completed?'#059669':'#1d4ed8'};color:#fff;border-radius:4px;padding:0.1rem 0.4rem;font-size:0.72rem`;
+      statusBadge.textContent = completed ? 'completed' : 'active';
+      const checkBtn = document.createElement('button');
+      checkBtn.className = 'ia-cmd'; checkBtn.textContent = '+check-in';
+      checkBtn.addEventListener('click', () => {
+        const val = parseFloat(prompt(`Valor actual (${g.unit || 'unidades'}):`, g.currentValue || 0));
+        if (isNaN(val)) return;
+        const goals2 = _load2(); const idx = goals2.findIndex(x => x.id === g.id);
+        if (idx !== -1) { goals2[idx].currentValue = val; goals2[idx].updatedAt = _now2(); _save2(goals2); _refresh2(); }
+      });
+      const delBtn = document.createElement('button');
+      delBtn.className = 'ia-cmd'; delBtn.textContent = '✕';
+      delBtn.addEventListener('click', () => { _save2(_load2().filter(x => x.id !== g.id)); _refresh2(); });
+      top.appendChild(titleEl); top.appendChild(catEl); top.appendChild(statusBadge); top.appendChild(checkBtn); top.appendChild(delBtn);
+      li.appendChild(top);
+      // progress bar
+      const target = g.targetValue || 0;
+      const current = g.currentValue || 0;
+      const pct = target > 0 ? Math.min(100, Math.round(current / target * 100)) : 0;
+      const barWrap = document.createElement('div');
+      barWrap.style.cssText = 'background:#374151;border-radius:4px;height:6px;margin-bottom:0.2rem';
+      const bar = document.createElement('div');
+      bar.style.cssText = `background:#4338ca;height:100%;border-radius:4px;width:${pct}%;transition:width 0.3s`;
+      barWrap.appendChild(bar);
+      li.appendChild(barWrap);
+      const label = document.createElement('small');
+      label.style.cssText = 'color:#9ca3af;font-size:0.75rem';
+      label.textContent = `${current}/${target} ${g.unit||''} (${pct}%)`;
+      li.appendChild(label);
+      list.appendChild(li);
+    });
+    const active    = goals.filter(g => !(g.currentValue >= g.targetValue && g.targetValue > 0)).length;
+    const completed = goals.filter(g => g.currentValue >= g.targetValue && g.targetValue > 0).length;
+    const totalPct  = goals.length > 0 ? Math.round(goals.reduce((acc, g) => { const t = g.targetValue||0; return acc + (t>0 ? Math.min(100, (g.currentValue||0)/t*100) : 0); }, 0) / goals.length) : 0;
+    stats.textContent = `Total: ${goals.length} · Activos: ${active} · Completados: ${completed} · Progreso prom: ${totalPct}%`;
+  }
+
+  document.getElementById('goaltracker-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const title = document.getElementById('gt2-title').value.trim();
+    if (!title) return;
+    const goals = _load2();
+    goals.push({
+      id: _uid2(), title,
+      description:  document.getElementById('gt2-desc').value.trim(),
+      category:     document.getElementById('gt2-category').value.trim(),
+      targetDate:   document.getElementById('gt2-date').value,
+      targetValue:  parseFloat(document.getElementById('gt2-target').value) || 0,
+      unit:         document.getElementById('gt2-unit').value.trim(),
+      currentValue: 0,
+      createdAt: _now2(), updatedAt: _now2()
+    });
+    _save2(goals);
+    e.target.reset();
+    _refresh2();
+  });
+  _refresh2();
+}
+
 export function renderGoalPanel() {
   const existing = document.getElementById('kairos-goal-panel');
   if (existing) { existing.remove(); return; }
