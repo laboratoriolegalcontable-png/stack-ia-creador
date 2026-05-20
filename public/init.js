@@ -68,6 +68,10 @@ import { renderMilestonePanel } from '/milestone-tracker.js';
 import { renderFocusSession }   from '/focus-session.js';
 import { renderQuoteVault }     from '/quote-vault.js';
 import { renderProjectNotes }   from '/project-notes.js';
+import { renderContentCalendar } from '/content-calendar.js';
+import { renderNetworkingLog }   from '/networking-log.js';
+import { renderSleepTracker }    from '/sleep-tracker.js';
+import { renderReadingNotes }    from '/reading-notes.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -147,6 +151,10 @@ registerHotkey('ctrl+alt+3', '/milestones',    () => { renderMilestonePanel(); t
 registerHotkey('ctrl+alt+4', '/focus-session', () => { renderFocusSession();   trackUsage('focus-session'); });
 registerHotkey('ctrl+alt+5', '/quotes',        () => { renderQuoteVault();     trackUsage('quotes'); });
 registerHotkey('ctrl+alt+6', '/pnotes',        () => { renderProjectNotes();   trackUsage('pnotes'); });
+registerHotkey('ctrl+alt+7', '/content-cal', () => { renderContentCalendar(); trackUsage('content-cal'); });
+registerHotkey('ctrl+alt+8', '/netlog',       () => { renderNetworkingLog();   trackUsage('netlog'); });
+registerHotkey('ctrl+alt+9', '/sleep',        () => { renderSleepTracker();    trackUsage('sleep'); });
+registerHotkey('ctrl+alt+0', '/rnotes',       () => { renderReadingNotes();    trackUsage('rnotes'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -222,6 +230,10 @@ document.getElementById('milestone-btn')?.addEventListener('click', () => { rend
 document.getElementById('fsession-btn')?.addEventListener('click',  () => { renderFocusSession();   trackUsage('focus-session'); });
 document.getElementById('quotes-btn')?.addEventListener('click',    () => { renderQuoteVault();     trackUsage('quotes'); });
 document.getElementById('pnotes-btn')?.addEventListener('click',    () => { renderProjectNotes();   trackUsage('pnotes'); });
+document.getElementById('content-cal-btn')?.addEventListener('click', () => { renderContentCalendar(); trackUsage('content-cal'); });
+document.getElementById('netlog-btn')?.addEventListener('click',       () => { renderNetworkingLog();   trackUsage('netlog'); });
+document.getElementById('sleep-btn')?.addEventListener('click',        () => { renderSleepTracker();    trackUsage('sleep'); });
+document.getElementById('rnotes-btn')?.addEventListener('click',       () => { renderReadingNotes();    trackUsage('rnotes'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
