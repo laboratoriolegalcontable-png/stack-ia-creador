@@ -48,6 +48,10 @@ import { renderProjectPanel }   from '/project-tracker.js';
 import { renderMeetingPanel }   from '/meeting-notes.js';
 import { renderGratitudePanel } from '/gratitude-journal.js';
 import { renderWinPanel }       from '/quick-wins.js';
+import { renderIdeaPanel }    from '/idea-bank.js';
+import { renderStandupPanel } from '/daily-standup.js';
+import { renderBudgetPanel }  from '/budget-tracker.js';
+import { renderReadingPanel } from '/reading-queue.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -108,6 +112,9 @@ registerHotkey('ctrl+alt+l', '/learning',  () => { renderLearningPanel(); trackU
 registerHotkey('ctrl+alt+p', '/projects',  () => { renderProjectPanel();   trackUsage('projects'); });
 registerHotkey('ctrl+alt+m', '/meetings',  () => { renderMeetingPanel();   trackUsage('meetings'); });
 registerHotkey('ctrl+alt+g', '/gratitude', () => { renderGratitudePanel(); trackUsage('gratitude'); });
+registerHotkey('ctrl+alt+i', '/ideas',   () => { renderIdeaPanel();    trackUsage('ideas'); });
+registerHotkey('ctrl+alt+s', '/standup', () => { renderStandupPanel(); trackUsage('standup'); });
+registerHotkey('ctrl+alt+b', '/budget',  () => { renderBudgetPanel();  trackUsage('budget'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -163,6 +170,10 @@ document.getElementById('project-btn')?.addEventListener('click',   () => { rend
 document.getElementById('meeting-btn')?.addEventListener('click',   () => { renderMeetingPanel();   trackUsage('meetings'); });
 document.getElementById('gratitude-btn')?.addEventListener('click', () => { renderGratitudePanel(); trackUsage('gratitude'); });
 document.getElementById('wins-btn')?.addEventListener('click',      () => { renderWinPanel();       trackUsage('wins'); });
+document.getElementById('ideas-btn')  ?.addEventListener('click', () => { renderIdeaPanel();    trackUsage('ideas'); });
+document.getElementById('standup-btn')?.addEventListener('click', () => { renderStandupPanel(); trackUsage('standup'); });
+document.getElementById('budget-btn') ?.addEventListener('click', () => { renderBudgetPanel();  trackUsage('budget'); });
+document.getElementById('reading-btn')?.addEventListener('click', () => { renderReadingPanel(); trackUsage('reading'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
