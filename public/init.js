@@ -36,6 +36,10 @@ import { renderHabitPanel }                             from '/habit-tracker.js'
 import { renderFocusTimer }                             from '/focus-timer.js';
 import { renderKnowledgeBase }                          from '/knowledge-base.js';
 import { renderHeatmap, recordActivity }                from '/session-heatmap.js';
+import { renderRetroPanel }                             from '/retrospective.js';
+import { renderEnergyPanel }                            from '/energy-tracker.js';
+import { renderVocabPanel }                             from '/vocabulary-builder.js';
+import { renderAccountabilityPanel }                    from '/accountability.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -89,11 +93,11 @@ registerHotkey('ctrl+j', '/journal',  () => { renderDreamJournal(); trackUsage('
 registerHotkey('ctrl+o', '/goals',    () => { renderGoalPanel(); trackUsage('goals'); });
 registerHotkey('ctrl+h', '/habits',   () => { renderHabitPanel(); trackUsage('habits'); });
 registerHotkey('ctrl+b', '/kb',       () => { renderKnowledgeBase(); trackUsage('kb'); });
+registerHotkey('ctrl+alt+r', '/retro', () => { renderRetroPanel(); trackUsage('retro'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
-// ? requires Shift on US keyboard; hotkeys.js includes e.shiftKey in combo, so combo is ctrl+shift+?
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
-// ── Button listeners ─────────────────────────────────────────────────────────────────────────────────
+// ── Button listeners ──────────────────────────────────────────────────────────────────────────────
 document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
 document.getElementById('dream-btn')?.addEventListener('click', () => {
   localStorage.setItem('kairos:sessions','5');
@@ -133,6 +137,10 @@ document.getElementById('habits-btn')?.addEventListener('click',      () => { re
 document.getElementById('focus-btn')?.addEventListener('click',       () => { renderFocusTimer(); trackUsage('focus'); });
 document.getElementById('kb-btn')?.addEventListener('click',          () => { renderKnowledgeBase(); trackUsage('kb'); });
 document.getElementById('heatmap-btn')?.addEventListener('click',     () => { renderHeatmap(); trackUsage('heatmap'); });
+document.getElementById('retro-btn')?.addEventListener('click',          () => { renderRetroPanel(); trackUsage('retro'); });
+document.getElementById('energy-btn')?.addEventListener('click',         () => { renderEnergyPanel(); trackUsage('energy'); });
+document.getElementById('vocab-btn')?.addEventListener('click',          () => { renderVocabPanel(); trackUsage('vocab'); });
+document.getElementById('accountability-btn')?.addEventListener('click', () => { renderAccountabilityPanel(); trackUsage('accountability'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
