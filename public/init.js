@@ -56,6 +56,10 @@ import { renderMoodPanel }      from '/mood-tracker.js';
 import { renderCheckpointPanel } from '/checkpoint.js';
 import { renderTemplatePanel }  from '/template-bank.js';
 import { renderContactPanel }   from '/contact-log.js';
+import { renderSprintPanel }     from '/sprint-planner.js';
+import { renderKpiPanel }        from '/kpi-tracker.js';
+import { renderEventLogPanel }   from '/event-log.js';
+import { renderReflectionPanel } from '/reflection-journal.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -123,6 +127,10 @@ registerHotkey('ctrl+alt+o', '/mood',       () => { renderMoodPanel();       tra
 registerHotkey('ctrl+alt+c', '/checkpoint', () => { renderCheckpointPanel(); trackUsage('checkpoint'); });
 registerHotkey('ctrl+alt+t', '/templates',  () => { renderTemplatePanel();   trackUsage('templates'); });
 registerHotkey('ctrl+alt+n', '/contacts',   () => { renderContactPanel();    trackUsage('contacts'); });
+registerHotkey('ctrl+alt+q', '/sprint',  () => { renderSprintPanel();     trackUsage('sprint'); });
+registerHotkey('ctrl+alt+k', '/kpis',    () => { renderKpiPanel();        trackUsage('kpis'); });
+registerHotkey('ctrl+alt+e', '/events',  () => { renderEventLogPanel();   trackUsage('events'); });
+registerHotkey('ctrl+alt+f', '/reflect', () => { renderReflectionPanel(); trackUsage('reflect'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -186,6 +194,10 @@ document.getElementById('mood-btn')?.addEventListener('click',        () => { re
 document.getElementById('checkpoint-btn')?.addEventListener('click',  () => { renderCheckpointPanel(); trackUsage('checkpoint'); });
 document.getElementById('template-btn')?.addEventListener('click',    () => { renderTemplatePanel();   trackUsage('templates'); });
 document.getElementById('contact-btn')?.addEventListener('click',     () => { renderContactPanel();    trackUsage('contacts'); });
+document.getElementById('sprint-btn')  ?.addEventListener('click', () => { renderSprintPanel();     trackUsage('sprint'); });
+document.getElementById('kpi-btn')     ?.addEventListener('click', () => { renderKpiPanel();        trackUsage('kpis'); });
+document.getElementById('eventlog-btn')?.addEventListener('click', () => { renderEventLogPanel();   trackUsage('events'); });
+document.getElementById('reflect-btn') ?.addEventListener('click', () => { renderReflectionPanel(); trackUsage('reflect'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
