@@ -1,122 +1,120 @@
-/** Knowledge Base — KAIROS browser module */
-const KB_KEY = 'kairos:kb';
+const KEY = 'kairos:kb';
+function load() { const d = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(d) ? d : []; }
+function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+function uid() { return crypto.randomUUID(); }
+function now() { return new Date().toISOString(); }
 
-function loadKB() { try { return JSON.parse(localStorage.getItem(KB_KEY) || '{}'); } catch { return {}; } }
-function saveKB(kb) { try { localStorage.setItem(KB_KEY, JSON.stringify(kb)); } catch {} }
+const CATEGORIES = { process: '📋', technical: '💻', business: '💼', legal: '⚖️', onboarding: '🚀', faq: '❓', other: '📝' };
+const STATUS_COLORS = { draft: 'gray', published: 'green', archived: 'gray', 'needs-review': 'blue' };
+const STATUS_CYCLE = ['draft', 'published', 'archived', 'needs-review'];
 
-/** @param {string} title @param {string} body @param {string[]} [tags] @returns {object} */
-export function addEntry(title, body, tags = []) {
-  const kb = loadKB();
-  const id = `kb-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const now = new Date().toISOString();
-  kb[id] = { id, title, body, tags, createdAt: now, updatedAt: now, useCount: 0 };
-  saveKB(kb);
-  return kb[id];
-}
-
-/** @param {string} query @returns {object[]} */
-export function searchEntries(query) {
-  const q = query.toLowerCase();
-  return Object.values(loadKB())
-    .filter(e => e.title.toLowerCase().includes(q) || e.body.toLowerCase().includes(q) || (e.tags || []).some(t => t.toLowerCase().includes(q)))
-    .sort((a, b) => b.useCount - a.useCount);
-}
-
-export function listEntries() { return Object.values(loadKB()).sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)); }
-export function deleteEntry(id) { const kb = loadKB(); delete kb[id]; saveKB(kb); }
-
-export function getKBStats() {
-  const entries = listEntries();
-  const tags = new Set(entries.flatMap(e => e.tags || []));
-  return { total: entries.length, totalTags: tags.size, mostUsed: entries.sort((a, b) => b.useCount - a.useCount)[0]?.title || null };
+function slugify(title) {
+  return title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
 export function renderKnowledgeBase() {
-  const existing = document.getElementById('kairos-kb-panel');
-  if (existing) { existing.remove(); return; }
-
-  const panel = document.createElement('div');
-  panel.id = 'kairos-kb-panel';
-  panel.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:1px solid #4338ca;border-radius:12px;padding:1.5rem;z-index:9999;width:min(540px,95vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:inherit';
-
-  function renderContent(query = '') {
-    const entries = query ? searchEntries(query) : listEntries();
-    const stats = getKBStats();
-
-    panel.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-        <h3 style="margin:0;color:#a5b4fc;font-size:1rem">📚 Knowledge Base <span style="font-size:0.75rem;color:#6b7280">${stats.total} entradas</span></h3>
-        <button id="kb-close" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:1.2rem">&times;</button>
-      </div>
-      <input id="kb-search" placeholder="Buscar..." style="width:100%;padding:0.5rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.85rem;box-sizing:border-box;margin-bottom:0.75rem" />
-      <details style="margin-bottom:1rem">
-        <summary style="color:#9ca3af;font-size:0.82rem;cursor:pointer">+ Nueva entrada</summary>
-        <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.5rem">
-          <input id="kb-title" placeholder="Título" style="padding:0.4rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.82rem" />
-          <textarea id="kb-body" placeholder="Contenido..." rows="3" style="padding:0.4rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.82rem;resize:vertical"></textarea>
-          <input id="kb-tags" placeholder="Tags (separados por coma)" style="padding:0.4rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.82rem" />
-          <button id="kb-add" style="padding:0.4rem;background:#4338ca;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.82rem">Agregar</button>
+  let panel = document.getElementById('knowledge-base-panel');
+  if (panel) { panel.style.display = panel.style.display === 'none' ? '' : 'none'; if (panel.style.display !== 'none') _refresh(); return; }
+  panel = document.createElement('div');
+  panel.id = 'knowledge-base-panel';
+  panel.className = 'ia-panel';
+  panel.innerHTML = `
+    <div class="ia-panel-header"><h2>📚 Knowledge Base</h2><button class="ia-close" onclick="document.getElementById('knowledge-base-panel').style.display='none'">✕</button></div>
+    <div class="ia-panel-body">
+      <form id="kb2-form" class="ia-form">
+        <input id="kb2-title" placeholder="Título *" required />
+        <div style="display:flex;gap:8px">
+          <select id="kb2-category" style="flex:1">
+            <option value="process">📋 Process</option>
+            <option value="technical">💻 Technical</option>
+            <option value="business">💼 Business</option>
+            <option value="legal">⚖️ Legal</option>
+            <option value="onboarding">🚀 Onboarding</option>
+            <option value="faq">❓ FAQ</option>
+            <option value="other">📝 Other</option>
+          </select>
+          <select id="kb2-status" style="flex:1">
+            <option value="draft" selected>Draft</option>
+            <option value="published">Published</option>
+            <option value="archived">Archived</option>
+            <option value="needs-review">Needs Review</option>
+          </select>
         </div>
-      </details>
-      <div id="kb-entries"></div>`;
-
-    panel.querySelector('#kb-search').value = query;
-
-    const entriesEl = panel.querySelector('#kb-entries');
-    if (entries.length === 0) {
-      entriesEl.innerHTML = '<p style="color:#6b7280;font-size:0.85rem">Sin entradas.</p>';
-    } else {
-      entries.forEach(e => {
-        const card = document.createElement('div');
-        card.style.cssText = 'border:1px solid #374151;border-radius:8px;padding:0.75rem;margin-bottom:0.5rem;background:#0f0f1e';
-
-        const header = document.createElement('div');
-        header.style.cssText = 'display:flex;justify-content:space-between;align-items:start;margin-bottom:0.3rem';
-
-        const titleEl = document.createElement('div');
-        titleEl.style.cssText = 'color:#e5e7eb;font-size:0.88rem;font-weight:600';
-        titleEl.textContent = e.title;
-
-        const delBtn = document.createElement('button');
-        delBtn.textContent = '✕';
-        delBtn.style.cssText = 'font-size:0.7rem;padding:0.15rem 0.4rem;background:#450a0a;color:#f87171;border:none;border-radius:4px;cursor:pointer';
-        delBtn.addEventListener('click', () => { deleteEntry(e.id); renderContent(query); });
-
-        header.append(titleEl, delBtn);
-
-        const bodyEl = document.createElement('div');
-        bodyEl.style.cssText = 'font-size:0.8rem;color:#9ca3af;white-space:pre-wrap';
-        bodyEl.textContent = e.body.slice(0, 200) + (e.body.length > 200 ? '...' : '');
-
-        card.append(header, bodyEl);
-
-        if (e.tags?.length) {
-          const tagsEl = document.createElement('div');
-          tagsEl.style.cssText = 'margin-top:0.4rem;display:flex;gap:0.3rem;flex-wrap:wrap';
-          e.tags.forEach(t => {
-            const chip = document.createElement('span');
-            chip.style.cssText = 'font-size:0.68rem;background:#1e1b4b;color:#a5b4fc;padding:0.1rem 0.4rem;border-radius:3px';
-            chip.textContent = t;
-            tagsEl.appendChild(chip);
-          });
-          card.appendChild(tagsEl);
-        }
-        entriesEl.appendChild(card);
-      });
-    }
-
-    panel.querySelector('#kb-close').addEventListener('click', () => panel.remove());
-    panel.querySelector('#kb-search').addEventListener('input', ev => renderContent(ev.target.value));
-    panel.querySelector('#kb-add').addEventListener('click', () => {
-      const title = panel.querySelector('#kb-title')?.value?.trim();
-      const body = panel.querySelector('#kb-body')?.value?.trim();
-      const tags = panel.querySelector('#kb-tags')?.value?.split(',').map(t => t.trim()).filter(Boolean) || [];
-      if (!title || !body) return;
-      addEntry(title, body, tags);
-      renderContent();
-    });
-  }
-
-  renderContent();
+        <input id="kb2-author" placeholder="Autor *" required />
+        <textarea id="kb2-content" placeholder="Contenido *" rows="4" required></textarea>
+        <input id="kb2-tags" placeholder="Tags (separados por coma)" />
+        <button type="submit" class="ia-btn">Agregar artículo</button>
+      </form>
+      <input id="kb2-search" placeholder="Buscar..." style="width:100%;padding:6px 8px;border:1px solid var(--color-border);border-radius:4px;background:var(--color-bg);color:var(--color-text);box-sizing:border-box;margin-bottom:8px" />
+      <div id="kb2-stats" class="ia-stats-bar"></div>
+      <div id="kb2-list" class="ia-list"></div>
+    </div>`;
   document.body.appendChild(panel);
+  document.getElementById('kb2-form').onsubmit = e => {
+    e.preventDefault();
+    const title = document.getElementById('kb2-title').value.trim();
+    const items = load();
+    items.unshift({
+      id: uid(),
+      title,
+      slug: slugify(title),
+      category: document.getElementById('kb2-category').value,
+      status: document.getElementById('kb2-status').value,
+      author: document.getElementById('kb2-author').value.trim(),
+      content: document.getElementById('kb2-content').value.trim(),
+      tags: document.getElementById('kb2-tags').value.split(',').map(s => s.trim()).filter(Boolean),
+      helpful: 0,
+      notHelpful: 0,
+      createdAt: now()
+    });
+    save(items);
+    e.target.reset();
+    document.getElementById('kb2-status').value = 'draft';
+    _refresh();
+  };
+  document.getElementById('kb2-search').oninput = _refresh;
+  _refresh();
+}
+
+function _refresh() {
+  const all = load();
+  const stats = document.getElementById('kb2-stats');
+  const list = document.getElementById('kb2-list');
+  const searchEl = document.getElementById('kb2-search');
+  if (!stats || !list) return;
+  const published = all.filter(a => a.status === 'published').length;
+  const drafts = all.filter(a => a.status === 'draft').length;
+  const catCounts = {};
+  all.filter(a => a.status === 'published').forEach(a => { catCounts[a.category] = (catCounts[a.category] || 0) + 1; });
+  const topCat = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a])[0] || '—';
+  stats.textContent = 'Total: ' + all.length + ' | Published: ' + published + ' | Drafts: ' + drafts + ' | Most viewed: ' + topCat;
+  const q = (searchEl?.value || '').toLowerCase();
+  let items = q ? all.filter(a =>
+    a.title.toLowerCase().includes(q) ||
+    (a.tags || []).some(t => t.toLowerCase().includes(q)) ||
+    (a.content || '').toLowerCase().includes(q)
+  ) : all;
+  list.innerHTML = '';
+  items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'ia-list-item';
+    const stColor = STATUS_COLORS[item.status] || 'gray';
+    const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(item.status) + 1) % STATUS_CYCLE.length];
+    const icon = CATEGORIES[item.category] || '📝';
+    el.innerHTML = '<div class="ia-list-item-header"><strong></strong><span class="ia-badge ' + stColor + '"></span><span class="ia-badge gray"></span><button class="ia-btn-sm blue">👍 0</button><button class="ia-btn-sm gray">👎 0</button><button class="ia-btn-sm blue"></button><button class="ia-btn-sm red">✕</button></div><small></small>';
+    el.querySelector('strong').textContent = icon + ' ' + item.title;
+    const badges = el.querySelectorAll('.ia-badge');
+    badges[0].textContent = item.status;
+    badges[1].textContent = item.category;
+    const [helpfulBtn, notHelpfulBtn, advBtn, delBtn] = el.querySelectorAll('button');
+    helpfulBtn.textContent = '👍 ' + (item.helpful || 0);
+    notHelpfulBtn.textContent = '👎 ' + (item.notHelpful || 0);
+    helpfulBtn.onclick = () => { const d = load(); const r = d.find(x => x.id === item.id); if (r) { r.helpful = (r.helpful || 0) + 1; save(d); _refresh(); } };
+    notHelpfulBtn.onclick = () => { const d = load(); const r = d.find(x => x.id === item.id); if (r) { r.notHelpful = (r.notHelpful || 0) + 1; save(d); _refresh(); } };
+    advBtn.textContent = '→ ' + next;
+    advBtn.onclick = () => { const d = load(); const r = d.find(x => x.id === item.id); if (r) { r.status = next; save(d); _refresh(); } };
+    delBtn.onclick = () => { save(load().filter(x => x.id !== item.id)); _refresh(); };
+    el.querySelector('small').textContent = (item.author ? item.author + ' · ' : '') + (item.tags?.join(', ') || '') + (item.slug ? ' [/' + item.slug + ']' : '');
+    list.appendChild(el);
+  });
 }
