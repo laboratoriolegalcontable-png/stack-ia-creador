@@ -137,6 +137,10 @@ import { renderSmartReminder }     from '/smart-reminder.js';
 import { renderPromptLibrary }     from '/prompt-library.js';
 import { renderAchievementTracker } from '/achievement-tracker.js';
 import { renderErrorLog }          from '/error-log.js';
+import { renderTimeTracker }    from '/time-tracker.js';
+import { renderIdeaBoard }      from '/idea-board.js';
+import { renderSkillsInventory } from '/skills-inventory.js';
+import { renderContentPlanner } from '/content-planner.js';
 import { renderProcessDoc }   from '/process-doc.js';
 import { renderBookClub }     from '/book-club.js';
 import { renderTeamPulse }    from '/team-pulse.js';
@@ -434,6 +438,10 @@ document.getElementById('processdoc-btn')?.addEventListener('click',  () => { re
 document.getElementById('bookclub-btn')?.addEventListener('click',    () => { renderBookClub();    trackUsage('bookclub'); });
 document.getElementById('teampulse-btn')?.addEventListener('click',   () => { renderTeamPulse();   trackUsage('teampulse'); });
 document.getElementById('voicenotes-btn')?.addEventListener('click',  () => { renderVoiceNotes();  trackUsage('voicenotes'); });
+document.getElementById('timetracker-btn')?.addEventListener('click',    () => { renderTimeTracker();     trackUsage('timetracker'); });
+document.getElementById('ideaboard-btn')?.addEventListener('click',      () => { renderIdeaBoard();       trackUsage('ideaboard'); });
+document.getElementById('skillsinv-btn')?.addEventListener('click',      () => { renderSkillsInventory(); trackUsage('skillsinv'); });
+document.getElementById('contentplan-btn')?.addEventListener('click',    () => { renderContentPlanner();  trackUsage('contentplan'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
