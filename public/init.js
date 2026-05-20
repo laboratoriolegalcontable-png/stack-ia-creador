@@ -116,6 +116,10 @@ import { renderEventPlanner }     from '/event-planner.js';
 import { renderInterviewPrep }    from '/interview-prep.js';
 import { renderNewsletterTracker } from '/newsletter-tracker.js';
 import { renderWordTracker }      from '/word-tracker.js';
+import { renderCheckpoint }        from '/checkpoint.js';
+import { renderPatternRecognizer } from '/pattern-recognizer.js';
+import { renderTimeMachine }       from '/time-machine.js';
+import { renderTokenBudget }       from '/token-budget.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -243,6 +247,10 @@ registerHotkey('ctrl+alt+e',   '/events',   () => { renderEventPlanner();       
 registerHotkey('ctrl+alt+i',   '/interview',() => { renderInterviewPrep();       trackUsage('interview'); });
 registerHotkey('ctrl+alt+l',   '/newsletters',() => { renderNewsletterTracker(); trackUsage('newsletters'); });
 registerHotkey('ctrl+alt+w',   '/words',    () => { renderWordTracker();         trackUsage('words'); });
+registerHotkey('ctrl+alt+a',   '/checkpoint',() => { renderCheckpoint();           trackUsage('checkpoint'); });
+registerHotkey('ctrl+alt+p',   '/patterns', () => { renderPatternRecognizer();     trackUsage('patterns'); });
+registerHotkey('ctrl+alt+y',   '/timemachine',() => { renderTimeMachine();          trackUsage('timemachine'); });
+registerHotkey('ctrl+alt+o',   '/tbudget',  () => { renderTokenBudget();           trackUsage('tbudget'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -366,6 +374,10 @@ document.getElementById('events-btn')?.addEventListener('click',      () => { re
 document.getElementById('interview-btn')?.addEventListener('click',   () => { renderInterviewPrep();       trackUsage('interview'); });
 document.getElementById('newsletters-btn')?.addEventListener('click', () => { renderNewsletterTracker();   trackUsage('newsletters'); });
 document.getElementById('words-btn')?.addEventListener('click',       () => { renderWordTracker();         trackUsage('words'); });
+document.getElementById('checkpoint-btn')?.addEventListener('click',  () => { renderCheckpoint();           trackUsage('checkpoint'); });
+document.getElementById('patterns-btn')?.addEventListener('click',    () => { renderPatternRecognizer();     trackUsage('patterns'); });
+document.getElementById('timemachine-btn')?.addEventListener('click', () => { renderTimeMachine();           trackUsage('timemachine'); });
+document.getElementById('tbudget-btn')?.addEventListener('click',     () => { renderTokenBudget();           trackUsage('tbudget'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
