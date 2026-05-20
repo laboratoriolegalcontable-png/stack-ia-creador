@@ -80,6 +80,10 @@ import { renderWaterTracker }    from '/water-tracker.js';
 import { renderWeightLog }       from '/weight-log.js';
 import { renderDailyIntention }  from '/daily-intention.js';
 import { renderProjectRoadmap }  from '/project-roadmap.js';
+import { renderGratitudeJar }    from '/gratitude-jar.js';
+import { renderTimerSessions }   from '/timer-sessions.js';
+import { renderMentorLog }       from '/mentor-log.js';
+import { renderCodeSnippets }    from '/code-snippets.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -171,6 +175,10 @@ registerHotkey('ctrl+alt+y', '/water',        () => { renderWaterTracker();    t
 registerHotkey('ctrl+alt+z', '/weight',       () => { renderWeightLog();       trackUsage('weight'); });
 registerHotkey('ctrl+shift+i', '/intention',  () => { renderDailyIntention();  trackUsage('intention'); });
 registerHotkey('ctrl+shift+r', '/roadmap',    () => { renderProjectRoadmap();  trackUsage('roadmap'); });
+registerHotkey('ctrl+shift+g', '/jar',        () => { renderGratitudeJar();    trackUsage('jar'); });
+registerHotkey('ctrl+shift+t', '/timer',      () => { renderTimerSessions();   trackUsage('timer'); });
+registerHotkey('ctrl+shift+m', '/mentor',     () => { renderMentorLog();       trackUsage('mentor'); });
+registerHotkey('ctrl+shift+s', '/snippets',   () => { renderCodeSnippets();    trackUsage('snippets'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -258,6 +266,10 @@ document.getElementById('water-btn')?.addEventListener('click',        () => { r
 document.getElementById('weight-btn')?.addEventListener('click',       () => { renderWeightLog();       trackUsage('weight'); });
 document.getElementById('intention-btn')?.addEventListener('click',    () => { renderDailyIntention();  trackUsage('intention'); });
 document.getElementById('roadmap-btn')?.addEventListener('click',      () => { renderProjectRoadmap();  trackUsage('roadmap'); });
+document.getElementById('jar-btn')?.addEventListener('click',          () => { renderGratitudeJar();    trackUsage('jar'); });
+document.getElementById('timer-btn')?.addEventListener('click',        () => { renderTimerSessions();   trackUsage('timer'); });
+document.getElementById('mentor-btn')?.addEventListener('click',       () => { renderMentorLog();       trackUsage('mentor'); });
+document.getElementById('snippets-btn')?.addEventListener('click',     () => { renderCodeSnippets();    trackUsage('snippets'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
