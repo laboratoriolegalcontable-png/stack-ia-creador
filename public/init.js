@@ -137,6 +137,10 @@ import { renderSmartReminder }     from '/smart-reminder.js';
 import { renderPromptLibrary }     from '/prompt-library.js';
 import { renderAchievementTracker } from '/achievement-tracker.js';
 import { renderErrorLog }          from '/error-log.js';
+import { renderConversationJournal } from '/conversation-journal.js';
+import { renderDecisionMatrix }      from '/decision-matrix.js';
+import { renderExperimentLog }       from '/experiment-log.js';
+import { renderWeeklyDigest }        from '/weekly-digest.js';
 import { renderPatternRecognizer } from '/pattern-recognizer.js';
 import { renderTimeMachine }       from '/time-machine.js';
 import { renderTokenBudget }       from '/token-budget.js';
@@ -418,6 +422,10 @@ document.getElementById('sreminder-btn')?.addEventListener('click',   () => { re
 document.getElementById('promptlib-btn')?.addEventListener('click',   () => { renderPromptLibrary();    trackUsage('promptlib'); });
 document.getElementById('achievements-btn')?.addEventListener('click',() => { renderAchievementTracker(); trackUsage('achievements'); });
 document.getElementById('errorlog-btn')?.addEventListener('click',    () => { renderErrorLog();         trackUsage('errorlog'); });
+document.getElementById('convjournal-btn')?.addEventListener('click',   () => { renderConversationJournal(); trackUsage('convjournal'); });
+document.getElementById('decmatrix-btn')?.addEventListener('click',     () => { renderDecisionMatrix();      trackUsage('decmatrix'); });
+document.getElementById('explog-btn')?.addEventListener('click',        () => { renderExperimentLog();       trackUsage('explog'); });
+document.getElementById('weeklydigest-btn')?.addEventListener('click',  () => { renderWeeklyDigest();        trackUsage('weeklydigest'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
