@@ -84,6 +84,10 @@ import { renderGratitudeJar }    from '/gratitude-jar.js';
 import { renderTimerSessions }   from '/timer-sessions.js';
 import { renderMentorLog }       from '/mentor-log.js';
 import { renderCodeSnippets }    from '/code-snippets.js';
+import { renderVisionBoard }     from '/vision-board.js';
+import { renderQuoteCollection } from '/quote-collection.js';
+import { renderNetworkGoals }    from '/network-goals.js';
+import { renderJobApplications } from '/job-applications.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -179,6 +183,10 @@ registerHotkey('ctrl+shift+g', '/jar',        () => { renderGratitudeJar();    t
 registerHotkey('ctrl+shift+t', '/timer',      () => { renderTimerSessions();   trackUsage('timer'); });
 registerHotkey('ctrl+shift+m', '/mentor',     () => { renderMentorLog();       trackUsage('mentor'); });
 registerHotkey('ctrl+shift+s', '/snippets',   () => { renderCodeSnippets();    trackUsage('snippets'); });
+registerHotkey('ctrl+shift+v', '/vision',    () => { renderVisionBoard();      trackUsage('vision'); });
+registerHotkey('ctrl+shift+q', '/quotes2',   () => { renderQuoteCollection();  trackUsage('quotes2'); });
+registerHotkey('ctrl+shift+n', '/netgoals',  () => { renderNetworkGoals();     trackUsage('netgoals'); });
+registerHotkey('ctrl+shift+j', '/jobs',      () => { renderJobApplications();  trackUsage('jobs'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -270,6 +278,10 @@ document.getElementById('jar-btn')?.addEventListener('click',          () => { r
 document.getElementById('timer-btn')?.addEventListener('click',        () => { renderTimerSessions();   trackUsage('timer'); });
 document.getElementById('mentor-btn')?.addEventListener('click',       () => { renderMentorLog();       trackUsage('mentor'); });
 document.getElementById('snippets-btn')?.addEventListener('click',     () => { renderCodeSnippets();    trackUsage('snippets'); });
+document.getElementById('vision-btn')?.addEventListener('click',       () => { renderVisionBoard();      trackUsage('vision'); });
+document.getElementById('quotes2-btn')?.addEventListener('click',      () => { renderQuoteCollection();  trackUsage('quotes2'); });
+document.getElementById('netgoals-btn')?.addEventListener('click',     () => { renderNetworkGoals();     trackUsage('netgoals'); });
+document.getElementById('jobs-btn')?.addEventListener('click',         () => { renderJobApplications();  trackUsage('jobs'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
