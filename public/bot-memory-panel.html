@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bot Memory Panel</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 1.25rem; color: #a78bfa; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    select, input, button {
+      background: #1e2130;
+      border: 1px solid #374151;
+      color: #e2e8f0;
+      border-radius: 6px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    input { flex: 1 1 220px; cursor: text; }
+    button {
+      background: #4c1d95;
+      border-color: #6d28d9;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    button:hover { background: #5b21b6; }
+    button.danger { background: #7f1d1d; border-color: #991b1b; }
+    button.danger:hover { background: #991b1b; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .stat-card {
+      background: #1e2130;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+    }
+    .stat-card .label { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-card .value { font-size: 1.3rem; font-weight: 700; color: #a78bfa; margin-top: 0.2rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    thead th {
+      background: #1e2130;
+      padding: 0.55rem 0.75rem;
+      text-align: left;
+      color: #94a3b8;
+      font-weight: 600;
+      border-bottom: 1px solid #374151;
+      position: sticky;
+      top: 0;
+    }
+    tbody tr:nth-child(even) { background: #161824; }
+    tbody tr:hover { background: #1e2a40; }
+    td {
+      padding: 0.45rem 0.75rem;
+      border-bottom: 1px solid #1e2130;
+      vertical-align: top;
+      max-width: 0;
+    }
+    td.ts { white-space: nowrap; width: 160px; color: #64748b; font-size: 0.78rem; }
+    td.type { white-space: nowrap; width: 140px; color: #7dd3fc; }
+    td.data {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #cbd5e1;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+    .empty { text-align: center; padding: 2rem; color: #4b5563; }
+    #status {
+      font-size: 0.82rem;
+      color: #6ee7b7;
+      min-height: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bot Memory Panel</h1>
+
+  <div class="toolbar">
+    <select id="botSelect">
+      <option value="lucrecia">Lucrecia</option>
+      <option value="oraculo">Oráculo</option>
+      <option value="valentina">Valentina</option>
+      <option value="megan">Megan</option>
+    </select>
+    <input id="searchInput" type="text" placeholder="Buscar en memoria..." />
+    <button id="btnSearch">Buscar</button>
+    <button id="btnRecent">Recientes</button>
+    <button id="btnSnapshot">Forzar Snapshot</button>
+    <button id="btnExport">Exportar JSON</button>
+    <button id="btnClear" class="danger">Limpiar &gt;90 días</button>
+  </div>
+
+  <p id="status"></p>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="label">Eventos</div><div class="value" id="sEventCount">—</div></div>
+    <div class="stat-card"><div class="label">Snapshots</div><div class="value" id="sSnapCount">—</div></div>
+    <div class="stat-card"><div class="label">Prom / día</div><div class="value" id="sAvg">—</div></div>
+    <div class="stat-card"><div class="label">Último evento</div><div class="value" id="sNewest" style="font-size:0.85rem">—</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Tipo</th>
+          <th>Datos</th>
+          <th>Sesión</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="4" class="empty">Seleccioná un bot y hacé click en Recientes.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script type="module">
+    import { botMemories, initAllMemories } from './bot-memory.js';
+
+    await initAllMemories();
+
+    const botSelect = document.getElementById('botSelect');
+    const searchInput = document.getElementById('searchInput');
+    const tableBody = document.getElementById('tableBody');
+    const status = document.getElementById('status');
+
+    function currentMemory() {
+      return botMemories[botSelect.value];
+    }
+
+    async function refreshStats() {
+      const s = await currentMemory().stats();
+      if (!s) return;
+      document.getElementById('sEventCount').textContent = s.eventCount;
+      document.getElementById('sSnapCount').textContent = s.snapshotCount;
+      document.getElementById('sAvg').textContent = s.avgEventsPerDay;
+      document.getElementById('sNewest').textContent = s.newestEvent
+        ? s.newestEvent.replace('T', ' ').slice(0, 19)
+        : '—';
+    }
+
+    function renderRows(events) {
+      if (!events.length) {
+        tableBody.innerHTML = '<tr><td colspan="4" class="empty">Sin resultados.</td></tr>';
+        return;
+      }
+      tableBody.innerHTML = events.map((e) => {
+        const ts = new Date(e.ts).toISOString().replace('T', ' ').slice(0, 19);
+        const data = JSON.stringify(e.data).slice(0, 200);
+        const session = (e.sessionId || '').slice(0, 8);
+        return `<tr>
+          <td class="ts">${ts}</td>
+          <td class="type">${escHtml(e.type)}</td>
+          <td class="data" title="${escHtml(JSON.stringify(e.data))}">${escHtml(data)}</td>
+          <td class="ts">${session}…</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function setStatus(msg) {
+      status.textContent = msg;
+      setTimeout(() => { status.textContent = ''; }, 3000);
+    }
+
+    document.getElementById('btnRecent').addEventListener('click', async () => {
+      const events = await currentMemory().recent(50);
+      renderRows(events);
+      await refreshStats();
+      setStatus(`${events.length} eventos recientes cargados.`);
+    });
+
+    document.getElementById('btnSearch').addEventListener('click', async () => {
+      const q = searchInput.value.trim();
+      if (!q) return;
+      const events = await currentMemory().search(q, 30);
+      renderRows(events);
+      setStatus(`${events.length} resultados para "${q}".`);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('btnSearch').click();
+    });
+
+    document.getElementById('btnSnapshot').addEventListener('click', async () => {
+      const summary = await currentMemory().summarize();
+      await refreshStats();
+      setStatus(summary ? 'Snapshot guardado.' : 'Sin eventos para resumir.');
+    });
+
+    document.getElementById('btnExport').addEventListener('click', async () => {
+      const json = await currentMemory().exportJSON();
+      if (!json) { setStatus('Error exportando.'); return; }
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${botSelect.value}-memory-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setStatus('Exportación descargada.');
+    });
+
+    document.getElementById('btnClear').addEventListener('click', async () => {
+      if (!confirm('¿Eliminar eventos de más de 90 días para este bot?')) return;
+      const deleted = await currentMemory().clearOlderThan(90);
+      await refreshStats();
+      setStatus(`${deleted ?? 0} eventos eliminados.`);
+    });
+
+    botSelect.addEventListener('change', async () => {
+      tableBody.innerHTML = '<tr><td colspan="4" class="empty">Seleccioná una acción.</td></tr>';
+      await refreshStats();
+    });
+
+    await refreshStats();
+  </script>
+</body>
+</html>
