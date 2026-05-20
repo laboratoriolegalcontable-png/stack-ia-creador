@@ -100,6 +100,103 @@ export function renderProjectPanel() {
   renderProjectList();
 }
 
+export function renderProjectTracker() {
+  const PT2_KEY = 'kairos:projects';
+  function _load2() { try { const d = JSON.parse(localStorage.getItem(PT2_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch { return []; } }
+  function _save2(d) { localStorage.setItem(PT2_KEY, JSON.stringify(d)); }
+  function _uid2() { return crypto.randomUUID(); }
+  function _now2() { return new Date().toISOString(); }
+
+  let panel = document.getElementById('projecttracker-panel');
+  if (panel) { panel.style.display = panel.style.display === 'none' ? '' : 'none'; if (panel.style.display !== 'none') _refresh2(); return; }
+  panel = document.createElement('div');
+  panel.id = 'projecttracker-panel';
+  panel.className = 'ia-panel';
+  panel.innerHTML = `
+    <h3>Project Tracker</h3>
+    <form id="projecttracker-form">
+      <input id="pt2-title" placeholder="Título *" required style="margin:2px">
+      <textarea id="pt2-desc" placeholder="Descripción" rows="2" style="margin:2px;width:100%;box-sizing:border-box"></textarea>
+      <select id="pt2-status" style="margin:2px">
+        <option value="planning">Planning</option>
+        <option value="active" selected>Active</option>
+        <option value="on-hold">On Hold</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <select id="pt2-priority" style="margin:2px">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+        <option value="critical">Critical</option>
+      </select>
+      <input id="pt2-due" type="date" style="margin:2px">
+      <button type="submit">Agregar Proyecto</button>
+    </form>
+    <div class="ia-stats" id="projecttracker-stats"></div>
+    <ul id="projecttracker-list" style="list-style:none;padding:0;margin-top:0.5rem"></ul>
+  `;
+  document.body.appendChild(panel);
+
+  function _refresh2() {
+    const projects = _load2();
+    const list = document.getElementById('projecttracker-list');
+    const stats = document.getElementById('projecttracker-stats');
+    if (!list || !stats) return;
+    list.innerHTML = '';
+    const statusColor = { planning:'#6366f1', active:'#059669', 'on-hold':'#d97706', completed:'#374151', cancelled:'#dc2626' };
+    const prioColor   = { low:'#374151', medium:'#1d4ed8', high:'#d97706', critical:'#dc2626' };
+    projects.slice().reverse().forEach(p => {
+      const li = document.createElement('li');
+      li.style.cssText = 'border:1px solid #374151;border-radius:6px;padding:0.5rem;margin-bottom:0.4rem';
+      const top = document.createElement('div');
+      top.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:0.4rem;flex-wrap:wrap';
+      const titleEl = document.createElement('strong');
+      titleEl.textContent = p.title;
+      const sBadge = document.createElement('span');
+      sBadge.style.cssText = `background:${statusColor[p.status]||'#374151'};color:#fff;border-radius:4px;padding:0.1rem 0.4rem;font-size:0.72rem`;
+      sBadge.textContent = p.status;
+      const pBadge = document.createElement('span');
+      pBadge.style.cssText = `background:${prioColor[p.priority]||'#374151'};color:#fff;border-radius:4px;padding:0.1rem 0.4rem;font-size:0.72rem`;
+      pBadge.textContent = p.priority;
+      const mCount = document.createElement('span');
+      mCount.style.cssText = 'color:#9ca3af;font-size:0.75rem';
+      mCount.textContent = `${(p.milestones||[]).length} milestones`;
+      const delBtn = document.createElement('button');
+      delBtn.className = 'ia-cmd'; delBtn.textContent = '✕';
+      delBtn.addEventListener('click', () => { _save2(_load2().filter(x => x.id !== p.id)); _refresh2(); });
+      top.appendChild(titleEl); top.appendChild(sBadge); top.appendChild(pBadge); top.appendChild(mCount); top.appendChild(delBtn);
+      li.appendChild(top);
+      list.appendChild(li);
+    });
+    const active    = projects.filter(p => p.status === 'active').length;
+    const completed = projects.filter(p => p.status === 'completed').length;
+    const onHold    = projects.filter(p => p.status === 'on-hold').length;
+    stats.textContent = `Total: ${projects.length} · Activos: ${active} · Completados: ${completed} · En pausa: ${onHold}`;
+  }
+
+  document.getElementById('projecttracker-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const title = document.getElementById('pt2-title').value.trim();
+    if (!title) return;
+    const projects = _load2();
+    projects.push({
+      id: _uid2(),
+      title,
+      description: document.getElementById('pt2-desc').value.trim(),
+      status:   document.getElementById('pt2-status').value,
+      priority: document.getElementById('pt2-priority').value,
+      dueDate:  document.getElementById('pt2-due').value,
+      milestones: [],
+      createdAt: _now2(), updatedAt: _now2()
+    });
+    _save2(projects);
+    e.target.reset();
+    _refresh2();
+  });
+  _refresh2();
+}
+
 function renderProjectList() {
   const listEl = document.getElementById('project-list');
   const statsEl = document.getElementById('project-stats');
