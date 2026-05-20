@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Monitor de Bots — Estudio Oro</title>
+  <style>
+    :root {
+      --color-primary: #e91e8c;
+      --color-secondary: #9c27b0;
+      --color-accent-blue: #2196f3;
+      --color-accent-orange: #ff9800;
+      --bg-dark: #0a0a0a;
+      --bg-card: #1a1a2e;
+      --bg-card-hover: #16213e;
+      --text-primary: #f0f0f0;
+      --text-secondary: #aaaaaa;
+      --text-muted: #666666;
+      --border-color: #2a2a4a;
+      --badge-green: #4caf50;
+      --badge-yellow: #ff9800;
+      --badge-red: #f44336;
+      --radius: 12px;
+      --radius-sm: 6px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --transition: 0.2s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ─── Header ─── */
+    .site-header {
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      height: 64px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      aria-hidden: true;
+    }
+
+    .brand-text h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .brand-text p {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .countdown-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+    }
+
+    .countdown-value {
+      color: var(--color-primary);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      min-width: 2ch;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 0.3rem 0.85rem;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .btn-back:hover,
+    .btn-back:focus-visible {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      outline: none;
+    }
+
+    /* ─── Main layout ─── */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* ─── Global alert panel ─── */
+    #global-alerts {
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-panel {
+      background: rgba(244, 67, 54, 0.08);
+      border: 1px solid rgba(244, 67, 54, 0.35);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+    }
+
+    .alert-panel-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #f44336;
+      margin-bottom: 0.6rem;
+    }
+
+    .alert-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .alert-item {
+      font-size: 0.8rem;
+      color: #ff7961;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .alert-item::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #f44336;
+    }
+
+    .alert-clear {
+      font-size: 0.78rem;
+      color: var(--badge-green);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ─── Bots grid ─── */
+    .bots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ─── Bot card ─── */
+    .bot-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .bot-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--bot-color, var(--color-primary));
+    }
+
+    .bot-card-header {
+      padding: 1rem 1.25rem 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .bot-info {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
+    }
+
+    .bot-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .bot-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .bot-role {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ─── Health badge ─── */
+    .health-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .health-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      display: block;
+    }
+
+    .badge-green  { background: rgba(76,175,80,0.15);  color: var(--badge-green);  }
+    .badge-yellow { background: rgba(255,152,0,0.15);  color: var(--badge-yellow); }
+    .badge-red    { background: rgba(244,67,54,0.15);  color: var(--badge-red);    }
+
+    /* ─── Health score ─── */
+    .bot-card-score {
+      padding: 0.85rem 1.25rem 0;
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+    }
+
+    .score-value {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* ─── Metrics ─── */
+    .bot-card-metrics {
+      padding: 0.75rem 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 1rem;
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .metric-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-value.warn  { color: var(--badge-yellow); }
+    .metric-value.alert { color: var(--badge-red); }
+
+    /* ─── Sparkline ─── */
+    .bot-card-sparkline {
+      padding: 0.4rem 1.25rem 0.75rem;
+    }
+
+    .sparkline-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .sparkline {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 32px;
+    }
+
+    .spark-bar {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      min-height: 3px;
+      transition: height var(--transition);
+    }
+
+    /* ─── Card footer ─── */
+    .bot-card-footer {
+      padding: 0.5rem 1.25rem 0.85rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .last-check {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .card-alert-indicator {
+      font-size: 0.68rem;
+      color: var(--badge-red);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .card-alert-indicator.visible { opacity: 1; }
+
+    /* ─── Status bar ─── */
+    .status-bar {
+      margin-top: 2rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .status-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--badge-green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      .brand-text p { display: none; }
+      .bots-grid { grid-template-columns: 1fr; }
+      .score-value { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="brand-icon" aria-hidden="true">🤖</div>
+        <div class="brand-text">
+          <h1>Sistema de Monitoreo de Bots — Estudio Oro</h1>
+          <p>Supervisión en tiempo real · Stack IA Creador</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="countdown-badge" aria-live="polite" aria-atomic="true">
+          <span aria-hidden="true">↻</span>
+          <span>Actualiza en</span>
+          <span class="countdown-value" id="countdown-display">30</span>
+          <span>s</span>
+        </div>
+        <a href="index.html" class="btn-back" aria-label="Volver al panel principal">
+          <span aria-hidden="true">←</span> Inicio
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════ MAIN ═══════════ -->
+  <main id="main-content">
+
+    <!-- Global alerts -->
+    <section id="global-alerts" aria-label="Alertas globales" aria-live="polite"></section>
+
+    <!-- Bot cards grid -->
+    <div class="bots-grid" role="list" aria-label="Estado de bots">
+
+      <!-- Lucrecia -->
+      <article class="bot-card" id="card-lucrecia" role="listitem"
+               style="--bot-color: #e91e8c"
+               aria-label="Bot Lucrecia">
+        <div class="bot-card-header">
+          <div class="bot-info">
+            <div class="bot-avatar" style="background: #e91e8c" aria-hidden="true">L</div>
+            <div>
+              <div class="bot-name">Lucrecia</div>
+              <div class="bot-role">Coordinadora General</div>
+            </div>
+          </div>
+          <span class="health-badge badge-green" id="badge-lucrecia"
+                aria-label="Estado de salud: Verde">Verde</span>
+        </div>
+        <div class="bot-card-score">
+          <span class="score-value" id="score-lucrecia" aria-label="Health Score">—</span>
+          <span class="score-label">/ 100</span>
+        </div>
+        <div class="bot-card-metrics">
+          <div class="metric-item">
+            <span class="metric-label">Error Rate</span>
+            <span class="metric-value" id="metric-lucrecia-errorRate">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Mem. Precision</span>
+            <span class="metric-value" id="metric-lucrecia-memoryPrecision">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Drift Score</span>
+            <span class="metric-value" id="metric-lucrecia-driftScore">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Compliance</span>
+            <span class="metric-value" id="metric-lucrecia-contractCompliance">—</span>
+          </div>
+        </div>
+        <div class="bot-card-sparkline">
+          <div class="sparkline-label">Health Score (historial)</div>
+          <div class="sparkline" id="sparkline-lucrecia" aria-hidden="true"></div>
+        </div>
+        <div class="bot-card-footer">
+          <span class="last-check" id="lastcheck-lucrecia">Sin datos</span>
+          <span class="card-alert-indicator" id="alertind-lucrecia"
+                aria-live="polite">⚠ Alertas</span>
+        </div>
+      </article>
+
+      <!-- Oráculo -->
+      <article class="bot-card" id="card-oraculo" role="listitem"
+               style="--bot-color: #9c27b0"
+               aria-label="Bot Oráculo">
+        <div class="bot-card-header">
+          <div class="bot-info">
+            <div class="bot-avatar" style="background: #9c27b0" aria-hidden="true">O</div>
+            <div>
+              <div class="bot-name">Oráculo</div>
+              <div class="bot-role">Orquestador Central</div>
+            </div>
+          </div>
+          <span class="health-badge badge-green" id="badge-oraculo"
+                aria-label="Estado de salud: Verde">Verde</span>
+        </div>
+        <div class="bot-card-score">
+          <span class="score-value" id="score-oraculo" aria-label="Health Score">—</span>
+          <span class="score-label">/ 100</span>
+        </div>
+        <div class="bot-card-metrics">
+          <div class="metric-item">
+            <span class="metric-label">Error Rate</span>
+            <span class="metric-value" id="metric-oraculo-errorRate">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Mem. Precision</span>
+            <span class="metric-value" id="metric-oraculo-memoryPrecision">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Drift Score</span>
+            <span class="metric-value" id="metric-oraculo-driftScore">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Compliance</span>
+            <span class="metric-value" id="metric-oraculo-contractCompliance">—</span>
+          </div>
+        </div>
+        <div class="bot-card-sparkline">
+          <div class="sparkline-label">Health Score (historial)</div>
+          <div class="sparkline" id="sparkline-oraculo" aria-hidden="true"></div>
+        </div>
+        <div class="bot-card-footer">
+          <span class="last-check" id="lastcheck-oraculo">Sin datos</span>
+          <span class="card-alert-indicator" id="alertind-oraculo"
+                aria-live="polite">⚠ Alertas</span>
+        </div>
+      </article>
+
+      <!-- Valentina -->
+      <article class="bot-card" id="card-valentina" role="listitem"
+               style="--bot-color: #2196f3"
+               aria-label="Bot Valentina">
+        <div class="bot-card-header">
+          <div class="bot-info">
+            <div class="bot-avatar" style="background: #2196f3" aria-hidden="true">V</div>
+            <div>
+              <div class="bot-name">Valentina</div>
+              <div class="bot-role">Especialista ReclamaIA</div>
+            </div>
+          </div>
+          <span class="health-badge badge-green" id="badge-valentina"
+                aria-label="Estado de salud: Verde">Verde</span>
+        </div>
+        <div class="bot-card-score">
+          <span class="score-value" id="score-valentina" aria-label="Health Score">—</span>
+          <span class="score-label">/ 100</span>
+        </div>
+        <div class="bot-card-metrics">
+          <div class="metric-item">
+            <span class="metric-label">Error Rate</span>
+            <span class="metric-value" id="metric-valentina-errorRate">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Mem. Precision</span>
+            <span class="metric-value" id="metric-valentina-memoryPrecision">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Drift Score</span>
+            <span class="metric-value" id="metric-valentina-driftScore">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Compliance</span>
+            <span class="metric-value" id="metric-valentina-contractCompliance">—</span>
+          </div>
+        </div>
+        <div class="bot-card-sparkline">
+          <div class="sparkline-label">Health Score (historial)</div>
+          <div class="sparkline" id="sparkline-valentina" aria-hidden="true"></div>
+        </div>
+        <div class="bot-card-footer">
+          <span class="last-check" id="lastcheck-valentina">Sin datos</span>
+          <span class="card-alert-indicator" id="alertind-valentina"
+                aria-live="polite">⚠ Alertas</span>
+        </div>
+      </article>
+
+      <!-- Megan -->
+      <article class="bot-card" id="card-megan" role="listitem"
+               style="--bot-color: #ff9800"
+               aria-label="Bot Megan">
+        <div class="bot-card-header">
+          <div class="bot-info">
+            <div class="bot-avatar" style="background: #ff9800" aria-hidden="true">M</div>
+            <div>
+              <div class="bot-name">Megan</div>
+              <div class="bot-role">Experta Inmobiliaria</div>
+            </div>
+          </div>
+          <span class="health-badge badge-green" id="badge-megan"
+                aria-label="Estado de salud: Verde">Verde</span>
+        </div>
+        <div class="bot-card-score">
+          <span class="score-value" id="score-megan" aria-label="Health Score">—</span>
+          <span class="score-label">/ 100</span>
+        </div>
+        <div class="bot-card-metrics">
+          <div class="metric-item">
+            <span class="metric-label">Error Rate</span>
+            <span class="metric-value" id="metric-megan-errorRate">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Mem. Precision</span>
+            <span class="metric-value" id="metric-megan-memoryPrecision">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Drift Score</span>
+            <span class="metric-value" id="metric-megan-driftScore">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Compliance</span>
+            <span class="metric-value" id="metric-megan-contractCompliance">—</span>
+          </div>
+        </div>
+        <div class="bot-card-sparkline">
+          <div class="sparkline-label">Health Score (historial)</div>
+          <div class="sparkline" id="sparkline-megan" aria-hidden="true"></div>
+        </div>
+        <div class="bot-card-footer">
+          <span class="last-check" id="lastcheck-megan">Sin datos</span>
+          <span class="card-alert-indicator" id="alertind-megan"
+                aria-live="polite">⚠ Alertas</span>
+        </div>
+      </article>
+
+    </div><!-- /.bots-grid -->
+
+    <!-- Status bar -->
+    <div class="status-bar" role="status" aria-label="Estado del sistema">
+      <div class="status-bar-left">
+        <div class="status-dot" aria-hidden="true"></div>
+        <span>Sistema activo — monitoreo automático habilitado</span>
+      </div>
+      <span id="last-refresh-ts">—</span>
+    </div>
+
+  </main>
+
+  <script type="module" src="bot-monitor.js"></script>
+</body>
+</html>
