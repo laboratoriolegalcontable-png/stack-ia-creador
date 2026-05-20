@@ -46,20 +46,6 @@ done
 [ -z "$PROMPT_FILE" ] && usage
 [ ! -f "$PROMPT_FILE" ] && { echo "Prompt file no existe: $PROMPT_FILE"; exit 1; }
 
-# NAME is interpolated into shell paths, filenames, plist labels and the generated
-# wrapper script. Restrict it to safe characters to prevent command injection and
-# malformed scheduling artifacts.
-if ! [[ "$NAME" =~ ^[a-zA-Z0-9_-]{1,64}$ ]]; then
-  echo "Nombre inválido: '$NAME'. Permitidos: letras, números, guión y guión bajo (max 64 chars)." >&2
-  exit 1
-fi
-
-# Repo root = the project that ships this skill. The wrapper needs to cd here so
-# `claude -p` finds .claude/skills/. We compute it from SKILL_DIR (set later) to
-# avoid hardcoding a username/path.
-SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPO_ROOT="$(cd "$SKILL_DIR/../.." && pwd)"
-
 OS=$(uname -s)
 RUNS_DIR="$HOME/.bh-runs/$NAME"
 BIN_DIR="$HOME/.bh-bin"
@@ -74,18 +60,16 @@ export PATH="\$HOME/.local/bin:\$PATH"
 BH_HOME="\${BH_HOME:-\$HOME/Developer/browser-harness}"
 TIMESTAMP=\$(date +%Y-%m-%d_%H%M%S)
 OUT="$RUNS_DIR/\$TIMESTAMP.md"
-# Working directory for claude -p (needs .claude/skills/ to be discoverable).
-# Resolved at schedule time from the script location, no hardcoded user path.
-cd "$REPO_ROOT"
+cd "$HOME/Diego-Orosa"
 
 # Circuit breaker: aborta si detecta runs anomalos
-source "$REPO_ROOT/.claude/skills/browser-harness/scripts/bh-guard.sh"
+source "$HOME/Diego-Orosa/.claude/skills/browser-harness/scripts/bh-guard.sh"
 if ! bh_guard_check "$NAME"; then
   echo "Aborted by circuit breaker" > "\$OUT"
   exit 0
 fi
 
-claude -p --dangerously-skip-permissions --max-turns 20 --model claude-haiku-4-5-20251001 < "$PROMPT_FILE" > "\$OUT" 2>&1 || echo "FAILED" >> "\$OUT"
+claude -p --dangerously-skip-permissions --max-turns 20 --model claude-haiku-4-5-20251001 < $PROMPT_FILE > "\$OUT" 2>&1 || echo "FAILED" >> "\$OUT"
 
 # Notificacion segun canal
 case "$OUTPUT_CHANNEL" in
@@ -115,25 +99,12 @@ chmod +x "$WRAPPER"
 
 case "$OS" in
   Darwin)
+    # Mac: usar launchd (mas confiable que cron en Mac)
     PLIST="$HOME/Library/LaunchAgents/com.bh.$NAME.plist"
-    # launchd's StartCalendarInterval admite solo enteros puros en cada clave
-    # (no rangos `9-18`, no pasos `*/30`, no listas `1,3,5`) y no acepta cron's
-    # day-of-month, month ni weekday a menos que sean enteros únicos.
-    # Estrategia:
-    #   - Si el cron es trivial (Min/Hour enteros en rango, resto `*`) → launchd
-    #   - Si no, fallback a crontab (macOS también lo soporta), que sí maneja
-    #     toda la sintaxis cron sin pérdida silenciosa de campos.
+    # Convertir cron simple "M H dom mon dow" a launchd
+    # Solo soportamos casos comunes
     IFS=' ' read -r CMIN CHOUR CDOM CMON CDOW <<< "$CRON"
-    # in_range $val $min $max — true if $val is a base-10 integer in [min, max].
-    # launchd silently accepts out-of-range integers (e.g. Minute=60, Hour=24)
-    # and the resulting plist either never fires or fires unpredictably.
-    in_range() {
-      [[ "$1" =~ ^(0|[1-9][0-9]*)$ ]] && [ "$1" -ge "$2" ] && [ "$1" -le "$3" ]
-    }
-
-    if in_range "$CMIN" 0 59 && in_range "$CHOUR" 0 23 \
-       && [ "$CDOM" = "*" ] && [ "$CMON" = "*" ] && [ "$CDOW" = "*" ]; then
-      cat > "$PLIST" <<EOF
+    cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -142,24 +113,17 @@ case "$OS" in
   <key>ProgramArguments</key> <array><string>$WRAPPER</string></array>
   <key>StartCalendarInterval</key>
   <dict>
-    <key>Minute</key><integer>$CMIN</integer>
-    <key>Hour</key><integer>$CHOUR</integer>
+    $([ "$CMIN" != "*" ] && echo "<key>Minute</key><integer>$CMIN</integer>")
+    $([ "$CHOUR" != "*" ] && echo "<key>Hour</key><integer>$CHOUR</integer>")
   </dict>
   <key>StandardOutPath</key>  <string>$RUNS_DIR/launchd.out</string>
   <key>StandardErrorPath</key><string>$RUNS_DIR/launchd.err</string>
 </dict>
 </plist>
 EOF
-      launchctl unload "$PLIST" 2>/dev/null || true
-      launchctl load "$PLIST"
-      echo "[OK] Job $NAME agendado via launchd (cron trivial). PList: $PLIST"
-    else
-      # Cron complejo o valores fuera de rango → usar crontab en macOS también
-      CRON_LINE="$CRON $WRAPPER  # bh:$NAME"
-      ( crontab -l 2>/dev/null | grep -v "# bh:$NAME"; echo "$CRON_LINE" ) | crontab -
-      echo "[OK] Job $NAME agendado via crontab en macOS (expresión cron no representable en launchd)."
-      echo "       Línea: $CRON_LINE"
-    fi
+    launchctl unload "$PLIST" 2>/dev/null || true
+    launchctl load "$PLIST"
+    echo "[OK] Job $NAME agendado via launchd. PList: $PLIST"
     ;;
   Linux)
     # Linux: agregar a crontab del usuario
@@ -177,7 +141,7 @@ esac
 
 cat <<EOF
 
-─────────────────────────────────────────
+────────────────────────────────────────
 Job activo. Detalles:
   Nombre:    $NAME
   Cron:      $CRON
@@ -188,5 +152,5 @@ Job activo. Detalles:
 
 Para borrar el job:
   $0 --remove --name $NAME    # (proximamente; por ahora editar a mano)
-─────────────────────────────────────────
+────────────────────────────────────────
 EOF

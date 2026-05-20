@@ -13,16 +13,13 @@ donde las marcas ponen catalogo, FAQ, testimonios, ofertas vigentes.
 1. Navegar a `https://www.instagram.com/{username}/`
 2. Localizar la fila de circulos "Stories destacadas" (entre bio y grid)
 3. Para cada highlight visible:
-   - Si `highlight_filter` esta definido, comparar el nombre del highlight
-     contra el filtro (regex match o membership en la lista de nombres). Si
-     no coincide, saltar al siguiente sin abrirlo.
    - Click → entra al carrusel de stories del highlight
    - Para cada story del carrusel:
      - Tipo: foto o video
      - Caption / texto superpuesto (si hay)
      - Stickers visibles (poll, link, mention, location)
      - Duracion (si es video)
-   - Flecha derecha (`→` / ArrowRight) para avanzar al siguiente story dentro del highlight, ESC para salir
+   - Tab derecha para avanzar, ESC para salir
 4. Volver al perfil, siguiente highlight
 
 ## Output

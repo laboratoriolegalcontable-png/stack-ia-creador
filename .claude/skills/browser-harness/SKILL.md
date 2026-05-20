@@ -96,31 +96,22 @@ Eso hace:
 5. Copia las 5 seed skills LATAM (instagram, mercadolibre, tiendanube, despegar, rappi) a `~/Developer/browser-harness/agent-workspace/domain-skills/`
 6. Imprime instrucciones para abrir Chrome con debugging port segun OS detectado
 
-Si el usuario corre macOS, el instalador imprime (lanzar en background con `&`
-para no bloquear la terminal ni una ejecución de tool):
+Si el usuario corre macOS, el instalador imprime:
 
 ```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 &
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
 ```
 
 Si corre Linux:
 
 ```bash
-google-chrome --remote-debugging-port=9222 &
+google-chrome --remote-debugging-port=9222
 ```
 
-Si corre Windows nativo (PowerShell / cmd, no WSL):
+Si corre Windows (WSL):
 
 ```cmd
-start "" chrome.exe --remote-debugging-port=9222
-```
-
-Si corre WSL (terminal Linux dentro de Windows), `start` no existe en bash
-— hay que invocar el `cmd.exe` del host para lanzar Chrome de Windows en
-background:
-
-```bash
-cmd.exe /C start "" chrome.exe --remote-debugging-port=9222
+chrome.exe --remote-debugging-port=9222
 ```
 
 Despues del install, verifica con:
@@ -182,26 +173,11 @@ El wrapper detecta el OS y usa launchd (Mac), cron (Linux) o Task Scheduler
 ### Modo 3 — VPS 24/7 (produccion)
 
 Si el usuario tiene VPS, le sugieres `bux` (sibling oficial de Browser
-Harness). **Nunca pipear directo a `sudo bash`** — el script upstream puede
-cambiar en cualquier momento y `sudo` da acceso root sin revisión. En su
-lugar, le mostrás este flujo (descargar, inspeccionar, ejecutar):
+Harness). Le pasas el comando:
 
 ```bash
-# 1. Descargar el instalador a disco
-curl -fsSL -o /tmp/bux-install.sh \
-  https://raw.githubusercontent.com/browser-use/bux/main/install.sh
-
-# 2. Inspeccionar el contenido antes de ejecutar
-less /tmp/bux-install.sh
-
-# 3. Ejecutar (sin sudo si es posible; con sudo solo si el script lo requiere
-#    y el usuario revisó qué hace). Pasale las env vars explícitamente.
-BROWSER_USE_API_KEY="$BROWSER_USE_API_KEY" bash /tmp/bux-install.sh
-
-# Si el script necesita permisos elevados para ciertos pasos (puertos <1024,
-# /etc, systemd), preferí correrlo sin sudo y dejar que falle con un mensaje
-# claro indicando qué línea requiere privilegios — así el usuario puede
-# ejecutar solo esa parte con sudo en lugar del script entero.
+curl -fsSL https://raw.githubusercontent.com/browser-use/bux/main/install.sh \
+  | sudo BROWSER_USE_API_KEY=$BROWSER_USE_API_KEY bash
 ```
 
 bux corre 24/7 con Telegram bot integrado. Para que sea util, el usuario

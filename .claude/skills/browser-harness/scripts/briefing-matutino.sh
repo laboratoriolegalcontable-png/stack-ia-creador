@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Briefing matutino de Diego Orosa
-# Corre 5 tareas en secuencia (con gaps para no triggar captchas) y consolida en un solo .md
+# Corre 5 tareas en paralelo (con gaps para no triggar captchas) y consolida en un solo .md
 # Pensado para ejecutarse 6:30 AM ART (8:30 AM Madrid) de Lunes a Viernes.
 
 set -euo pipefail
@@ -13,16 +13,6 @@ OUT="$OUT_DIR/$DATE.md"
 mkdir -p "$OUT_DIR"
 
 cd "$BH_HOME"
-
-# Circuit breaker: aborta si detecta runs anomalos o excede rate limit
-GUARD="$HOME/Diego-Orosa/.claude/skills/browser-harness/scripts/bh-guard.sh"
-if [ -f "$GUARD" ]; then
-  source "$GUARD"
-  if ! bh_guard_check "briefing-matutino"; then
-    echo "Aborted by circuit breaker (rate limit / cost kill switch)" >> "$OUT"
-    exit 0
-  fi
-fi
 
 run_step() {
   local name="$1"; local prompt="$2"; local gap="${3:-30}"

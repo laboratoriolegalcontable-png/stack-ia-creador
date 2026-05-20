@@ -17,9 +17,6 @@
    - Imagen principal
    - URL del producto
    - Etiquetas visibles (oferta, nuevo, agotado)
-   - Si `with_stock_only` es `true` (default), descartar inmediatamente los
-     productos con etiqueta "agotado" o stock 0 antes de extraer detalle.
-     Mantener un contador `descartados_sin_stock` para reportar al final.
 4. Click en cada producto para extraer detalle:
    - SKU
    - Descripcion (primeras 200c)
@@ -44,7 +41,7 @@
 - Rango de precio: {min} - {max}
 - Precio promedio: {avg}
 - % en oferta (con precio antes): {%}
-- % sin stock: {%}  (solo significativo si `with_stock_only=false`; si el filtro está activo este valor refleja productos descartados antes del detalle)
+- % sin stock: {%}
 - Categoria con mas productos: {nombre} ({N})
 - Productos sin imagen: {N} (potencial calidad baja del catalogo)
 ```

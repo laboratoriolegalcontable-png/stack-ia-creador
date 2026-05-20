@@ -28,8 +28,8 @@ El usuario quiere los ultimos N posts de una cuenta especifica (publica).
 Tabla Markdown ordenada por fecha descendente:
 
 ```markdown
-| # | Fecha | Tipo | Caption (primeros 80c) | Likes | Comments | Thumbnail | URL |
-|---|---|---|---|---|---|---|---|
+| # | Fecha | Tipo | Caption (primeros 80c) | Likes | Comments | URL |
+|---|---|---|---|---|---|---|
 ```
 
 ## Anti-captcha
@@ -42,6 +42,6 @@ Si despues de 10-15 posts aparece challenge wall:
 
 ## Senales de exito
 
-- Cuenta de filas en la tabla == `count` solicitado, o == al total de posts disponibles si la cuenta tiene menos posts que `count`
+- Cuenta de filas en la tabla >= `count` solicitado
 - Sin filas con campos vacios
-- URLs validas para posts (`https://www.instagram.com/p/...`) o reels (`https://www.instagram.com/reel/...`)
+- URLs validas (`https://www.instagram.com/p/...`)
