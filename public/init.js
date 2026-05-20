@@ -40,6 +40,10 @@ import { renderRetroPanel }                             from '/retrospective.js'
 import { renderEnergyPanel }                            from '/energy-tracker.js';
 import { renderVocabPanel }                             from '/vocabulary-builder.js';
 import { renderAccountabilityPanel }                    from '/accountability.js';
+import { renderProjectPanel }   from '/project-tracker.js';
+import { renderMeetingPanel }   from '/meeting-notes.js';
+import { renderGratitudePanel } from '/gratitude-journal.js';
+import { renderWinPanel }       from '/quick-wins.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -95,6 +99,9 @@ registerHotkey('ctrl+h', '/habits',   () => { renderHabitPanel(); trackUsage('ha
 registerHotkey('ctrl+b', '/kb',       () => { renderKnowledgeBase(); trackUsage('kb'); });
 registerHotkey('ctrl+alt+r', '/retro', () => { renderRetroPanel(); trackUsage('retro'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
+registerHotkey('ctrl+alt+p', '/projects',  () => { renderProjectPanel();   trackUsage('projects'); });
+registerHotkey('ctrl+alt+m', '/meetings',  () => { renderMeetingPanel();   trackUsage('meetings'); });
+registerHotkey('ctrl+alt+g', '/gratitude', () => { renderGratitudePanel(); trackUsage('gratitude'); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
 // ── Button listeners ──────────────────────────────────────────────────────────────────────────────
@@ -141,6 +148,10 @@ document.getElementById('retro-btn')?.addEventListener('click',          () => {
 document.getElementById('energy-btn')?.addEventListener('click',         () => { renderEnergyPanel(); trackUsage('energy'); });
 document.getElementById('vocab-btn')?.addEventListener('click',          () => { renderVocabPanel(); trackUsage('vocab'); });
 document.getElementById('accountability-btn')?.addEventListener('click', () => { renderAccountabilityPanel(); trackUsage('accountability'); });
+document.getElementById('project-btn')  ?.addEventListener('click', () => { renderProjectPanel();   trackUsage('projects'); });
+document.getElementById('meeting-btn')  ?.addEventListener('click', () => { renderMeetingPanel();   trackUsage('meetings'); });
+document.getElementById('gratitude-btn')?.addEventListener('click', () => { renderGratitudePanel(); trackUsage('gratitude'); });
+document.getElementById('wins-btn')     ?.addEventListener('click', () => { renderWinPanel();       trackUsage('wins'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
