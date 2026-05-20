@@ -37,7 +37,7 @@ export function renderMediaLog() {
     e.preventDefault();
     const items = load();
     const rating = parseInt(document.getElementById('ml-rating').value) || 0;
-    items.push({ uid: uid(), title: document.getElementById('ml-title').value.trim(), type: document.getElementById('ml-type').value, creator: document.getElementById('ml-creator').value.trim(), rating: Math.min(5, Math.max(1, rating)) || 0, status: document.getElementById('ml-status').value, notes: document.getElementById('ml-notes').value.trim(), createdAt: now() });
+    items.push({ uid: uid(), title: document.getElementById('ml-title').value.trim(), type: document.getElementById('ml-type').value, creator: document.getElementById('ml-creator').value.trim(), rating: rating ? Math.min(5, Math.max(1, rating)) : 0, status: document.getElementById('ml-status').value, notes: document.getElementById('ml-notes').value.trim(), createdAt: now() });
     save(items);
     e.target.reset();
     _refresh();
