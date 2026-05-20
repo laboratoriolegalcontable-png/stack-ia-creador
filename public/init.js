@@ -129,6 +129,10 @@ import { renderAnomalyReport }     from '/anomaly-detector.js';
 import { renderCheckpointLog }     from '/checkpoint-log.js';
 import { renderContactNotes }      from '/contact-notes.js';
 import { renderPresentationLog }   from '/presentation-log.js';
+import { renderSessionReplay }     from '/session-replay.js';
+import { renderChangelog }         from '/changelog.js';
+import { renderLinkVault }         from '/link-vault.js';
+import { renderResearchLog }       from '/research-log.js';
 import { renderPatternRecognizer } from '/pattern-recognizer.js';
 import { renderTimeMachine }       from '/time-machine.js';
 import { renderTokenBudget }       from '/token-budget.js';
@@ -402,6 +406,10 @@ document.getElementById('anomaly-btn')?.addEventListener('click',     () => { re
 document.getElementById('cplog-btn')?.addEventListener('click',       () => { renderCheckpointLog();    trackUsage('cplog'); });
 document.getElementById('cnotes-btn')?.addEventListener('click',      () => { renderContactNotes();     trackUsage('cnotes'); });
 document.getElementById('preslog-btn')?.addEventListener('click',     () => { renderPresentationLog();  trackUsage('preslog'); });
+document.getElementById('sreplay-btn')?.addEventListener('click',     () => { renderSessionReplay();    trackUsage('sreplay'); });
+document.getElementById('changelog-btn')?.addEventListener('click',   () => { renderChangelog();        trackUsage('changelog'); });
+document.getElementById('linkvault-btn')?.addEventListener('click',   () => { renderLinkVault();        trackUsage('linkvault'); });
+document.getElementById('researchlog-btn')?.addEventListener('click', () => { renderResearchLog();      trackUsage('researchlog'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
