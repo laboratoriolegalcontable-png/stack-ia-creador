@@ -212,10 +212,11 @@ export class BotMemory {
       const tx = this._db.transaction('events', 'readwrite');
       const store = tx.objectStore('events');
       const existing = await cursorAll(store, 'botId', IDBKeyRange.only(this.botId));
-      const seen = new Set(existing.map((e) => `${e.ts}|${e.botId}|${e.type}`));
+      const keyFor = (e) => `${e.ts}|${e.botId}|${e.type}|${JSON.stringify(e.data ?? null)}`;
+      const seen = new Set(existing.map(keyFor));
       let imported = 0;
       for (const ev of incoming) {
-        const key = `${ev.ts}|${ev.botId}|${ev.type}`;
+        const key = keyFor(ev);
         if (!seen.has(key)) {
           const { id: _id, ...clean } = ev;
           store.add({ ...clean, botId: this.botId });

@@ -222,7 +222,7 @@ function metricClass(key, value, thresholds) {
   const isRateLike = key === 'errorRate' || key === 'driftScore';
   const breached   = isRateLike ? value > threshold : value < threshold;
   if (!breached) return '';
-  // Decide severity: >2× threshold deviation → alert, else warn
+  // Decide severity: >1.5× threshold deviation → alert, else warn
   const ratio = isRateLike
     ? value / threshold
     : threshold / value;

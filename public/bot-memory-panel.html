@@ -182,7 +182,7 @@
           <td class="ts">${ts}</td>
           <td class="type">${escHtml(e.type)}</td>
           <td class="data" title="${escHtml(JSON.stringify(e.data))}">${escHtml(data)}</td>
-          <td class="ts">${session}…</td>
+          <td class="ts">${escHtml(session)}…</td>
         </tr>`;
       }).join('');
     }
