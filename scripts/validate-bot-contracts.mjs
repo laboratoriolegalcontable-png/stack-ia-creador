@@ -150,7 +150,7 @@ const tests = [
     type: 'input',
     data: {
       nombre_reclamante: 'María Gómez',
-      cuil_reclamante: '20-99999999-9', // invalid check digit (verifier=10 → always invalid)
+      cuil_reclamante: '20-99999999-9', // verifier=10 (impossible digit) → always invalid
       empresa_reclamada: 'Telecom S.A.',
       descripcion_hecho: 'Cobro indebido en factura de internet por servicio no contratado',
       fecha_hecho: '2025-03-15T00:00:00-03:00',
@@ -250,7 +250,7 @@ try {
 }
 
 try {
-  const v2 = kernel.validateCUIL('30-71234567-8'); // CUIT persona jurídica (may be invalid check digit — test only checks prefix path)
+  const v2 = kernel.validateCUIL('30-71234567-8');
   if (v2.type === 'persona_juridica') {
     pass('validateCUIL: persona_juridica prefix (30) detected');
   } else {
@@ -261,14 +261,15 @@ try {
 }
 
 try {
-  const v3 = kernel.validateCUIL('00-00000000-0');
+  // 20-00000000-X: sum=10, 10%11=10, verifier=(11-10)%11=1; check digit 9 ≠ 1 → invalid
+  const v3 = kernel.validateCUIL('20-00000000-9');
   if (!v3.valid) {
-    pass('validateCUIL: all-zeros CUIL correctly rejected');
+    pass('validateCUIL: CUIL with wrong check digit correctly rejected');
   } else {
-    fail('validateCUIL: all-zeros CUIL correctly rejected', 'Should be invalid');
+    fail('validateCUIL: CUIL with wrong check digit correctly rejected', 'Should be invalid');
   }
 } catch (e) {
-  fail('validateCUIL: all-zeros CUIL', e.message);
+  fail('validateCUIL: wrong check digit CUIL', e.message);
 }
 
 // Prescription deadline
@@ -342,7 +343,6 @@ console.log(`\n  Total tests: ${totalTests}`);
 console.log(`  Passed:      ${totalTests - failedTests}`);
 console.log(`  Failed:      ${failedTests}`);
 
-// Write report file (useful for CI artifact upload on failure)
 try {
   fs.writeFileSync('/tmp/contract-validation-report.json', JSON.stringify(report, null, 2));
 } catch (_) {
