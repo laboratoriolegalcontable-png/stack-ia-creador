@@ -39,24 +39,31 @@ export function getFocusStats() {
   };
 }
 
+// Module-level interval ref so the toggle-off branch can clear it without a closure.
+let _focusTimerInterval = null;
+
 export function renderFocusTimer() {
   const existing = document.getElementById('kairos-focus-panel');
-  if (existing) { existing.remove(); return; }
+  if (existing) {
+    // Clean up interval before removing — the previous render's closure is gone.
+    if (_focusTimerInterval) { clearInterval(_focusTimerInterval); _focusTimerInterval = null; }
+    existing.remove();
+    return;
+  }
 
-  const stats = getFocusStats();
   const panel = document.createElement('div');
   panel.id = 'kairos-focus-panel';
   panel.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:1px solid #4338ca;border-radius:16px;padding:2rem;z-index:9999;width:min(360px,95vw);text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:inherit';
 
-  let timerInterval = null;
-
   // Close handler clears interval before removing panel
   function closePanel() {
-    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    if (_focusTimerInterval) { clearInterval(_focusTimerInterval); _focusTimerInterval = null; }
     panel.remove();
   }
 
   function render() {
+    // Recompute stats on every render so counters stay fresh after session changes
+    const stats = getFocusStats();
     const currentState = getTimerState();
     const remaining = currentState ? Math.max(0, currentState.endsAt - Date.now()) : 0;
     const mins = Math.floor(remaining / 60000).toString().padStart(2, '0');
@@ -79,38 +86,38 @@ export function renderFocusTimer() {
     panel.querySelector('#ft-close')?.addEventListener('click', closePanel);
     panel.querySelector('#ft-focus')?.addEventListener('click', () => {
       startTimer('focus');
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(render, 1000);
+      if (_focusTimerInterval) clearInterval(_focusTimerInterval);
+      _focusTimerInterval = setInterval(render, 1000);
       render();
     });
     panel.querySelector('#ft-short')?.addEventListener('click', () => {
       startTimer('short-break');
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(render, 1000);
+      if (_focusTimerInterval) clearInterval(_focusTimerInterval);
+      _focusTimerInterval = setInterval(render, 1000);
       render();
     });
     panel.querySelector('#ft-long')?.addEventListener('click', () => {
       startTimer('long-break');
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(render, 1000);
+      if (_focusTimerInterval) clearInterval(_focusTimerInterval);
+      _focusTimerInterval = setInterval(render, 1000);
       render();
     });
     panel.querySelector('#ft-complete')?.addEventListener('click', () => {
       if (currentState) completeTimer(currentState.sessionId);
-      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      if (_focusTimerInterval) { clearInterval(_focusTimerInterval); _focusTimerInterval = null; }
       render();
     });
 
     // Auto-complete when timer reaches 0
     if (currentState && remaining === 0) {
       completeTimer(currentState.sessionId);
-      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-      setTimeout(render, 0); // refresh UI back to start state
+      if (_focusTimerInterval) { clearInterval(_focusTimerInterval); _focusTimerInterval = null; }
+      setTimeout(render, 0);
     }
   }
 
   render();
   const state = getTimerState();
-  if (state) timerInterval = setInterval(render, 1000);
+  if (state) _focusTimerInterval = setInterval(render, 1000);
   document.body.appendChild(panel);
 }

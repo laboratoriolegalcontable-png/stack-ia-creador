@@ -25,6 +25,27 @@ function localDateStr() {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
+/**
+ * Compute days between two YYYY-MM-DD strings using local calendar dates.
+ * Uses new Date(y, m, d) (local midnight) to avoid UTC-parse issues,
+ * and Math.round to handle DST transitions (23h or 25h days).
+ */
+function daysBetweenLocalDates(a, b) {
+  const [ay, am, ad] = a.split('-').map(Number);
+  const [by, bm, bd] = b.split('-').map(Number);
+  return Math.round((new Date(by, bm - 1, bd) - new Date(ay, am - 1, ad)) / 86400000);
+}
+
+/**
+ * Returns yesterday's date string in YYYY-MM-DD using local calendar arithmetic.
+ * Avoids subtracting 86400000ms directly, which breaks during DST transitions.
+ */
+function localYesterdayStr() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
 /** @param {string} id @returns {object|null} */
 export function checkIn(id) {
   const habits = loadHabits();
@@ -34,16 +55,16 @@ export function checkIn(id) {
   if (h.lastCheckedIn === today) return h;
 
   if (h.frequency === 'weekly') {
-    // Weekly: streak continues as long as last check-in was within the last 7 days
+    // Weekly: streak continues if last check-in was within the last 7 calendar days.
+    // daysBetweenLocalDates uses local midnight dates to avoid UTC parse + DST issues.
     const daysSinceLast = h.lastCheckedIn
-      ? Math.floor((Date.now() - new Date(h.lastCheckedIn).getTime()) / 86400000)
+      ? daysBetweenLocalDates(h.lastCheckedIn, today)
       : Infinity;
     h.currentStreak = daysSinceLast <= 7 ? h.currentStreak + 1 : 1;
   } else {
-    // Daily: streak continues only if last check-in was yesterday
-    const yesterday = new Date(Date.now() - 86400000);
-    const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
-    h.currentStreak = h.lastCheckedIn === yStr ? h.currentStreak + 1 : 1;
+    // Daily: streak continues only if last check-in was yesterday (local calendar day).
+    // localYesterdayStr uses setDate()-1 which handles DST correctly.
+    h.currentStreak = h.lastCheckedIn === localYesterdayStr() ? h.currentStreak + 1 : 1;
   }
 
   h.longestStreak = Math.max(h.longestStreak, h.currentStreak);

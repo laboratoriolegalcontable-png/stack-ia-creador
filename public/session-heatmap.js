@@ -22,8 +22,8 @@ export function recordActivity() {
 /** @param {number} [days] @returns {Array<{date:string,hour:number,count:number}>} */
 export function getHeatmap(days = 30) {
   const heatmap = loadHeatmap();
-  const cutoff = localDateStr().slice(0, 10);
-  const cutoffDate = new Date(Date.now() - days * 86400000);
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - days);
   const cutoffStr = `${cutoffDate.getFullYear()}-${String(cutoffDate.getMonth()+1).padStart(2,'0')}-${String(cutoffDate.getDate()).padStart(2,'0')}`;
   return Object.entries(heatmap)
     .map(([key, count]) => { const [date, hourStr] = key.split(':'); return { date, hour: parseInt(hourStr, 10), count }; })
@@ -47,7 +47,8 @@ export function renderHeatmap() {
   const existing = document.getElementById('kairos-heatmap-panel');
   if (existing) { existing.remove(); return; }
 
-  recordActivity();
+  // Do NOT call recordActivity() here — opening the panel is not a user session event.
+  // Activity is recorded once at app startup via init.js.
   const days = getDailySummary(14);
   const entries = getHeatmap(14);
 
