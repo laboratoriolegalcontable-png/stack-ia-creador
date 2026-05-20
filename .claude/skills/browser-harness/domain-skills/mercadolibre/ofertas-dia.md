@@ -8,7 +8,8 @@
 
 ## Pasos
 
-1. Navegar a `https://www.mercadolibre.com.{tld}/ofertas`
+1. Navegar a `https://www.mercadolibre{tld}/ofertas` — `{tld}` ya incluye el prefijo
+   - AR → `.com.ar`, MX → `.com.mx`, CL → `.cl`, CO → `.com.co`
 2. Si `category` definido, click en la categoria en el sidebar
 3. Ordenar por "Mayor descuento"
 4. Para cada oferta (hasta `count`):

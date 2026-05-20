@@ -96,22 +96,23 @@ Eso hace:
 5. Copia las 5 seed skills LATAM (instagram, mercadolibre, tiendanube, despegar, rappi) a `~/Developer/browser-harness/agent-workspace/domain-skills/`
 6. Imprime instrucciones para abrir Chrome con debugging port segun OS detectado
 
-Si el usuario corre macOS, el instalador imprime:
+Si el usuario corre macOS, el instalador imprime (lanzar en background con `&`
+para no bloquear la terminal ni una ejecución de tool):
 
 ```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 &
 ```
 
 Si corre Linux:
 
 ```bash
-google-chrome --remote-debugging-port=9222
+google-chrome --remote-debugging-port=9222 &
 ```
 
 Si corre Windows (WSL):
 
 ```cmd
-chrome.exe --remote-debugging-port=9222
+start "" chrome.exe --remote-debugging-port=9222
 ```
 
 Despues del install, verifica con:

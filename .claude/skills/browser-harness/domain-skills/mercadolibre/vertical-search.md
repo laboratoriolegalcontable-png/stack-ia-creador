@@ -42,22 +42,36 @@ verticales tienen filtros propios y estructura distinta.
 
 ## Output
 
+Importante: el precio puede venir en USD o en la moneda local del país
+(ARS, MXN, CLP, COP). NO asumir USD. La tabla incluye una columna `Moneda`
+para preservar la fuente original, y `Precio/m2` se calcula en la **misma
+moneda** que `Precio` (no convertir). Si el usuario pide ranking unificado
+en USD, hacer la conversión en una sección aparte usando la tasa del día
+y citarla explícitamente.
+
 ```markdown
 ## Busqueda en {vertical}: {ubicacion} ({tipo_operacion})
 
 **Filtros:** {filtros}
 **Total resultados:** N (mostrando top {count})
 
-| # | Direccion | Barrio | Precio USD | m2 | USD/m2 | Amb | Dorm | Antig | Publicado | Inmo | URL |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| # | Direccion | Barrio | Precio | Moneda | m2 | Precio/m2 | Amb | Dorm | Antig | Publicado | Inmo | URL |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
-### Analisis del mercado
-- USD/m2 promedio del filtro: {avg}
-- USD/m2 mediana: {median}
-- Top 3 mas baratos por USD/m2 (oportunidades):
-- Top 3 mas caros por USD/m2 (premium):
-- Caidas de precio en la ultima semana (si data disponible): {N listings}
+### Analisis del mercado (por moneda)
+- Precio/m2 promedio (USD): {avg_usd} — sobre los N listings publicados en USD
+- Precio/m2 promedio (moneda local): {avg_local} {currency} — sobre los M listings en moneda local
+- Mediana USD: {median_usd}
+- Mediana local: {median_local} {currency}
+- Top 3 más baratos por Precio/m2 dentro de cada moneda (oportunidades)
+- Top 3 más caros por Precio/m2 dentro de cada moneda (premium)
+- Caídas de precio en la última semana (si la data está disponible): {N listings}
 - % publicados por inmobiliarias vs particulares
+
+### Conversión opcional a USD
+Si el usuario lo pide, convertir los precios en moneda local usando la tasa
+de cambio del día (citar fuente y fecha). NO mezclar USD nativo con USD
+convertido en el mismo ranking sin marcar cuál es cuál.
 ```
 
 ## Caso de uso especifico: comparativo triple matricula (BUE-MAD-MVD)

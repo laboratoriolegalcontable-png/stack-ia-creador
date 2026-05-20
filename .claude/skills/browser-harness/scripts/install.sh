@@ -129,36 +129,37 @@ print_chrome_instructions() {
   case "$os" in
     mac)
       cat <<'EOF'
-Cerra Chrome COMPLETAMENTE (Cmd+Q) y volve a abrirlo asi:
+Cerra Chrome COMPLETAMENTE (Cmd+Q) y volve a abrirlo en background (& al final)
+asi no se bloquea la terminal:
 
   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-    --remote-debugging-port=9222
+    --remote-debugging-port=9222 &
 
 Si querer un perfil separado para no romper tu Chrome principal:
 
   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
     --remote-debugging-port=9222 \
-    --user-data-dir=$HOME/.bh-chrome-profile
+    --user-data-dir=$HOME/.bh-chrome-profile &
 EOF
       ;;
     linux|wsl)
       cat <<'EOF'
-Cerra Chrome y abrilo asi:
+Cerra Chrome y abrilo en background:
 
-  google-chrome --remote-debugging-port=9222
+  google-chrome --remote-debugging-port=9222 &
 
 O con perfil separado:
 
   google-chrome --remote-debugging-port=9222 \
-    --user-data-dir=$HOME/.bh-chrome-profile
+    --user-data-dir=$HOME/.bh-chrome-profile &
 EOF
       ;;
     windows)
       cat <<'EOF'
-En PowerShell:
+En PowerShell (Start-Process lanza sin bloquear la consola):
 
-  & "C:\Program Files\Google\Chrome\Application\chrome.exe" `
-    --remote-debugging-port=9222
+  Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" `
+    -ArgumentList "--remote-debugging-port=9222"
 EOF
       ;;
   esac

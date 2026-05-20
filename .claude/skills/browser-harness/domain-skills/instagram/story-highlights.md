@@ -22,7 +22,7 @@ donde las marcas ponen catalogo, FAQ, testimonios, ofertas vigentes.
      - Caption / texto superpuesto (si hay)
      - Stickers visibles (poll, link, mention, location)
      - Duracion (si es video)
-   - Tab derecha para avanzar, ESC para salir
+   - Flecha derecha (`→` / ArrowRight) para avanzar al siguiente story dentro del highlight, ESC para salir
 4. Volver al perfil, siguiente highlight
 
 ## Output

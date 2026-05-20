@@ -506,6 +506,18 @@
         setStatus('Ejecuta "Todos los bots" primero para guardar baseline.', 'var(--warn)');
         return;
       }
+      // Verify the last multi-bot run actually produced reports for all bots
+      // before allowing it to overwrite the baseline.
+      const reports = lastMultiRegression._reports || {};
+      const expected = ['lucrecia', 'oraculo', 'valentina', 'megan'];
+      const missing = expected.filter((id) => !reports[id] || typeof reports[id].score !== 'number');
+      if (missing.length > 0) {
+        setStatus(
+          `No se puede guardar baseline: faltan reportes válidos para ${missing.join(', ')}.`,
+          'var(--fail)'
+        );
+        return;
+      }
       lastMultiRegression.saveBaseline();
       setStatus('Baseline guardado.', 'var(--pass)');
     });
