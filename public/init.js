@@ -125,6 +125,10 @@ import { renderCostTracker }       from '/cost-tracker.js';
 import { renderDailyReview }       from '/daily-review.js';
 import { renderFeedbackLog }       from '/feedback-log.js';
 import { renderReadingChallenge }  from '/reading-challenge.js';
+import { renderAnomalyReport }     from '/anomaly-detector.js';
+import { renderCheckpointLog }     from '/checkpoint-log.js';
+import { renderContactNotes }      from '/contact-notes.js';
+import { renderPresentationLog }   from '/presentation-log.js';
 import { renderPatternRecognizer } from '/pattern-recognizer.js';
 import { renderTimeMachine }       from '/time-machine.js';
 import { renderTokenBudget }       from '/token-budget.js';
@@ -394,6 +398,10 @@ document.getElementById('costtracker-btn')?.addEventListener('click', () => { re
 document.getElementById('dailyreview-btn')?.addEventListener('click', () => { renderDailyReview();      trackUsage('dailyreview'); });
 document.getElementById('feedbacklog-btn')?.addEventListener('click', () => { renderFeedbackLog();      trackUsage('feedbacklog'); });
 document.getElementById('rchallenge-btn')?.addEventListener('click',  () => { renderReadingChallenge(); trackUsage('rchallenge'); });
+document.getElementById('anomaly-btn')?.addEventListener('click',     () => { renderAnomalyReport();    trackUsage('anomaly'); });
+document.getElementById('cplog-btn')?.addEventListener('click',       () => { renderCheckpointLog();    trackUsage('cplog'); });
+document.getElementById('cnotes-btn')?.addEventListener('click',      () => { renderContactNotes();     trackUsage('cnotes'); });
+document.getElementById('preslog-btn')?.addEventListener('click',     () => { renderPresentationLog();  trackUsage('preslog'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
