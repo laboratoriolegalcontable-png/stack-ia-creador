@@ -120,13 +120,18 @@ case "$OS" in
     # (no rangos `9-18`, no pasos `*/30`, no listas `1,3,5`) y no acepta cron's
     # day-of-month, month ni weekday a menos que sean enteros únicos.
     # Estrategia:
-    #   - Si el cron es trivial (Min/Hour enteros, resto `*`) → launchd
+    #   - Si el cron es trivial (Min/Hour enteros en rango, resto `*`) → launchd
     #   - Si no, fallback a crontab (macOS también lo soporta), que sí maneja
     #     toda la sintaxis cron sin pérdida silenciosa de campos.
     IFS=' ' read -r CMIN CHOUR CDOM CMON CDOW <<< "$CRON"
-    is_int() { [[ "$1" =~ ^[0-9]+$ ]]; }
+    # in_range $val $min $max — true if $val is a base-10 integer in [min, max].
+    # launchd silently accepts out-of-range integers (e.g. Minute=60, Hour=24)
+    # and the resulting plist either never fires or fires unpredictably.
+    in_range() {
+      [[ "$1" =~ ^(0|[1-9][0-9]*)$ ]] && [ "$1" -ge "$2" ] && [ "$1" -le "$3" ]
+    }
 
-    if is_int "$CMIN" && is_int "$CHOUR" \
+    if in_range "$CMIN" 0 59 && in_range "$CHOUR" 0 23 \
        && [ "$CDOM" = "*" ] && [ "$CMON" = "*" ] && [ "$CDOW" = "*" ]; then
       cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -149,10 +154,10 @@ EOF
       launchctl load "$PLIST"
       echo "[OK] Job $NAME agendado via launchd (cron trivial). PList: $PLIST"
     else
-      # Cron complejo → usar crontab en macOS también
+      # Cron complejo o valores fuera de rango → usar crontab en macOS también
       CRON_LINE="$CRON $WRAPPER  # bh:$NAME"
       ( crontab -l 2>/dev/null | grep -v "# bh:$NAME"; echo "$CRON_LINE" ) | crontab -
-      echo "[OK] Job $NAME agendado via crontab en macOS (expresión cron compleja)."
+      echo "[OK] Job $NAME agendado via crontab en macOS (expresión cron no representable en launchd)."
       echo "       Línea: $CRON_LINE"
     fi
     ;;
