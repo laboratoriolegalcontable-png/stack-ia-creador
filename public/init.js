@@ -92,6 +92,10 @@ import { renderFocusBlocks }     from '/focus-blocks.js';
 import { renderClientCrm }       from '/client-crm.js';
 import { renderInvoiceTracker }  from '/invoice-tracker.js';
 import { renderLearningGoals }   from '/learning-goals.js';
+import { renderPersonalBrand }   from '/personal-brand.js';
+import { renderDailyWins }       from '/daily-wins.js';
+import { renderPortfolioTracker } from '/portfolio-tracker.js';
+import { renderProjectLog }      from '/project-log.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -195,6 +199,10 @@ registerHotkey('ctrl+shift+f', '/fblocks',    () => { renderFocusBlocks();      
 registerHotkey('ctrl+shift+c', '/crm',        () => { renderClientCrm();         trackUsage('crm'); });
 registerHotkey('ctrl+shift+p', '/invoices',   () => { renderInvoiceTracker();    trackUsage('invoices'); });
 registerHotkey('ctrl+shift+l', '/lgoals',     () => { renderLearningGoals();     trackUsage('lgoals'); });
+registerHotkey('ctrl+shift+b', '/brand',     () => { renderPersonalBrand();     trackUsage('brand'); });
+registerHotkey('ctrl+shift+w', '/wins2',     () => { renderDailyWins();         trackUsage('wins2'); });
+registerHotkey('ctrl+shift+o', '/portfolio', () => { renderPortfolioTracker();  trackUsage('portfolio'); });
+registerHotkey('ctrl+shift+e', '/plog',      () => { renderProjectLog();        trackUsage('plog'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -294,6 +302,10 @@ document.getElementById('fblocks-btn')?.addEventListener('click',      () => { r
 document.getElementById('crm-btn')?.addEventListener('click',          () => { renderClientCrm();         trackUsage('crm'); });
 document.getElementById('invoices-btn')?.addEventListener('click',     () => { renderInvoiceTracker();    trackUsage('invoices'); });
 document.getElementById('lgoals-btn')?.addEventListener('click',       () => { renderLearningGoals();     trackUsage('lgoals'); });
+document.getElementById('brand-btn')?.addEventListener('click',        () => { renderPersonalBrand();     trackUsage('brand'); });
+document.getElementById('wins2-btn')?.addEventListener('click',        () => { renderDailyWins();         trackUsage('wins2'); });
+document.getElementById('portfolio-btn')?.addEventListener('click',    () => { renderPortfolioTracker();  trackUsage('portfolio'); });
+document.getElementById('plog-btn')?.addEventListener('click',         () => { renderProjectLog();        trackUsage('plog'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
