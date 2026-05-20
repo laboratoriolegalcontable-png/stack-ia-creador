@@ -1,0 +1,794 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-05-20",
+  "bots": [
+    {
+      "id": "lucrecia",
+      "name": "Lucrecia",
+      "role": "Coordinadora General",
+      "description": "Agenda reuniones, atiende clientes, genera actas post-reunión vía WhatsApp/email",
+      "color": "#e91e8c",
+      "thresholds": {
+        "errorRate": 0.01,
+        "memoryPrecision": 0.995,
+        "driftScore": 0.005,
+        "contractCompliance": 0.999
+      },
+      "capabilities": ["scheduling", "client_intake", "meeting_minutes", "whatsapp", "email"],
+      "systemPromptHash": "sha256-lucrecia-v1",
+      "goldenTests": [
+        {
+          "id": "LUC-001",
+          "category": "scheduling",
+          "input": "Necesito agendar una reunión con el cliente Martínez para esta semana",
+          "expectedContains": ["fecha", "hora", "Martínez", "confirmar"],
+          "expectedNotContains": ["no puedo", "imposible", "no tengo acceso"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["calendar"]
+        },
+        {
+          "id": "LUC-002",
+          "category": "scheduling",
+          "input": "El Dr. García quiere reunión urgente el martes 25 a las 10hs, que sea por Zoom",
+          "expectedContains": ["martes", "10", "Zoom", "García", "enlace"],
+          "expectedNotContains": ["no sé", "error", "sin acceso"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["calendar", "zoom"]
+        },
+        {
+          "id": "LUC-003",
+          "category": "scheduling",
+          "input": "Cancela la reunión del miércoles con López y reagéndalas para la próxima semana",
+          "expectedContains": ["cancelada", "López", "próxima semana", "nueva fecha"],
+          "expectedNotContains": ["no puedo cancelar", "error", "imposible"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["calendar"]
+        },
+        {
+          "id": "LUC-004",
+          "category": "scheduling",
+          "input": "¿Cuántas reuniones tengo esta semana y cuáles son?",
+          "expectedContains": ["reuniones", "semana", "agenda"],
+          "expectedNotContains": ["no tengo información", "sin datos", "error"],
+          "maxResponseMs": 2000,
+          "requiresTools": ["calendar"]
+        },
+        {
+          "id": "LUC-005",
+          "category": "scheduling",
+          "input": "Hay un choque entre la reunión del lunes con Rodríguez a las 15hs y la de Fernández también a las 15hs",
+          "expectedContains": ["conflicto", "15", "opciones", "reagendar"],
+          "expectedNotContains": ["no es mi problema", "ignorar", "error"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["calendar"]
+        },
+        {
+          "id": "LUC-006",
+          "category": "client_intake",
+          "input": "Tengo un cliente nuevo, empresa Petroquímica del Sur S.A., contacto Juan Ramírez, teléfono 11-4567-8901, quiere asesoría laboral",
+          "expectedContains": ["Petroquímica del Sur", "Ramírez", "laboral", "registrado"],
+          "expectedNotContains": ["no puedo registrar", "error", "incompleto"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["crm"]
+        },
+        {
+          "id": "LUC-007",
+          "category": "client_intake",
+          "input": "El cliente Sánchez llama y dice que está esperando una respuesta de hace 3 días sobre su consulta tributaria",
+          "expectedContains": ["Sánchez", "tributaria", "seguimiento", "respuesta"],
+          "expectedNotContains": ["no sé de qué hablas", "error", "sin información"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["crm", "email"]
+        },
+        {
+          "id": "LUC-008",
+          "category": "client_intake",
+          "input": "Cliente enojado: Pérez Construcciones llama furioso porque nadie le devolvió el llamado en 5 días",
+          "expectedContains": ["Pérez", "disculpa", "urgente", "comunicar"],
+          "expectedNotContains": ["es culpa de otro", "no es mi área", "llame después"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["crm", "whatsapp"]
+        },
+        {
+          "id": "LUC-009",
+          "category": "client_intake",
+          "input": "Registra el siguiente dato: la Dra. Morales quiere que todas sus comunicaciones sean únicamente por email, nunca por WhatsApp",
+          "expectedContains": ["Morales", "email", "preferencia", "guardado"],
+          "expectedNotContains": ["error", "no puedo", "WhatsApp"],
+          "maxResponseMs": 2500,
+          "requiresTools": ["crm"]
+        },
+        {
+          "id": "LUC-010",
+          "category": "client_intake",
+          "input": "¿Quiénes son los clientes con reuniones pendientes de confirmar?",
+          "expectedContains": ["clientes", "pendientes", "confirmar"],
+          "expectedNotContains": ["no tengo esa información", "error", "sin datos"],
+          "maxResponseMs": 2500,
+          "requiresTools": ["crm", "calendar"]
+        },
+        {
+          "id": "LUC-011",
+          "category": "meeting_minutes",
+          "input": "Genera el acta de la reunión del 19/05 con Technopack S.R.L. sobre renovación de contrato de servicios anuales",
+          "expectedContains": ["acta", "Technopack", "19/05", "contrato", "acuerdos"],
+          "expectedNotContains": ["no puedo generar", "error", "sin información"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["document_generator"]
+        },
+        {
+          "id": "LUC-012",
+          "category": "meeting_minutes",
+          "input": "La reunión con Inversiones Globales terminó. Acuerdos: 1) entregar propuesta antes del 30/05, 2) reunión de seguimiento el 10/06, 3) descuento del 15% si firman antes de junio",
+          "expectedContains": ["propuesta", "30/05", "10/06", "15%", "acta"],
+          "expectedNotContains": ["error", "no registrado", "sin acuerdos"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["document_generator", "calendar"]
+        },
+        {
+          "id": "LUC-013",
+          "category": "meeting_minutes",
+          "input": "Envía el acta de la reunión de ayer a todos los participantes: García, López y Fernández",
+          "expectedContains": ["acta", "enviada", "García", "López", "Fernández"],
+          "expectedNotContains": ["no puedo enviar", "error", "sin acceso"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["email", "document_generator"]
+        },
+        {
+          "id": "LUC-014",
+          "category": "meeting_minutes",
+          "input": "El cliente Montoya pide el acta de todas las reuniones del último trimestre",
+          "expectedContains": ["Montoya", "actas", "trimestre", "reuniones"],
+          "expectedNotContains": ["no tengo actas", "error", "no puedo"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["document_generator", "crm"]
+        },
+        {
+          "id": "LUC-015",
+          "category": "meeting_minutes",
+          "input": "Genera acta urgente: reunión express de 20 minutos con Abasto Logistics para resolver tema facturación bloqueada",
+          "expectedContains": ["Abasto", "facturación", "acta", "acuerdos"],
+          "expectedNotContains": ["no se puede urgente", "error", "no genero actas express"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["document_generator"]
+        },
+        {
+          "id": "LUC-016",
+          "category": "whatsapp",
+          "input": "Mandá un WhatsApp a Rodríguez recordándole la reunión de mañana a las 14hs en las oficinas de Av. Corrientes 1234",
+          "expectedContains": ["Rodríguez", "mañana", "14", "Corrientes", "enviado"],
+          "expectedNotContains": ["no puedo enviar", "error WhatsApp", "sin acceso"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["whatsapp"]
+        },
+        {
+          "id": "LUC-017",
+          "category": "whatsapp",
+          "input": "Enviá WhatsApp a todos los clientes confirmados para esta semana con el link de Zoom y la agenda de la reunión",
+          "expectedContains": ["enviado", "Zoom", "agenda", "clientes"],
+          "expectedNotContains": ["no puedo", "error", "sin contactos"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["whatsapp", "calendar"]
+        },
+        {
+          "id": "LUC-018",
+          "category": "whatsapp",
+          "input": "Respondé el WhatsApp de Sosa que pregunta si puede cambiar la reunión del viernes al lunes",
+          "expectedContains": ["Sosa", "lunes", "confirmar", "disponibilidad"],
+          "expectedNotContains": ["no respondo WhatsApp", "error", "imposible"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["whatsapp", "calendar"]
+        },
+        {
+          "id": "LUC-019",
+          "category": "email",
+          "input": "Enviá email formal a Importadora Baires S.A. confirmando la propuesta de honorarios mensuales por $850.000 más IVA",
+          "expectedContains": ["Importadora Baires", "$850.000", "IVA", "honorarios", "email"],
+          "expectedNotContains": ["no envío emails", "error", "sin formato"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["email"]
+        },
+        {
+          "id": "LUC-020",
+          "category": "email",
+          "input": "Preparame el email de seguimiento post-reunión para Constructora del Norte con los próximos pasos acordados y fecha de entrega 15/06",
+          "expectedContains": ["Constructora del Norte", "próximos pasos", "15/06", "seguimiento"],
+          "expectedNotContains": ["no puedo redactar", "error", "sin contexto"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["email"]
+        }
+      ]
+    },
+    {
+      "id": "oraculo",
+      "name": "Oráculo",
+      "role": "Orquestador Central",
+      "description": "Coordina todos los agentes NARAKIA, detecta oportunidades, activa cadenas automatizadas",
+      "color": "#9c27b0",
+      "thresholds": {
+        "errorRate": 0.005,
+        "memoryPrecision": 0.998,
+        "driftScore": 0.002,
+        "contractCompliance": 0.9999
+      },
+      "capabilities": ["orchestration", "alerting", "lead_notification", "web_search", "whatsapp"],
+      "systemPromptHash": "sha256-oraculo-v1",
+      "goldenTests": [
+        {
+          "id": "ORA-001",
+          "category": "orchestration",
+          "input": "Activá la cadena completa para el lead nuevo de Petroquímica Patagónica: intake, propuesta, seguimiento y agenda primera reunión",
+          "expectedContains": ["Petroquímica Patagónica", "cadena", "activada", "Lucrecia", "pasos"],
+          "expectedNotContains": ["no puedo coordinar", "error", "agentes no disponibles"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["agent_router", "crm"]
+        },
+        {
+          "id": "ORA-002",
+          "category": "orchestration",
+          "input": "El agente Valentina tiene 12 reclamos sin resolver hace más de 48hs. ¿Qué hacemos?",
+          "expectedContains": ["Valentina", "reclamos", "48hs", "prioridad", "acción"],
+          "expectedNotContains": ["no es mi área", "error", "ignorar"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["agent_router", "alerting"]
+        },
+        {
+          "id": "ORA-003",
+          "category": "orchestration",
+          "input": "¿Cuál es el estado actual de todos los agentes NARAKIA?",
+          "expectedContains": ["Lucrecia", "Valentina", "Megan", "estado", "activo"],
+          "expectedNotContains": ["sin información", "error", "no tengo datos"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["agent_router"]
+        },
+        {
+          "id": "ORA-004",
+          "category": "orchestration",
+          "input": "Coordiná con Megan la generación de un informe financiero para el cliente Portafolio Sur que quiere invertir USD 500.000 en Miami",
+          "expectedContains": ["Megan", "Portafolio Sur", "500.000", "Miami", "informe"],
+          "expectedNotContains": ["no coordino con Megan", "error", "sin capacidad"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["agent_router"]
+        },
+        {
+          "id": "ORA-005",
+          "category": "orchestration",
+          "input": "Hay un conflicto: Lucrecia y Megan están respondiendo al mismo cliente Goldenberg simultáneamente. Resolvé la colisión.",
+          "expectedContains": ["Goldenberg", "colisión", "resuelto", "prioridad"],
+          "expectedNotContains": ["no puedo resolver", "que se arreglen", "error crítico"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["agent_router"]
+        },
+        {
+          "id": "ORA-006",
+          "category": "alerting",
+          "input": "Alerta crítica: el sistema de facturación AFIP estuvo caído 4 horas. Notificá a todos los equipos relevantes.",
+          "expectedContains": ["AFIP", "alerta", "equipo", "notificado", "caído"],
+          "expectedNotContains": ["no es urgente", "ignorar", "luego"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["alerting", "whatsapp"]
+        },
+        {
+          "id": "ORA-007",
+          "category": "alerting",
+          "input": "Detecté anomalía: la tasa de error de respuestas aumentó 300% en los últimos 15 minutos",
+          "expectedContains": ["anomalía", "error", "300%", "investigando", "alerta"],
+          "expectedNotContains": ["normal", "sin acción", "ignorar"],
+          "maxResponseMs": 2500,
+          "requiresTools": ["alerting", "monitoring"]
+        },
+        {
+          "id": "ORA-008",
+          "category": "alerting",
+          "input": "SLA breach: el cliente Grandes Superficies S.A. lleva 6hs esperando respuesta, su contrato garantiza respuesta en 2hs",
+          "expectedContains": ["Grandes Superficies", "SLA", "urgente", "escalado", "2hs"],
+          "expectedNotContains": ["no es urgente", "mañana", "sin prioridad"],
+          "maxResponseMs": 2500,
+          "requiresTools": ["alerting", "crm", "whatsapp"]
+        },
+        {
+          "id": "ORA-009",
+          "category": "alerting",
+          "input": "Notificá alerta de vencimiento: 3 clientes tienen vencimiento de contrato en los próximos 7 días",
+          "expectedContains": ["vencimiento", "7 días", "clientes", "renovación", "alerta"],
+          "expectedNotContains": ["no hago alertas", "error", "sin datos"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["alerting", "crm"]
+        },
+        {
+          "id": "ORA-010",
+          "category": "alerting",
+          "input": "Monitoreo de calidad: el score de satisfacción bajó de 9.2 a 7.8 esta semana. Activá protocolo de revisión.",
+          "expectedContains": ["satisfacción", "7.8", "protocolo", "revisión", "causas"],
+          "expectedNotContains": ["aceptable", "sin acción", "ignorar el bajón"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["alerting", "monitoring"]
+        },
+        {
+          "id": "ORA-011",
+          "category": "lead_notification",
+          "input": "Lead nuevo entrante: empresa Logística del Cono Sur, 250 empleados, necesita asesoría laboral y tributaria, contacto CEO directo",
+          "expectedContains": ["Logística del Cono Sur", "lead", "250", "notificado", "laboral"],
+          "expectedNotContains": ["no proceso leads", "error", "sin acceso"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["crm", "whatsapp", "agent_router"]
+        },
+        {
+          "id": "ORA-012",
+          "category": "lead_notification",
+          "input": "Lead calificado: Portafolio Invest tiene presupuesto confirmado de USD 2M para inversión inmobiliaria. Score: 95/100.",
+          "expectedContains": ["Portafolio Invest", "USD 2M", "calificado", "Megan", "95"],
+          "expectedNotContains": ["lead frío", "no es prioritario", "error"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["crm", "agent_router", "whatsapp"]
+        },
+        {
+          "id": "ORA-013",
+          "category": "lead_notification",
+          "input": "Lead desde LinkedIn: el Dr. Rivero se interesó en el post sobre COPREC y quiere saber cómo funciona ReclamaIA",
+          "expectedContains": ["Rivero", "COPREC", "ReclamaIA", "Valentina", "contacto"],
+          "expectedNotContains": ["no gestiono LinkedIn", "error", "sin seguimiento"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["crm", "whatsapp", "agent_router"]
+        },
+        {
+          "id": "ORA-014",
+          "category": "lead_notification",
+          "input": "Lead frío recuperado: Transportes Nacionales no respondió en 30 días, reactivar con oferta especial",
+          "expectedContains": ["Transportes Nacionales", "reactivar", "oferta", "30 días"],
+          "expectedNotContains": ["descartado", "sin retorno", "no vale la pena"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["crm", "email", "whatsapp"]
+        },
+        {
+          "id": "ORA-015",
+          "category": "lead_notification",
+          "input": "Reporte semanal de leads: ¿cuántos entraron, cuántos se convirtieron y cuál es la tasa de conversión?",
+          "expectedContains": ["leads", "conversión", "semana", "tasa", "reporte"],
+          "expectedNotContains": ["sin datos", "no hago reportes", "error"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["crm", "analytics"]
+        },
+        {
+          "id": "ORA-016",
+          "category": "web_search",
+          "input": "Buscá información actualizada sobre las nuevas alícuotas de ingresos brutos en CABA para el sector servicios profesionales 2026",
+          "expectedContains": ["ingresos brutos", "CABA", "2026", "alícuota", "servicios profesionales"],
+          "expectedNotContains": ["no busco en internet", "sin acceso web", "error"],
+          "maxResponseMs": 8000,
+          "requiresTools": ["web_search"]
+        },
+        {
+          "id": "ORA-017",
+          "category": "web_search",
+          "input": "Investigá si hay novedades sobre la reforma del Código Procesal para reclamos de consumidores en Argentina",
+          "expectedContains": ["reforma", "código procesal", "consumidores", "Argentina", "novedades"],
+          "expectedNotContains": ["no tengo acceso a internet", "error", "sin información"],
+          "maxResponseMs": 8000,
+          "requiresTools": ["web_search"]
+        },
+        {
+          "id": "ORA-018",
+          "category": "web_search",
+          "input": "¿Cuál es el tipo de cambio oficial y blue del dólar hoy?",
+          "expectedContains": ["oficial", "blue", "dólar", "tipo de cambio"],
+          "expectedNotContains": ["no sé el tipo de cambio", "sin acceso", "no busco precios"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["web_search"]
+        },
+        {
+          "id": "ORA-019",
+          "category": "whatsapp",
+          "input": "Enviá WhatsApp de alerta urgente al equipo completo NARAKIA: el servidor principal está con 95% de CPU",
+          "expectedContains": ["urgente", "95%", "CPU", "servidor", "equipo"],
+          "expectedNotContains": ["no envío alertas por WhatsApp", "error", "sin urgencia"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["whatsapp"]
+        },
+        {
+          "id": "ORA-020",
+          "category": "whatsapp",
+          "input": "Notificá por WhatsApp a los 5 clientes premium que mañana habrá mantenimiento del sistema entre 02:00 y 04:00 hs",
+          "expectedContains": ["mantenimiento", "02:00", "04:00", "premium", "enviado"],
+          "expectedNotContains": ["no notifico clientes", "error", "sin lista"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["whatsapp", "crm"]
+        }
+      ]
+    },
+    {
+      "id": "valentina",
+      "name": "Valentina",
+      "role": "Especialista ReclamaIA",
+      "description": "Atiende clientes de reclamai.ar, califica reclamos, gestiona COPREC y organismos",
+      "color": "#2196f3",
+      "thresholds": {
+        "errorRate": 0.01,
+        "memoryPrecision": 0.99,
+        "driftScore": 0.01,
+        "contractCompliance": 0.999
+      },
+      "capabilities": ["claim_intake", "claim_qualification", "coprec_filing", "consumer_defense", "status_tracking"],
+      "systemPromptHash": "sha256-valentina-v1",
+      "goldenTests": [
+        {
+          "id": "VAL-001",
+          "category": "claim_intake",
+          "input": "Quiero reclamar contra Personal por un cargo de $8.500 que me cobraron dos veces en octubre",
+          "expectedContains": ["Personal", "$8.500", "doble cobro", "reclamo", "datos"],
+          "expectedNotContains": ["no puedo ayudarte", "llame a Personal", "no es mi área"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["claim_db"]
+        },
+        {
+          "id": "VAL-002",
+          "category": "claim_intake",
+          "input": "Fiat me vendió un 0km con defecto de fábrica en la caja de cambios. Ya lo llevé 3 veces al service y no lo arreglaron.",
+          "expectedContains": ["Fiat", "defecto", "caja de cambios", "garantía", "reclamo"],
+          "expectedNotContains": ["llame al concesionario", "no ayudo con autos", "sin solución"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["claim_db"]
+        },
+        {
+          "id": "VAL-003",
+          "category": "claim_intake",
+          "input": "La empresa de internet Fibercorp no me da servicio hace 15 días y siguen cobrando la factura mensual",
+          "expectedContains": ["Fibercorp", "15 días", "servicio", "cobro", "reclamo"],
+          "expectedNotContains": ["normal que fallen", "pague igual", "no puedo"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["claim_db"]
+        },
+        {
+          "id": "VAL-004",
+          "category": "claim_intake",
+          "input": "Aerolíneas Argentinas me canceló el vuelo a Bariloche el viernes y solo me ofrecieron reprogramar para el martes. Perdí el casamiento de mi hermano.",
+          "expectedContains": ["Aerolíneas", "cancelación", "indemnización", "daño", "reclamo"],
+          "expectedNotContains": ["mala suerte", "sin solución", "no ayudo con vuelos"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["claim_db"]
+        },
+        {
+          "id": "VAL-005",
+          "category": "claim_intake",
+          "input": "MercadoLibre me cobró por un producto que nunca llegó y no me da el reembolso aunque el vendedor reconoció que no despachó",
+          "expectedContains": ["MercadoLibre", "reembolso", "no llegó", "reclamo", "consumidor"],
+          "expectedNotContains": ["reclame en la plataforma", "sin garantía online", "no ayudo"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["claim_db"]
+        },
+        {
+          "id": "VAL-006",
+          "category": "claim_qualification",
+          "input": "Tengo el DNI, el contrato firmado con la empresa, 3 facturas con los cargos incorrectos y los emails donde ellos reconocen el error. ¿Es suficiente para COPREC?",
+          "expectedContains": ["documentación", "suficiente", "COPREC", "calificado", "proceder"],
+          "expectedNotContains": ["no es suficiente", "falta todo", "imposible"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["claim_qualifier"]
+        },
+        {
+          "id": "VAL-007",
+          "category": "claim_qualification",
+          "input": "El reclamo es contra mi vecino que me debe $50.000. ¿Puedo usar ReclamaIA?",
+          "expectedContains": ["consumidor", "proveedor", "relación de consumo", "no aplica"],
+          "expectedNotContains": ["sí claro", "iniciamos el reclamo", "sin problema"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["claim_qualifier"]
+        },
+        {
+          "id": "VAL-008",
+          "category": "claim_qualification",
+          "input": "Mi reclamo contra Banco Nación es de hace 3 años. ¿Prescribió?",
+          "expectedContains": ["prescripción", "3 años", "plazo", "Banco", "análisis"],
+          "expectedNotContains": ["sí prescribió, nada que hacer", "no sé", "sin respuesta"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["claim_qualifier", "legal_db"]
+        },
+        {
+          "id": "VAL-009",
+          "category": "claim_qualification",
+          "input": "Soy empresa (S.R.L.) y quiero reclamar contra mi proveedor de software que no cumplió el contrato",
+          "expectedContains": ["empresa", "SRL", "consumidor final", "vía alternativa", "contrato"],
+          "expectedNotContains": ["iniciamos COPREC", "perfecto", "sin problema"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["claim_qualifier"]
+        },
+        {
+          "id": "VAL-010",
+          "category": "claim_qualification",
+          "input": "Tengo capturas de pantalla de WhatsApp donde el vendedor me prometió entrega en 24hs y luego nunca respondió. ¿Vale como prueba?",
+          "expectedContains": ["WhatsApp", "prueba", "capturas", "válido", "evidencia"],
+          "expectedNotContains": ["no vale WhatsApp", "necesita papel", "inválido"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["claim_qualifier", "legal_db"]
+        },
+        {
+          "id": "VAL-011",
+          "category": "coprec_filing",
+          "input": "Inicia el trámite COPREC contra Claro por cobros indebidos por $15.340 durante 4 meses",
+          "expectedContains": ["COPREC", "Claro", "$15.340", "iniciado", "número de expediente"],
+          "expectedNotContains": ["no puedo iniciar", "error COPREC", "sin acceso"],
+          "maxResponseMs": 6000,
+          "requiresTools": ["coprec_api", "claim_db"]
+        },
+        {
+          "id": "VAL-012",
+          "category": "coprec_filing",
+          "input": "¿Cuánto tiempo demora el COPREC en resolverse y qué pasa si la empresa no se presenta?",
+          "expectedContains": ["COPREC", "plazo", "audiencia", "rebeldía", "resolución"],
+          "expectedNotContains": ["no sé", "depende", "sin información"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["legal_db"]
+        },
+        {
+          "id": "VAL-013",
+          "category": "coprec_filing",
+          "input": "La audiencia COPREC de Gómez contra Telecom es el próximo martes. Preparame el brief con argumentos clave.",
+          "expectedContains": ["Gómez", "Telecom", "COPREC", "argumentos", "audiencia"],
+          "expectedNotContains": ["no preparo briefs", "error", "sin tiempo"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["claim_db", "legal_db"]
+        },
+        {
+          "id": "VAL-014",
+          "category": "coprec_filing",
+          "input": "El COPREC contra Naranja X llegó a acuerdo: $45.000 de resarcimiento. ¿Acepto o conviene ir a Defensa del Consumidor?",
+          "expectedContains": ["$45.000", "Naranja X", "acuerdo", "Defensa del Consumidor", "recomendación"],
+          "expectedNotContains": ["acepta sin más", "no sé qué decirte", "es lo mismo"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["claim_db", "legal_db"]
+        },
+        {
+          "id": "VAL-015",
+          "category": "coprec_filing",
+          "input": "El juez del COPREC rechazó el reclamo porque dice que superamos el monto máximo. ¿Qué hacemos ahora?",
+          "expectedContains": ["rechazo", "monto", "apelación", "alternativa", "próximo paso"],
+          "expectedNotContains": ["no hay nada que hacer", "perdiste", "sin opciones"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["legal_db", "claim_db"]
+        },
+        {
+          "id": "VAL-016",
+          "category": "consumer_defense",
+          "input": "¿Cuáles son los derechos del consumidor ante un producto defectuoso según la Ley 24.240?",
+          "expectedContains": ["Ley 24.240", "garantía", "reparación", "reemplazo", "reembolso"],
+          "expectedNotContains": ["no sé la ley", "sin información legal", "consultá un abogado"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["legal_db"]
+        },
+        {
+          "id": "VAL-017",
+          "category": "consumer_defense",
+          "input": "La empresa me dice que el defecto lo causé yo. ¿Cómo invierto la carga de la prueba?",
+          "expectedContains": ["carga de la prueba", "consumidor", "presunción", "empresa", "Ley 24.240"],
+          "expectedNotContains": ["tienen razón", "es tu culpa", "sin solución"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["legal_db"]
+        },
+        {
+          "id": "VAL-018",
+          "category": "consumer_defense",
+          "input": "Quiero denunciar a una empresa de turismo que opera sin habilitación y estafó a 40 personas con paquetes a Cancún",
+          "expectedContains": ["denuncia", "turismo", "habilitación", "organismos", "Cancún"],
+          "expectedNotContains": ["no hago denuncias", "no es mi área", "sin solución grupal"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["legal_db", "claim_db"]
+        },
+        {
+          "id": "VAL-019",
+          "category": "status_tracking",
+          "input": "¿En qué estado está mi reclamo RC-2026-00891 contra Banco ICBC?",
+          "expectedContains": ["RC-2026-00891", "estado", "ICBC", "seguimiento"],
+          "expectedNotContains": ["no tengo ese número", "error", "sin datos"],
+          "maxResponseMs": 3000,
+          "requiresTools": ["claim_db"]
+        },
+        {
+          "id": "VAL-020",
+          "category": "status_tracking",
+          "input": "Pasaron 45 días desde que inicie el reclamo y no me actualizaron nada. ¿Qué pasó?",
+          "expectedContains": ["45 días", "reclamo", "estado", "actualización", "seguimiento"],
+          "expectedNotContains": ["es normal esperar", "sin novedades es bueno", "paciencia"],
+          "maxResponseMs": 3500,
+          "requiresTools": ["claim_db", "alerting"]
+        }
+      ]
+    },
+    {
+      "id": "megan",
+      "name": "Megan",
+      "role": "Experta Inmobiliaria Internacional",
+      "description": "Inversiones inmobiliarias Miami/España/Uruguay/BSAS, modelos financieros, negociación bilingüe",
+      "color": "#ff9800",
+      "thresholds": {
+        "errorRate": 0.02,
+        "memoryPrecision": 0.985,
+        "driftScore": 0.015,
+        "contractCompliance": 0.995
+      },
+      "capabilities": ["investment_analysis", "financial_modeling", "market_comparison", "negotiation", "bilingual_es_en"],
+      "systemPromptHash": "sha256-megan-v1",
+      "goldenTests": [
+        {
+          "id": "MEG-001",
+          "category": "investment_analysis",
+          "input": "Tengo USD 300.000 para invertir en Miami. ¿Qué tipo de propiedad me da mejor retorno hoy?",
+          "expectedContains": ["Miami", "USD 300.000", "retorno", "rental yield", "zona"],
+          "expectedNotContains": ["no sé de Miami", "sin información", "consulte un agente"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["market_data", "financial_calculator"]
+        },
+        {
+          "id": "MEG-002",
+          "category": "investment_analysis",
+          "input": "¿Conviene más comprar en Brickell o en Wynwood para alquiler turístico en Miami?",
+          "expectedContains": ["Brickell", "Wynwood", "turístico", "Airbnb", "comparación"],
+          "expectedNotContains": ["son iguales", "sin datos de barrios", "no sé"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["market_data"]
+        },
+        {
+          "id": "MEG-003",
+          "category": "investment_analysis",
+          "input": "Analiza el mercado inmobiliario de Uruguay como alternativa a Miami. Ventajas fiscales para argentinos.",
+          "expectedContains": ["Uruguay", "ventajas fiscales", "argentinos", "Punta del Este", "retorno"],
+          "expectedNotContains": ["Uruguay no es relevante", "sin ventajas", "no analizo Uruguay"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["market_data", "legal_db"]
+        },
+        {
+          "id": "MEG-004",
+          "category": "investment_analysis",
+          "input": "¿Cuánto rinde un departamento de 2 ambientes en Palermo, Buenos Aires, actualmente con alquiler tradicional?",
+          "expectedContains": ["Palermo", "2 ambientes", "alquiler", "rendimiento", "Buenos Aires"],
+          "expectedNotContains": ["no analizo BSAS", "sin datos locales", "no sé"],
+          "maxResponseMs": 4500,
+          "requiresTools": ["market_data", "financial_calculator"]
+        },
+        {
+          "id": "MEG-005",
+          "category": "investment_analysis",
+          "input": "Comparo: invertir USD 250.000 en Costa del Sol España vs apartamento en Edgewater Miami. ¿Cuál me conviene más en 5 años?",
+          "expectedContains": ["Costa del Sol", "Edgewater", "5 años", "proyección", "comparación"],
+          "expectedNotContains": ["son iguales", "sin proyección", "no comparo países"],
+          "maxResponseMs": 6000,
+          "requiresTools": ["market_data", "financial_calculator"]
+        },
+        {
+          "id": "MEG-006",
+          "category": "financial_modeling",
+          "input": "Arma el modelo financiero para un PH en Caballito, CABA: precio $180.000 USD, refacción estimada $30.000 USD, alquiler proyectado $1.200 USD/mes",
+          "expectedContains": ["Caballito", "$180.000", "$30.000", "ROI", "flujo de caja"],
+          "expectedNotContains": ["no armo modelos", "error", "sin cálculo"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["financial_calculator"]
+        },
+        {
+          "id": "MEG-007",
+          "category": "financial_modeling",
+          "input": "¿Cuántos años tarda en recuperarse la inversión de un condo en Coral Gables a USD 450.000 con alquiler de USD 2.800/mes?",
+          "expectedContains": ["Coral Gables", "USD 450.000", "USD 2.800", "payback", "años"],
+          "expectedNotContains": ["no calculo payback", "sin datos", "error financiero"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["financial_calculator"]
+        },
+        {
+          "id": "MEG-008",
+          "category": "financial_modeling",
+          "input": "Calcula el impacto de una suba de tasas de interés del 7% al 8.5% en la cuota de un hipotecario de USD 320.000 a 30 años",
+          "expectedContains": ["hipotecario", "USD 320.000", "tasa", "cuota", "8.5%"],
+          "expectedNotContains": ["no calculo hipotecas", "sin cálculo", "error"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["financial_calculator"]
+        },
+        {
+          "id": "MEG-009",
+          "category": "financial_modeling",
+          "input": "Proyectá la valorización de un inmueble en Montevideo, Pocitos, en los próximos 10 años con inflación dólar del 3% anual",
+          "expectedContains": ["Pocitos", "Montevideo", "10 años", "valorización", "3%"],
+          "expectedNotContains": ["no proyecto a 10 años", "sin datos Uruguay", "error"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["financial_calculator", "market_data"]
+        },
+        {
+          "id": "MEG-010",
+          "category": "financial_modeling",
+          "input": "Escenario pesimista, base y optimista para inversión de USD 500.000 en desarrollo en pozo en Buenos Aires entrega 2027",
+          "expectedContains": ["pesimista", "base", "optimista", "pozo", "2027", "USD 500.000"],
+          "expectedNotContains": ["solo un escenario", "no hago análisis de riesgo", "sin proyección"],
+          "maxResponseMs": 6000,
+          "requiresTools": ["financial_calculator", "market_data"]
+        },
+        {
+          "id": "MEG-011",
+          "category": "market_comparison",
+          "input": "Comparame precio por m2 en Palermo vs Belgrano vs Puerto Madero hoy",
+          "expectedContains": ["Palermo", "Belgrano", "Puerto Madero", "m2", "USD"],
+          "expectedNotContains": ["son iguales", "no tengo precios", "sin comparación"],
+          "maxResponseMs": 4000,
+          "requiresTools": ["market_data"]
+        },
+        {
+          "id": "MEG-012",
+          "category": "market_comparison",
+          "input": "¿Está el mercado de Miami sobrevaluado o hay oportunidades todavía? Dame tu análisis del ciclo actual.",
+          "expectedContains": ["Miami", "ciclo", "sobrevaluado", "oportunidad", "mercado"],
+          "expectedNotContains": ["no analizo ciclos", "sin opinión", "sin datos"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["market_data"]
+        },
+        {
+          "id": "MEG-013",
+          "category": "market_comparison",
+          "input": "Para un argentino con dólares en el colchón, ¿qué destino es más conveniente en 2026: España, Uruguay o Miami?",
+          "expectedContains": ["Argentina", "España", "Uruguay", "Miami", "fiscal", "2026"],
+          "expectedNotContains": ["es lo mismo", "no comparo destinos", "sin respuesta"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["market_data", "legal_db"]
+        },
+        {
+          "id": "MEG-014",
+          "category": "market_comparison",
+          "input": "¿Cuál es el cap rate promedio para multifamily buildings en el área de Doral, Miami?",
+          "expectedContains": ["Doral", "cap rate", "multifamily", "Miami", "%"],
+          "expectedNotContains": ["no conozco Doral", "sin cap rate", "no sé"],
+          "maxResponseMs": 4500,
+          "requiresTools": ["market_data"]
+        },
+        {
+          "id": "MEG-015",
+          "category": "market_comparison",
+          "input": "Tendencia de precios en Punta del Este 2023-2026 vs inflación en dólares. ¿Ganó o perdió contra el dólar?",
+          "expectedContains": ["Punta del Este", "2023", "2026", "tendencia", "dólar"],
+          "expectedNotContains": ["sin datos históricos", "no analizo tendencias", "error"],
+          "maxResponseMs": 5000,
+          "requiresTools": ["market_data", "financial_calculator"]
+        },
+        {
+          "id": "MEG-016",
+          "category": "negotiation",
+          "input": "El vendedor pide USD 280.000 por un depto en Recoleta pero la tasación dice USD 245.000. Dame una estrategia de negociación.",
+          "expectedContains": ["Recoleta", "USD 280.000", "USD 245.000", "estrategia", "negociación"],
+          "expectedNotContains": ["paga lo que piden", "sin estrategia", "no negocio"],
+          "maxResponseMs": 4500,
+          "requiresTools": ["market_data"]
+        },
+        {
+          "id": "MEG-017",
+          "category": "negotiation",
+          "input": "El comprador de mi propiedad en Miami quiere bajar el precio USD 30.000 porque dice que los techos necesitan reparación. ¿Cómo respondo?",
+          "expectedContains": ["reparación", "Miami", "USD 30.000", "contraoferta", "inspección"],
+          "expectedNotContains": ["acepta", "sin negociación", "perdiste"],
+          "maxResponseMs": 4500,
+          "requiresTools": ["market_data"]
+        },
+        {
+          "id": "MEG-018",
+          "category": "negotiation",
+          "input": "Necesito el pitch en inglés para presentar mi portfolio de propiedades en Buenos Aires a un fondo de inversión de New York",
+          "expectedContains": ["pitch", "Buenos Aires", "New York", "portfolio", "investment"],
+          "expectedNotContains": ["no hablo inglés", "solo español", "sin pitch"],
+          "maxResponseMs": 5000,
+          "requiresTools": []
+        },
+        {
+          "id": "MEG-019",
+          "category": "bilingual_es_en",
+          "input": "Draft the letter of intent for the purchase of Unit 1504 at Brickell City Centre for USD 620,000 with 30-day due diligence period",
+          "expectedContains": ["Unit 1504", "Brickell", "620,000", "due diligence", "letter of intent"],
+          "expectedNotContains": ["no redacto en inglés", "no puedo", "error"],
+          "maxResponseMs": 6000,
+          "requiresTools": ["document_generator"]
+        },
+        {
+          "id": "MEG-020",
+          "category": "bilingual_es_en",
+          "input": "Translate this clause to Spanish for our Argentine buyer: 'The Seller shall deliver the property free and clear of all liens, encumbrances, and claims within 60 days of contract execution'",
+          "expectedContains": ["vendedor", "libre de gravámenes", "60 días", "ejecución", "traducción"],
+          "expectedNotContains": ["no traduzco", "error", "sin traducción"],
+          "maxResponseMs": 4000,
+          "requiresTools": []
+        }
+      ]
+    }
+  ]
+}

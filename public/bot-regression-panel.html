@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NARAKIA — Regression Test Panel</title>
+  <style>
+    :root {
+      --bg: #0f0f13;
+      --surface: #18181f;
+      --border: #2a2a38;
+      --text: #e8e8f0;
+      --muted: #7878a0;
+      --pass: #22c55e;
+      --fail: #ef4444;
+      --warn: #f59e0b;
+      --accent: #9c27b0;
+      --lucrecia: #e91e8c;
+      --oraculo: #9c27b0;
+      --valentina: #2196f3;
+      --megan: #ff9800;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 28px;
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    label { font-size: 0.85rem; color: var(--muted); }
+    select, button {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+    select {
+      background: var(--bg);
+      color: var(--text);
+    }
+    button {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      border-color: transparent;
+      transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    #btn-baseline {
+      background: #2a2a38;
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .summary-card .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    .summary-card .value {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .summary-card .value.pass { color: var(--pass); }
+    .summary-card .value.fail { color: var(--fail); }
+    .summary-card .value.neutral { color: var(--text); }
+    .history-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 24px;
+      align-items: center;
+    }
+    .history-bar .hist-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-right: 6px;
+    }
+    .hist-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      cursor: default;
+      position: relative;
+    }
+    .hist-dot[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-size: 0.7rem;
+      pointer-events: none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+    th {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:hover td { background: var(--surface); }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-pass { background: rgba(34,197,94,.15); color: var(--pass); }
+    .badge-fail { background: rgba(239,68,68,.15); color: var(--fail); }
+    .badge-cat {
+      background: rgba(156,39,176,.15);
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .failure-reason { color: var(--fail); font-size: 0.78rem; margin-top: 3px; }
+    .input-text { color: var(--muted); font-size: 0.82rem; }
+    .progress-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--pass);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+    .bot-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+    #status {
+      font-size: 0.85rem;
+      color: var(--muted);
+      min-height: 20px;
+    }
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .drift-table { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    .drift-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      min-width: 130px;
+    }
+    .drift-card .drift-bot { font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; }
+    .drift-card .drift-val { font-size: 1.2rem; font-weight: 700; }
+    .drift-pos { color: var(--pass); }
+    .drift-neg { color: var(--fail); }
+    .drift-zero { color: var(--muted); }
+    @media (max-width: 600px) {
+      body { padding: 14px; }
+      .controls { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <h1>NARAKIA · Regression Panel</h1>
+  <p class="subtitle">Golden test suite — Stack IA Creador v1.0.0</p>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div>
+      <label for="bot-select">Bot</label><br />
+      <select id="bot-select">
+        <option value="all">Todos los bots</option>
+        <option value="lucrecia">Lucrecia — Coordinadora General</option>
+        <option value="oraculo">Oráculo — Orquestador Central</option>
+        <option value="valentina">Valentina — ReclamaIA</option>
+        <option value="megan">Megan — Experta Inmobiliaria</option>
+      </select>
+    </div>
+    <div>
+      <label>&nbsp;</label><br />
+      <button id="btn-run">▶ Run with Mock Evaluator</button>
+    </div>
+    <div>
+      <label>&nbsp;</label><br />
+      <button id="btn-baseline">💾 Save as Baseline</button>
+    </div>
+    <div style="margin-left: auto;">
+      <label>&nbsp;</label><br />
+      <span id="status">Ready.</span>
+    </div>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="summary-grid" id="summary-grid" style="display:none"></div>
+
+  <!-- History sparkline -->
+  <div id="history-section" style="display:none">
+    <div class="section-title">Últimas 5 ejecuciones</div>
+    <div class="history-bar" id="history-bar"></div>
+  </div>
+
+  <!-- Drift vs baseline -->
+  <div id="drift-section" style="display:none">
+    <div class="section-title">Drift vs baseline</div>
+    <div class="drift-table" id="drift-table"></div>
+  </div>
+
+  <!-- Results table -->
+  <div id="table-section" style="display:none">
+    <div class="section-title" id="table-title">Resultados</div>
+    <table id="results-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Bot</th>
+          <th>Categoría</th>
+          <th>Input</th>
+          <th>Estado</th>
+          <th>Detalle / Razón</th>
+          <th>ms</th>
+        </tr>
+      </thead>
+      <tbody id="results-body"></tbody>
+    </table>
+  </div>
+
+  <script type="module">
+    import { RegressionRunner, MultiRobotRegression } from './bot-regression.js';
+
+    const BOT_COLORS = {
+      lucrecia: '#e91e8c',
+      oraculo: '#9c27b0',
+      valentina: '#2196f3',
+      megan: '#ff9800',
+    };
+
+    const btnRun = document.getElementById('btn-run');
+    const btnBaseline = document.getElementById('btn-baseline');
+    const botSelect = document.getElementById('bot-select');
+    const statusEl = document.getElementById('status');
+    const summaryGrid = document.getElementById('summary-grid');
+    const historySection = document.getElementById('history-section');
+    const historyBar = document.getElementById('history-bar');
+    const driftSection = document.getElementById('drift-section');
+    const driftTable = document.getElementById('drift-table');
+    const tableSection = document.getElementById('table-section');
+    const tableTitle = document.getElementById('table-title');
+    const resultsBody = document.getElementById('results-body');
+
+    let lastMultiRegression = null;
+    let allResults = []; // flat array of { botId, ...caseResult }
+
+    function setStatus(msg, color) {
+      statusEl.textContent = msg;
+      statusEl.style.color = color || '';
+    }
+
+    function fmtScore(score) {
+      return `${(score * 100).toFixed(1)}%`;
+    }
+
+    function renderSummary(reports) {
+      summaryGrid.innerHTML = '';
+      summaryGrid.style.display = 'grid';
+
+      const ids = Object.keys(reports);
+
+      // Overall score card (multi only)
+      if (ids.length > 1 && lastMultiRegression) {
+        const overall = lastMultiRegression.overallScore();
+        summaryGrid.appendChild(makeSummaryCard('Overall (ponderado)', fmtScore(overall),
+          overall >= 0.9 ? 'pass' : overall >= 0.7 ? 'neutral' : 'fail'
+        ));
+      }
+
+      for (const id of ids) {
+        const r = reports[id];
+        const color = BOT_COLORS[id] || '#888';
+        const card = makeSummaryCard(
+          `<span class="bot-tag" style="background:${color}22;color:${color}">${id}</span> ${r.total} casos`,
+          `${r.passed}/${r.total} ✓`,
+          r.score >= 0.9 ? 'pass' : r.score >= 0.7 ? 'neutral' : 'fail'
+        );
+        // Progress bar
+        const bar = document.createElement('div');
+        bar.className = 'progress-bar';
+        const fill = document.createElement('div');
+        fill.className = 'progress-fill';
+        fill.style.width = `${r.score * 100}%`;
+        if (r.score < 0.7) fill.style.background = 'var(--fail)';
+        else if (r.score < 0.9) fill.style.background = 'var(--warn)';
+        bar.appendChild(fill);
+        card.appendChild(bar);
+        summaryGrid.appendChild(card);
+      }
+    }
+
+    function makeSummaryCard(label, value, cls) {
+      const card = document.createElement('div');
+      card.className = 'summary-card';
+      card.innerHTML = `<div class="label">${label}</div><div class="value ${cls}">${value}</div>`;
+      return card;
+    }
+
+    function renderHistory(botId) {
+      const runner = new RegressionRunner(botId);
+      const history = runner.loadHistory(5);
+      if (!history.length) { historySection.style.display = 'none'; return; }
+
+      historySection.style.display = 'block';
+      historyBar.innerHTML = `<span class="hist-label">Bot: ${botId}</span>`;
+      for (const h of history.reverse()) {
+        const pct = Math.round((h.score || 0) * 100);
+        const bg = pct >= 90 ? '#22c55e33' : pct >= 70 ? '#f59e0b33' : '#ef444433';
+        const fc = pct >= 90 ? '#22c55e' : pct >= 70 ? '#f59e0b' : '#ef4444';
+        const d = document.createElement('div');
+        d.className = 'hist-dot';
+        d.style.background = bg;
+        d.style.color = fc;
+        d.style.border = `2px solid ${fc}`;
+        d.textContent = `${pct}%`;
+        d.title = `${h.timestamp?.slice(0, 16) || '?'} — ${h.passed}/${h.total} passed`;
+        historyBar.appendChild(d);
+      }
+    }
+
+    function renderDrift(multiRegression) {
+      const drift = multiRegression.driftVsBaseline();
+      if (drift.error) { driftSection.style.display = 'none'; return; }
+      driftSection.style.display = 'block';
+      driftTable.innerHTML = '';
+      for (const [id, delta] of Object.entries(drift)) {
+        if (delta === null) continue;
+        const card = document.createElement('div');
+        card.className = 'drift-card';
+        const cls = delta > 0.001 ? 'drift-pos' : delta < -0.001 ? 'drift-neg' : 'drift-zero';
+        const sign = delta > 0 ? '+' : '';
+        card.innerHTML = `<div class="drift-bot">${id}</div><div class="drift-val ${cls}">${sign}${(delta*100).toFixed(1)}%</div>`;
+        driftTable.appendChild(card);
+      }
+    }
+
+    function renderTable(results) {
+      resultsBody.innerHTML = '';
+      tableSection.style.display = 'block';
+      tableTitle.textContent = `Resultados — ${results.length} casos`;
+
+      for (const r of results) {
+        const tr = document.createElement('tr');
+        const color = BOT_COLORS[r.botId] || '#888';
+        tr.innerHTML = `
+          <td><code style="font-size:.8rem">${r.caseId}</code></td>
+          <td><span class="bot-tag" style="background:${color}22;color:${color}">${r.botId}</span></td>
+          <td><span class="badge badge-cat">${r.category}</span></td>
+          <td class="input-text">${esc(r.input.slice(0, 70))}${r.input.length > 70 ? '…' : ''}</td>
+          <td><span class="badge ${r.passed ? 'badge-pass' : 'badge-fail'}">${r.passed ? 'PASS' : 'FAIL'}</span></td>
+          <td>${r.passed ? '<span style="color:var(--muted);font-size:.8rem">—</span>' : `<div class="failure-reason">${esc(r.failures ? r.failures.join(' | ') : '')}</div>`}</td>
+          <td style="color:var(--muted);font-size:.8rem">${r.responseMs || 0}</td>
+        `;
+        resultsBody.appendChild(tr);
+      }
+    }
+
+    function esc(str) {
+      return String(str)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+
+    btnRun.addEventListener('click', async () => {
+      const selectedBot = botSelect.value;
+      btnRun.disabled = true;
+      btnBaseline.disabled = true;
+      allResults = [];
+      setStatus('Cargando casos de prueba...');
+
+      try {
+        if (selectedBot === 'all') {
+          // Multi-bot run
+          lastMultiRegression = new MultiRobotRegression();
+          setStatus('Ejecutando todos los bots en paralelo...');
+          const reports = await lastMultiRegression.runAll(
+            (input, tc) => RegressionRunner.mockEvaluator(input, tc)
+          );
+
+          // Flatten results for the table
+          for (const [botId, report] of Object.entries(reports)) {
+            // We need raw case results — re-run single bot to get them
+            // (report only has failures summary, so re-extract)
+          }
+
+          // Run individual runners to get per-case detail
+          const detailRunners = ['lucrecia','oraculo','valentina','megan'].map(
+            id => new RegressionRunner(id)
+          );
+          const detailResults = await Promise.all(
+            detailRunners.map(r =>
+              r.runAll((input, tc) => RegressionRunner.mockEvaluator(input, tc))
+                .then(() => ({ runner: r, botId: r.botId }))
+            )
+          );
+          for (const { runner, botId } of detailResults) {
+            for (const res of runner._results) {
+              allResults.push({ botId, ...res });
+            }
+          }
+
+          renderSummary(reports);
+          renderDrift(lastMultiRegression);
+          historySection.style.display = 'none';
+          renderTable(allResults);
+          setStatus(
+            `Done. Overall: ${fmtScore(lastMultiRegression.overallScore())} — ${allResults.filter(r=>r.passed).length}/${allResults.length} passed.`,
+            allResults.every(r => r.passed) ? 'var(--pass)' : 'var(--warn)'
+          );
+
+        } else {
+          // Single bot run
+          lastMultiRegression = null;
+          const runner = new RegressionRunner(selectedBot);
+          setStatus(`Cargando casos para ${selectedBot}...`);
+          await runner.loadCases();
+          setStatus(`Ejecutando ${runner.cases.length} casos para ${selectedBot}...`);
+          const report = await runner.runAll(
+            (input, tc) => RegressionRunner.mockEvaluator(input, tc)
+          );
+          runner.saveResults();
+
+          for (const res of runner._results) {
+            allResults.push({ botId: selectedBot, ...res });
+          }
+
+          renderSummary({ [selectedBot]: report });
+          renderHistory(selectedBot);
+          driftSection.style.display = 'none';
+          renderTable(allResults);
+          setStatus(
+            `Done. ${report.passed}/${report.total} passed (${fmtScore(report.score)}). Avg: ${report.avgResponseMs}ms`,
+            report.score === 1 ? 'var(--pass)' : report.score >= 0.8 ? 'var(--warn)' : 'var(--fail)'
+          );
+        }
+
+      } catch (err) {
+        setStatus(`Error: ${err.message}`, 'var(--fail)');
+        console.error(err);
+      } finally {
+        btnRun.disabled = false;
+        btnBaseline.disabled = false;
+      }
+    });
+
+    btnBaseline.addEventListener('click', () => {
+      if (!lastMultiRegression) {
+        setStatus('Ejecuta "Todos los bots" primero para guardar baseline.', 'var(--warn)');
+        return;
+      }
+      lastMultiRegression.saveBaseline();
+      setStatus('Baseline guardado.', 'var(--pass)');
+    });
+  </script>
+</body>
+</html>
