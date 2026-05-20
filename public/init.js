@@ -96,6 +96,10 @@ import { renderPersonalBrand }   from '/personal-brand.js';
 import { renderDailyWins }       from '/daily-wins.js';
 import { renderPortfolioTracker } from '/portfolio-tracker.js';
 import { renderProjectLog }      from '/project-log.js';
+import { renderContentIdeas }    from '/content-ideas.js';
+import { renderColdOutreach }    from '/cold-outreach.js';
+import { renderSalesPipeline }   from '/sales-pipeline.js';
+import { renderClientFeedback }  from '/client-feedback.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -203,6 +207,10 @@ registerHotkey('ctrl+shift+b', '/brand',     () => { renderPersonalBrand();     
 registerHotkey('ctrl+shift+w', '/wins2',     () => { renderDailyWins();         trackUsage('wins2'); });
 registerHotkey('ctrl+shift+o', '/portfolio', () => { renderPortfolioTracker();  trackUsage('portfolio'); });
 registerHotkey('ctrl+shift+e', '/plog',      () => { renderProjectLog();        trackUsage('plog'); });
+registerHotkey('ctrl+shift+d', '/c-ideas',  () => { renderContentIdeas();      trackUsage('c-ideas'); });
+registerHotkey('ctrl+shift+u', '/outreach', () => { renderColdOutreach();      trackUsage('outreach'); });
+registerHotkey('ctrl+shift+a', '/sales',    () => { renderSalesPipeline();     trackUsage('sales'); });
+registerHotkey('ctrl+shift+k', '/feedback2',() => { renderClientFeedback();    trackUsage('feedback2'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -306,6 +314,10 @@ document.getElementById('brand-btn')?.addEventListener('click',        () => { r
 document.getElementById('wins2-btn')?.addEventListener('click',        () => { renderDailyWins();         trackUsage('wins2'); });
 document.getElementById('portfolio-btn')?.addEventListener('click',    () => { renderPortfolioTracker();  trackUsage('portfolio'); });
 document.getElementById('plog-btn')?.addEventListener('click',         () => { renderProjectLog();        trackUsage('plog'); });
+document.getElementById('cideas-btn')?.addEventListener('click',       () => { renderContentIdeas();      trackUsage('c-ideas'); });
+document.getElementById('outreach-btn')?.addEventListener('click',     () => { renderColdOutreach();      trackUsage('outreach'); });
+document.getElementById('sales-btn')?.addEventListener('click',        () => { renderSalesPipeline();     trackUsage('sales'); });
+document.getElementById('feedback2-btn')?.addEventListener('click',    () => { renderClientFeedback();    trackUsage('feedback2'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
