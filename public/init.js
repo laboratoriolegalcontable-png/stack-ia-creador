@@ -32,6 +32,10 @@ import { renderGoalPanel }                              from '/goal-tracker.js';
 import { renderInsightPanel, generateInsights }         from '/insight-engine.js';
 import { renderTimeMachine }                            from '/time-machine.js';
 import { renderPatternReport, analyzeText }             from '/pattern-recognizer.js';
+import { renderHabitPanel }                             from '/habit-tracker.js';
+import { renderFocusTimer }                             from '/focus-timer.js';
+import { renderKnowledgeBase }                          from '/knowledge-base.js';
+import { renderHeatmap, recordActivity }                from '/session-heatmap.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -40,7 +44,7 @@ import { evaluate as evaluateRule }                     from '/bot-rules.js';
 
 const flags = getFlags();
 
-// ── Core KAIROS ──────────────────────────────────────────────────────────────
+// ── Core KAIROS ─────────────────────────────────────────────────────────────────────────────
 if (flags.KAIROS_ENABLED)             { incrementSession(); runDreamCycle(); }
 if (flags.COORDINATOR_ENABLED)        { runCoordinatorCycle('Optimización automática'); }
 if (flags.FRUSTRATION_DETECTION)      { attachFrustrationDetection(document.body); }
@@ -58,10 +62,11 @@ if (flags.OFFLINE_INDICATOR_ENABLED)  { initOfflineIndicator(); }
 if (flags.CONTEXT_COMPRESSOR_ENABLED) { setTimeout(() => compressKairosMemory(), 5000); }
 if (flags.AUTO_TAGGER_ENABLED)        { tagSession(document.title + ' ' + location.href); }
 
+recordActivity();
 analyzeText(document.title + ' ' + location.href);
 generateInsights();
 
-// ── Blindaje IA — nuevos módulos ─────────────────────────────────────────────
+// ── Blindaje IA ─────────────────────────────────────────────────────────────────────────────
 if (flags.DRIFT_DETECTOR_ENABLED)      { startDriftMonitor(60_000); }
 if (flags.SEGMENTED_MEMORY_ENABLED)    { compact('sesion'); }
 if (flags.BOT_SUPERVISOR_ENABLED) {
@@ -73,7 +78,7 @@ if (flags.BOT_SUPERVISOR_ENABLED) {
   });
 }
 
-// ── Hotkeys ───────────────────────────────────────────────────────────────────
+// ── Hotkeys ──────────────────────────────────────────────────────────────────────────────────
 registerHotkey('ctrl+d', '/dream',    () => { localStorage.setItem('kairos:sessions','5'); runDreamCycle().then(() => { notify('KAIROS completado','4 fases ejecutadas','kairos'); trackUsage('dream'); }); });
 registerHotkey('ctrl+g', '/gc',       () => document.getElementById('gc-btn')?.click());
 registerHotkey('ctrl+s', '/stats',    () => { renderStats(); trackUsage('stats'); });
@@ -82,10 +87,13 @@ registerHotkey('ctrl+e', '/export',   () => renderExportPanel());
 registerHotkey('ctrl+k', '/ctx-viz',  () => toggleCtxViz());
 registerHotkey('ctrl+j', '/journal',  () => { renderDreamJournal(); trackUsage('journal'); });
 registerHotkey('ctrl+o', '/goals',    () => { renderGoalPanel(); trackUsage('goals'); });
+registerHotkey('ctrl+h', '/habits',   () => { renderHabitPanel(); trackUsage('habits'); });
+registerHotkey('ctrl+b', '/kb',       () => { renderKnowledgeBase(); trackUsage('kb'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
-registerHotkey('ctrl+?', 'hotkeys',   () => showHotkeysHelp());
+// ? requires Shift on US keyboard; hotkeys.js includes e.shiftKey in combo, so combo is ctrl+shift+?
+registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
-// ── Button listeners ──────────────────────────────────────────────────────────
+// ── Button listeners ─────────────────────────────────────────────────────────────────────────────────
 document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
 document.getElementById('dream-btn')?.addEventListener('click', () => {
   localStorage.setItem('kairos:sessions','5');
@@ -121,6 +129,10 @@ document.getElementById('goals-btn')?.addEventListener('click',       () => { re
 document.getElementById('insights-btn')?.addEventListener('click',    () => { renderInsightPanel(); trackUsage('insights'); });
 document.getElementById('timemachine-btn')?.addEventListener('click', () => { renderTimeMachine(); trackUsage('time-machine'); });
 document.getElementById('patterns-btn')?.addEventListener('click',    () => { renderPatternReport(); trackUsage('patterns'); });
+document.getElementById('habits-btn')?.addEventListener('click',      () => { renderHabitPanel(); trackUsage('habits'); });
+document.getElementById('focus-btn')?.addEventListener('click',       () => { renderFocusTimer(); trackUsage('focus'); });
+document.getElementById('kb-btn')?.addEventListener('click',          () => { renderKnowledgeBase(); trackUsage('kb'); });
+document.getElementById('heatmap-btn')?.addEventListener('click',     () => { renderHeatmap(); trackUsage('heatmap'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
