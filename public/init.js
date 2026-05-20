@@ -135,6 +135,7 @@ import { renderLinkVault }         from '/link-vault.js';
 import { renderResearchLog }       from '/research-log.js';
 import { renderSmartReminder }     from '/smart-reminder.js';
 import { renderPromptLibrary }     from '/prompt-library.js';
+import { renderPromptStudio }      from '/prompt-studio.js';
 import { renderAchievementTracker } from '/achievement-tracker.js';
 import { renderErrorLog }          from '/error-log.js';
 import { renderTimeTracker }    from '/time-tracker.js';
@@ -285,6 +286,7 @@ registerHotkey('ctrl+alt+y',   '/timemachine',() => { renderTimeMachine();      
 registerHotkey('ctrl+alt+o',   '/tbudget',  () => { renderTokenBudget();           trackUsage('tbudget'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
+registerHotkey('ctrl+p',       '/prompt-studio', () => { renderPromptStudio(); trackUsage('prompt-studio'); });
 
 // ── Button listeners ──────────────────────────────────────────────────────────────────────────────
 document.getElementById('ctx-viz-btn')?.addEventListener('click', toggleCtxViz);
@@ -428,6 +430,7 @@ document.getElementById('linkvault-btn')?.addEventListener('click',   () => { re
 document.getElementById('researchlog-btn')?.addEventListener('click', () => { renderResearchLog();      trackUsage('researchlog'); });
 document.getElementById('sreminder-btn')?.addEventListener('click',   () => { renderSmartReminder();    trackUsage('sreminder'); });
 document.getElementById('promptlib-btn')?.addEventListener('click',   () => { renderPromptLibrary();    trackUsage('promptlib'); });
+document.getElementById('prompt-studio-btn')?.addEventListener('click', () => { renderPromptStudio();   trackUsage('prompt-studio'); });
 document.getElementById('achievements-btn')?.addEventListener('click',() => { renderAchievementTracker(); trackUsage('achievements'); });
 document.getElementById('errorlog-btn')?.addEventListener('click',    () => { renderErrorLog();         trackUsage('errorlog'); });
 document.getElementById('convjournal-btn')?.addEventListener('click',   () => { renderConversationJournal(); trackUsage('convjournal'); });
