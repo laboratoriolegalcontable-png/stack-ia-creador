@@ -108,6 +108,10 @@ import { renderReadingList }     from '/reading-list.js';
 import { renderCourseTracker }   from '/course-tracker.js';
 import { renderSavingsTracker }  from '/savings-tracker.js';
 import { renderMealPlanner }     from '/meal-planner.js';
+import { renderBodyMetrics }      from '/body-metrics.js';
+import { renderBookNotes }        from '/book-notes.js';
+import { renderSubscriptionTracker } from '/subscription-tracker.js';
+import { renderTravelLog }        from '/travel-log.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -227,6 +231,10 @@ registerHotkey('ctrl+shift+r', '/readlist', () => { renderReadingList();       t
 registerHotkey('ctrl+shift+h', '/courses',  () => { renderCourseTracker();     trackUsage('courses'); });
 registerHotkey('ctrl+shift+z', '/savings',  () => { renderSavingsTracker();    trackUsage('savings'); });
 registerHotkey('ctrl+shift+m', '/meals',    () => { renderMealPlanner();       trackUsage('meals'); });
+registerHotkey('ctrl+alt+b',   '/bmetrics', () => { renderBodyMetrics();        trackUsage('bmetrics'); });
+registerHotkey('ctrl+alt+n',   '/bnotes',   () => { renderBookNotes();          trackUsage('bnotes'); });
+registerHotkey('ctrl+alt+s',   '/subs',     () => { renderSubscriptionTracker(); trackUsage('subs'); });
+registerHotkey('ctrl+alt+t',   '/travel',   () => { renderTravelLog();          trackUsage('travel'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -342,6 +350,10 @@ document.getElementById('readlist-btn')?.addEventListener('click',    () => { re
 document.getElementById('courses-btn')?.addEventListener('click',     () => { renderCourseTracker();     trackUsage('courses'); });
 document.getElementById('savings-btn')?.addEventListener('click',     () => { renderSavingsTracker();    trackUsage('savings'); });
 document.getElementById('meals-btn')?.addEventListener('click',       () => { renderMealPlanner();       trackUsage('meals'); });
+document.getElementById('bmetrics-btn')?.addEventListener('click',    () => { renderBodyMetrics();        trackUsage('bmetrics'); });
+document.getElementById('bnotes-btn')?.addEventListener('click',      () => { renderBookNotes();          trackUsage('bnotes'); });
+document.getElementById('subs-btn')?.addEventListener('click',        () => { renderSubscriptionTracker(); trackUsage('subs'); });
+document.getElementById('travel-btn')?.addEventListener('click',      () => { renderTravelLog();          trackUsage('travel'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
