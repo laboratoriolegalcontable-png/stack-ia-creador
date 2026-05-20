@@ -22,7 +22,7 @@ export function renderBugLog() {
       </form>
       <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
         <select id="bl-filter" style="padding:4px 8px;border:1px solid var(--color-border);border-radius:4px;background:var(--color-bg);color:var(--color-text)">
-          <option value="all">Todos</option><option value="open">Open</option><option value="in-progress">In Progress</option><option value="resolved">Resolved</option>
+          <option value="all">Todos</option><option value="open">Open</option><option value="in-progress">In Progress</option><option value="resolved">Resolved</option><option value="wont-fix">Wont Fix</option>
         </select>
       </div>
       <div id="bl-stats" class="ia-stats-bar"></div>
@@ -63,11 +63,13 @@ function _refresh() {
     const sevColor = item.severity === 'critical' ? 'red' : item.severity === 'high' ? 'blue' : 'gray';
     const statuses = ['open', 'in-progress', 'resolved', 'wont-fix'];
     const next = statuses[(statuses.indexOf(item.status) + 1) % statuses.length];
-    el.innerHTML = '<div class="ia-list-item-header"><strong></strong><span class="ia-badge ' + sevColor + '">' + item.severity + '</span><span class="ia-badge">' + item.status + '</span><button class="ia-btn-sm blue" data-next="' + item.id + '">→ ' + next + '</button><button class="ia-btn-sm red" data-del="' + item.id + '">✕</button></div><small></small>';
+    el.innerHTML = '<div class="ia-list-item-header"><strong></strong><span class="ia-badge ' + sevColor + '"></span><span class="ia-badge"></span><button class="ia-btn-sm blue"></button><button class="ia-btn-sm red">✕</button></div><small></small>';
     el.querySelector('strong').textContent = item.title;
     el.querySelector('small').textContent = (item.component || '') + (item.description ? (item.component ? ' · ' : '') + item.description.slice(0, 80) : '');
-    el.querySelector('[data-next]').onclick = () => { const d = load(); const b = d.find(x => x.id === item.id); if (b) { b.status = next; save(d); _refresh(); } };
-    el.querySelector('[data-del]').onclick = () => { save(load().filter(x => x.id !== item.id)); _refresh(); };
+    const badges = el.querySelectorAll('.ia-badge'); badges[0].textContent = item.severity; badges[1].textContent = item.status;
+    const [nextBtn, delBtn] = el.querySelectorAll('button'); nextBtn.textContent = '→ ' + next;
+    nextBtn.onclick = () => { const d = load(); const b = d.find(x => x.id === item.id); if (b) { b.status = next; save(d); _refresh(); } };
+    delBtn.onclick = () => { save(load().filter(x => x.id !== item.id)); _refresh(); };
     list.appendChild(el);
   });
 }

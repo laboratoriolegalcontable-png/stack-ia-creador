@@ -51,7 +51,7 @@ function _refresh() {
   items.sort((a, b) => b.createdAt.localeCompare(a.createdAt)).forEach(item => {
     const el = document.createElement('div');
     el.className = 'ia-list-item';
-    const stars = '⭐'.repeat(item.rating);
+    const stars = '⭐'.repeat(Math.max(0, Math.min(5, item.rating || 0)));
     el.innerHTML = '<div class="ia-list-item-header"><strong></strong><span class="ia-badge">' + item.date + '</span><span class="ia-badge gray" title="rating">' + stars + '</span><button class="ia-btn-sm red" data-del="' + item.id + '">✕</button></div><small></small>';
     el.querySelector('strong').textContent = item.habit;
     el.querySelector('small').textContent = item.notes || '';
