@@ -29,7 +29,7 @@ export function getGratitudeStats() {
   let currentStreak = 0;
   const today = new Date().toISOString().slice(0, 10);
   const d = new Date(today);
-  while (dateSet.has(d.toISOString().slice(0, 10))) { currentStreak++; d.setDate(d.getDate() - 1); }
+  while (dateSet.has(d.toISOString().slice(0, 10))) { currentStreak++; d.setUTCDate(d.getUTCDate() - 1); }
   let longestStreak = 0; let streak = 0;
   for (let i = 0; i < dates.length; i++) {
     if (i === 0) { streak = 1; longestStreak = 1; continue; }

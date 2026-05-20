@@ -58,6 +58,8 @@ export function renderWinPanel() {
     const t = titleIn.value.trim(); if (!t) return;
     addWin(t, catSel.value, impSel.value, refIn.value);
     titleIn.value = ''; refIn.value = '';
+    tabs.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    tabs.querySelector('[data-cat="all"]')?.classList.add('active');
     renderWinList();
   });
   panel.appendChild(form);

@@ -116,8 +116,8 @@ function renderProjectList() {
     const badge = document.createElement('span'); badge.className = `badge badge-${p.status}`; badge.textContent = p.status;
     const prio = document.createElement('span'); prio.className = 'badge'; prio.textContent = p.priority;
     top.append(titleEl, badge, prio);
-    if (p.description) { const desc = document.createElement('p'); desc.textContent = p.description; card.appendChild(desc); }
     card.appendChild(top);
+    if (p.description) { const desc = document.createElement('p'); desc.textContent = p.description; card.appendChild(desc); }
     // status select
     const statusSel = document.createElement('select');
     ['active','paused','completed','archived'].forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; if (v === p.status) o.selected = true; statusSel.appendChild(o); });

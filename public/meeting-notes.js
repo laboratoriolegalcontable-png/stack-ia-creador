@@ -42,6 +42,7 @@ export function toggleAction(meetingId, actionId) {
   const a = m.actionItems.find(x => x.id === actionId);
   if (!a) return null;
   a.done = !a.done;
+  m.updatedAt = new Date().toISOString();
   saveMeetings(list);
   return m;
 }
