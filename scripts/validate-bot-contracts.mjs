@@ -150,7 +150,7 @@ const tests = [
     type: 'input',
     data: {
       nombre_reclamante: 'María Gómez',
-      cuil_reclamante: '20-99999999-9', // invalid check digit
+      cuil_reclamante: '20-99999999-9', // invalid check digit (verifier=10 → always invalid)
       empresa_reclamada: 'Telecom S.A.',
       descripcion_hecho: 'Cobro indebido en factura de internet por servicio no contratado',
       fecha_hecho: '2025-03-15T00:00:00-03:00',
@@ -203,7 +203,6 @@ for (const test of tests) {
     }
   } else {
     if (!result.valid) {
-      // Optionally check that expected error strings are present
       if (test.expectErrorsContaining) {
         const allFound = test.expectErrorsContaining.every(expected =>
           result.errors.some(err => err.toLowerCase().includes(expected.toLowerCase()))
@@ -238,12 +237,11 @@ section('DETERMINISTIC KERNEL SANITY CHECKS');
 const kernel = new DeterministicKernel();
 
 // CUIL validation
+// 20-12345678-6: sum=148, 148 mod 11=5, verifier=(11-5)%11=6 ✓
 try {
-  // Valid CUIL: 20-12345678-9 (standard persona física, must compute correctly)
-  // Let's use a known-valid CUIL
-  const v1 = kernel.validateCUIL('20-27107099-0');
+  const v1 = kernel.validateCUIL('20-12345678-6');
   if (v1.valid && v1.type === 'persona_fisica') {
-    pass('validateCUIL: valid persona_fisica CUIL recognized');
+    pass('validateCUIL: valid persona_fisica CUIL recognized (20-12345678-6)');
   } else {
     fail('validateCUIL: valid persona_fisica CUIL recognized', `Got valid=${v1.valid}, type=${v1.type}`);
   }
@@ -252,11 +250,10 @@ try {
 }
 
 try {
-  const v2 = kernel.validateCUIL('30-71234567-8'); // CUIT persona jurídica
+  const v2 = kernel.validateCUIL('30-71234567-8'); // CUIT persona jurídica (may be invalid check digit — test only checks prefix path)
   if (v2.type === 'persona_juridica') {
     pass('validateCUIL: persona_juridica prefix (30) detected');
   } else {
-    // Not all 30-xxxxx-x are valid; just check structure path is taken
     pass('validateCUIL: persona_juridica prefix ran without error');
   }
 } catch (e) {
@@ -305,7 +302,7 @@ try {
 try {
   const roi = kernel.calculateInvestmentROI(100000, 150000, 5, 2000, 'USD', 500);
   if (typeof roi.roi === 'number' && typeof roi.tir === 'number' && typeof roi.capRate === 'number') {
-    pass(`calculateInvestmentROI: returns numeric roi=${roi.roi}%, tir=${roi.tir}%, capRate=${roi.capRate}%`);
+    pass(`calculateInvestmentROI: returns numeric roi=${roi.roi.toFixed(1)}%, tir=${roi.tir.toFixed(1)}%, capRate=${roi.capRate.toFixed(2)}%`);
   } else {
     fail('calculateInvestmentROI: numeric results', JSON.stringify(roi));
   }
