@@ -48,6 +48,10 @@ import { renderProjectPanel }   from '/project-tracker.js';
 import { renderMeetingPanel }   from '/meeting-notes.js';
 import { renderGratitudePanel } from '/gratitude-journal.js';
 import { renderWinPanel }       from '/quick-wins.js';
+import { renderSprintPanel }     from '/sprint-planner.js';
+import { renderKpiPanel }        from '/kpi-tracker.js';
+import { renderEventLogPanel }   from '/event-log.js';
+import { renderReflectionPanel } from '/reflection-journal.js';
 import { renderIdeaPanel }    from '/idea-bank.js';
 import { renderStandupPanel } from '/daily-standup.js';
 import { renderBudgetPanel }  from '/budget-tracker.js';
@@ -115,6 +119,10 @@ registerHotkey('ctrl+alt+g', '/gratitude', () => { renderGratitudePanel(); track
 registerHotkey('ctrl+alt+i', '/ideas',   () => { renderIdeaPanel();    trackUsage('ideas'); });
 registerHotkey('ctrl+alt+s', '/standup', () => { renderStandupPanel(); trackUsage('standup'); });
 registerHotkey('ctrl+alt+b', '/budget',  () => { renderBudgetPanel();  trackUsage('budget'); });
+registerHotkey('ctrl+alt+q', '/sprint',  () => { renderSprintPanel();     trackUsage('sprint'); });
+registerHotkey('ctrl+alt+k', '/kpis',    () => { renderKpiPanel();        trackUsage('kpis'); });
+registerHotkey('ctrl+alt+e', '/events',  () => { renderEventLogPanel();   trackUsage('events'); });
+registerHotkey('ctrl+alt+f', '/reflect', () => { renderReflectionPanel(); trackUsage('reflect'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -170,6 +178,10 @@ document.getElementById('project-btn')?.addEventListener('click',   () => { rend
 document.getElementById('meeting-btn')?.addEventListener('click',   () => { renderMeetingPanel();   trackUsage('meetings'); });
 document.getElementById('gratitude-btn')?.addEventListener('click', () => { renderGratitudePanel(); trackUsage('gratitude'); });
 document.getElementById('wins-btn')?.addEventListener('click',      () => { renderWinPanel();       trackUsage('wins'); });
+document.getElementById('sprint-btn')  ?.addEventListener('click', () => { renderSprintPanel();     trackUsage('sprint'); });
+document.getElementById('kpi-btn')     ?.addEventListener('click', () => { renderKpiPanel();        trackUsage('kpis'); });
+document.getElementById('eventlog-btn')?.addEventListener('click', () => { renderEventLogPanel();   trackUsage('events'); });
+document.getElementById('reflect-btn') ?.addEventListener('click', () => { renderReflectionPanel(); trackUsage('reflect'); });
 document.getElementById('ideas-btn')  ?.addEventListener('click', () => { renderIdeaPanel();    trackUsage('ideas'); });
 document.getElementById('standup-btn')?.addEventListener('click', () => { renderStandupPanel(); trackUsage('standup'); });
 document.getElementById('budget-btn') ?.addEventListener('click', () => { renderBudgetPanel();  trackUsage('budget'); });
