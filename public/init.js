@@ -100,6 +100,10 @@ import { renderContentIdeas }    from '/content-ideas.js';
 import { renderColdOutreach }    from '/cold-outreach.js';
 import { renderSalesPipeline }   from '/sales-pipeline.js';
 import { renderClientFeedback }  from '/client-feedback.js';
+import { renderSocialProof }     from '/social-proof.js';
+import { renderEmailCampaigns }  from '/email-campaigns.js';
+import { renderTimeAudit }       from '/time-audit.js';
+import { renderDigitalDetox }    from '/digital-detox.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -211,6 +215,10 @@ registerHotkey('ctrl+shift+d', '/c-ideas',  () => { renderContentIdeas();      t
 registerHotkey('ctrl+shift+u', '/outreach', () => { renderColdOutreach();      trackUsage('outreach'); });
 registerHotkey('ctrl+shift+a', '/sales',    () => { renderSalesPipeline();     trackUsage('sales'); });
 registerHotkey('ctrl+shift+k', '/feedback2',() => { renderClientFeedback();    trackUsage('feedback2'); });
+registerHotkey('ctrl+shift+y', '/sproof',   () => { renderSocialProof();       trackUsage('sproof'); });
+registerHotkey('ctrl+shift+g', '/ecampaigns',() => { renderEmailCampaigns();   trackUsage('ecampaigns'); });
+registerHotkey('ctrl+shift+t', '/taudit',   () => { renderTimeAudit();         trackUsage('taudit'); });
+registerHotkey('ctrl+shift+x', '/detox',    () => { renderDigitalDetox();      trackUsage('detox'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -318,6 +326,10 @@ document.getElementById('cideas-btn')?.addEventListener('click',       () => { r
 document.getElementById('outreach-btn')?.addEventListener('click',     () => { renderColdOutreach();      trackUsage('outreach'); });
 document.getElementById('sales-btn')?.addEventListener('click',        () => { renderSalesPipeline();     trackUsage('sales'); });
 document.getElementById('feedback2-btn')?.addEventListener('click',    () => { renderClientFeedback();    trackUsage('feedback2'); });
+document.getElementById('sproof-btn')?.addEventListener('click',      () => { renderSocialProof();       trackUsage('sproof'); });
+document.getElementById('ecampaigns-btn')?.addEventListener('click',  () => { renderEmailCampaigns();   trackUsage('ecampaigns'); });
+document.getElementById('taudit-btn')?.addEventListener('click',      () => { renderTimeAudit();         trackUsage('taudit'); });
+document.getElementById('detox-btn')?.addEventListener('click',       () => { renderDigitalDetox();      trackUsage('detox'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
