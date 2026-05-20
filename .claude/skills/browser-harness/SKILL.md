@@ -173,11 +173,26 @@ El wrapper detecta el OS y usa launchd (Mac), cron (Linux) o Task Scheduler
 ### Modo 3 — VPS 24/7 (produccion)
 
 Si el usuario tiene VPS, le sugieres `bux` (sibling oficial de Browser
-Harness). Le pasas el comando:
+Harness). **Nunca pipear directo a `sudo bash`** — el script upstream puede
+cambiar en cualquier momento y `sudo` da acceso root sin revisión. En su
+lugar, le mostrás este flujo (descargar, inspeccionar, ejecutar):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/browser-use/bux/main/install.sh \
-  | sudo BROWSER_USE_API_KEY=$BROWSER_USE_API_KEY bash
+# 1. Descargar el instalador a disco
+curl -fsSL -o /tmp/bux-install.sh \
+  https://raw.githubusercontent.com/browser-use/bux/main/install.sh
+
+# 2. Inspeccionar el contenido antes de ejecutar
+less /tmp/bux-install.sh
+
+# 3. Ejecutar (sin sudo si es posible; con sudo solo si el script lo requiere
+#    y el usuario revisó qué hace). Pasale las env vars explícitamente.
+BROWSER_USE_API_KEY="$BROWSER_USE_API_KEY" bash /tmp/bux-install.sh
+
+# Si el script necesita permisos elevados para ciertos pasos (puertos <1024,
+# /etc, systemd), preferí correrlo sin sudo y dejar que falle con un mensaje
+# claro indicando qué línea requiere privilegios — así el usuario puede
+# ejecutar solo esa parte con sudo en lugar del script entero.
 ```
 
 bux corre 24/7 con Telegram bot integrado. Para que sea util, el usuario

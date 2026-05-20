@@ -89,7 +89,11 @@ export const CONTRACTS = {
         if (!Array.isArray(output.participants_notified) || output.participants_notified.length === 0) {
           errors.push('participants_notified must be a non-empty array');
         }
-        if (!isNonEmptyString(output.meeting_link) && output.platform !== 'whatsapp') {
+        const VALID_OUTPUT_PLATFORMS = ['zoom', 'meet', 'teams', 'whatsapp'];
+        if (!VALID_OUTPUT_PLATFORMS.includes(output.platform)) {
+          errors.push(`output.platform must be one of: ${VALID_OUTPUT_PLATFORMS.join(', ')}`);
+        }
+        if (output.platform !== 'whatsapp' && !isNonEmptyString(output.meeting_link)) {
           errors.push('meeting_link must be present for zoom/meet/teams platforms');
         }
         if (!isISODateString(output.confirmed_datetime)) {

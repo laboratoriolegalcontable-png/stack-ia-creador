@@ -114,7 +114,7 @@ inject_shell_env() {
       echo '' >> "$rc"
       echo '# browser-harness — domain skills activas' >> "$rc"
       echo 'export BH_DOMAIN_SKILLS=1' >> "$rc"
-      echo 'export BH_HOME="$HOME/Developer/browser-harness"' >> "$rc"
+      echo "export BH_HOME=\"$BH_HOME\"" >> "$rc"
     fi
   done
 }

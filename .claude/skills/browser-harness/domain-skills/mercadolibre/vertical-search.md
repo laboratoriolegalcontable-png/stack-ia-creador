@@ -60,7 +60,7 @@ verticales tienen filtros propios y estructura distinta.
 - % publicados por inmobiliarias vs particulares
 ```
 
-## Caso de uso especifico: triple matricula Diego Orosa
+## Caso de uso especifico: comparativo triple matricula (BUE-MAD-MVD)
 
 Si el usuario menciona "triple matricula" o "comparativo BUE-MAD-MVD":
 1. Correr esta skill 3 veces:

@@ -39,6 +39,7 @@ case "$(uname -s)" in
   <key>StandardErrorPath</key><string>$HOME/.bh-runs/briefing-matutino/launchd.err</string>
 </dict></plist>
 EOF
+    mkdir -p "$HOME/.bh-runs/briefing-matutino"
     launchctl unload "$PLIST" 2>/dev/null || true
     launchctl load "$PLIST"
     ;;
@@ -90,5 +91,5 @@ Para verlos a posteriori, abrir el dashboard:
 Para parar un job:
   Mac:   launchctl unload ~/Library/LaunchAgents/com.bh.<name>.plist
   Linux: crontab -e  → borrar la linea con # bh:<name>
-────────────────────────────────────────
+─────────────────────────────────────────
 EOF

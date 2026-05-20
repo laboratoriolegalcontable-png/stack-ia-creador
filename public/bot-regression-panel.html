@@ -420,9 +420,9 @@
         const tr = document.createElement('tr');
         const color = BOT_COLORS[r.botId] || '#888';
         tr.innerHTML = `
-          <td><code style="font-size:.8rem">${r.caseId}</code></td>
-          <td><span class="bot-tag" style="background:${color}22;color:${color}">${r.botId}</span></td>
-          <td><span class="badge badge-cat">${r.category}</span></td>
+          <td><code style="font-size:.8rem">${esc(r.caseId)}</code></td>
+          <td><span class="bot-tag" style="background:${color}22;color:${color}">${esc(r.botId)}</span></td>
+          <td><span class="badge badge-cat">${esc(r.category)}</span></td>
           <td class="input-text">${esc(r.input.slice(0, 70))}${r.input.length > 70 ? '…' : ''}</td>
           <td><span class="badge ${r.passed ? 'badge-pass' : 'badge-fail'}">${r.passed ? 'PASS' : 'FAIL'}</span></td>
           <td>${r.passed ? '<span style="color:var(--muted);font-size:.8rem">—</span>' : `<div class="failure-reason">${esc(r.failures ? r.failures.join(' | ') : '')}</div>`}</td>
@@ -454,27 +454,8 @@
             (input, tc) => RegressionRunner.mockEvaluator(input, tc)
           );
 
-          // Flatten results for the table
-          for (const [botId, report] of Object.entries(reports)) {
-            // We need raw case results — re-run single bot to get them
-            // (report only has failures summary, so re-extract)
-          }
-
-          // Run individual runners to get per-case detail
-          const detailRunners = ['lucrecia','oraculo','valentina','megan'].map(
-            id => new RegressionRunner(id)
-          );
-          const detailResults = await Promise.all(
-            detailRunners.map(r =>
-              r.runAll((input, tc) => RegressionRunner.mockEvaluator(input, tc))
-                .then(() => ({ runner: r, botId: r.botId }))
-            )
-          );
-          for (const { runner, botId } of detailResults) {
-            for (const res of runner._results) {
-              allResults.push({ botId, ...res });
-            }
-          }
+          // Read per-case results directly from the multi-bot run (no re-execution)
+          allResults = lastMultiRegression.caseResults();
 
           renderSummary(reports);
           renderDrift(lastMultiRegression);

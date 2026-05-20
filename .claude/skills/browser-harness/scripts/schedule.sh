@@ -69,7 +69,7 @@ if ! bh_guard_check "$NAME"; then
   exit 0
 fi
 
-claude -p --dangerously-skip-permissions --max-turns 20 --model claude-haiku-4-5-20251001 < $PROMPT_FILE > "\$OUT" 2>&1 || echo "FAILED" >> "\$OUT"
+claude -p --dangerously-skip-permissions --max-turns 20 --model claude-haiku-4-5-20251001 < "$PROMPT_FILE" > "\$OUT" 2>&1 || echo "FAILED" >> "\$OUT"
 
 # Notificacion segun canal
 case "$OUTPUT_CHANNEL" in
@@ -102,8 +102,21 @@ case "$OS" in
     # Mac: usar launchd (mas confiable que cron en Mac)
     PLIST="$HOME/Library/LaunchAgents/com.bh.$NAME.plist"
     # Convertir cron simple "M H dom mon dow" a launchd
-    # Solo soportamos casos comunes
+    # Solo soportamos casos triviales (integer puro). launchd no admite
+    # rangos (9-18), pasos (*/30) ni listas (1,3,5) en <integer>. Si el
+    # campo no es un entero, abortamos para no generar un plist roto.
     IFS=' ' read -r CMIN CHOUR CDOM CMON CDOW <<< "$CRON"
+    is_int() { [[ "$1" =~ ^[0-9]+$ ]]; }
+    if [ "$CMIN" != "*" ] && ! is_int "$CMIN"; then
+      echo "[ERROR] schedule.sh: launchd no soporta expresiones cron complejas en Minute ('$CMIN')." >&2
+      echo "        Usá un valor entero (ej. 0, 30) o ejecutá este job en Linux con cron." >&2
+      exit 1
+    fi
+    if [ "$CHOUR" != "*" ] && ! is_int "$CHOUR"; then
+      echo "[ERROR] schedule.sh: launchd no soporta expresiones cron complejas en Hour ('$CHOUR')." >&2
+      echo "        Usá un valor entero (ej. 8, 14) o ejecutá este job en Linux con cron." >&2
+      exit 1
+    fi
     cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -141,7 +154,7 @@ esac
 
 cat <<EOF
 
-────────────────────────────────────────
+─────────────────────────────────────────
 Job activo. Detalles:
   Nombre:    $NAME
   Cron:      $CRON
@@ -152,5 +165,5 @@ Job activo. Detalles:
 
 Para borrar el job:
   $0 --remove --name $NAME    # (proximamente; por ahora editar a mano)
-────────────────────────────────────────
+─────────────────────────────────────────
 EOF

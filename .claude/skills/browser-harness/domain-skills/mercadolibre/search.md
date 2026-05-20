@@ -11,7 +11,7 @@
 
 ## Pasos
 
-1. Navegar a `https://www.mercadolibre.com.{country_tld}/`
+1. Navegar a `https://www.mercadolibre{country_tld}/` — `{country_tld}` ya incluye el prefijo
    - AR → `.com.ar`, MX → `.com.mx`, CL → `.cl`, CO → `.com.co`
 2. Escribir `query` en el search bar y Enter
 3. Aplicar filtros del sidebar segun inputs:

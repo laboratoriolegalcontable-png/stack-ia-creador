@@ -44,4 +44,4 @@ Si despues de 10-15 posts aparece challenge wall:
 
 - Cuenta de filas en la tabla >= `count` solicitado
 - Sin filas con campos vacios
-- URLs validas (`https://www.instagram.com/p/...`)
+- URLs validas para posts (`https://www.instagram.com/p/...`) o reels (`https://www.instagram.com/reel/...`)

@@ -4,7 +4,7 @@
  * ES Module, no framework dependencies
  */
 
-// ─── Validation helpers ────────────────────────────────────────────────────
+// ─── Validation helpers ─────────────────────────────────────────────────────────
 
 function containsAll(text, terms) {
   const lower = text.toLowerCase();
@@ -21,20 +21,22 @@ function validateTestCase(result, testCase) {
 
   // Check expectedContains
   if (testCase.expectedContains && testCase.expectedContains.length) {
-    const missing = testCase.expectedContains.filter(
-      term => !result.response.toLowerCase().includes(term.toLowerCase())
-    );
-    if (missing.length) {
+    if (!containsAll(result.response, testCase.expectedContains)) {
+      const lower = result.response.toLowerCase();
+      const missing = testCase.expectedContains.filter(
+        term => !lower.includes(term.toLowerCase())
+      );
       failures.push(`Missing required terms: ${missing.join(', ')}`);
     }
   }
 
   // Check expectedNotContains
   if (testCase.expectedNotContains && testCase.expectedNotContains.length) {
-    const found = testCase.expectedNotContains.filter(
-      term => result.response.toLowerCase().includes(term.toLowerCase())
-    );
-    if (found.length) {
+    if (containsAny(result.response, testCase.expectedNotContains)) {
+      const lower = result.response.toLowerCase();
+      const found = testCase.expectedNotContains.filter(
+        term => lower.includes(term.toLowerCase())
+      );
       failures.push(`Forbidden terms found: ${found.join(', ')}`);
     }
   }
@@ -59,7 +61,7 @@ function validateTestCase(result, testCase) {
   return { passed: failures.length === 0, failures };
 }
 
-// ─── RegressionRunner ──────────────────────────────────────────────────────
+// ─── RegressionRunner ─────────────────────────────────────────────────────────
 
 export class RegressionRunner {
   /**
@@ -295,7 +297,7 @@ export class RegressionRunner {
   }
 }
 
-// ─── MultiRobotRegression ──────────────────────────────────────────────────
+// ─── MultiRobotRegression ────────────────────────────────────────────────────
 
 export class MultiRobotRegression {
   constructor() {
@@ -311,9 +313,9 @@ export class MultiRobotRegression {
    * @returns {Promise<Object>} { lucrecia, oraculo, valentina, megan }
    */
   async runAll(evaluatorFn) {
-    const runners = this._botIds.map(id => new RegressionRunner(id));
+    this._runners = this._botIds.map(id => new RegressionRunner(id));
     const results = await Promise.all(
-      runners.map(runner =>
+      this._runners.map(runner =>
         runner.runAll((input, tc) =>
           evaluatorFn(input, { ...tc, botId: runner.botId })
         )
@@ -326,6 +328,22 @@ export class MultiRobotRegression {
     });
 
     return { ...this._reports };
+  }
+
+  /**
+   * Returns a flat list of per-case results across all bots from the last runAll().
+   * Avoids re-executing tests just to access per-case detail.
+   * @returns {Array<Object>}
+   */
+  caseResults() {
+    if (!this._runners) return [];
+    const all = [];
+    for (const runner of this._runners) {
+      for (const res of runner._results) {
+        all.push({ botId: runner.botId, ...res });
+      }
+    }
+    return all;
   }
 
   /**
