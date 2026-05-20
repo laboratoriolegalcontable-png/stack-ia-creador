@@ -137,6 +137,10 @@ import { renderSmartReminder }     from '/smart-reminder.js';
 import { renderPromptLibrary }     from '/prompt-library.js';
 import { renderAchievementTracker } from '/achievement-tracker.js';
 import { renderErrorLog }          from '/error-log.js';
+import { renderProcessDoc }   from '/process-doc.js';
+import { renderBookClub }     from '/book-club.js';
+import { renderTeamPulse }    from '/team-pulse.js';
+import { renderVoiceNotes }   from '/voice-notes.js';
 import { renderConversationJournal } from '/conversation-journal.js';
 import { renderDecisionMatrix }      from '/decision-matrix.js';
 import { renderExperimentLog }       from '/experiment-log.js';
@@ -426,6 +430,10 @@ document.getElementById('convjournal-btn')?.addEventListener('click',   () => { 
 document.getElementById('decmatrix-btn')?.addEventListener('click',     () => { renderDecisionMatrix();      trackUsage('decmatrix'); });
 document.getElementById('explog-btn')?.addEventListener('click',        () => { renderExperimentLog();       trackUsage('explog'); });
 document.getElementById('weeklydigest-btn')?.addEventListener('click',  () => { renderWeeklyDigest();        trackUsage('weeklydigest'); });
+document.getElementById('processdoc-btn')?.addEventListener('click',  () => { renderProcessDoc();  trackUsage('processdoc'); });
+document.getElementById('bookclub-btn')?.addEventListener('click',    () => { renderBookClub();    trackUsage('bookclub'); });
+document.getElementById('teampulse-btn')?.addEventListener('click',   () => { renderTeamPulse();   trackUsage('teampulse'); });
+document.getElementById('voicenotes-btn')?.addEventListener('click',  () => { renderVoiceNotes();  trackUsage('voicenotes'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
