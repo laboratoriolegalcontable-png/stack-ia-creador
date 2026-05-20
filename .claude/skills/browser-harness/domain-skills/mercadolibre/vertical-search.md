@@ -38,9 +38,19 @@ verticales tienen filtros propios y estructura distinta.
    - Inmobiliaria / Particular
    - Fecha de publicacion
    - URL
-6. Calcular USD/m2 para cada uno
+6. Calcular `Precio/m2` para cada listing **en la misma moneda** que el precio
+   extraído (NO convertir a USD acá). El listing queda con dos campos: `precio`
+   y `moneda`. La conversión a USD es opcional y se hace después en la sección
+   "Conversión opcional a USD" del Output.
 
 ## Output
+
+Importante: el precio puede venir en USD o en la moneda local del país
+(ARS, MXN, CLP, COP). NO asumir USD. La tabla incluye una columna `Moneda`
+para preservar la fuente original, y `Precio/m2` se calcula en la **misma
+moneda** que `Precio` (no convertir). Si el usuario pide ranking unificado
+en USD, hacer la conversión en una sección aparte usando la tasa del día
+y citarla explícitamente.
 
 ```markdown
 ## Busqueda en {vertical}: {ubicacion} ({tipo_operacion})
@@ -48,26 +58,35 @@ verticales tienen filtros propios y estructura distinta.
 **Filtros:** {filtros}
 **Total resultados:** N (mostrando top {count})
 
-| # | Direccion | Barrio | Precio USD | m2 | USD/m2 | Amb | Dorm | Antig | Publicado | Inmo | URL |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| # | Direccion | Barrio | Precio | Moneda | m2 | Precio/m2 | Amb | Dorm | Antig | Publicado | Inmo | URL |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
-### Analisis del mercado
-- USD/m2 promedio del filtro: {avg}
-- USD/m2 mediana: {median}
-- Top 3 mas baratos por USD/m2 (oportunidades):
-- Top 3 mas caros por USD/m2 (premium):
-- Caidas de precio en la ultima semana (si data disponible): {N listings}
+### Analisis del mercado (por moneda)
+- Precio/m2 promedio (USD): {avg_usd} — sobre los N listings publicados en USD
+- Precio/m2 promedio (moneda local): {avg_local} {currency} — sobre los M listings en moneda local
+- Mediana USD: {median_usd}
+- Mediana local: {median_local} {currency}
+- Top 3 más baratos por Precio/m2 dentro de cada moneda (oportunidades)
+- Top 3 más caros por Precio/m2 dentro de cada moneda (premium)
+- Caídas de precio en la última semana (si la data está disponible): {N listings}
 - % publicados por inmobiliarias vs particulares
+
+### Conversión opcional a USD
+Si el usuario lo pide, convertir los precios en moneda local usando la tasa
+de cambio del día (citar fuente y fecha). NO mezclar USD nativo con USD
+convertido en el mismo ranking sin marcar cuál es cuál.
 ```
 
-## Caso de uso especifico: triple matricula Diego Orosa
+## Caso de uso especifico: comparativo triple matricula (BUE-MAD-MVD)
 
 Si el usuario menciona "triple matricula" o "comparativo BUE-MAD-MVD":
 1. Correr esta skill 3 veces:
    - inmuebles.mercadolibre.com.ar / Palermo
    - idealista.com (NO ML, usar otra skill) / Madrid Centro
    - mercadolibre.com.uy / Punta Carretas Montevideo
-2. Devolver tabla comparativa unificada con USD/m2 por ciudad.
+2. Devolver tabla comparativa unificada con USD/m2 por ciudad (esta es la
+   única sub-tarea donde se hace conversión forzada a USD; citar la tasa
+   de cambio usada y la fecha).
 
 ## Gotchas
 
