@@ -76,6 +76,10 @@ import { renderLanguageLog }     from '/language-log.js';
 import { renderExpenseTracker }  from '/expense-tracker.js';
 import { renderTaskInbox }       from '/task-inbox.js';
 import { renderWellnessCheck }   from '/wellness-check.js';
+import { renderWaterTracker }    from '/water-tracker.js';
+import { renderWeightLog }       from '/weight-log.js';
+import { renderDailyIntention }  from '/daily-intention.js';
+import { renderProjectRoadmap }  from '/project-roadmap.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -163,6 +167,10 @@ registerHotkey('ctrl+alt+1', '/lang',         () => { renderLanguageLog();     t
 registerHotkey('ctrl+alt+h', '/expenses',     () => { renderExpenseTracker();  trackUsage('expenses'); });
 registerHotkey('ctrl+alt+j', '/tasks',        () => { renderTaskInbox();       trackUsage('tasks'); });
 registerHotkey('ctrl+alt+u', '/wellness',     () => { renderWellnessCheck();   trackUsage('wellness'); });
+registerHotkey('ctrl+alt+y', '/water',        () => { renderWaterTracker();    trackUsage('water'); });
+registerHotkey('ctrl+alt+z', '/weight',       () => { renderWeightLog();       trackUsage('weight'); });
+registerHotkey('ctrl+shift+i', '/intention',  () => { renderDailyIntention();  trackUsage('intention'); });
+registerHotkey('ctrl+shift+r', '/roadmap',    () => { renderProjectRoadmap();  trackUsage('roadmap'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -246,6 +254,10 @@ document.getElementById('lang-btn')?.addEventListener('click',         () => { r
 document.getElementById('expenses-btn')?.addEventListener('click',     () => { renderExpenseTracker();  trackUsage('expenses'); });
 document.getElementById('tasks-btn')?.addEventListener('click',        () => { renderTaskInbox();       trackUsage('tasks'); });
 document.getElementById('wellness-btn')?.addEventListener('click',     () => { renderWellnessCheck();   trackUsage('wellness'); });
+document.getElementById('water-btn')?.addEventListener('click',        () => { renderWaterTracker();    trackUsage('water'); });
+document.getElementById('weight-btn')?.addEventListener('click',       () => { renderWeightLog();       trackUsage('weight'); });
+document.getElementById('intention-btn')?.addEventListener('click',    () => { renderDailyIntention();  trackUsage('intention'); });
+document.getElementById('roadmap-btn')?.addEventListener('click',      () => { renderProjectRoadmap();  trackUsage('roadmap'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
