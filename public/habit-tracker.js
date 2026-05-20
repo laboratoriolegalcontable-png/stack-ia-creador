@@ -4,6 +4,12 @@ const HABITS_KEY = 'kairos:habits';
 function loadHabits() { try { return JSON.parse(localStorage.getItem(HABITS_KEY) || '{}'); } catch { return {}; } }
 function saveHabits(h) { localStorage.setItem(HABITS_KEY, JSON.stringify(h)); }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 /** @param {string} name @param {'daily'|'weekly'} [frequency] @returns {object} */
 export function addHabit(name, frequency = 'daily') {
   const habits = loadHabits();
@@ -14,15 +20,32 @@ export function addHabit(name, frequency = 'daily') {
   return habit;
 }
 
+function localDateStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
 /** @param {string} id @returns {object|null} */
 export function checkIn(id) {
   const habits = loadHabits();
   if (!habits[id]) return null;
   const h = habits[id];
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   if (h.lastCheckedIn === today) return h;
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  h.currentStreak = h.lastCheckedIn === yesterday ? h.currentStreak + 1 : 1;
+
+  if (h.frequency === 'weekly') {
+    // Weekly: streak continues as long as last check-in was within the last 7 days
+    const daysSinceLast = h.lastCheckedIn
+      ? Math.floor((Date.now() - new Date(h.lastCheckedIn).getTime()) / 86400000)
+      : Infinity;
+    h.currentStreak = daysSinceLast <= 7 ? h.currentStreak + 1 : 1;
+  } else {
+    // Daily: streak continues only if last check-in was yesterday
+    const yesterday = new Date(Date.now() - 86400000);
+    const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
+    h.currentStreak = h.lastCheckedIn === yStr ? h.currentStreak + 1 : 1;
+  }
+
   h.longestStreak = Math.max(h.longestStreak, h.currentStreak);
   h.lastCheckedIn = today;
   h.checkIns = [...(h.checkIns || []).slice(-89), today];
@@ -36,7 +59,7 @@ export function deleteHabit(id) { const h = loadHabits(); delete h[id]; saveHabi
 
 export function getHabitStats() {
   const habits = listHabits();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   return { total: habits.length, checkedToday: habits.filter(h => h.lastCheckedIn === today).length, topStreak: habits.reduce((m, h) => Math.max(m, h.longestStreak), 0) };
 }
 
@@ -44,7 +67,7 @@ export function renderHabitPanel() {
   const existing = document.getElementById('kairos-habit-panel');
   if (existing) { existing.remove(); return; }
   const habits = listHabits();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   const stats = getHabitStats();
 
   const panel = document.createElement('div');
@@ -53,7 +76,7 @@ export function renderHabitPanel() {
   panel.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
       <h3 style="margin:0;color:#a5b4fc;font-size:1rem">&#x1F525; Habit Tracker</h3>
-      <button onclick="document.getElementById('kairos-habit-panel').remove()" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:1.2rem">&times;</button>
+      <button id="habit-close" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:1.2rem">&times;</button>
     </div>
     <div style="display:flex;gap:1rem;margin-bottom:1rem;font-size:0.8rem">
       <span style="color:#a5b4fc">${stats.total} hábitos</span>
@@ -62,34 +85,64 @@ export function renderHabitPanel() {
     </div>
     <div style="display:flex;gap:0.5rem;margin-bottom:1rem">
       <input id="habit-input" placeholder="Nuevo hábito..." style="flex:1;padding:0.5rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.85rem" />
+      <select id="habit-freq" style="padding:0.4rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#9ca3af;font-size:0.82rem">
+        <option value="daily">Diario</option>
+        <option value="weekly">Semanal</option>
+      </select>
       <button id="habit-add" style="padding:0.4rem 0.8rem;background:#4338ca;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.82rem">+</button>
     </div>
-    <div id="habit-list">
-      ${habits.length === 0 ? '<p style="color:#6b7280;font-size:0.85rem">Sin hábitos aún.</p>' : habits.map(h => {
-        const doneToday = h.lastCheckedIn === today;
-        const streakColor = h.currentStreak >= 7 ? '#fbbf24' : h.currentStreak >= 3 ? '#34d399' : '#60a5fa';
-        return `<div style="border:1px solid ${doneToday ? '#065f46' : '#374151'};border-radius:8px;padding:0.75rem;margin-bottom:0.5rem;background:${doneToday ? '#052e16' : '#0f0f1e'};display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div style="color:#e5e7eb;font-size:0.88rem">${h.name}</div>
-            <div style="font-size:0.72rem;color:${streakColor};margin-top:0.2rem">🔥 ${h.currentStreak} días · máx ${h.longestStreak}</div>
-          </div>
-          <div style="display:flex;gap:0.4rem">
-            ${!doneToday ? `<button onclick="window._kht.checkin('${h.id}')" style="padding:0.3rem 0.7rem;background:#065f46;color:#34d399;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem">✓ Check</button>` : `<span style="color:#34d399;font-size:0.78rem">✓ Hecho</span>`}
-            <button onclick="window._kht.del('${h.id}')" style="padding:0.3rem 0.5rem;background:#450a0a;color:#f87171;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem">✕</button>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>`;
+    <div id="habit-list"></div>`;
 
-  window._kht = {
-    checkin: (id) => { checkIn(id); panel.remove(); renderHabitPanel(); },
-    del: (id) => { deleteHabit(id); panel.remove(); renderHabitPanel(); },
-  };
-  panel.querySelector('#habit-add')?.addEventListener('click', () => {
-    const input = panel.querySelector('#habit-input');
-    const name = input?.value?.trim();
+  const listEl = panel.querySelector('#habit-list');
+  if (habits.length === 0) {
+    listEl.innerHTML = '<p style="color:#6b7280;font-size:0.85rem">Sin hábitos aún.</p>';
+  } else {
+    habits.forEach(h => {
+      const doneToday = h.lastCheckedIn === today;
+      const streakColor = h.currentStreak >= 7 ? '#fbbf24' : h.currentStreak >= 3 ? '#34d399' : '#60a5fa';
+      const row = document.createElement('div');
+      row.style.cssText = `border:1px solid ${doneToday ? '#065f46' : '#374151'};border-radius:8px;padding:0.75rem;margin-bottom:0.5rem;background:${doneToday ? '#052e16' : '#0f0f1e'};display:flex;justify-content:space-between;align-items:center`;
+
+      const info = document.createElement('div');
+      const nameEl = document.createElement('div');
+      nameEl.style.cssText = 'color:#e5e7eb;font-size:0.88rem';
+      nameEl.textContent = h.name; // textContent prevents XSS
+      const meta = document.createElement('div');
+      meta.style.cssText = `font-size:0.72rem;color:${streakColor};margin-top:0.2rem`;
+      meta.textContent = `🔥 ${h.currentStreak} días · máx ${h.longestStreak} · ${h.frequency === 'weekly' ? 'semanal' : 'diario'}`;
+      info.append(nameEl, meta);
+
+      const btns = document.createElement('div');
+      btns.style.cssText = 'display:flex;gap:0.4rem';
+      if (!doneToday) {
+        const checkBtn = document.createElement('button');
+        checkBtn.textContent = '✓ Check';
+        checkBtn.style.cssText = 'padding:0.3rem 0.7rem;background:#065f46;color:#34d399;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem';
+        checkBtn.addEventListener('click', () => { checkIn(h.id); panel.remove(); renderHabitPanel(); });
+        btns.appendChild(checkBtn);
+      } else {
+        const done = document.createElement('span');
+        done.style.cssText = 'color:#34d399;font-size:0.78rem';
+        done.textContent = '✓ Hecho';
+        btns.appendChild(done);
+      }
+      const delBtn = document.createElement('button');
+      delBtn.textContent = '✕';
+      delBtn.style.cssText = 'padding:0.3rem 0.5rem;background:#450a0a;color:#f87171;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem';
+      delBtn.addEventListener('click', () => { deleteHabit(h.id); panel.remove(); renderHabitPanel(); });
+      btns.appendChild(delBtn);
+
+      row.append(info, btns);
+      listEl.appendChild(row);
+    });
+  }
+
+  panel.querySelector('#habit-close').addEventListener('click', () => panel.remove());
+  panel.querySelector('#habit-add').addEventListener('click', () => {
+    const name = panel.querySelector('#habit-input')?.value?.trim();
+    const freq = panel.querySelector('#habit-freq')?.value || 'daily';
     if (!name) return;
-    addHabit(name);
+    addHabit(name, freq);
     panel.remove();
     renderHabitPanel();
   });

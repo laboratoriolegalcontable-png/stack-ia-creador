@@ -44,12 +44,17 @@ export function renderFocusTimer() {
   if (existing) { existing.remove(); return; }
 
   const stats = getFocusStats();
-  const state = getTimerState();
   const panel = document.createElement('div');
   panel.id = 'kairos-focus-panel';
   panel.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:1px solid #4338ca;border-radius:16px;padding:2rem;z-index:9999;width:min(360px,95vw);text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:inherit';
 
   let timerInterval = null;
+
+  // Close handler clears interval before removing panel
+  function closePanel() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    panel.remove();
+  }
 
   function render() {
     const currentState = getTimerState();
@@ -59,30 +64,53 @@ export function renderFocusTimer() {
     const typeLabel = { focus: '🎯 Foco', 'short-break': '☕ Pausa corta', 'long-break': '🌿 Pausa larga' };
 
     panel.innerHTML = `
-      <button onclick="document.getElementById('kairos-focus-panel').remove()" style="position:absolute;top:0.75rem;right:0.75rem;background:none;border:none;color:#6b7280;cursor:pointer;font-size:1.2rem">&times;</button>
       <div style="font-size:0.85rem;color:#9ca3af;margin-bottom:0.75rem">${currentState ? (typeLabel[currentState.type] || currentState.type) : '⏱️ Focus Timer'}</div>
       <div style="font-size:3.5rem;font-weight:700;color:#a5b4fc;letter-spacing:0.05em;margin-bottom:1.5rem">${currentState ? `${mins}:${secs}` : '25:00'}</div>
       <div style="display:flex;gap:0.75rem;justify-content:center;margin-bottom:1.5rem">
         ${!currentState ? `
           <button id="ft-focus" style="padding:0.6rem 1.2rem;background:#4338ca;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600">🎯 Foco</button>
           <button id="ft-short" style="padding:0.6rem 1rem;background:#1e3a5f;color:#60a5fa;border:1px solid #1d4ed8;border-radius:8px;cursor:pointer">Pausa 5'</button>
-          <button id="ft-long" style="padding:0.6rem 1rem;background:#1e3a5f;color:#60a5fa;border:1px solid #1d4ed8;border-radius:8px;cursor:pointer">Pausa 15'</button>
+          <button id="ft-long"  style="padding:0.6rem 1rem;background:#1e3a5f;color:#60a5fa;border:1px solid #1d4ed8;border-radius:8px;cursor:pointer">Pausa 15'</button>
         ` : `<button id="ft-complete" style="padding:0.6rem 1.5rem;background:#065f46;color:#34d399;border:none;border-radius:8px;cursor:pointer;font-weight:600">✓ Completar</button>`}
       </div>
-      <div style="font-size:0.78rem;color:#6b7280">${stats.todayFocus} sesiones hoy · ${stats.totalFocusMin} min totales</div>`;
+      <div style="font-size:0.78rem;color:#6b7280">${stats.todayFocus} sesiones hoy · ${stats.totalFocusMin} min totales</div>
+      <button id="ft-close" style="position:absolute;top:0.75rem;right:0.75rem;background:none;border:none;color:#6b7280;cursor:pointer;font-size:1.2rem">&times;</button>`;
 
-    panel.querySelector('#ft-focus')?.addEventListener('click', () => { startTimer('focus'); if (timerInterval) clearInterval(timerInterval); timerInterval = setInterval(render, 1000); render(); });
-    panel.querySelector('#ft-short')?.addEventListener('click', () => { startTimer('short-break'); if (timerInterval) clearInterval(timerInterval); timerInterval = setInterval(render, 1000); render(); });
-    panel.querySelector('#ft-long')?.addEventListener('click', () => { startTimer('long-break'); if (timerInterval) clearInterval(timerInterval); timerInterval = setInterval(render, 1000); render(); });
-    panel.querySelector('#ft-complete')?.addEventListener('click', () => { if (currentState) completeTimer(currentState.sessionId); if (timerInterval) clearInterval(timerInterval); render(); });
+    panel.querySelector('#ft-close')?.addEventListener('click', closePanel);
+    panel.querySelector('#ft-focus')?.addEventListener('click', () => {
+      startTimer('focus');
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(render, 1000);
+      render();
+    });
+    panel.querySelector('#ft-short')?.addEventListener('click', () => {
+      startTimer('short-break');
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(render, 1000);
+      render();
+    });
+    panel.querySelector('#ft-long')?.addEventListener('click', () => {
+      startTimer('long-break');
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(render, 1000);
+      render();
+    });
+    panel.querySelector('#ft-complete')?.addEventListener('click', () => {
+      if (currentState) completeTimer(currentState.sessionId);
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      render();
+    });
 
+    // Auto-complete when timer reaches 0
     if (currentState && remaining === 0) {
       completeTimer(currentState.sessionId);
-      if (timerInterval) clearInterval(timerInterval);
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      setTimeout(render, 0); // refresh UI back to start state
     }
   }
 
   render();
+  const state = getTimerState();
   if (state) timerInterval = setInterval(render, 1000);
   document.body.appendChild(panel);
 }
