@@ -1,12 +1,12 @@
 /** learning-tracker.js — Tracker de libros, cursos y recursos de aprendizaje · KAIROS browser module */
 const LT_KEY = 'kairos:learning';
 
-const TYPE_EMOJI = { book: '📚', course: '🎓', article: '📄', video: '🎥', podcast: '🎙️', other: '📦' };
+const TYPE_EMOJI = { book: '📚', course: '🎓', article: '📄', video: '🎥', podcast: '🎤', other: '📦' };
 const STATUS_COLOR = { 'not-started': '#374151', 'in-progress': '#d97706', 'completed': '#065f46', 'abandoned': '#450a0a' };
 const STATUS_TEXT_COLOR = { 'not-started': '#9ca3af', 'in-progress': '#fbbf24', 'completed': '#34d399', 'abandoned': '#f87171' };
 const STATUS_LABEL = { 'not-started': 'Sin empezar', 'in-progress': 'En progreso', 'completed': '✓ Completado', 'abandoned': 'Abandonado' };
 
-function loadItems() { try { return JSON.parse(localStorage.getItem(LT_KEY) || '[]'); } catch { return []; } }
+function loadItems() { try { const d = JSON.parse(localStorage.getItem(LT_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch { return []; } }
 function saveItems(list) { localStorage.setItem(LT_KEY, JSON.stringify(list)); }
 
 export function addLearningItem(title, type, totalUnits, url = '', tags = []) {
@@ -34,7 +34,7 @@ export function updateProgress(id, currentUnit, notes) {
   const idx = list.findIndex(i => i.id === id);
   if (idx === -1) return null;
   const item = list[idx];
-  item.currentUnit = Math.min(Number(currentUnit) || 0, item.totalUnits);
+  item.currentUnit = Math.max(0, Math.min(Number(currentUnit) || 0, item.totalUnits));
   item.progressPct = Math.round(item.currentUnit / item.totalUnits * 100);
   if (notes !== undefined) item.notes = String(notes).slice(0,2000);
   if (item.status === 'not-started' && item.currentUnit > 0) { item.status = 'in-progress'; item.startedAt = new Date().toISOString(); }
@@ -106,7 +106,6 @@ export function renderLearningPanel() {
   }
   refreshStats();
 
-  // Filter tabs
   const tabRow = document.createElement('div');
   tabRow.style.cssText = 'display:flex;gap:0.3rem;margin-bottom:0.9rem;flex-wrap:wrap';
   const filters = [['all','Todos'],['in-progress','En progreso'],['not-started','Sin empezar'],['completed','Completos'],['abandoned','Abandonados']];
@@ -125,7 +124,6 @@ export function renderLearningPanel() {
     tabRow.appendChild(btn);
   });
 
-  // Form
   const form = document.createElement('div');
   form.style.cssText = 'border:1px solid #374151;border-radius:8px;padding:0.9rem;margin-bottom:0.9rem;display:flex;flex-direction:column;gap:0.5rem';
   const inTitle = document.createElement('input'); inTitle.placeholder = 'Título (libro, curso, artículo...)'; inTitle.style.cssText = 'padding:0.4rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.82rem';
@@ -164,13 +162,11 @@ export function renderLearningPanel() {
       badge.textContent = STATUS_LABEL[item.status];
       top.append(titleWrap, badge);
 
-      // Progress bar
       const barWrap = document.createElement('div'); barWrap.style.cssText = 'background:#1f2937;border-radius:4px;height:6px;margin-bottom:0.5rem;overflow:hidden';
       const barFill = document.createElement('div'); barFill.style.cssText = `height:100%;width:${item.progressPct}%;background:${item.progressPct===100?'#34d399':'#4338ca'};border-radius:4px;transition:width 0.3s`;
       barWrap.appendChild(barFill);
       const progLabel = document.createElement('div'); progLabel.style.cssText = 'font-size:0.72rem;color:#6b7280;margin-bottom:0.4rem'; progLabel.textContent = `${item.currentUnit}/${item.totalUnits} unidades · ${item.progressPct}%`;
 
-      // Controls
       const ctrlRow = document.createElement('div'); ctrlRow.style.cssText = 'display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap';
       if (item.status !== 'completed' && item.status !== 'abandoned') {
         const progressInp = document.createElement('input'); progressInp.type = 'number'; progressInp.min = '0'; progressInp.max = String(item.totalUnits);

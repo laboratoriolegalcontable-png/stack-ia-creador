@@ -1,7 +1,7 @@
 /** context-capsule.js — Cápsulas de contexto mental / workspace · KAIROS browser module */
 const CC_KEY = 'kairos:capsules';
 
-function loadCapsules() { try { return JSON.parse(localStorage.getItem(CC_KEY) || '[]'); } catch { return []; } }
+function loadCapsules() { try { const d = JSON.parse(localStorage.getItem(CC_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch { return []; } }
 function saveCapsules(list) { localStorage.setItem(CC_KEY, JSON.stringify(list)); }
 
 export function createCapsule(title, context, links = [], tags = []) {
@@ -89,14 +89,12 @@ export function renderCapsulePanel() {
   }
   refreshStats();
 
-  // Search
   const searchRow = document.createElement('div'); searchRow.style.cssText = 'margin-bottom:0.8rem';
   const searchInp = document.createElement('input'); searchInp.placeholder = 'Buscar cápsulas por título o tag...';
   searchInp.style.cssText = 'width:100%;box-sizing:border-box;padding:0.4rem 0.6rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.82rem';
   searchInp.addEventListener('input', () => { searchQuery = searchInp.value.trim().toLowerCase(); renderList(); });
   searchRow.appendChild(searchInp);
 
-  // Form
   const form = document.createElement('div');
   form.style.cssText = 'border:1px solid #374151;border-radius:8px;padding:0.9rem;margin-bottom:0.9rem;display:flex;flex-direction:column;gap:0.5rem';
   const inTitle = document.createElement('input'); inTitle.placeholder = 'Título de la cápsula...'; inTitle.style.cssText = 'padding:0.4rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.82rem';
@@ -135,6 +133,9 @@ export function renderCapsulePanel() {
 
       const ctxEl = document.createElement('div'); ctxEl.style.cssText = 'font-size:0.8rem;color:#9ca3af;white-space:pre-wrap;word-break:break-word;margin-bottom:0.4rem;max-height:80px;overflow:hidden'; ctxEl.textContent = c.context;
 
+      // Prepend title+context before tags/links appended below
+      card.append(top, ctxEl);
+
       if (c.tags && c.tags.length) {
         const tagsRow = document.createElement('div'); tagsRow.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.3rem;margin-bottom:0.3rem';
         c.tags.forEach(t => { const chip = document.createElement('span'); chip.style.cssText = 'font-size:0.65rem;padding:0.1rem 0.35rem;background:#1e3a5f;color:#60a5fa;border-radius:4px'; chip.textContent = t; tagsRow.appendChild(chip); });
@@ -151,8 +152,7 @@ export function renderCapsulePanel() {
         card.appendChild(linksRow);
       }
 
-      card.append(top, ctxEl);
-      card.addEventListener('click', (ev) => { if (ev.target === delBtn || delBtn.contains(ev.target)) return; accessCapsule(c.id); refreshStats(); });
+      card.addEventListener('click', (ev) => { if (ev.target === delBtn || delBtn.contains(ev.target)) return; accessCapsule(c.id); refreshStats(); renderList(); });
       listEl.appendChild(card);
     });
   }

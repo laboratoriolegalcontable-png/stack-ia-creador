@@ -1,7 +1,7 @@
 /** decision-journal.js — Diario de decisiones importantes · KAIROS browser module */
 const DJ_KEY = 'kairos:decisions';
 
-function loadDecisions() { try { return JSON.parse(localStorage.getItem(DJ_KEY) || '[]'); } catch { return []; } }
+function loadDecisions() { try { const d = JSON.parse(localStorage.getItem(DJ_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch { return []; } }
 function saveDecisions(list) { localStorage.setItem(DJ_KEY, JSON.stringify(list)); }
 
 function localDateStr() {
@@ -81,7 +81,6 @@ export function renderDecisionPanel() {
   }
   refreshStats();
 
-  // Filter tabs
   let currentFilter = 'all';
   const tabRow = document.createElement('div');
   tabRow.style.cssText = 'display:flex;gap:0.4rem;margin-bottom:0.9rem';
@@ -93,7 +92,6 @@ export function renderDecisionPanel() {
     tabRow.appendChild(btn);
   });
 
-  // Form
   const form = document.createElement('div');
   form.style.cssText = 'border:1px solid #374151;border-radius:8px;padding:0.9rem;margin-bottom:0.9rem;display:flex;flex-direction:column;gap:0.5rem';
   function inp(ph) { const i = document.createElement('input'); i.placeholder = ph; i.style.cssText = 'padding:0.4rem;background:#0f0f1e;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:0.82rem'; return i; }
