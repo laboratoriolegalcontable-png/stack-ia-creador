@@ -44,7 +44,7 @@ export function getIdeaStats() {
 
 export function renderIdeaPanel() {
   let panel = document.getElementById('kairos-idea-panel');
-  if (panel) { panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; if (panel.style.display === 'block') renderIdeaList(); return; }
+  if (panel) { panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; if (panel.style.display === 'block') { const activeBtn = panel.querySelector('.filter-tabs button.active'); const f = activeBtn?.dataset.filter; renderIdeaList(f && f !== 'all' ? f : undefined); } return; }
   panel = document.createElement('section'); panel.id = 'kairos-idea-panel'; panel.className = 'kairos-panel';
   const h2 = document.createElement('h2'); h2.textContent = '💡 Idea Bank'; panel.appendChild(h2);
   const statsEl = document.createElement('p'); statsEl.id = 'idea-stats'; panel.appendChild(statsEl);

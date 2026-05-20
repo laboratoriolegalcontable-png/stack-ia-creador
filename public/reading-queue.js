@@ -7,7 +7,9 @@ function uid() { return crypto.randomUUID ? crypto.randomUUID() : Date.now().toS
 
 export function addReadingItem(title, url, tags = []) {
   const list = loadItems();
-  const item = { id: uid(), title: title.trim(), url: url.trim(), tags, status: 'unread', notes: '', addedAt: new Date().toISOString() };
+  const trimmedUrl = url.trim();
+  if (!/^https?:\/\//i.test(trimmedUrl)) return null;
+  const item = { id: uid(), title: title.trim(), url: trimmedUrl, tags, status: 'unread', notes: '', addedAt: new Date().toISOString() };
   list.unshift(item); saveItems(list); return item;
 }
 
@@ -50,6 +52,8 @@ export function renderReadingPanel() {
     e.preventDefault();
     const t = titleIn.value.trim(); const u = urlIn.value.trim();
     if (!t || !u) return;
+    if (!/^https?:\/\//i.test(u)) { urlIn.setCustomValidity('Solo se permiten URLs http:// o https://'); urlIn.reportValidity(); return; }
+    urlIn.setCustomValidity('');
     const tags = tagsIn.value.split(',').map(s => s.trim()).filter(Boolean);
     addReadingItem(t, u, tags);
     titleIn.value = ''; urlIn.value = ''; tagsIn.value = '';

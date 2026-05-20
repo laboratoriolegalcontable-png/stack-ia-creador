@@ -4,6 +4,7 @@ const DS_KEY = 'kairos:standups';
 function loadStandups() { try { const d = JSON.parse(localStorage.getItem(DS_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch { return []; } }
 function saveStandups(list) { localStorage.setItem(DS_KEY, JSON.stringify(list)); }
 function uid() { return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function localDate() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 
 export function addStandup(date, yesterday, today, blockers, mood = 3) {
   const list = loadStandups();
@@ -27,7 +28,7 @@ export function getStandupStats() {
   const dateSet = new Set(dates);
   let currentStreak = 0;
   const d = new Date(new Date().toISOString().slice(0, 10));
-  while (dateSet.has(d.toISOString().slice(0, 10))) { currentStreak++; d.setDate(d.getDate() - 1); }
+  while (dateSet.has(d.toISOString().slice(0, 10))) { currentStreak++; d.setUTCDate(d.getUTCDate() - 1); }
   const avgMood = list.length ? Math.round(list.reduce((s, x) => s + x.mood, 0) / list.length * 10) / 10 : 0;
   return { total: list.length, withBlockers: list.filter(s => s.blockers).length, avgMood, currentStreak };
 }
@@ -40,7 +41,7 @@ export function renderStandupPanel() {
   const statsEl = document.createElement('p'); statsEl.id = 'standup-stats'; panel.appendChild(statsEl);
 
   const form = document.createElement('form');
-  const dateIn = document.createElement('input'); dateIn.type = 'date'; dateIn.value = new Date().toISOString().slice(0, 10);
+  const dateIn = document.createElement('input'); dateIn.type = 'date'; dateIn.value = localDate();
   const yesterdayIn = document.createElement('textarea'); yesterdayIn.placeholder = '¿Qué hice ayer?'; yesterdayIn.rows = 2;
   const todayIn = document.createElement('textarea'); todayIn.placeholder = '¿Qué voy a hacer hoy?'; todayIn.rows = 2;
   const blockersIn = document.createElement('textarea'); blockersIn.placeholder = 'Bloqueos (opcional)'; blockersIn.rows = 2;
