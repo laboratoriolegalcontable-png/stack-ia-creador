@@ -47,6 +47,7 @@ export function renderReadingPanel() {
   const urlIn = document.createElement('input'); urlIn.type = 'url'; urlIn.placeholder = 'URL';
   const tagsIn = document.createElement('input'); tagsIn.type = 'text'; tagsIn.placeholder = 'Tags (coma separados)';
   const addBtn = document.createElement('button'); addBtn.type = 'submit'; addBtn.textContent = '+ Agregar';
+  urlIn.addEventListener('input', () => urlIn.setCustomValidity(''));
   form.append(titleIn, urlIn, tagsIn, addBtn);
   form.addEventListener('submit', e => {
     e.preventDefault();

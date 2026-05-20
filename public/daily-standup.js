@@ -27,8 +27,8 @@ export function getStandupStats() {
   const dates = [...new Set(list.map(s => s.date))].sort().reverse();
   const dateSet = new Set(dates);
   let currentStreak = 0;
-  const d = new Date(new Date().toISOString().slice(0, 10));
-  while (dateSet.has(d.toISOString().slice(0, 10))) { currentStreak++; d.setUTCDate(d.getUTCDate() - 1); }
+  const d = new Date(); d.setHours(0, 0, 0, 0);
+  while (true) { const s = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; if (!dateSet.has(s)) break; currentStreak++; d.setDate(d.getDate() - 1); }
   const avgMood = list.length ? Math.round(list.reduce((s, x) => s + x.mood, 0) / list.length * 10) / 10 : 0;
   return { total: list.length, withBlockers: list.filter(s => s.blockers).length, avgMood, currentStreak };
 }
