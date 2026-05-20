@@ -55,10 +55,10 @@ if ! [[ "$NAME" =~ ^[a-zA-Z0-9_-]{1,64}$ ]]; then
 fi
 
 # Repo root = the project that ships this skill. The wrapper needs to cd here so
-# `claude -p` finds .claude/skills/. We compute it from SKILL_DIR (set later) to
-# avoid hardcoding a username/path.
+# `claude -p` finds .claude/skills/. From SKILL_DIR (.claude/skills/browser-harness)
+# the repo root is 3 levels up: ../.. reaches `.claude/`, ../../.. reaches the repo.
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPO_ROOT="$(cd "$SKILL_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SKILL_DIR/../../.." && pwd)"
 
 OS=$(uname -s)
 RUNS_DIR="$HOME/.bh-runs/$NAME"
