@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Prompting 101 — Anthropic Applied AI</title>
+<meta name="description" content="10 pilares, flujo v1→v5, 4 plantillas copiables. Metodología Anthropic Applied AI." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon-192.png" sizes="192x192" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+.page-nav{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81);border:1px solid #4338ca;border-radius:12px;padding:1.5rem;margin-bottom:1.75rem}
+.hero h2{color:#a5b4fc;font-size:1.05rem;margin:0 0 0.4rem}
+.hero p{color:#c7d2fe;font-size:0.85rem;margin:0 0 0.875rem;line-height:1.6}
+.hero-tags{display:flex;gap:0.4rem;flex-wrap:wrap}
+.hero-tag{background:rgba(99,102,241,0.2);border:1px solid #4338ca;border-radius:6px;color:#a5b4fc;font-size:0.72rem;font-weight:600;padding:0.25rem 0.6rem}
+.p101-tabs{display:flex;gap:0.25rem;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:1.5rem;position:sticky;top:0;background:var(--bg);z-index:5;padding-top:0.25rem}
+.p101-tab{background:transparent;border:0;padding:0.55rem 0.85rem;cursor:pointer;font-family:inherit;font-size:0.88rem;color:var(--muted);border-bottom:2px solid transparent;min-height:44px}
+.p101-tab.active{color:var(--text);border-bottom-color:#6366f1;font-weight:600}
+.p101-tab:hover{color:var(--text)}
+.p101-section{display:none}
+.p101-section.active{display:block}
+.pillar-grid{display:flex;flex-direction:column;gap:0.75rem}
+.pillar{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.pillar-head{display:flex;align-items:flex-start;gap:0.875rem;padding:0.875rem 1rem;cursor:pointer;user-select:none}
+.pillar-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800;flex-shrink:0;color:white}
+.pillar-title{font-size:0.95rem;font-weight:700;margin-bottom:0.15rem}
+.pillar-sub{font-size:0.78rem;color:var(--muted)}
+.pillar-arrow{margin-left:auto;color:var(--muted);font-size:0.85rem;flex-shrink:0;transition:transform 0.2s}
+.pillar.open .pillar-arrow{transform:rotate(90deg)}
+.pillar-body{display:none;padding:0 1rem 1rem 3.5rem;border-top:1px solid var(--border)}
+.pillar.open .pillar-body{display:block}
+.pillar-body p{font-size:0.85rem;color:var(--muted);margin:0.625rem 0}
+.pillar-body .when{font-size:0.78rem;background:var(--yellow);padding:0.3rem 0.6rem;border-radius:5px;display:inline-block;margin-bottom:0.5rem}
+.system-badge{font-size:0.65rem;background:#1e1b4b;color:#a5b4fc;border-radius:4px;padding:0.1rem 0.4rem;margin-left:0.4rem;vertical-align:middle;font-weight:600}
+.user-badge{font-size:0.65rem;background:#052e16;color:#4ade80;border-radius:4px;padding:0.1rem 0.4rem;margin-left:0.4rem;vertical-align:middle;font-weight:600}
+.versions{display:flex;flex-direction:column;gap:0.625rem}
+.version{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.version-head{display:flex;align-items:center;gap:0.75rem;padding:0.875rem 1rem;cursor:pointer}
+.v-badge{font-size:0.72rem;font-weight:800;padding:0.25rem 0.65rem;border-radius:6px;flex-shrink:0}
+.v1 .v-badge{background:#fee2e2;color:#b91c1c}.v2 .v-badge{background:#fef3c7;color:#92400e}
+.v3 .v-badge{background:#fef9c3;color:#713f12}.v4 .v-badge{background:#dbeafe;color:#1e40af}
+.v5 .v-badge{background:#dcfce7;color:#166534}
+.version-head h3{font-size:0.9rem;font-weight:600;margin:0}
+.pillars-added{font-size:0.72rem;color:var(--muted);margin-left:auto;text-align:right}
+.version-body{display:none;padding:0 1rem 1rem;border-top:1px solid var(--border)}
+.version.open .version-body{display:block}
+.version-body .what{font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem}
+.version-body .error{background:var(--red);border-radius:6px;padding:0.5rem 0.75rem;font-size:0.8rem;margin-bottom:0.5rem}
+.version-body .fix{background:var(--green-bg);border-radius:6px;padding:0.5rem 0.75rem;font-size:0.8rem}
+.version-arrow{color:var(--muted);font-size:0.85rem;transition:transform 0.2s}
+.version.open .version-arrow{transform:rotate(90deg)}
+.template-cards{display:flex;flex-direction:column;gap:1rem}
+.tpl-card{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.tpl-head{padding:0.875rem 1rem;background:var(--code-bg)}
+.tpl-head h3{font-size:0.95rem;font-weight:700;margin:0 0 0.25rem}
+.tpl-head p{font-size:0.8rem;color:var(--muted);margin:0}
+.tpl-body pre{margin:0;border:none;border-radius:0;border-top:1px solid var(--border)}
+.tpl-usage{padding:0.75rem 1rem;font-size:0.78rem;color:var(--muted);border-top:1px solid var(--border);background:var(--code-bg)}
+.tpl-usage strong{color:var(--text)}
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem}
+@media(max-width:560px){.tech-grid{grid-template-columns:1fr}}
+.tech-card{border:1px solid var(--border);border-radius:8px;padding:0.875rem}
+.tech-card h4{font-size:0.85rem;font-weight:700;margin:0 0 0.3rem}
+.tech-card p{font-size:0.78rem;color:var(--muted);margin:0}
+.tech-ok{border-color:#16a34a}.tech-ok h4{color:#16a34a}
+.tech-no{border-color:#ef4444}.tech-no h4{color:#ef4444}
+.anti-list{display:flex;flex-direction:column;gap:0.4rem;margin-top:0.75rem}
+.anti-item{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:var(--code-bg);border-radius:6px}
+.anti-cat{font-size:0.65rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:4px;flex-shrink:0;margin-top:0.1rem}
+.cat-tarea{background:#fef3c7;color:#92400e}.cat-output{background:#dbeafe;color:#1e40af}
+.cat-ctx{background:#f3e8ff;color:#6b21a8}.cat-tokens{background:#fce7f3;color:#9d174d}
+.cat-tool{background:#fee2e2;color:#b91c1c}.cat-agent{background:#ecfdf5;color:#065f46}
+.summary-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.summary-table th{text-align:left;padding:0.5rem 0.75rem;border-bottom:2px solid var(--border);font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+.summary-table td{padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);vertical-align:top}
+.summary-table tr:last-child td{border-bottom:none}
+.summary-table tr:hover td{background:var(--code-bg)}
+@media(prefers-color-scheme:dark){.pillar-body .when{background:#422006}.v1 .v-badge{background:#450a0a;color:#fca5a5}.v2 .v-badge{background:#422006;color:#fcd34d}.v3 .v-badge{background:#422006;color:#fef08a}.v4 .v-badge{background:#1e3a5f;color:#93c5fd}.v5 .v-badge{background:#052e16;color:#86efac}}
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:0.75rem">
+    <div>
+      <h1>Prompting 101</h1>
+      <div class="subtitle">10 pilares &middot; v1&rarr;v5 &middot; 4 plantillas &middot; Anthropic Applied AI</div>
+    </div>
+    <div class="page-nav">
+      <a href="" class="btn btn-secondary" style="font-size:0.82rem">&larr; Inicio</a>
+      <a href="dashboard.html" class="btn btn-secondary" style="font-size:0.82rem">Dashboard</a>
+      <a href="crm.html" class="btn" style="background:linear-gradient(135deg,#4338ca,#6d28d9);font-size:0.82rem">CRM</a>
+    </div>
+  </div>
+</header>
+<div class="hero">
+  <h2>Prompting es ciencia empírica, no magia</h2>
+  <p>Hannah y Christian del equipo Applied AI de Anthropic: 10 pilares en orden, el caso del seguro sueco que pasa de accidente de esquí a <code>&lt;final_verdict&gt;</code> parseable, y cuándo usar XML tags, extended thinking y prefill.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">10 pilares</span><span class="hero-tag">v1 &rarr; v5</span>
+    <span class="hero-tag">XML tags</span><span class="hero-tag">Extended thinking</span>
+    <span class="hero-tag">Prefill</span><span class="hero-tag">Prompt caching</span><span class="hero-tag">4 plantillas</span>
+  </div>
+</div>
+<div class="p101-tabs" role="tablist">
+  <button class="p101-tab active" data-sec="pilares">10 Pilares</button>
+  <button class="p101-tab" data-sec="v1v5">v1 &rarr; v5</button>
+  <button class="p101-tab" data-sec="tecnicas">Técnicas</button>
+  <button class="p101-tab" data-sec="plantillas">Plantillas</button>
+</div>
+<section id="sec-pilares" class="p101-section active">
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem">Construye el prompt en este orden. <span style="background:#1e1b4b;color:#a5b4fc;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.7rem;font-weight:700">SYSTEM</span> = cacheable. <span style="background:#052e16;color:#4ade80;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.7rem;font-weight:700">USER</span> = cambia por llamada.</p>
+  <div class="pillar-grid" id="pillarGrid"></div>
+</section>
+<section id="sec-v1v5" class="p101-section">
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem">El mismo prompt del seguro sueco en 5 versiones. Cada una agrega UN pilar y corrige el error de la anterior.</p>
+  <div class="versions" id="versionsGrid"></div>
+  <div class="card" style="margin-top:1rem"><p style="font-size:0.82rem;color:var(--muted);margin:0"><strong style="color:var(--text)">Lección:</strong> No salgas a producción con v1. Tampoco escribas v5 de un golpe. Lanza, lee el output, añade UN pilar, vuelve a correr.</p></div>
+</section>
+<section id="sec-tecnicas" class="p101-section">
+  <h2 style="font-size:1rem;margin-bottom:1rem">Técnicas permitidas (solo estas 5)</h2>
+  <div class="tech-grid">
+    <div class="tech-card tech-ok"><h4>✅ Role Assignment</h4><p>Identidad de experto cuando importa el tono o vocabulario.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ Few-Shot Examples (2-5)</h4><p>Cuando consistencia de formato &gt; instrucción textual.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ XML Structural Tags</h4><p>Claude está fine-tuneado para leer bloques XML como intenciones separadas.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ Grounding Anchors</h4><p>"Marca [uncertain] si no estás seguro" — previene alucinaciones.</p></div>
+    <div class="tech-card tech-ok"><h4>✅ Chain of Thought</h4><p>Para lógica multi-paso. NUNCA en thinking-native (o3, DeepSeek-R1).</p></div>
+  </div>
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">Técnicas prohibidas</h2>
+  <div class="tech-grid">
+    <div class="tech-card tech-no"><h4>❌ Mixture of Experts</h4><p>Simula routing sin routing real — fabrica resultados.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Tree of Thought</h4><p>Simula ramificación sin paralelismo real.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Graph of Thought</h4><p>Necesita motor externo — fabricación en single-prompt.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Universal Self-Consistency</h4><p>Requiere muestreo independiente.</p></div>
+    <div class="tech-card tech-no"><h4>❌ Prompt chaining capa-a-capa</h4><p>En cadenas largas empuja al modelo a fabricar.</p></div>
+  </div>
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">Prefill</h2>
+  <table class="summary-table" style="margin-bottom:1.25rem">
+    <thead><tr><th>Prefill</th><th>Fuerza</th><th>Cuándo</th></tr></thead>
+    <tbody>
+      <tr><td><code>{</code></td><td>JSON sin preamble</td><td>Output entra a parser</td></tr>
+      <tr><td><code>&lt;final_verdict&gt;</code></td><td>XML directo</td><td>Solo el bloque final</td></tr>
+      <tr><td><code>1.</code></td><td>Lista numerada sin intro</td><td>N items sin decoración</td></tr>
+    </tbody>
+  </table>
+  <h2 style="font-size:1rem;margin:1.25rem 0 1rem">35 anti-patrones</h2>
+  <div class="anti-list" id="antiList"></div>
+</section>
+<section id="sec-plantillas" class="p101-section">
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem">4 plantillas listas para copiar.</p>
+  <div class="template-cards" id="templateCards"></div>
+</section>
+<footer>
+  <div>Prompting 101 &middot; Anthropic Applied AI &middot; <a href="">Stack IA</a> &middot; <a href="crm.html">CRM</a> &middot; <a href="dashboard.html">Dashboard</a></div>
+</footer>
+<script src="prompting-101.js"></script>
+</body>
+</html>
