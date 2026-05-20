@@ -44,6 +44,10 @@ import { renderDecisionPanel }                          from '/decision-journal.
 import { renderWeeklyPanel }                            from '/weekly-planner.js';
 import { renderLearningPanel }                          from '/learning-tracker.js';
 import { renderCapsulePanel }                           from '/context-capsule.js';
+import { renderProjectPanel }   from '/project-tracker.js';
+import { renderMeetingPanel }   from '/meeting-notes.js';
+import { renderGratitudePanel } from '/gratitude-journal.js';
+import { renderWinPanel }       from '/quick-wins.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -101,6 +105,9 @@ registerHotkey('ctrl+alt+r', '/retro', () => { renderRetroPanel(); trackUsage('r
 registerHotkey('ctrl+alt+d', '/decisions', () => { renderDecisionPanel(); trackUsage('decisions'); });
 registerHotkey('ctrl+alt+w', '/weekly',    () => { renderWeeklyPanel(); trackUsage('weekly'); });
 registerHotkey('ctrl+alt+l', '/learning',  () => { renderLearningPanel(); trackUsage('learning'); });
+registerHotkey('ctrl+alt+p', '/projects',  () => { renderProjectPanel();   trackUsage('projects'); });
+registerHotkey('ctrl+alt+m', '/meetings',  () => { renderMeetingPanel();   trackUsage('meetings'); });
+registerHotkey('ctrl+alt+g', '/gratitude', () => { renderGratitudePanel(); trackUsage('gratitude'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -151,7 +158,11 @@ document.getElementById('accountability-btn')?.addEventListener('click', () => {
 document.getElementById('decision-btn')?.addEventListener('click', () => { renderDecisionPanel(); trackUsage('decisions'); });
 document.getElementById('weekly-btn')?.addEventListener('click',   () => { renderWeeklyPanel(); trackUsage('weekly'); });
 document.getElementById('learning-btn')?.addEventListener('click', () => { renderLearningPanel(); trackUsage('learning'); });
-document.getElementById('capsule-btn')?.addEventListener('click',  () => { renderCapsulePanel(); trackUsage('capsule'); });
+document.getElementById('capsule-btn')?.addEventListener('click',   () => { renderCapsulePanel();   trackUsage('capsule'); });
+document.getElementById('project-btn')?.addEventListener('click',   () => { renderProjectPanel();   trackUsage('projects'); });
+document.getElementById('meeting-btn')?.addEventListener('click',   () => { renderMeetingPanel();   trackUsage('meetings'); });
+document.getElementById('gratitude-btn')?.addEventListener('click', () => { renderGratitudePanel(); trackUsage('gratitude'); });
+document.getElementById('wins-btn')?.addEventListener('click',      () => { renderWinPanel();       trackUsage('wins'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
