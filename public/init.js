@@ -116,6 +116,10 @@ import { renderEventPlanner }     from '/event-planner.js';
 import { renderInterviewPrep }    from '/interview-prep.js';
 import { renderNewsletterTracker } from '/newsletter-tracker.js';
 import { renderWordTracker }      from '/word-tracker.js';
+import { renderBugLog }           from '/bug-log.js';
+import { renderHabitJournal }     from '/habit-journal.js';
+import { renderMoodJournal }      from '/mood-journal.js';
+import { renderMediaLog }         from '/media-log.js';
 import { renderCheckpoint }        from '/checkpoint.js';
 import { renderPatternRecognizer } from '/pattern-recognizer.js';
 import { renderTimeMachine }       from '/time-machine.js';
@@ -378,6 +382,10 @@ document.getElementById('checkpoint-btn')?.addEventListener('click',  () => { re
 document.getElementById('patterns-btn')?.addEventListener('click',    () => { renderPatternRecognizer();     trackUsage('patterns'); });
 document.getElementById('timemachine-btn')?.addEventListener('click', () => { renderTimeMachine();           trackUsage('timemachine'); });
 document.getElementById('tbudget-btn')?.addEventListener('click',     () => { renderTokenBudget();           trackUsage('tbudget'); });
+document.getElementById('buglog-btn')?.addEventListener('click',      () => { renderBugLog();              trackUsage('buglog'); });
+document.getElementById('hjournal-btn')?.addEventListener('click',   () => { renderHabitJournal();        trackUsage('hjournal'); });
+document.getElementById('mjournal-btn')?.addEventListener('click',   () => { renderMoodJournal();         trackUsage('mjournal'); });
+document.getElementById('medialog-btn')?.addEventListener('click',   () => { renderMediaLog();            trackUsage('medialog'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
