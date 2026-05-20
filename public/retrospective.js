@@ -18,7 +18,6 @@ export function addRetro(period, wentWell, improvements, actionItems) {
     wentWell: String(wentWell).slice(0, 2000),
     improvements: String(improvements).slice(0, 2000),
     actionItems: String(actionItems).slice(0, 2000),
-    actionsDone: false,
     createdAt: new Date().toISOString(),
   };
   list.unshift(retro);
@@ -36,7 +35,7 @@ export function deleteRetro(id) {
 
 export function getRetroStats() {
   const list = loadRetros();
-  return { total: list.length, openActions: list.filter(r => !r.actionsDone).length };
+  return { total: list.length, openActions: list.filter(r => r.actionItems && r.actionItems.trim()).length };
 }
 
 export function renderRetroPanel() {

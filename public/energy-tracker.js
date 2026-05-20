@@ -11,7 +11,7 @@ function saveEnergy(data) { localStorage.setItem(ENERGY_KEY, JSON.stringify(data
 
 export function logEnergy(level) {
   level = Math.round(level);
-  if (level < 1 || level > 5) throw new RangeError('level must be 1-5');
+  if (!Number.isFinite(level) || level < 1 || level > 5) throw new RangeError('level must be 1-5');
   const data = loadEnergy();
   const date = localDateStr();
   const hour = new Date().getHours();

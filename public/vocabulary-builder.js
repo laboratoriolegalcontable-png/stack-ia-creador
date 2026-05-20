@@ -112,7 +112,8 @@ export function renderVocabPanel() {
 
   function renderList() {
     listEl.innerHTML = '';
-    const terms = currentQuery ? searchTerms(currentQuery) : listTerms(currentFilter);
+    const base = currentQuery ? searchTerms(currentQuery) : listTerms(currentFilter);
+    const terms = (currentQuery && currentFilter !== 'all') ? base.filter(t => t.status === currentFilter) : base;
     if (terms.length === 0) {
       const empty = document.createElement('p'); empty.style.cssText = 'color:#6b7280;font-size:0.85rem'; empty.textContent = 'Sin términos.'; listEl.appendChild(empty); return;
     }
