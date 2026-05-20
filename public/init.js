@@ -64,6 +64,10 @@ import { renderSkillPanel }       from '/skill-matrix.js';
 import { renderOkrPanel }         from '/okr-tracker.js';
 import { renderTimeLogPanel }     from '/time-log.js';
 import { renderAffirmationPanel } from '/affirmations.js';
+import { renderMilestonePanel } from '/milestone-tracker.js';
+import { renderFocusSession }   from '/focus-session.js';
+import { renderQuoteVault }     from '/quote-vault.js';
+import { renderProjectNotes }   from '/project-notes.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -139,6 +143,10 @@ registerHotkey('ctrl+alt+2', '/skills',        () => { renderSkillPanel();      
 registerHotkey('ctrl+alt+v', '/okrs',          () => { renderOkrPanel();         trackUsage('okrs'); });
 registerHotkey('ctrl+alt+x', '/timelog',       () => { renderTimeLogPanel();     trackUsage('timelog'); });
 registerHotkey('ctrl+alt+a', '/affirmations',  () => { renderAffirmationPanel(); trackUsage('affirmations'); });
+registerHotkey('ctrl+alt+3', '/milestones',    () => { renderMilestonePanel(); trackUsage('milestones'); });
+registerHotkey('ctrl+alt+4', '/focus-session', () => { renderFocusSession();   trackUsage('focus-session'); });
+registerHotkey('ctrl+alt+5', '/quotes',        () => { renderQuoteVault();     trackUsage('quotes'); });
+registerHotkey('ctrl+alt+6', '/pnotes',        () => { renderProjectNotes();   trackUsage('pnotes'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -210,6 +218,10 @@ document.getElementById('skills-btn')?.addEventListener('click',       () => { r
 document.getElementById('okr-btn')?.addEventListener('click',          () => { renderOkrPanel();         trackUsage('okrs'); });
 document.getElementById('timelog-btn')?.addEventListener('click',      () => { renderTimeLogPanel();     trackUsage('timelog'); });
 document.getElementById('affirmations-btn')?.addEventListener('click', () => { renderAffirmationPanel(); trackUsage('affirmations'); });
+document.getElementById('milestone-btn')?.addEventListener('click', () => { renderMilestonePanel(); trackUsage('milestones'); });
+document.getElementById('fsession-btn')?.addEventListener('click',  () => { renderFocusSession();   trackUsage('focus-session'); });
+document.getElementById('quotes-btn')?.addEventListener('click',    () => { renderQuoteVault();     trackUsage('quotes'); });
+document.getElementById('pnotes-btn')?.addEventListener('click',    () => { renderProjectNotes();   trackUsage('pnotes'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
