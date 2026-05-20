@@ -95,7 +95,12 @@ function fmtTime(date) {
  * @returns {{ current: object, history: number[] }}
  */
 function loadMetrics(botId) {
-  const raw = localStorage.getItem('bot_metrics_' + botId);
+  let raw = null;
+  try {
+    raw = localStorage.getItem('bot_metrics_' + botId);
+  } catch (_) {
+    // localStorage may be unavailable (private mode, blocked by browser, etc.)
+  }
   if (raw) {
     try {
       return JSON.parse(raw);

@@ -176,12 +176,13 @@
       }
       tableBody.innerHTML = events.map((e) => {
         const ts = new Date(e.ts).toISOString().replace('T', ' ').slice(0, 19);
-        const data = JSON.stringify(e.data).slice(0, 200);
+        const serialized = JSON.stringify(e.data ?? null) ?? '';
+        const data = serialized.slice(0, 200);
         const session = (e.sessionId || '').slice(0, 8);
         return `<tr>
           <td class="ts">${ts}</td>
           <td class="type">${escHtml(e.type)}</td>
-          <td class="data" title="${escHtml(JSON.stringify(e.data))}">${escHtml(data)}</td>
+          <td class="data" title="${escHtml(serialized)}">${escHtml(data)}</td>
           <td class="ts">${escHtml(session)}…</td>
         </tr>`;
       }).join('');

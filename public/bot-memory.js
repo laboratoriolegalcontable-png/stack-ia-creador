@@ -97,7 +97,10 @@ export class BotMemory {
       const store = tx.objectStore('events');
       const all = await cursorAll(store, 'botId', IDBKeyRange.only(this.botId));
       const matches = all
-        .filter((e) => JSON.stringify(e.data).toLowerCase().includes(q))
+        .filter((e) => {
+          const serialized = JSON.stringify(e.data ?? null);
+          return typeof serialized === 'string' && serialized.toLowerCase().includes(q);
+        })
         .sort((a, b) => b.ts - a.ts)
         .slice(0, limit);
       return matches;
@@ -208,24 +211,52 @@ export class BotMemory {
     try {
       if (!this._db) return null;
       const payload = JSON.parse(json);
-      const incoming = Array.isArray(payload.events) ? payload.events : [];
-      const tx = this._db.transaction('events', 'readwrite');
-      const store = tx.objectStore('events');
-      const existing = await cursorAll(store, 'botId', IDBKeyRange.only(this.botId));
-      const keyFor = (e) => `${e.ts}|${e.botId}|${e.type}|${JSON.stringify(e.data ?? null)}`;
-      const seen = new Set(existing.map(keyFor));
-      let imported = 0;
-      for (const ev of incoming) {
+      const incomingEvents = Array.isArray(payload.events) ? payload.events : [];
+      const incomingSnapshots = Array.isArray(payload.snapshots) ? payload.snapshots : [];
+
+      // Always key by the target botId (this.botId), so events tagged with a different
+      // botId in the export still dedupe correctly against existing events for this bot.
+      const keyFor = (e) => `${e.ts}|${this.botId}|${e.type}|${JSON.stringify(e.data ?? null)}`;
+      const snapKeyFor = (s) => `${s.ts}|${this.botId}|${(s.summary ?? '').slice(0, 80)}`;
+
+      let importedEvents = 0;
+      let importedSnapshots = 0;
+
+      // Events
+      const txE = this._db.transaction('events', 'readwrite');
+      const storeE = txE.objectStore('events');
+      const existingEvents = await cursorAll(storeE, 'botId', IDBKeyRange.only(this.botId));
+      const seenEvents = new Set(existingEvents.map(keyFor));
+      for (const ev of incomingEvents) {
         const key = keyFor(ev);
-        if (!seen.has(key)) {
+        if (!seenEvents.has(key)) {
           const { id: _id, ...clean } = ev;
-          store.add({ ...clean, botId: this.botId });
-          seen.add(key);
-          imported++;
+          storeE.add({ ...clean, botId: this.botId });
+          seenEvents.add(key);
+          importedEvents++;
         }
       }
-      await txPromise(tx);
-      return imported;
+      await txPromise(txE);
+
+      // Snapshots
+      if (incomingSnapshots.length > 0) {
+        const txS = this._db.transaction('snapshots', 'readwrite');
+        const storeS = txS.objectStore('snapshots');
+        const existingSnaps = await cursorAll(storeS, 'botId', IDBKeyRange.only(this.botId));
+        const seenSnaps = new Set(existingSnaps.map(snapKeyFor));
+        for (const sn of incomingSnapshots) {
+          const key = snapKeyFor(sn);
+          if (!seenSnaps.has(key)) {
+            const { id: _id, ...clean } = sn;
+            storeS.add({ ...clean, botId: this.botId });
+            seenSnaps.add(key);
+            importedSnapshots++;
+          }
+        }
+        await txPromise(txS);
+      }
+
+      return { events: importedEvents, snapshots: importedSnapshots };
     } catch (err) {
       console.warn(`[BotMemory:${this.botId}] importJSON failed`, err);
       return null;

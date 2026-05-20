@@ -4,7 +4,7 @@
  * ES Module, no framework dependencies
  */
 
-// ─── Validation helpers ─────────────────────────────────────────────────────────
+// ─── Validation helpers ──────────────────────────────────────────────────────────
 
 function containsAll(text, terms) {
   const lower = text.toLowerCase();
@@ -61,7 +61,7 @@ function validateTestCase(result, testCase) {
   return { passed: failures.length === 0, failures };
 }
 
-// ─── RegressionRunner ─────────────────────────────────────────────────────────
+// ─── RegressionRunner ──────────────────────────────────────────────────────────
 
 export class RegressionRunner {
   /**
@@ -144,17 +144,28 @@ export class RegressionRunner {
       evalResult = { response: '', toolsUsed: [], responseMs: 0 };
     }
 
+    // Normalize evaluator output so malformed results yield a failed test
+    // case instead of crashing the whole regression run.
+    const normalized = {
+      response: typeof evalResult?.response === 'string' ? evalResult.response : '',
+      toolsUsed: Array.isArray(evalResult?.toolsUsed) ? evalResult.toolsUsed : [],
+      responseMs: Number.isFinite(evalResult?.responseMs) ? evalResult.responseMs : 0,
+    };
+    if (!error && typeof evalResult?.response !== 'string') {
+      error = `Evaluator returned non-string response (type: ${typeof evalResult?.response})`;
+    }
+
     const validation = error
       ? { passed: false, failures: [`Evaluator threw: ${error}`] }
-      : validateTestCase(evalResult, testCase);
+      : validateTestCase(normalized, testCase);
 
     return {
       caseId: testCase.id,
       category: testCase.category,
       input: testCase.input,
-      response: evalResult.response,
-      toolsUsed: evalResult.toolsUsed || [],
-      responseMs: evalResult.responseMs || 0,
+      response: normalized.response,
+      toolsUsed: normalized.toolsUsed,
+      responseMs: normalized.responseMs,
       passed: validation.passed,
       failures: validation.failures,
     };
@@ -297,7 +308,7 @@ export class RegressionRunner {
   }
 }
 
-// ─── MultiRobotRegression ────────────────────────────────────────────────────
+// ─── MultiRobotRegression ──────────────────────────────────────────────────────
 
 export class MultiRobotRegression {
   constructor() {
