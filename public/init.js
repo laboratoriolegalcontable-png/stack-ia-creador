@@ -40,6 +40,10 @@ import { renderRetroPanel }                             from '/retrospective.js'
 import { renderEnergyPanel }                            from '/energy-tracker.js';
 import { renderVocabPanel }                             from '/vocabulary-builder.js';
 import { renderAccountabilityPanel }                    from '/accountability.js';
+import { renderDecisionPanel }                          from '/decision-journal.js';
+import { renderWeeklyPanel }                            from '/weekly-planner.js';
+import { renderLearningPanel }                          from '/learning-tracker.js';
+import { renderCapsulePanel }                           from '/context-capsule.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -94,6 +98,9 @@ registerHotkey('ctrl+o', '/goals',    () => { renderGoalPanel(); trackUsage('goa
 registerHotkey('ctrl+h', '/habits',   () => { renderHabitPanel(); trackUsage('habits'); });
 registerHotkey('ctrl+b', '/kb',       () => { renderKnowledgeBase(); trackUsage('kb'); });
 registerHotkey('ctrl+alt+r', '/retro', () => { renderRetroPanel(); trackUsage('retro'); });
+registerHotkey('ctrl+alt+d', '/decisions', () => { renderDecisionPanel(); trackUsage('decisions'); });
+registerHotkey('ctrl+alt+w', '/weekly',    () => { renderWeeklyPanel(); trackUsage('weekly'); });
+registerHotkey('ctrl+alt+l', '/learning',  () => { renderLearningPanel(); trackUsage('learning'); });
 registerHotkey('ctrl+m', '/memory',   () => { if (flags.SEGMENTED_MEMORY_ENABLED) document.dispatchEvent(new CustomEvent('memory:show-stats')); });
 registerHotkey('ctrl+shift+?', 'hotkeys', () => showHotkeysHelp());
 
@@ -141,6 +148,10 @@ document.getElementById('retro-btn')?.addEventListener('click',          () => {
 document.getElementById('energy-btn')?.addEventListener('click',         () => { renderEnergyPanel(); trackUsage('energy'); });
 document.getElementById('vocab-btn')?.addEventListener('click',          () => { renderVocabPanel(); trackUsage('vocab'); });
 document.getElementById('accountability-btn')?.addEventListener('click', () => { renderAccountabilityPanel(); trackUsage('accountability'); });
+document.getElementById('decision-btn')?.addEventListener('click', () => { renderDecisionPanel(); trackUsage('decisions'); });
+document.getElementById('weekly-btn')?.addEventListener('click',   () => { renderWeeklyPanel(); trackUsage('weekly'); });
+document.getElementById('learning-btn')?.addEventListener('click', () => { renderLearningPanel(); trackUsage('learning'); });
+document.getElementById('capsule-btn')?.addEventListener('click',  () => { renderCapsulePanel(); trackUsage('capsule'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
