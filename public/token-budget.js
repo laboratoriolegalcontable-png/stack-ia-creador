@@ -1,72 +1,62 @@
-/**
- * Token Budget Monitor — rastrea uso de localStorage como proxy de contexto
- * Muestra advertencia cuando el uso supera 80% de 5MB
- * @module token-budget
- */
-import { getFlags } from './flags.js';
+const KEY = 'kairos:token_budget';
+const MAX_DAILY = 200000;
+const WARNING = 0.80;
+const CRITICAL = 0.95;
 
-const MAX_BYTES    = 5 * 1024 * 1024; // 5MB localStorage limit
-const WARN_RATIO   = 0.80;
-const CRIT_RATIO   = 0.95;
-const BUDGET_KEY   = 'token-budget:daily';
-const TOKEN_RATIO  = 4; // bytes por token estimado
+function getState() {
+  const raw = JSON.parse(localStorage.getItem(KEY) || '{}');
+  const today = new Date().toISOString().slice(0, 10);
+  if (raw.date !== today) return { date: today, used: 0 };
+  return raw;
+}
+function saveState(s) { localStorage.setItem(KEY, JSON.stringify(s)); }
 
-export function getBudgetStats() {
-  let used = 0;
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const val = localStorage.getItem(key) || '';
-    used += key.length + val.length;
-  }
-  const ratio  = used / MAX_BYTES;
-  const tokens = Math.round(used / TOKEN_RATIO);
-  const status = ratio >= CRIT_RATIO ? 'critical' : ratio >= WARN_RATIO ? 'warning' : 'ok';
-  return { used, max: MAX_BYTES, ratio, tokens, status };
+export function trackTokens(estimatedTokens) {
+  const s = getState();
+  s.used += estimatedTokens;
+  saveState(s);
+  return s;
 }
 
-function getOrCreateBanner() {
-  let el = document.getElementById('token-budget-banner');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'token-budget-banner';
-    el.style.cssText = [
-      'position:fixed;top:0;left:0;right:0;z-index:10000',
-      'padding:8px 16px;font-family:sans-serif;font-size:13px',
-      'display:flex;align-items:center;justify-content:space-between',
-    ].join(';');
-    document.body.prepend(el);
-  }
-  return el;
+export function renderTokenBudget() {
+  let panel = document.getElementById('token-budget-panel');
+  if (panel) { panel.style.display = panel.style.display === 'none' ? '' : 'none'; if (panel.style.display !== 'none') _refresh(); return; }
+  panel = document.createElement('div');
+  panel.id = 'token-budget-panel';
+  panel.className = 'ia-panel';
+  panel.innerHTML = `
+    <div class="ia-panel-header"><h2>🪙 Token Budget</h2><button class="ia-close" onclick="document.getElementById('token-budget-panel').style.display='none'">✕</button></div>
+    <div class="ia-panel-body">
+      <div style="display:flex;gap:6px;margin-bottom:10px">
+        <button id="tb-add" class="ia-btn-sm blue">+ Agregar tokens</button>
+        <button id="tb-reset" class="ia-btn-sm red">↺ Resetear día</button>
+      </div>
+      <div id="tb-gauge" style="margin-bottom:10px"></div>
+      <div id="tb-stats" class="ia-stats-bar"></div>
+      <div id="tb-history" class="ia-list"></div>
+    </div>`;
+  document.body.appendChild(panel);
+  document.getElementById('tb-add').onclick = () => {
+    const t = parseInt(prompt('Tokens a agregar:') || '0');
+    if (t > 0) { trackTokens(t); _refresh(); }
+  };
+  document.getElementById('tb-reset').onclick = () => {
+    if (confirm('¿Resetear contador del día?')) { saveState({ date: new Date().toISOString().slice(0, 10), used: 0 }); _refresh(); }
+  };
+  _refresh();
 }
 
-export function checkTokenBudget() {
-  if (!getFlags().TOKEN_BUDGET_ENABLED) return;
+function _refresh() {
+  const s = getState();
+  const ratio = s.used / MAX_DAILY;
+  const pct = Math.min(100, Math.round(ratio * 100));
+  const status = ratio >= CRITICAL ? 'critical' : ratio >= WARNING ? 'warning' : 'ok';
+  const color = status === 'critical' ? '#ef4444' : status === 'warning' ? '#f59e0b' : '#22c55e';
 
-  const { ratio, used, tokens, status } = getBudgetStats();
-  if (status === 'ok') {
-    document.getElementById('token-budget-banner')?.remove();
-    return;
-  }
+  const stats = document.getElementById('tb-stats');
+  const gauge = document.getElementById('tb-gauge');
+  if (!stats || !gauge) return;
 
-  const pct    = Math.round(ratio * 100);
-  const color  = status === 'critical' ? '#dc2626' : '#d97706';
-  const icon   = status === 'critical' ? '🔴' : '🟡';
-  const banner = getOrCreateBanner();
-  banner.style.background = color;
-  banner.style.color = '#fff';
-  banner.innerHTML = `
-    <span>${icon} <strong>Token Budget ${status === 'critical' ? 'CRÍTICO' : 'AVISO'}</strong>:
-      ${pct}% del contexto usado (~${tokens.toLocaleString()} tokens estimados).
-      Considera ejecutar <code>/gc</code> para liberar memoria.</span>
-    <button onclick="this.parentElement.remove()"
-      style="background:rgba(255,255,255,0.2);border:none;color:#fff;
-             padding:4px 10px;border-radius:4px;cursor:pointer">✕</button>
-  `;
-}
-
-export function initTokenBudget() {
-  if (!getFlags().TOKEN_BUDGET_ENABLED) return;
-  checkTokenBudget();
-  // Re-verificar cada 2 minutos
-  setInterval(checkTokenBudget, 2 * 60 * 1000);
+  stats.textContent = 'Usado: ' + s.used.toLocaleString() + ' / ' + MAX_DAILY.toLocaleString() + ' tokens (' + pct + '%) — Estado: ' + status;
+  gauge.innerHTML = '<div style="background:var(--color-border);border-radius:4px;height:16px;overflow:hidden"><div style="width:' + pct + '%;height:100%;background:' + color + ';transition:width 0.3s"></div></div>';
 }

@@ -1,89 +1,89 @@
-/** Pattern Recognizer — KAIROS browser module */
-const PATTERNS_KEY = 'kairos:patterns';
-
-const PATTERN_RULES = [
-  { name: 'Consultas frecuentes de estado', regex: /estado|status|cómo va|how is/i, minOccurrences: 3 },
-  { name: 'Solicitudes de resumen', regex: /resumen|summary|resume|summarize/i, minOccurrences: 2 },
-  { name: 'Errores recurrentes', regex: /error|fallo|crash|exception|broke/i, minOccurrences: 3 },
-  { name: 'Optimización frecuente', regex: /optimiz|mejorar|improve|performance|rendimiento/i, minOccurrences: 2 },
-  { name: 'Preguntas de configuración', regex: /config|configurar|setup|instalar|install/i, minOccurrences: 2 },
-  { name: 'Solicitudes de debug', regex: /debug|depurar|trace|log|inspect/i, minOccurrences: 3 },
-  { name: 'Revisión de código', regex: /revisar|review|refactor|lint|código/i, minOccurrences: 2 },
-  { name: 'Consultas de documentación', regex: /docs|documentación|documentation|readme|manual/i, minOccurrences: 2 },
+const KEY = 'kairos:patterns';
+const RULES = [
+  { name: 'Consultas de estado', regex: /estado|status|cómo va|how is/i, min: 3 },
+  { name: 'Solicitudes de resumen', regex: /resumen|summary|resume|summarize/i, min: 2 },
+  { name: 'Errores recurrentes', regex: /error|fallo|crash|exception|broke/i, min: 3 },
+  { name: 'Optimización', regex: /optimiz|mejorar|improve|performance|rendimiento/i, min: 2 },
+  { name: 'Configuración', regex: /config|configurar|setup|instalar|install/i, min: 2 },
+  { name: 'Debug', regex: /debug|depurar|trace|log|inspect/i, min: 3 },
+  { name: 'Revisión de código', regex: /revisar|review|refactor|lint|code/i, min: 2 },
+  { name: 'Documentación', regex: /docs|documentación|documentation|readme|manual/i, min: 2 },
 ];
+function loadPatterns() { const d = JSON.parse(localStorage.getItem(KEY) || '{}'); return typeof d === 'object' && d !== null ? d : {}; }
+function savePatterns(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+function now() { return new Date().toISOString(); }
 
-function loadPatterns() {
-  try { return JSON.parse(localStorage.getItem(PATTERNS_KEY) || '{}'); } catch { return {}; }
-}
-
-function savePatterns(p) {
-  try { localStorage.setItem(PATTERNS_KEY, JSON.stringify(p)); } catch {}
-}
-
-/** @param {string} text @returns {object[]} */
-export function analyzeText(text) {
+function analyzeText(text) {
   const patterns = loadPatterns();
   const detected = [];
-  const now = new Date().toISOString();
-
-  for (const rule of PATTERN_RULES) {
+  const n = now();
+  for (const rule of RULES) {
     if (rule.regex.test(text)) {
-      const key = rule.name;
-      const existing = patterns[key] || { id: `pat-${Date.now()}`, name: key, occurrences: 0, firstSeen: now, lastSeen: now, confidence: 0, examples: [] };
-      existing.occurrences++;
-      existing.lastSeen = now;
-      existing.confidence = Math.min(1, existing.occurrences / (rule.minOccurrences * 3));
-      if (existing.examples.length < 5) existing.examples.push(text.slice(0, 80));
-      patterns[key] = existing;
-      if (existing.occurrences >= rule.minOccurrences) detected.push(existing);
+      const k = rule.name;
+      const p = patterns[k] || { name: k, occurrences: 0, firstSeen: n, lastSeen: n, confidence: 0, examples: [] };
+      p.occurrences++;
+      p.lastSeen = n;
+      p.confidence = Math.min(1, p.occurrences / (rule.min * 3));
+      if (p.examples.length < 5) p.examples.push(text.slice(0, 100));
+      patterns[k] = p;
+      if (p.occurrences >= rule.min) detected.push(p);
     }
   }
-
   savePatterns(patterns);
   return detected;
 }
 
-/** @returns {object[]} */
-export function getAllPatterns() {
-  return Object.values(loadPatterns()).sort((a, b) => b.occurrences - a.occurrences);
-}
-
-export function clearPatterns() {
-  localStorage.removeItem(PATTERNS_KEY);
-}
-
-export function renderPatternReport() {
-  const existing = document.getElementById('kairos-patterns-panel');
-  if (existing) { existing.remove(); return; }
-
-  const patterns = getAllPatterns();
-
-  const panel = document.createElement('div');
-  panel.id = 'kairos-patterns-panel';
-  panel.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:1px solid #4338ca;border-radius:12px;padding:1.5rem;z-index:9999;width:min(500px,95vw);max-height:80vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:inherit';
+export function renderPatternRecognizer() {
+  let panel = document.getElementById('pattern-recognizer-panel');
+  if (panel) { panel.style.display = panel.style.display === 'none' ? '' : 'none'; if (panel.style.display !== 'none') _refresh(); return; }
+  panel = document.createElement('div');
+  panel.id = 'pattern-recognizer-panel';
+  panel.className = 'ia-panel';
   panel.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-      <h3 style="margin:0;color:#a5b4fc;font-size:1rem">🔍 Pattern Recognizer</h3>
-      <button onclick="document.getElementById('kairos-patterns-panel').remove()" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:1.2rem">&times;</button>
-    </div>
-    ${patterns.length === 0
-      ? '<p style="color:#6b7280;font-size:0.85rem">Sin patrones detectados aún. Usa el sistema y vuelve más tarde.</p>'
-      : patterns.map(p => {
-          const pct = Math.round(p.confidence * 100);
-          const barColor = pct >= 80 ? '#34d399' : pct >= 50 ? '#f59e0b' : '#60a5fa';
-          return `<div style="border:1px solid #374151;border-radius:8px;padding:0.75rem;margin-bottom:0.5rem;background:#0f0f1e">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem">
-              <div style="color:#e5e7eb;font-size:0.85rem">${p.name}</div>
-              <div style="font-size:0.75rem;color:#9ca3af">${p.occurrences}× · ${pct}%</div>
-            </div>
-            <div style="height:4px;background:#374151;border-radius:2px;margin-bottom:0.4rem">
-              <div style="height:100%;width:${pct}%;background:${barColor};border-radius:2px"></div>
-            </div>
-            <div style="font-size:0.7rem;color:#6b7280">Últ: ${new Date(p.lastSeen).toLocaleString('es-AR')}</div>
-          </div>`;
-        }).join('')}
-    <button onclick="window._kairos_pr.clear()" style="margin-top:0.5rem;font-size:0.75rem;color:#6b7280;background:none;border:none;cursor:pointer">Limpiar patrones</button>`;
-
-  window._kairos_pr = { clear: () => { clearPatterns(); panel.remove(); renderPatternReport(); } };
+    <div class="ia-panel-header"><h2>🔍 Pattern Recognizer</h2><button class="ia-close" onclick="document.getElementById('pattern-recognizer-panel').style.display='none'">✕</button></div>
+    <div class="ia-panel-body">
+      <form id="pr-form" class="ia-form">
+        <input id="pr-text" placeholder="Texto a analizar *" required />
+        <button type="submit" class="ia-btn">Analizar</button>
+      </form>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <button id="pr-clear" class="ia-btn-sm red">🗑 Limpiar patrones</button>
+      </div>
+      <div id="pr-stats" class="ia-stats-bar"></div>
+      <div id="pr-result" style="margin-bottom:8px;padding:8px;background:var(--color-surface);border-radius:4px;font-size:0.85rem;display:none"></div>
+      <div id="pr-list" class="ia-list"></div>
+    </div>`;
   document.body.appendChild(panel);
+  document.getElementById('pr-form').onsubmit = e => {
+    e.preventDefault();
+    const text = document.getElementById('pr-text').value.trim();
+    const detected = analyzeText(text);
+    const result = document.getElementById('pr-result');
+    result.style.display = '';
+    result.textContent = detected.length ? 'Patrones detectados: ' + detected.map(p => p.name).join(', ') : 'Sin patrones detectados (umbral no alcanzado)';
+    e.target.reset();
+    _refresh();
+  };
+  document.getElementById('pr-clear').onclick = () => { if (confirm('¿Limpiar todos los patrones?')) { savePatterns({}); _refresh(); } };
+  _refresh();
+}
+
+function _refresh() {
+  const patterns = Object.values(loadPatterns());
+  const stats = document.getElementById('pr-stats');
+  const list = document.getElementById('pr-list');
+  if (!stats || !list) return;
+  const significant = patterns.filter(p => p.confidence > 0.3).length;
+  stats.textContent = 'Patrones totales: ' + patterns.length + ' | Significativos: ' + significant;
+  list.innerHTML = '';
+  patterns.sort((a, b) => b.occurrences - a.occurrences).forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'ia-list-item';
+    const conf = Math.round(p.confidence * 100);
+    const color = conf >= 70 ? 'red' : conf >= 40 ? 'blue' : 'gray';
+    el.innerHTML = '<div class="ia-list-item-header"><strong></strong><span class="ia-badge">' + p.occurrences + 'x</span><span class="ia-badge ' + color + '">' + conf + '%</span></div><small></small>';
+    el.querySelector('strong').textContent = p.name;
+    el.querySelector('small').textContent = 'Último: ' + new Date(p.lastSeen).toLocaleString();
+    list.appendChild(el);
+  });
 }
