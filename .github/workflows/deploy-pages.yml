@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Fix paths for GitHub Pages subpath
+        run: |
+          # Fix JS module absolute imports → relative
+          sed -i "s|from '/|from './|g" public/init.js
+
+          # Fix HTML absolute paths → relative (leaves https:// untouched)
+          for f in public/*.html; do
+            sed -i "s| href=\"/| href=\"|g; s| src=\"/| src=\"|g" "$f"
+          done
+
+          # Required: disable Jekyll processing
+          touch public/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
