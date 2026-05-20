@@ -116,6 +116,10 @@ import { renderEventPlanner }     from '/event-planner.js';
 import { renderInterviewPrep }    from '/interview-prep.js';
 import { renderNewsletterTracker } from '/newsletter-tracker.js';
 import { renderWordTracker }      from '/word-tracker.js';
+import { renderBugLog }           from '/bug-log.js';
+import { renderHabitJournal }     from '/habit-journal.js';
+import { renderMoodJournal }      from '/mood-journal.js';
+import { renderMediaLog }         from '/media-log.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
 import { supervise, getStats as getSupervisorStats }    from '/bot-supervisor.js';
@@ -366,6 +370,10 @@ document.getElementById('events-btn')?.addEventListener('click',      () => { re
 document.getElementById('interview-btn')?.addEventListener('click',   () => { renderInterviewPrep();       trackUsage('interview'); });
 document.getElementById('newsletters-btn')?.addEventListener('click', () => { renderNewsletterTracker();   trackUsage('newsletters'); });
 document.getElementById('words-btn')?.addEventListener('click',       () => { renderWordTracker();         trackUsage('words'); });
+document.getElementById('buglog-btn')?.addEventListener('click',      () => { renderBugLog();              trackUsage('buglog'); });
+document.getElementById('hjournal-btn')?.addEventListener('click',   () => { renderHabitJournal();        trackUsage('hjournal'); });
+document.getElementById('mjournal-btn')?.addEventListener('click',   () => { renderMoodJournal();         trackUsage('mjournal'); });
+document.getElementById('medialog-btn')?.addEventListener('click',   () => { renderMediaLog();            trackUsage('medialog'); });
 document.getElementById('hotkeys-btn')?.addEventListener('click',     showHotkeysHelp);
 document.getElementById('supervisor-btn')?.addEventListener('click',  () => {
   const s = getSupervisorStats();
