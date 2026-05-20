@@ -19,6 +19,10 @@ bh_alert() {
   fi
 }
 
+# Counts actual executions, not arbitrary .md artifacts. A single execution may
+# emit several markdown files (briefing-matutino writes 5 partial files plus the
+# main output per run). We skip files ending in `.partial.md` and the runs log,
+# leaving exactly one marker file per execution.
 bh_count_files_since() {
   local dir="$1"
   local since_epoch="$2"
@@ -26,6 +30,9 @@ bh_count_files_since() {
   [ -d "$dir" ] || { echo 0; return; }
   for f in "$dir"/*.md; do
     [ -f "$f" ] || continue
+    case "$f" in
+      *.partial.md) continue ;;
+    esac
     local mtime
     mtime=$(stat -f %m "$f" 2>/dev/null || stat -c %Y "$f" 2>/dev/null || echo 0)
     [ "$mtime" -gt "$since_epoch" ] && count=$((count + 1))

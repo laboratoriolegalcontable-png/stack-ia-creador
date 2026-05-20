@@ -12,8 +12,11 @@ Trackear que se postea en un hashtag (competencia, tendencia, evento en vivo).
 
 1. Navegar a `https://www.instagram.com/explore/tags/{hashtag}/`
 2. La pagina muestra dos secciones: "Top posts" y "Recent posts"
-3. Scrollear "Recent posts" hasta encontrar uno con timestamp >= ahora - window_hours
-4. Para cada post visible en la ventana:
+3. "Recent posts" llega ordenado del más nuevo al más viejo, así que scrollear
+   hasta encontrar un post con timestamp **<** `ahora - window_hours`
+   (anterior a la ventana). Ese marca el límite inferior; luego procesar solo
+   los posts con timestamp **>=** `ahora - window_hours`.
+4. Para cada post dentro de la ventana:
    - Click → extraer caption, likes, comments, fecha, username, URL
    - Filtrar los que pasan `min_likes`
 5. Detectar accounts repetidas — si una cuenta aparece >3 veces, marcarla como spam/bot

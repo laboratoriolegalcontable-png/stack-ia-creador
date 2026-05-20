@@ -17,7 +17,8 @@ la misma. Browser Harness detecta el pais por el dominio y adapta moneda.
 ## Gotchas
 
 - Mercado Libre NO requiere login para buscar — funciona sin sesion.
-- "MercadoLider" tiene 3 niveles (gold, platinum, diamante). Detectar el badge.
+- "MercadoLider" tiene 2 niveles oficiales (Gold y Platinum) además del estado
+  base sin badge. NO existe nivel "diamante" — buscar solo Gold/Platinum.
 - "Envio Full" significa que el producto esta en deposito de ML — entrega 24h.
   Importante para clasificar sellers serios.
 - Precios en cuotas confunden al parser — siempre extraer el precio "al
