@@ -1,1 +1,649 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>m05 · Brutalist · Estudio Oro</title><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet"><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--ivory:#F2EFE6;--carbon:#1C1C1C;--red:#E62E2E;--mute:#6B6B6B}body{font-family:'Inter',sans-serif;background:var(--ivory);color:var(--carbon);line-height:1.45}.top-strip{background:var(--carbon);color:#fff;font-size:11px;padding:10px 32px;display:flex;justify-content:space-between;letter-spacing:.08em;text-transform:uppercase}.nav{padding:24px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(28,28,28,0.12)}.nav-logo{font-size:22px;font-weight:900;letter-spacing:-.04em;text-transform:uppercase}.nav-cta{background:var(--carbon);color:#fff;padding:12px 22px;text-decoration:none;font-size:13px;font-weight:600;text-transform:uppercase}.hero{padding:80px 32px 120px;position:relative;overflow:hidden}.hero-corner{position:absolute;top:0;right:0;width:120px;height:120px;background:var(--red)}.hero h1{font-size:clamp(4rem,12vw,11rem);font-weight:900;line-height:.88;letter-spacing:-.055em;text-transform:uppercase;margin-bottom:60px;max-width:1400px}.hero h1 .red{color:var(--red)}.hero-lead{font-size:18px;line-height:1.5;font-weight:500;max-width:520px;margin-bottom:32px}.btn{display:inline-flex;align-items:center;gap:10px;padding:24px 36px;background:var(--carbon);color:#fff;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}.footer{background:var(--carbon);color:var(--ivory);padding:80px 32px;text-align:center}.footer-mega{font-size:clamp(4rem,18vw,16rem);font-weight:900;letter-spacing:-.06em;line-height:.85;text-transform:uppercase;white-space:nowrap}.footer-mega .red{color:var(--red)}</style><script src="legal-layer.js" defer></script></head><body><div class="top-strip"><span>Buenos Aires · Madrid · Punta del Este</span><span>Urgencias 24/7</span></div><nav class="nav"><a href="index.html" class="nav-logo">Estudio Oro</a><a href="https://wa.me/5491168777777" class="nav-cta">Consultar →</a></nav><section class="hero"><div class="hero-corner"></div><h1>UNA FIRMA.<br>ONCE <span class="red">ESPECIALIDADES.</span><br>CERO COMPROMISOS.</h1><p class="hero-lead"><strong>Firma multipráctica</strong> integrada por abogados penalistas, corredores inmobiliarios matriculados y especialistas en patrimonio internacional.</p><a href="https://wa.me/5491168777777" class="btn">Consulta inmediata →</a></section><footer class="footer"><div class="footer-mega">ESTUDIO<span class="red">.</span>ORO</div><p style="margin-top:30px;font-size:13px;opacity:.6">Estudio Oro S.A.S. · CPACF / CASI / CUCICBA · © 2026</p></footer></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio Oro | Firma Multipractica - Penal, Real Estate y Patrimonio</title>
+<meta name="description" content="Estudio Oro S.A.S. — firma multipractica de defensa penal, real estate y patrimonio. Equipo de abogados penalistas y corredores inmobiliarios matriculados. Buenos Aires, Madrid y Punta del Este.">
+<meta name="keywords" content="estudio juridico Buenos Aires, abogado penalista CABA, corredor inmobiliario matriculado, defensa penal, real estate, patrimonio internacional, fideicomiso, IA legal, Estudio Oro">
+<meta property="og:title" content="Estudio Oro | Firma Multipractica Penal & Real Estate">
+<meta property="og:description" content="Equipo de abogados penalistas y corredores inmobiliarios. Buenos Aires, Madrid y Punta del Este.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://estudiooro.com">
+<link rel="canonical" href="https://estudiooro.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Estudio Oro S.A.S.",
+  "description": "Firma multipractica de defensa penal, real estate y patrimonio internacional.",
+  "url": "https://estudiooro.com",
+  "telephone": "+54-911-6877-7777",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Salguero 2835 4B",
+    "addressLocality": "Palermo, CABA",
+    "addressCountry": "AR"
+  },
+  "openingHours": "Mo-Su 00:00-23:59"
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ivory:#F2EFE6;
+  --carbon:#1C1C1C;
+  --red:#E62E2E;
+  --red-dark:#B81F1F;
+  --mute:#6B6B6B;
+  --line:rgba(28,28,28,0.12);
+  --mx:50%;
+  --my:50%;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--ivory);color:var(--carbon);font-weight:400;line-height:1.45;overflow-x:hidden}
+.display{font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.05em;line-height:0.9;text-transform:uppercase}
+.mono{font-family:'Inter',sans-serif;font-feature-settings:"tnum";letter-spacing:0.02em}
+
+/* PROGRESS BAR */
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--red);width:0%;z-index:9999;transition:width 0.05s linear}
+
+/* TOP STRIP */
+.top-strip{background:var(--carbon);color:#fff;font-size:11px;padding:10px 32px;display:flex;justify-content:space-between;align-items:center;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;position:relative;z-index:100}
+.top-strip .sedes{display:flex;gap:24px}
+.top-strip .urg{display:flex;align-items:center;gap:10px}
+.top-strip .urg-dot{width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 1.4s ease-in-out infinite}
+.top-strip .urg-cta{background:var(--red);padding:6px 14px;color:#fff;text-decoration:none;font-weight:700;letter-spacing:0.04em;transition:background 0.2s}
+.top-strip .urg-cta:hover{background:var(--red-dark)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.4)}}
+
+/* NAV */
+.nav{background:var(--ivory);padding:24px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:90;backdrop-filter:blur(10px);background:rgba(242,239,230,0.95)}
+.nav-logo{font-size:22px;font-weight:900;letter-spacing:-0.04em;text-transform:uppercase}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{color:var(--carbon);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--red)}
+.nav-cta{background:var(--carbon);color:#fff !important;padding:12px 22px;transition:all 0.25s}
+.nav-cta:hover{background:var(--red);color:#fff !important}
+@media(max-width:768px){.nav-links a:not(.nav-cta){display:none}}
+
+/* HERO */
+.hero{padding:80px 32px 120px;position:relative;overflow:hidden;background:var(--ivory)}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px circle at var(--mx) var(--my),rgba(230,46,46,0.08),transparent 50%);pointer-events:none;transition:opacity 0.3s}
+.hero-corner{position:absolute;top:0;right:0;width:120px;height:120px;background:var(--red);z-index:1}
+.hero-corner-2{position:absolute;bottom:0;left:0;width:80px;height:80px;background:var(--carbon);z-index:1}
+.hero-inner{position:relative;z-index:2;max-width:1400px;margin:0 auto}
+.hero-eyebrow{font-size:13px;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;margin-bottom:40px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:"";width:40px;height:2px;background:var(--red)}
+.hero h1{font-size:clamp(4rem,12vw,11rem);font-weight:900;line-height:0.88;letter-spacing:-0.055em;text-transform:uppercase;margin-bottom:60px}
+.hero h1 .word{display:inline-block;opacity:0;transform:translateY(60px);transition:opacity 0.7s cubic-bezier(0.2,0.7,0.2,1),transform 0.7s cubic-bezier(0.2,0.7,0.2,1)}
+.hero h1 .word.in{opacity:1;transform:translateY(0)}
+.hero h1 .red{color:var(--red)}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-top:40px}
+.hero-lead{font-size:18px;line-height:1.5;color:var(--carbon);font-weight:500;max-width:520px}
+.hero-lead strong{font-weight:800}
+.hero-ctas{display:flex;gap:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:24px 36px;font-size:13px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.3s cubic-bezier(0.2,0.7,0.2,1);cursor:pointer;border:none;font-family:inherit}
+.btn-primary{background:var(--carbon);color:#fff}
+.btn-primary:hover{background:var(--red);transform:translateX(4px)}
+.btn-outline{background:transparent;color:var(--carbon);border:2px solid var(--red);color:var(--red)}
+.btn-outline:hover{background:var(--red);color:#fff;transform:translateX(4px)}
+.btn .arrow{transition:transform 0.25s;font-size:18px}
+.btn:hover .arrow{transform:translate(4px,-4px) scale(1.3)}
+@media(max-width:768px){.hero-grid{grid-template-columns:1fr;gap:40px}.hero-ctas{flex-direction:column}.btn{width:100%}}
+
+/* MARQUEE */
+.marquee{background:var(--carbon);color:var(--ivory);padding:32px 0;overflow:hidden;border-top:2px solid var(--red);border-bottom:2px solid var(--red);position:relative}
+.marquee-track{display:flex;gap:0;animation:marquee 40s linear infinite;white-space:nowrap;width:max-content}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-item{font-size:clamp(2.5rem,6vw,5rem);font-weight:900;letter-spacing:-0.04em;text-transform:uppercase;padding:0 40px;display:flex;align-items:center;gap:40px}
+.marquee-item::after{content:"●";color:var(--red);font-size:0.5em}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* DIVIDER BAR */
+.divider-bar{height:6px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform 0.8s cubic-bezier(0.7,0,0.2,1)}
+.divider-bar.in{transform:scaleX(1)}
+
+/* STATS */
+.stats{padding:120px 32px;background:var(--ivory);position:relative}
+.stats-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.stat{position:relative;padding:32px 0;border-top:2px solid var(--carbon)}
+.stat-num{font-size:clamp(4rem,7vw,7rem);font-weight:900;letter-spacing:-0.05em;line-height:1;color:var(--carbon);display:flex;align-items:baseline}
+.stat-num .suffix{color:var(--red);margin-left:4px}
+.stat-label{font-size:12px;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;color:var(--mute);margin-top:16px}
+@media(max-width:768px){.stats-inner{grid-template-columns:repeat(2,1fr);gap:24px}}
+
+/* SECTION HEADER */
+.section-head{max-width:1400px;margin:0 auto 64px;padding:0 32px;display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:end}
+.section-num{font-size:14px;font-weight:800;letter-spacing:0.2em;color:var(--red);text-transform:uppercase}
+.section-title{font-size:clamp(2.5rem,6vw,5rem);font-weight:900;letter-spacing:-0.05em;text-transform:uppercase;line-height:0.9}
+.section-title .red{color:var(--red)}
+
+/* AREAS */
+.areas{padding:140px 0 120px;background:var(--ivory)}
+.areas-grid{max-width:1400px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(180px,auto);gap:2px;background:var(--carbon)}
+.area{background:var(--ivory);padding:36px;display:flex;flex-direction:column;justify-content:space-between;transition:background 0.3s,color 0.3s;cursor:pointer;position:relative;overflow:hidden;text-decoration:none;color:var(--carbon)}
+.area:hover{background:var(--carbon);color:var(--ivory)}
+.area:hover .area-arrow{color:var(--red);transform:translate(8px,-8px) scale(1.4)}
+.area-num{font-size:11px;font-weight:700;letter-spacing:0.2em;opacity:0.5}
+.area-title{font-size:clamp(1.5rem,2.4vw,2.2rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;text-transform:uppercase;margin:24px 0 16px}
+.area-desc{font-size:13px;line-height:1.4;font-weight:500;opacity:0.8}
+.area-arrow{position:absolute;top:24px;right:28px;font-size:24px;font-weight:700;transition:all 0.3s cubic-bezier(0.2,0.7,0.2,1);color:var(--red)}
+.area-hero{grid-column:span 3;grid-row:span 2;background:var(--carbon);color:var(--ivory)}
+.area-hero:hover{background:var(--red);color:var(--ivory)}
+.area-hero .area-title{font-size:clamp(2.5rem,4vw,4rem)}
+.area-hero .area-arrow{color:var(--red);font-size:32px}
+.area-hero:hover .area-arrow{color:var(--carbon)}
+.area-wide{grid-column:span 2}
+@media(max-width:900px){.areas-grid{grid-template-columns:repeat(2,1fr)}.area-hero{grid-column:span 2;grid-row:span 1}.area-wide{grid-column:span 1}}
+
+/* PENAL BLACK SLAB */
+.penal{background:var(--carbon);color:var(--ivory);padding:140px 32px;position:relative;overflow:hidden}
+.penal::before{content:"";position:absolute;top:0;left:0;width:160px;height:160px;background:var(--red)}
+.penal::after{content:"";position:absolute;bottom:0;right:0;width:100px;height:100px;background:var(--red)}
+.penal-inner{max-width:1400px;margin:0 auto;position:relative;z-index:2}
+.penal-head{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:end;margin-bottom:64px}
+.penal-head .section-num{color:var(--red)}
+.penal-title{font-size:clamp(3rem,7vw,6.5rem);font-weight:900;letter-spacing:-0.05em;text-transform:uppercase;line-height:0.9}
+.penal-title .red{color:var(--red)}
+.penal-grid{display:grid;grid-template-columns:2fr 1fr;gap:64px;align-items:start}
+.penal-subs{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(255,255,255,0.1)}
+.penal-sub{background:var(--carbon);padding:32px;border:1px solid rgba(255,255,255,0.08);transition:all 0.3s}
+.penal-sub:hover{background:var(--red);border-color:var(--red);transform:translateX(6px)}
+.penal-sub-num{font-size:11px;font-weight:700;letter-spacing:0.2em;color:var(--red);margin-bottom:14px}
+.penal-sub:hover .penal-sub-num{color:var(--carbon)}
+.penal-sub-title{font-size:18px;font-weight:800;letter-spacing:-0.02em;text-transform:uppercase}
+.urgency{background:var(--red);color:var(--carbon);padding:40px;position:relative}
+.urgency-tag{font-size:11px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.urgency-tag::before{content:"";width:10px;height:10px;background:var(--carbon);border-radius:50%;animation:pulse 1.2s ease-in-out infinite}
+.urgency h3{font-size:24px;font-weight:900;letter-spacing:-0.03em;line-height:1.05;text-transform:uppercase;margin-bottom:18px}
+.urgency p{font-size:14px;line-height:1.5;font-weight:500;margin-bottom:28px}
+.urgency-btns{display:flex;flex-direction:column;gap:0}
+.urgency-btn{background:var(--carbon);color:#fff;padding:18px 24px;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;transition:all 0.25s}
+.urgency-btn:hover{background:var(--ivory);color:var(--carbon)}
+.urgency-btn + .urgency-btn{margin-top:2px}
+@media(max-width:900px){.penal-grid{grid-template-columns:1fr}.penal-subs{grid-template-columns:1fr}}
+
+/* REAL ESTATE */
+.realestate{padding:140px 32px 120px;background:var(--ivory)}
+.realestate-inner{max-width:1400px;margin:0 auto}
+.re-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--carbon)}
+.re-card{background:var(--ivory);padding:40px;transition:all 0.3s;cursor:pointer;position:relative;min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
+.re-card:hover{background:var(--carbon);color:var(--ivory)}
+.re-card:hover .re-arrow{color:var(--red);transform:translate(6px,-6px) scale(1.3)}
+.re-num{font-size:11px;font-weight:700;letter-spacing:0.2em;color:var(--red)}
+.re-title{font-size:22px;font-weight:900;letter-spacing:-0.03em;text-transform:uppercase;margin-top:24px}
+.re-arrow{position:absolute;top:32px;right:32px;font-size:22px;font-weight:700;transition:all 0.3s;color:var(--carbon)}
+@media(max-width:768px){.re-grid{grid-template-columns:1fr}}
+
+/* ABOUT */
+.about{background:var(--carbon);color:var(--ivory);padding:140px 32px;position:relative;overflow:hidden}
+.about::before{content:"";position:absolute;top:0;right:0;width:140px;height:140px;background:var(--red)}
+.about-inner{max-width:1400px;margin:0 auto;position:relative;z-index:2}
+.about-eyebrow{font-size:13px;font-weight:800;letter-spacing:0.2em;color:var(--red);text-transform:uppercase;margin-bottom:40px}
+.about-quote{font-size:clamp(2.5rem,5.5vw,5rem);font-weight:900;letter-spacing:-0.05em;line-height:0.95;text-transform:uppercase;margin-bottom:80px;max-width:1100px}
+.about-quote .red{color:var(--red)}
+.about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:80px;align-items:start}
+.about-body p{font-size:16px;line-height:1.6;font-weight:400;margin-bottom:20px;color:rgba(242,239,230,0.85)}
+.about-body p strong{color:var(--ivory);font-weight:800}
+.about-side{background:rgba(255,255,255,0.04);border-left:3px solid var(--red);padding:36px}
+.side-block{margin-bottom:32px}
+.side-block:last-child{margin-bottom:0}
+.side-block h4{font-size:11px;font-weight:800;letter-spacing:0.2em;color:var(--red);text-transform:uppercase;margin-bottom:14px}
+.side-block p{font-size:14px;line-height:1.55;color:rgba(242,239,230,0.85)}
+.side-block strong{color:var(--ivory);font-weight:700}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:40px}}
+
+/* INSIGHTS */
+.insights{padding:140px 32px 120px;background:var(--ivory)}
+.insights-inner{max-width:1400px;margin:0 auto}
+.insights-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--carbon)}
+.insight{background:var(--ivory);padding:48px 36px;transition:all 0.35s;cursor:pointer;position:relative;min-height:380px;display:flex;flex-direction:column;text-decoration:none;color:var(--carbon)}
+.insight:hover{background:var(--carbon);color:var(--ivory)}
+.insight:hover .insight-arrow{color:var(--red);transform:translate(6px,-6px) scale(1.4)}
+.insight-tag{font-size:11px;font-weight:800;letter-spacing:0.2em;color:var(--red);text-transform:uppercase}
+.insight-title{font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:900;letter-spacing:-0.04em;line-height:1;text-transform:uppercase;margin:32px 0 20px;flex-grow:1}
+.insight-desc{font-size:14px;line-height:1.5;opacity:0.75;margin-bottom:24px}
+.insight-arrow{font-size:26px;font-weight:700;transition:all 0.35s;color:var(--carbon);align-self:flex-start}
+.insight:hover .insight-arrow{color:var(--red)}
+@media(max-width:900px){.insights-grid{grid-template-columns:1fr}}
+
+/* CONTACT */
+.contact{background:var(--red);color:var(--carbon);padding:140px 32px;position:relative;overflow:hidden}
+.contact::before{content:"";position:absolute;bottom:0;left:0;width:120px;height:120px;background:var(--carbon)}
+.contact-inner{max-width:1400px;margin:0 auto;position:relative;z-index:2}
+.contact-eyebrow{font-size:13px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:32px}
+.contact-title{font-size:clamp(3rem,8vw,7rem);font-weight:900;letter-spacing:-0.05em;text-transform:uppercase;line-height:0.9;margin-bottom:80px}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:start}
+.contact-info h4{font-size:11px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:14px;margin-top:32px}
+.contact-info h4:first-child{margin-top:0}
+.contact-info p{font-size:16px;font-weight:600;line-height:1.5}
+.contact-info a{color:var(--carbon);text-decoration:none;border-bottom:2px solid var(--carbon);transition:opacity 0.2s}
+.contact-info a:hover{opacity:0.7}
+.form{display:grid;gap:14px}
+.form input,.form textarea{background:transparent;border:none;border-bottom:2px solid var(--carbon);padding:18px 0;font-family:inherit;font-size:15px;color:var(--carbon);font-weight:500;outline:none;width:100%;transition:border 0.2s}
+.form input::placeholder,.form textarea::placeholder{color:rgba(28,28,28,0.5);font-weight:500;text-transform:uppercase;letter-spacing:0.05em;font-size:13px}
+.form input:focus,.form textarea:focus{border-bottom-color:#fff}
+.form textarea{resize:vertical;min-height:100px}
+.form-submit{background:var(--carbon);color:#fff;padding:22px;border:none;font-family:inherit;font-size:13px;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;justify-content:space-between}
+.form-submit:hover{background:var(--ivory);color:var(--carbon)}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:40px}}
+
+/* FOOTER */
+.footer{background:var(--carbon);color:var(--ivory);padding:80px 32px 40px;overflow:hidden}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-mega{font-size:clamp(4rem,18vw,16rem);font-weight:900;letter-spacing:-0.06em;line-height:0.85;text-transform:uppercase;color:var(--ivory);white-space:nowrap;margin-bottom:60px}
+.footer-mega .red{color:var(--red)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:1px solid rgba(255,255,255,0.15);font-size:12px;letter-spacing:0.05em;color:rgba(242,239,230,0.6);flex-wrap:wrap;gap:16px}
+.footer-bottom a{color:rgba(242,239,230,0.6);text-decoration:none;margin-left:24px;transition:color 0.2s}
+.footer-bottom a:hover{color:var(--red)}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:24px;right:24px;background:var(--red);color:#fff;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:900;font-size:24px;box-shadow:0 8px 24px rgba(230,46,46,0.4);transition:all 0.25s;z-index:200}
+.wa-float:hover{background:var(--carbon);transform:scale(1.1) rotate(8deg)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(0.2,0.7,0.2,1),transform 0.7s cubic-bezier(0.2,0.7,0.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .section-head{grid-template-columns:1fr;gap:20px;align-items:start}
+  .hero{padding:60px 24px 80px}
+  .stats,.areas,.realestate,.about,.insights,.contact{padding-left:24px;padding-right:24px}
+}
+</style>
+<script src="legal-layer.js" defer></script>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <div class="sedes">
+    <span>Buenos Aires</span>
+    <span>Madrid</span>
+    <span>Punta del Este</span>
+  </div>
+  <div class="urg">
+    <span class="urg-dot"></span>
+    <span>Urgencias penales 24/7</span>
+    <a href="https://wa.me/5491168777777" class="urg-cta">WhatsApp →</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo display">Estudio Oro</a>
+  <div class="nav-links">
+    <a href="#areas">Áreas</a>
+    <a href="#penal">Penal</a>
+    <a href="#realestate">Real Estate</a>
+    <a href="#estudio">Estudio</a>
+    <a href="#contacto">Contacto</a>
+    <a href="https://wa.me/5491168777777" class="nav-cta">Consultar →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-corner"></div>
+  <div class="hero-corner-2"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Buenos Aires · Madrid · Punta del Este</div>
+    <h1 id="hero-headline">
+      <span class="word">UNA</span> <span class="word">FIRMA.</span><br>
+      <span class="word">ONCE</span> <span class="word red">ESPECIALIDADES.</span><br>
+      <span class="word">CERO</span> <span class="word">COMPROMISOS.</span>
+    </h1>
+    <div class="hero-grid">
+      <p class="hero-lead reveal">
+        <strong>Firma multipráctica</strong> integrada por abogados penalistas, corredores inmobiliarios matriculados y especialistas en patrimonio internacional. Una sola estructura para resolver lo que estudios convencionales tercerizan.
+      </p>
+      <div class="hero-ctas reveal">
+        <a href="#contacto" class="btn btn-primary">Consulta inmediata <span class="arrow">→</span></a>
+        <a href="#areas" class="btn btn-outline">Áreas <span class="arrow">↘</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider-bar reveal-bar"></div>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item">Penal</div>
+    <div class="marquee-item">Real Estate</div>
+    <div class="marquee-item">Patrimonio</div>
+    <div class="marquee-item">IA Legal Lab</div>
+    <div class="marquee-item">Comercial</div>
+    <div class="marquee-item">Civil</div>
+    <div class="marquee-item">Laboral</div>
+    <div class="marquee-item">Tributario</div>
+    <div class="marquee-item">Familia</div>
+    <div class="marquee-item">Compliance</div>
+    <div class="marquee-item">Mediación</div>
+    <div class="marquee-item">Penal</div>
+    <div class="marquee-item">Real Estate</div>
+    <div class="marquee-item">Patrimonio</div>
+    <div class="marquee-item">IA Legal Lab</div>
+    <div class="marquee-item">Comercial</div>
+    <div class="marquee-item">Civil</div>
+    <div class="marquee-item">Laboral</div>
+    <div class="marquee-item">Tributario</div>
+    <div class="marquee-item">Familia</div>
+    <div class="marquee-item">Compliance</div>
+    <div class="marquee-item">Mediación</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal">
+      <div class="stat-num"><span class="counter" data-target="15">0</span><span class="suffix">+</span></div>
+      <div class="stat-label">Años acumulados</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num"><span class="counter" data-target="500">0</span><span class="suffix">+</span></div>
+      <div class="stat-label">Causas y operaciones</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num"><span class="counter" data-target="3">0</span></div>
+      <div class="stat-label">Sedes operativas</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num"><span class="counter" data-target="24">0</span><span class="suffix">/7</span></div>
+      <div class="stat-label">Urgencias penales</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider-bar reveal-bar"></div>
+
+<!-- AREAS -->
+<section class="areas" id="areas">
+  <div class="section-head reveal">
+    <div class="section-num">[01] Práctica</div>
+    <h2 class="section-title">Once áreas, <span class="red">una sola</span> estructura.</h2>
+  </div>
+  <div class="areas-grid">
+    <a href="#penal" class="area area-hero reveal">
+      <div class="area-num">01 / Hero</div>
+      <span class="area-arrow">↗</span>
+      <div>
+        <h3 class="area-title">Penal</h3>
+        <p class="area-desc">Excarcelaciones urgentes, juicios orales, delitos económicos. Equipo de penalistas 24/7.</p>
+      </div>
+    </a>
+    <a href="#realestate" class="area area-hero reveal">
+      <div class="area-num">07 / Hero</div>
+      <span class="area-arrow">↗</span>
+      <div>
+        <h3 class="area-title">Real Estate</h3>
+        <p class="area-desc">Corretaje matriculado con due diligence legal incluido. Operaciones ARG · ESP · URY.</p>
+      </div>
+    </a>
+    <a href="#" class="area reveal">
+      <div class="area-num">02</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Civil</h3><p class="area-desc">Daños y perjuicios, responsabilidad civil, contratos.</p></div>
+    </a>
+    <a href="#" class="area reveal">
+      <div class="area-num">03</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Comercial</h3><p class="area-desc">Sociedades, contratos comerciales, conflictos societarios.</p></div>
+    </a>
+    <a href="#" class="area reveal">
+      <div class="area-num">04</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Laboral</h3><p class="area-desc">Defensa empresarial y representación individual.</p></div>
+    </a>
+    <a href="#" class="area reveal">
+      <div class="area-num">05</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Tributario</h3><p class="area-desc">Procedimientos fiscales, planificación impositiva.</p></div>
+    </a>
+    <a href="#" class="area area-wide reveal">
+      <div class="area-num">06</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Familia y Sucesiones</h3><p class="area-desc">Divorcios, alimentos, herencias, fideicomisos.</p></div>
+    </a>
+    <a href="#" class="area area-wide reveal">
+      <div class="area-num">08</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Patrimonio</h3><p class="area-desc">Estructuras de protección y planificación sucesoria.</p></div>
+    </a>
+    <a href="#" class="area area-wide reveal">
+      <div class="area-num">09</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">IA Legal Lab</h3><p class="area-desc">Análisis de expedientes y jurisprudencia con IA.</p></div>
+    </a>
+    <a href="#" class="area area-wide reveal">
+      <div class="area-num">10</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Compliance</h3><p class="area-desc">Programas de integridad y prevención del lavado.</p></div>
+    </a>
+    <a href="#" class="area area-wide reveal">
+      <div class="area-num">11</div>
+      <span class="area-arrow">→</span>
+      <div><h3 class="area-title">Mediación</h3><p class="area-desc">Resolución alternativa de conflictos.</p></div>
+    </a>
+  </div>
+</section>
+
+<!-- PENAL -->
+<section class="penal" id="penal">
+  <div class="penal-inner">
+    <div class="penal-head reveal">
+      <div class="section-num">[02] Defensa Penal</div>
+      <h2 class="penal-title">Cuando cada <span class="red">hora cuenta.</span></h2>
+    </div>
+    <div class="penal-grid">
+      <div class="penal-subs reveal">
+        <div class="penal-sub"><div class="penal-sub-num">01</div><div class="penal-sub-title">Excarcelación urgente</div></div>
+        <div class="penal-sub"><div class="penal-sub-num">02</div><div class="penal-sub-title">Juicio oral</div></div>
+        <div class="penal-sub"><div class="penal-sub-num">03</div><div class="penal-sub-title">Delitos económicos</div></div>
+        <div class="penal-sub"><div class="penal-sub-num">04</div><div class="penal-sub-title">Tránsito culposo</div></div>
+        <div class="penal-sub"><div class="penal-sub-num">05</div><div class="penal-sub-title">Violencia familiar y de género</div></div>
+        <div class="penal-sub"><div class="penal-sub-num">06</div><div class="penal-sub-title">Empresarial</div></div>
+      </div>
+      <div class="urgency reveal">
+        <div class="urgency-tag">Activa ahora · 24/7</div>
+        <h3>Detención en curso. Nuestro equipo penalista actúa en las primeras horas.</h3>
+        <p>Linea directa 24/7 atendida por abogados penalistas del estudio. Confidencial, sin compromiso, sin costo. Respuesta inmediata por WhatsApp.</p>
+        <div class="urgency-btns">
+          <a href="https://wa.me/5491168777777" class="urgency-btn">WhatsApp directo <span>→</span></a>
+          <a href="tel:+5491168777777" class="urgency-btn">Llamada urgente <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider-bar reveal-bar"></div>
+
+<!-- REAL ESTATE -->
+<section class="realestate" id="realestate">
+  <div class="realestate-inner">
+    <div class="section-head reveal">
+      <div class="section-num">[03] Real Estate</div>
+      <h2 class="section-title">Corretaje matriculado <span class="red">con</span> due diligence legal.</h2>
+    </div>
+    <div class="re-grid">
+      <div class="re-card reveal"><div class="re-num">01</div><span class="re-arrow">↗</span><h3 class="re-title">Verificación de títulos</h3></div>
+      <div class="re-card reveal"><div class="re-num">02</div><span class="re-arrow">↗</span><h3 class="re-title">Compraventa segura</h3></div>
+      <div class="re-card reveal"><div class="re-num">03</div><span class="re-arrow">↗</span><h3 class="re-title">Análisis de inversión</h3></div>
+      <div class="re-card reveal"><div class="re-num">04</div><span class="re-arrow">↗</span><h3 class="re-title">Real estate offshore</h3></div>
+      <div class="re-card reveal"><div class="re-num">05</div><span class="re-arrow">↗</span><h3 class="re-title">Negociación</h3></div>
+      <div class="re-card reveal"><div class="re-num">06</div><span class="re-arrow">↗</span><h3 class="re-title">Fideicomisos</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="estudio">
+  <div class="about-inner">
+    <div class="about-eyebrow reveal">[04] Nuestro Estudio</div>
+    <h2 class="about-quote reveal">Lo que estudios convencionales <span class="red">tercerizan,</span> nosotros lo resolvemos internamente.</h2>
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <p>Estudio Oro es una <strong>firma multipráctica argentina</strong> con sedes operativas en Buenos Aires, Madrid y Punta del Este. Reunimos un equipo de abogados penalistas, corredores inmobiliarios matriculados y especialistas en patrimonio internacional bajo una misma estructura, lo que nos permite resolver desde una sola firma operaciones que estudios tradicionales tercerizan.</p>
+        <p>Combinamos defensa penal de alta exposición, corretaje inmobiliario premium y estructuras patrimoniales internacionales. <strong>Más de 500 causas y operaciones resueltas como equipo.</strong> Disponibilidad permanente 24/7 para urgencias penales.</p>
+        <p>Estudio Oro incorpora <strong>inteligencia artificial aplicada</strong> al análisis de expedientes, jurisprudencia y due diligence — una capacidad analítica que multiplica la velocidad y cobertura del equipo. Nuestro IA Legal Lab opera como departamento autónomo.</p>
+        <p>Fundado por el <strong>Dr. Diego A. Orosa, Socio Director</strong>, el estudio reúne hoy a más de 15 profesionales entre abogados, corredores, contadores y técnicos.</p>
+      </div>
+      <aside class="about-side reveal">
+        <div class="side-block">
+          <h4>Departamentos</h4>
+          <p>Penal · Real Estate · Patrimonio · IA Legal Lab · Comercial · Laboral · Tributario · Familia</p>
+        </div>
+        <div class="side-block">
+          <h4>Sedes</h4>
+          <p><strong>Buenos Aires</strong> — sede central, Salguero 2835 4B, Palermo<br><strong>Madrid</strong><br><strong>Punta del Este</strong></p>
+        </div>
+        <div class="side-block">
+          <h4>Equipo</h4>
+          <p><strong>+15 profesionales</strong><br>Abogados penalistas · Corredores inmobiliarios matriculados · Asesores patrimoniales · Compliance officers</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights" id="insights">
+  <div class="insights-inner">
+    <div class="section-head reveal">
+      <div class="section-num">[05] Insights</div>
+      <h2 class="section-title">Lectura <span class="red">directa.</span></h2>
+    </div>
+    <div class="insights-grid">
+      <a href="#" class="insight reveal">
+        <div class="insight-tag">Penal</div>
+        <h3 class="insight-title">Qué hacer si te detienen en Buenos Aires</h3>
+        <p class="insight-desc">Derechos constitucionales inmediatos y los cinco errores graves.</p>
+        <span class="insight-arrow">→</span>
+      </a>
+      <a href="#" class="insight reveal">
+        <div class="insight-tag">Real Estate</div>
+        <h3 class="insight-title">Due diligence inmobiliario en CABA</h3>
+        <p class="insight-desc">Los siete pasos legales antes del boleto.</p>
+        <span class="insight-arrow">→</span>
+      </a>
+      <a href="#" class="insight reveal">
+        <div class="insight-tag">Patrimonio</div>
+        <h3 class="insight-title">Proteger patrimonio en Argentina 2026</h3>
+        <p class="insight-desc">Fideicomisos y estructuras societarias.</p>
+        <span class="insight-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="contact-inner">
+    <div class="contact-eyebrow reveal">[06] Contacto</div>
+    <h2 class="contact-title reveal">Hablemos <span style="opacity:0.5">·</span> ahora.</h2>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h4>Sede central</h4>
+        <p>Salguero 2835 4B<br>Palermo, CABA</p>
+        <h4>WhatsApp 24/7</h4>
+        <p><a href="https://wa.me/5491168777777">+54 9 11 6877 7777</a></p>
+        <h4>Email</h4>
+        <p><a href="mailto:contacto@estudiooro.com">contacto@estudiooro.com</a></p>
+        <h4>Sedes internacionales</h4>
+        <p>Madrid · Punta del Este</p>
+      </div>
+      <form class="form reveal" onsubmit="event.preventDefault();alert('Recibimos tu mensaje. Te respondemos en menos de 24 horas.');">
+        <input type="text" placeholder="Nombre completo" required>
+        <input type="email" placeholder="Email" required>
+        <input type="tel" placeholder="Teléfono / WhatsApp">
+        <input type="text" placeholder="Área de consulta (Penal / Real Estate / Patrimonio)">
+        <textarea placeholder="Describí tu consulta brevemente" required></textarea>
+        <button class="form-submit" type="submit">Enviar consulta <span>→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-mega">ESTUDIO<span class="red">.</span>ORO</div>
+    <div class="footer-bottom">
+      <div>Estudio Oro S.A.S. · Equipo matriculado CPACF / CASI / CUCICBA · Salguero 2835 4B, Palermo, CABA · © 2026</div>
+      <div>
+        <a href="#areas">Áreas</a>
+        <a href="#estudio">Estudio</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5491168777777" class="wa-float" aria-label="WhatsApp">✆</a>
+
+<script>
+// PROGRESS BAR
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  progress.style.width = pct + '%';
+}, {passive:true});
+
+// MOUSE SPOTLIGHT
+const hero = document.getElementById('hero');
+hero.addEventListener('mousemove', (e) => {
+  const r = hero.getBoundingClientRect();
+  hero.style.setProperty('--mx', ((e.clientX - r.left)/r.width*100) + '%');
+  hero.style.setProperty('--my', ((e.clientY - r.top)/r.height*100) + '%');
+});
+
+// HERO WORD REVEAL
+window.addEventListener('load', () => {
+  const words = document.querySelectorAll('#hero-headline .word');
+  words.forEach((w, i) => setTimeout(() => w.classList.add('in'), 120 + i*100));
+});
+
+// REVEAL ON SCROLL
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal, .reveal-bar').forEach(el => io.observe(el));
+
+// COUNTERS
+const counters = document.querySelectorAll('.counter');
+const cio = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = +el.dataset.target;
+      const start = performance.now();
+      const duration = 1200;
+      const animate = (now) => {
+        const t = Math.min((now - start)/duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(target * eased);
+        if (t < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+      cio.unobserve(el);
+    }
+  });
+}, {threshold:0.4});
+counters.forEach(c => cio.observe(c));
+</script>
+
+</body>
+</html>
