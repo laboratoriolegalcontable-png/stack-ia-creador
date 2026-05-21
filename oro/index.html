@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio Oro | Firma Multipractica - Penal, Real Estate y Patrimonio</title>
+<meta name="description" content="Estudio Oro S.A.S. — firma multipractica de defensa penal, real estate y patrimonio. Equipo de abogados penalistas y corredores inmobiliarios matriculados. Buenos Aires, Madrid y Punta del Este.">
+<meta name="keywords" content="estudio juridico Buenos Aires, abogado penalista CABA, corredor inmobiliario matriculado, defensa penal, real estate, patrimonio internacional, fideicomiso, IA legal, Estudio Oro">
+<meta property="og:title" content="Estudio Oro | Firma Multipractica Penal & Real Estate">
+<meta property="og:description" content="Equipo de abogados penalistas y corredores inmobiliarios. Buenos Aires, Madrid y Punta del Este.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://estudiooro.com">
+<link rel="canonical" href="https://estudiooro.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Estudio Oro S.A.S.","description":"Firma multipractica de defensa penal, real estate y patrimonio internacional.","url":"https://estudiooro.com","telephone":"+5491168777777","address":{"@type":"PostalAddress","streetAddress":"Salguero 2835 4B, Palermo","addressLocality":"Buenos Aires","addressCountry":"AR"},"openingHours":"Mo-Su 00:00-23:59"}
+</script>
+<style>
+:root{
+  --bg:#0A0B0E; --bg2:#0F1B2E; --bone:#ECE4D2; --bone-dim:#ECE4D2cc;
+  --gold:#C9A663; --coral:#E54B2A; --cyan:#4ECDC4; --navy:#0F1B2E;
+  --line:rgba(236,228,210,.10); --line2:rgba(236,228,210,.20);
+  --mx:50%; --my:50%; --scrollProg:0;
+  --hue-shift:0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--bone);
+  font-family:'Inter Tight',sans-serif; font-weight:400;
+  overflow-x:hidden; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+@media (hover:none){body{cursor:auto}}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button{font:inherit;background:none;border:none;color:inherit;cursor:none}
+@media (hover:none){button,a{cursor:pointer}}
+
+/* SCROLL PROGRESS */
+.scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--coral));width:calc(var(--scrollProg)*100%);z-index:9999;box-shadow:0 0 12px var(--gold)}
+
+/* CURSOR */
+.cursor-main,.cursor-trail{position:fixed;pointer-events:none;z-index:9998;border-radius:50%;mix-blend-mode:difference;transition:width .25s cubic-bezier(.2,.8,.2,1),height .25s,background-color .25s}
+.cursor-main{width:18px;height:18px;border:1.5px solid var(--bone);transform:translate(-50%,-50%)}
+.cursor-trail{width:5px;height:5px;background:var(--bone);transform:translate(-50%,-50%)}
+.cursor-main.active{width:60px;height:60px;background:var(--coral);border-color:var(--coral)}
+@media (hover:none){.cursor-main,.cursor-trail{display:none}}
+
+/* TOP STRIP */
+.topstrip{position:relative;border-bottom:1px solid var(--line);background:#06070A;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;overflow:hidden;padding:8px 0;color:var(--bone-dim)}
+.tick-wrap{display:flex;animation:tick 38s linear infinite;white-space:nowrap;gap:48px;padding-left:48px}
+.tick-wrap span{display:inline-flex;align-items:center;gap:8px}
+.tick-wrap .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.tick-wrap .live{color:var(--coral);font-weight:500}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,11,14,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1340px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.logo{font-family:'Fraunces',serif;font-size:22px;font-weight:500;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.logo-mark{width:28px;height:28px;border:1.5px solid var(--gold);border-radius:50%;position:relative;display:grid;place-items:center;font-size:13px;color:var(--gold);font-family:'Fraunces',serif}
+.logo-mark::after{content:"";position:absolute;inset:-3px;border:1px solid var(--gold);border-radius:50%;opacity:.3;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.2);opacity:0}}
+.nav-links{display:flex;gap:28px;font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--bone-dim)}
+.nav-links a{position:relative;padding:6px 0}
+.nav-links a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover::after{width:100%}
+.nav-links a:hover{color:var(--bone)}
+.cta-btn{position:relative;padding:11px 22px;background:var(--gold);color:#0A0B0E;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;transition:transform .15s cubic-bezier(.2,.8,.2,1),background .3s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.cta-btn:hover{background:var(--bone)}
+.cta-btn .arrow{transition:transform .3s}
+.cta-btn:hover .arrow{transform:translateX(4px)}
+.cta-secondary{background:transparent;color:var(--bone);border:1px solid var(--line2)}
+.cta-secondary:hover{background:var(--bone);color:#0A0B0E}
+@media(max-width:900px){.nav-links{display:none}.nav-inner{padding:14px 20px}}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;padding:80px 32px 100px;overflow:hidden;display:flex;align-items:center}
+.hero-mesh{position:absolute;inset:0;overflow:hidden;z-index:0}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55;mix-blend-mode:screen;animation:drift 22s ease-in-out infinite}
+.mb1{width:55vw;height:55vw;background:#C9A663;top:-15%;left:-10%}
+.mb2{width:50vw;height:50vw;background:#E54B2A;top:20%;right:-15%;animation-delay:-7s}
+.mb3{width:45vw;height:45vw;background:#4ECDC4;bottom:-20%;left:20%;animation-delay:-14s;opacity:.35}
+.mb4{width:40vw;height:40vw;background:#0F1B2E;bottom:0;right:10%;animation-delay:-4s;opacity:.7}
+@keyframes drift{0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}33%{transform:translate(40px,-30px) rotate(20deg) scale(1.08)}66%{transform:translate(-30px,40px) rotate(-15deg) scale(.95)}}
+#particles{position:absolute;inset:0;z-index:1;opacity:.65}
+.hero-spotlight{position:absolute;inset:0;background:radial-gradient(circle 500px at var(--mx) var(--my),rgba(201,166,99,.10),transparent 70%);pointer-events:none;z-index:2}
+.hero-inner{position:relative;z-index:3;max-width:1340px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:end}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:"";width:36px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(48px,7.2vw,108px);line-height:.96;font-weight:400;letter-spacing:-.03em;margin-bottom:32px;font-variation-settings:"opsz" 144}
+.hero h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero h1 .word .inner{display:inline-block;transform:translateY(110%);animation:wordRise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .word:nth-child(2) .inner{animation-delay:.1s}
+.hero h1 .word:nth-child(3) .inner{animation-delay:.2s}
+.hero h1 .word:nth-child(4) .inner{animation-delay:.3s}
+.hero h1 .word:nth-child(5) .inner{animation-delay:.4s}
+.hero h1 .word:nth-child(6) .inner{animation-delay:.5s}
+@keyframes wordRise{to{transform:translateY(0)}}
+.hero h1 .accent{color:var(--gold);font-style:italic;font-weight:300;transition:color .3s}
+.hero h1 .typewriter{color:var(--coral);font-style:italic;font-weight:300;position:relative}
+.hero h1 .typewriter::after{content:"|";color:var(--cyan);animation:blink 1s steps(1) infinite;font-style:normal;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+.hero-lead{font-size:18px;line-height:1.5;color:var(--bone-dim);max-width:620px;margin-bottom:42px;font-weight:300;opacity:0;animation:fadeUp 1s .8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.hero-cta-row{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero-aside{display:flex;flex-direction:column;gap:18px;opacity:0;animation:fadeUp 1s 1.2s cubic-bezier(.2,.8,.2,1) forwards}
+.glass-card{background:rgba(236,228,210,.04);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--line2);border-radius:18px;padding:24px;position:relative;overflow:hidden}
+.glass-card::before{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;background:linear-gradient(135deg,rgba(236,228,210,.25),transparent 50%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.stats-card .stat-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px}
+.stats-card .stat-row:last-child{border-bottom:none;padding-bottom:0}
+.stats-card .stat-row span:last-child{color:var(--gold);font-weight:500}
+.stats-card-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.stats-card-title .pulse{width:6px;height:6px;border-radius:50%;background:var(--coral);animation:pulseDot 1.5s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(229,75,42,.6)}50%{opacity:.4;box-shadow:0 0 0 8px rgba(229,75,42,0)}}
+
+.ai-bubble{padding:18px 20px}
+.ai-bubble-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ai-bubble-head .avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--gold));display:grid;place-items:center;font-family:'Fraunces',serif;font-size:13px;color:#0A0B0E;font-weight:600}
+.ai-bubble-head h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone)}
+.ai-bubble-head .status{font-size:10px;color:var(--cyan);font-family:'JetBrains Mono',monospace;margin-left:auto;display:flex;align-items:center;gap:6px}
+.ai-bubble-head .status::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+.ai-msg{font-size:13px;line-height:1.5;padding:10px 12px;border-radius:10px;margin-bottom:8px}
+.ai-msg.user{background:rgba(201,166,99,.10);color:var(--bone);border:1px solid rgba(201,166,99,.2)}
+.ai-msg.bot{background:rgba(78,205,196,.08);color:var(--bone-dim);border:1px solid rgba(78,205,196,.18)}
+.ai-msg.typing::after{content:"●●●";letter-spacing:3px;color:var(--cyan);animation:typing 1.2s infinite}
+@keyframes typing{0%,100%{opacity:.3}50%{opacity:1}}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:32px}.hero{padding:60px 20px 80px}}
+
+/* WORLD MAP */
+.world{padding:120px 32px;border-top:1px solid var(--line);position:relative;background:linear-gradient(180deg,var(--bg),#08090C)}
+.section-head{max-width:1340px;margin:0 auto 60px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:"";width:24px;height:1px;background:var(--gold)}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,68px);font-weight:400;line-height:1.02;letter-spacing:-.025em;max-width:780px}
+.section-title em{color:var(--gold);font-style:italic;font-weight:300}
+.section-sub{font-size:15px;color:var(--bone-dim);max-width:380px;line-height:1.6}
+.world-inner{max-width:1340px;margin:0 auto;position:relative}
+.world-svg{width:100%;height:auto;max-height:520px}
+.sede-pin{position:absolute;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;color:var(--bone);background:rgba(10,11,14,.85);border:1px solid var(--line2);padding:8px 12px;border-radius:8px;backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:2px;pointer-events:none}
+.sede-pin strong{color:var(--gold);font-size:13px}
+.sede-pin .latlon{color:var(--bone-dim);font-size:9px}
+
+/* MARQUEE */
+.marquee{padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#06070A;overflow:hidden}
+.marquee-row{display:flex;animation:mq 50s linear infinite;white-space:nowrap;font-family:'Fraunces',serif;font-size:clamp(44px,5.5vw,80px);font-weight:300;font-style:italic;color:var(--bone);gap:48px}
+.marquee-row:hover{animation-play-state:paused}
+.marquee-row.reverse{animation:mqR 60s linear infinite;color:var(--gold);font-size:clamp(36px,4.5vw,68px);font-style:normal;font-weight:400;border-top:1px solid var(--line);padding-top:24px;margin-top:24px}
+.marquee-row span{display:inline-flex;align-items:center;gap:48px}
+.marquee-row span::after{content:"·";color:var(--gold)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* STATS */
+.stats{padding:120px 32px;border-top:1px solid var(--line)}
+.stats-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:48px 32px;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Fraunces',serif;font-size:clamp(56px,7vw,108px);font-weight:300;line-height:1;letter-spacing:-.03em;color:var(--bone);margin-bottom:8px}
+.stat-num .suf{color:var(--gold);font-size:.5em;vertical-align:super;font-style:italic}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim)}
+@media(max-width:900px){.stats-inner{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:none}}
+
+/* PRACTICE AREAS — 3D tilt */
+.practice{padding:120px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,var(--bg) 0%,#0A0E16 100%)}
+.practice-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcard{position:relative;background:rgba(236,228,210,.025);border:1px solid var(--line);border-radius:18px;padding:36px 28px;transition:border-color .35s,background .35s;transform-style:preserve-3d;will-change:transform;overflow:hidden;cursor:none}
+@media (hover:none){.pcard{cursor:pointer}}
+.pcard::before{content:"";position:absolute;inset:0;background:radial-gradient(circle 200px at var(--cx,50%) var(--cy,50%),rgba(201,166,99,.10),transparent 60%);opacity:0;transition:opacity .35s;border-radius:18px;pointer-events:none}
+.pcard:hover::before{opacity:1}
+.pcard:hover{border-color:rgba(201,166,99,.4);background:rgba(236,228,210,.04)}
+.pcard-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.12em;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center}
+.pcard-icon{width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-family:'Fraunces',serif;font-size:14px;transition:transform .5s cubic-bezier(.5,1.6,.4,.9)}
+.pcard:hover .pcard-icon{transform:rotate(180deg) scale(1.15);background:var(--gold);color:#0A0B0E}
+.pcard h3{font-family:'Fraunces',serif;font-size:30px;font-weight:400;letter-spacing:-.02em;margin-bottom:12px}
+.pcard p{font-size:14px;color:var(--bone-dim);line-height:1.5}
+.pcard-arrow{position:absolute;bottom:24px;right:24px;font-size:22px;color:var(--bone-dim);transition:transform .35s,color .35s}
+.pcard:hover .pcard-arrow{transform:translate(4px,-4px);color:var(--gold)}
+@media(max-width:900px){.practice-grid{grid-template-columns:1fr}}
+
+/* PENAL pinned */
+.penal{position:relative;border-top:1px solid var(--line);background:#06070A}
+.penal-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden;padding:0 32px}
+.penal-track{height:300vh;position:relative}
+.penal-inner{max-width:1340px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.penal-left h2{font-family:'Fraunces',serif;font-size:clamp(40px,5.5vw,76px);font-weight:400;line-height:1;letter-spacing:-.025em;margin-bottom:28px}
+.penal-left h2 em{color:var(--coral);font-style:italic;font-weight:300}
+.penal-left p{font-size:16px;color:var(--bone-dim);line-height:1.6;margin-bottom:32px;max-width:480px}
+.urgency-box{background:linear-gradient(135deg,rgba(229,75,42,.10),rgba(229,75,42,.03));border:1px solid rgba(229,75,42,.3);border-radius:18px;padding:28px;backdrop-filter:blur(10px)}
+.urgency-box .live-clock{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.urgency-box .live-clock .blink{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:pulseDot 1.2s ease-in-out infinite}
+.urgency-box h3{font-family:'Fraunces',serif;font-size:24px;font-weight:500;margin-bottom:10px}
+.urgency-box p{font-size:13px;margin-bottom:18px;color:var(--bone-dim)}
+.urgency-row{display:flex;gap:10px;flex-wrap:wrap}
+.penal-right{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.penal-card{background:rgba(236,228,210,.03);border:1px solid var(--line);padding:24px 20px;border-radius:14px;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s;opacity:0;transform:translateY(40px) scale(.95)}
+.penal-card.in{opacity:1;transform:translateY(0) scale(1)}
+.penal-card .pc-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--coral);margin-bottom:10px}
+.penal-card h4{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.2}
+@media(max-width:900px){.penal-sticky{position:static;height:auto;padding:80px 20px}.penal-track{height:auto}.penal-inner{grid-template-columns:1fr;gap:40px}.penal-right{grid-template-columns:1fr 1fr}}
+
+/* REAL ESTATE */
+.realestate{padding:120px 32px;border-top:1px solid var(--line);position:relative;overflow:hidden}
+.re-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.re-card{position:relative;background:rgba(236,228,210,.04);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--line2);border-radius:18px;padding:34px 28px;min-height:220px;overflow:hidden;transition:border-color .35s;cursor:none}
+@media (hover:none){.re-card{cursor:pointer}}
+.re-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle 140px at var(--cx,50%) var(--cy,50%),rgba(78,205,196,.18),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.re-card:hover::before{opacity:1}
+.re-card:hover{border-color:rgba(78,205,196,.4)}
+.re-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);margin-bottom:18px;letter-spacing:.1em}
+.re-card h3{font-family:'Fraunces',serif;font-size:22px;font-weight:500;margin-bottom:10px;letter-spacing:-.01em}
+.re-card p{font-size:13px;color:var(--bone-dim);line-height:1.55}
+.re-card .reveal{position:absolute;bottom:24px;left:28px;right:28px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.re-card:hover .reveal{opacity:1;transform:translateY(0)}
+@media(max-width:900px){.re-grid{grid-template-columns:1fr}}
+
+/* IA LAB */
+.ialab{padding:120px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,#06070A,#0A0E16)}
+.ialab-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.waveform{display:flex;align-items:flex-end;gap:5px;height:200px;padding:24px;background:rgba(78,205,196,.04);border:1px solid rgba(78,205,196,.18);border-radius:18px;margin-bottom:24px}
+.wave-bar{flex:1;background:linear-gradient(180deg,var(--cyan),var(--gold));border-radius:3px;min-height:6px;animation:wave 1.6s ease-in-out infinite;transform-origin:bottom}
+@keyframes wave{0%,100%{transform:scaleY(.15)}50%{transform:scaleY(1)}}
+.ialab-meta{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim);letter-spacing:.08em}
+.ialab-meta span:first-child{color:var(--cyan)}
+.ialab h2{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.025em;font-weight:400;margin-bottom:20px}
+.ialab h2 em{color:var(--cyan);font-style:italic;font-weight:300}
+.ialab p{font-size:16px;color:var(--bone-dim);line-height:1.6;margin-bottom:28px;max-width:520px}
+.ialab-feats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ialab-feat{padding:18px;background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:12px}
+.ialab-feat .lab{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:.12em;margin-bottom:6px}
+.ialab-feat .val{font-family:'Fraunces',serif;font-size:24px}
+@media(max-width:900px){.ialab-inner{grid-template-columns:1fr}}
+
+/* ABOUT */
+.about{padding:120px 32px;border-top:1px solid var(--line)}
+.about-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr;gap:60px}
+.about-body p{font-size:16px;color:var(--bone-dim);line-height:1.7;margin-bottom:20px;max-width:680px}
+.about-body p:first-child{font-size:18px;color:var(--bone)}
+.about-panel{background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:18px;padding:32px;height:fit-content;position:sticky;top:100px}
+.about-panel h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;margin-top:24px}
+.about-panel h4:first-child{margin-top:0}
+.about-panel p{font-size:14px;color:var(--bone-dim);line-height:1.6}
+.about-panel strong{color:var(--bone);font-weight:500}
+@media(max-width:900px){.about-inner{grid-template-columns:1fr}.about-panel{position:static}}
+
+/* INSIGHTS */
+.insights{padding:120px 32px;border-top:1px solid var(--line);background:#06070A}
+.insights-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.icard{position:relative;background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:18px;padding:32px;transition:border-color .4s,background .4s;transform-style:preserve-3d;will-change:transform;overflow:hidden;cursor:none}
+@media (hover:none){.icard{cursor:pointer}}
+.icard:hover{border-color:rgba(201,166,99,.35);background:rgba(236,228,210,.06)}
+.icard .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.12em;margin-bottom:24px;text-transform:uppercase}
+.icard h3{font-family:'Fraunces',serif;font-size:24px;font-weight:500;line-height:1.15;letter-spacing:-.015em;margin-bottom:14px}
+.icard p{font-size:14px;color:var(--bone-dim);line-height:1.55;margin-bottom:24px}
+.icard .read{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+@media(max-width:900px){.insights-grid{grid-template-columns:1fr}}
+
+/* CONTACT */
+.contact{padding:120px 32px;border-top:1px solid var(--line)}
+.contact-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:60px}
+.contact-info p{font-size:15px;color:var(--bone-dim);margin-bottom:24px;line-height:1.6;max-width:420px}
+.contact-block{margin-bottom:24px}
+.contact-block h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.contact-block a,.contact-block span{display:block;font-size:15px;color:var(--bone)}
+.contact-block a:hover{color:var(--gold)}
+.form-grid{display:grid;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.input{background:rgba(236,228,210,.04);border:1px solid var(--line2);color:var(--bone);padding:16px 18px;font:14px 'Inter Tight',sans-serif;border-radius:10px;width:100%;transition:border-color .3s,background .3s}
+.input:focus{outline:none;border-color:var(--gold);background:rgba(236,228,210,.06)}
+.input::placeholder{color:var(--bone-dim)}
+textarea.input{resize:vertical;min-height:120px;font-family:'Inter Tight',sans-serif}
+.checkbox-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--bone-dim);font-family:'JetBrains Mono',monospace}
+.checkbox-row input{accent-color:var(--gold)}
+@media(max-width:900px){.contact-inner{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{padding:60px 32px 32px;border-top:1px solid var(--line);background:#06070A}
+.footer-inner{max-width:1340px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.footer-grid h6{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.footer-grid a,.footer-grid p{display:block;font-size:13px;color:var(--bone-dim);margin-bottom:8px;line-height:1.6}
+.footer-grid a:hover{color:var(--bone)}
+.footer-logo{font-family:'Fraunces',serif;font-size:24px;font-weight:500;margin-bottom:14px;color:var(--bone)}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim);letter-spacing:.04em}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:99;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;box-shadow:0 12px 40px rgba(37,211,102,.4);transition:transform .3s;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11px}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:#25D366;opacity:.3;animation:pulse 2s ease-in-out infinite;z-index:-1}
+
+/* REVEALS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s} .reveal-d2{transition-delay:.2s} .reveal-d3{transition-delay:.3s} .reveal-d4{transition-delay:.4s}
+</style>
+<script defer>
+/* === legal-layer.js inlined === */
+/*! Estudio Oro — Legal Layer
+ *  Cookie consent + form consent + footer legal bar + professional disclaimers.
+ *  Vanilla JS, scoped CSS, safe to inject on any page.
+ *  v1 — 2026-05-21
+ */
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'estudio_oro_consent_v1';
+  var LEGAL_DIR = (function () {
+    // Resolve relative path: pages can be in /modelos/ or /modelos/legal/
+    try {
+      var p = window.location.pathname;
+      if (p.indexOf('/legal/') >= 0) return '';
+      return 'legal/';
+    } catch (e) { return 'legal/'; }
+  })();
+
+  // ---------- 1. SCOPED CSS ----------
+  var css = '' +
+    '.eo-legal-vars{--eo-ink:#0E1A2B;--eo-paper:#FBF8F2;--eo-cream:#F4EFE7;--eo-gold:#B8924D;--eo-gold-deep:#8E6B2E;--eo-soft:#3B4A60;--eo-rule:#D9CFB8}' +
+    '#eo-cookie-banner,#eo-cookie-modal,#eo-cookie-fab,#eo-legal-bar,.eo-legal-consent,.eo-pro-note{font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.55;color:#0E1A2B;box-sizing:border-box}' +
+    '#eo-cookie-backdrop{position:fixed;inset:0;background:rgba(14,26,43,.45);z-index:99998;opacity:0;transition:opacity .25s;pointer-events:none}' +
+    '#eo-cookie-backdrop.on{opacity:1;pointer-events:auto}' +
+    '#eo-cookie-banner{position:fixed;left:0;right:0;bottom:0;background:#FBF8F2;border-top:1px solid #D9CFB8;padding:20px 28px;z-index:99999;transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.7,.2,1);box-shadow:0 -8px 28px rgba(14,26,43,.12)}' +
+    '#eo-cookie-banner.show{transform:translateY(0)}' +
+    '#eo-cookie-banner .eo-wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap}' +
+    '#eo-cookie-banner h4{font-family:"Playfair Display",Georgia,serif;font-weight:400;margin:0 0 4px;font-size:17px;color:#0E1A2B}' +
+    '#eo-cookie-banner p{margin:0;color:#3B4A60;font-size:13px;max-width:640px}' +
+    '#eo-cookie-banner .eo-actions{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}' +
+    '.eo-btn{font-family:inherit;font-size:13px;padding:9px 16px;border:1px solid #D9CFB8;background:#fff;color:#0E1A2B;cursor:pointer;border-radius:2px;letter-spacing:.02em;transition:all .15s}' +
+    '.eo-btn:hover{border-color:#8E6B2E;color:#8E6B2E}' +
+    '.eo-btn.primary{background:#0E1A2B;color:#FBF8F2;border-color:#0E1A2B}' +
+    '.eo-btn.primary:hover{background:#8E6B2E;border-color:#8E6B2E;color:#fff}' +
+    '#eo-cookie-modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);background:#FBF8F2;border:1px solid #D9CFB8;border-radius:3px;padding:32px;width:min(520px,92vw);max-height:90vh;overflow:auto;z-index:100000;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 20px 60px rgba(14,26,43,.25)}' +
+    '#eo-cookie-modal.on{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}' +
+    '#eo-cookie-modal h3{font-family:"Playfair Display",Georgia,serif;font-weight:400;margin:0 0 18px;font-size:24px;color:#0E1A2B}' +
+    '#eo-cookie-modal .eo-row{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 0;border-bottom:1px solid #D9CFB8;gap:18px}' +
+    '#eo-cookie-modal .eo-row:last-of-type{border-bottom:none}' +
+    '#eo-cookie-modal .eo-row .eo-label{font-weight:600;font-size:14px;color:#0E1A2B;display:block;margin-bottom:2px}' +
+    '#eo-cookie-modal .eo-row .eo-desc{font-size:12px;color:#3B4A60}' +
+    '.eo-switch{position:relative;display:inline-block;width:38px;height:22px;flex-shrink:0;margin-top:4px}' +
+    '.eo-switch input{opacity:0;width:0;height:0}' +
+    '.eo-slider{position:absolute;cursor:pointer;inset:0;background:#D9CFB8;transition:.2s;border-radius:22px}' +
+    '.eo-slider:before{position:absolute;content:"";height:16px;width:16px;left:3px;top:3px;background:#fff;transition:.2s;border-radius:50%}' +
+    '.eo-switch input:checked + .eo-slider{background:#B8924D}' +
+    '.eo-switch input:checked + .eo-slider:before{transform:translateX(16px)}' +
+    '.eo-switch input:disabled + .eo-slider{opacity:.6;cursor:not-allowed}' +
+    '#eo-cookie-modal .eo-foot{margin-top:22px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}' +
+    '#eo-cookie-fab{position:fixed;bottom:16px;left:16px;width:42px;height:42px;border-radius:50%;background:#FBF8F2;border:1px solid #D9CFB8;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:99997;box-shadow:0 4px 14px rgba(14,26,43,.12);transition:all .2s;font-size:18px}' +
+    '#eo-cookie-fab:hover{border-color:#8E6B2E;transform:translateY(-1px)}' +
+    '#eo-cookie-fab.on{display:flex}' +
+    '#eo-legal-bar{font-size:12px;color:#6b7180;text-align:center;padding:18px 16px;line-height:2;border-top:1px solid rgba(217,207,184,.5);margin-top:24px}' +
+    '#eo-legal-bar a{color:inherit;text-decoration:none;margin:0 2px}' +
+    '#eo-legal-bar a:hover{color:#8E6B2E;text-decoration:underline}' +
+    '#eo-legal-bar .sep{opacity:.5;margin:0 6px}' +
+    '.eo-legal-consent{display:flex;align-items:flex-start;gap:10px;padding:12px 0;margin:14px 0;font-size:12.5px;color:inherit;line-height:1.5}' +
+    '.eo-legal-consent input[type="checkbox"]{margin-top:3px;flex-shrink:0;accent-color:#B8924D}' +
+    '.eo-legal-consent a{color:#8E6B2E;text-decoration:underline}' +
+    '.eo-pro-note{display:block;margin-top:10px;padding:8px 12px;font-size:11.5px;color:#6b7180;border-left:2px solid rgba(184,146,77,.5);background:rgba(251,248,242,.4);line-height:1.5;font-style:italic}' +
+    '@media (max-width:640px){#eo-cookie-banner{padding:18px 18px}#eo-cookie-banner .eo-actions{margin-left:0;width:100%}#eo-cookie-banner .eo-actions .eo-btn{flex:1 1 auto}}';
+
+  function injectStyle() {
+    var s = document.createElement('style');
+    s.id = 'eo-legal-style';
+    s.textContent = css;
+    document.head.appendChild(s);
+  }
+
+  // ---------- 2. META TAGS ----------
+  function ensureMeta() {
+    var head = document.head;
+    if (!head.querySelector('meta[name="robots"]')) {
+      var m = document.createElement('meta'); m.name = 'robots'; m.content = 'index, follow'; head.appendChild(m);
+    }
+    if (!head.querySelector('meta[http-equiv="X-Frame-Options"]')) {
+      var x = document.createElement('meta'); x.setAttribute('http-equiv','X-Frame-Options'); x.content='SAMEORIGIN'; head.appendChild(x);
+    }
+    if (!head.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
+      var c = document.createElement('meta'); c.setAttribute('http-equiv','Content-Security-Policy');
+      c.content = "default-src 'self' 'unsafe-inline' fonts.googleapis.com fonts.gstatic.com wa.me; img-src 'self' data:; ";
+      head.appendChild(c);
+    }
+  }
+
+  // ---------- 3. CONSENT STORAGE ----------
+  function getConsent() {
+    try { var raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : null; }
+    catch (e) { return null; }
+  }
+  function saveConsent(c) {
+    c.timestamp = new Date().toISOString();
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(c)); } catch (e) {}
+  }
+
+  // ---------- 4. COOKIE BANNER ----------
+  function buildBanner() {
+    var bd = document.createElement('div'); bd.id = 'eo-cookie-backdrop';
+    var b = document.createElement('div'); b.id = 'eo-cookie-banner'; b.className = 'eo-legal-vars';
+    b.innerHTML =
+      '<div class="eo-wrap">' +
+        '<div><h4>Privacidad y cookies</h4><p>Utilizamos cookies técnicas necesarias para el funcionamiento del sitio. Con su consentimiento, también utilizamos cookies de preferencias, analíticas y de marketing. Consulte la <a style="color:#8E6B2E" href="' + LEGAL_DIR + 'cookies.html">Política de Cookies</a>.</p></div>' +
+        '<div class="eo-actions">' +
+          '<button class="eo-btn" data-eo="customize">Personalizar</button>' +
+          '<button class="eo-btn" data-eo="necessary">Sólo necesarias</button>' +
+          '<button class="eo-btn primary" data-eo="all">Aceptar todas</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(bd); document.body.appendChild(b);
+
+    var m = document.createElement('div'); m.id = 'eo-cookie-modal'; m.className = 'eo-legal-vars';
+    m.innerHTML =
+      '<h3>Preferencias de cookies</h3>' +
+      '<div class="eo-row"><div><span class="eo-label">Técnicas (necesarias)</span><span class="eo-desc">Imprescindibles para el funcionamiento del sitio. No requieren consentimiento.</span></div>' +
+        '<label class="eo-switch"><input type="checkbox" checked disabled><span class="eo-slider"></span></label></div>' +
+      '<div class="eo-row"><div><span class="eo-label">Preferencias</span><span class="eo-desc">Recordar opciones del usuario como sede o idioma.</span></div>' +
+        '<label class="eo-switch"><input type="checkbox" data-eo-pref="preferences"><span class="eo-slider"></span></label></div>' +
+      '<div class="eo-row"><div><span class="eo-label">Analíticas</span><span class="eo-desc">Medir el uso del sitio (Google Analytics) con IP anonimizada.</span></div>' +
+        '<label class="eo-switch"><input type="checkbox" data-eo-pref="analytics"><span class="eo-slider"></span></label></div>' +
+      '<div class="eo-row"><div><span class="eo-label">Marketing</span><span class="eo-desc">Mostrar contenidos personalizados (Meta Pixel). Sólo con consentimiento explícito.</span></div>' +
+        '<label class="eo-switch"><input type="checkbox" data-eo-pref="marketing"><span class="eo-slider"></span></label></div>' +
+      '<div class="eo-foot">' +
+        '<button class="eo-btn" data-eo="modal-close">Cancelar</button>' +
+        '<button class="eo-btn primary" data-eo="modal-save">Guardar preferencias</button>' +
+      '</div>';
+    document.body.appendChild(m);
+
+    var fab = document.createElement('button'); fab.id = 'eo-cookie-fab'; fab.title = 'Preferencias de cookies'; fab.setAttribute('aria-label','Preferencias de cookies'); fab.textContent = '\u{1F36A}';
+    document.body.appendChild(fab);
+
+    var openModal = function () {
+      var c = getConsent() || {};
+      m.querySelector('[data-eo-pref="preferences"]').checked = !!c.preferences;
+      m.querySelector('[data-eo-pref="analytics"]').checked = !!c.analytics;
+      m.querySelector('[data-eo-pref="marketing"]').checked = !!c.marketing;
+      bd.classList.add('on'); m.classList.add('on'); b.classList.remove('show');
+    };
+    var closeModal = function () { m.classList.remove('on'); bd.classList.remove('on'); if (!getConsent()) b.classList.add('show'); };
+    var finish = function () { b.classList.remove('show'); bd.classList.remove('on'); m.classList.remove('on'); fab.classList.add('on'); };
+
+    b.addEventListener('click', function (e) {
+      var t = e.target.getAttribute('data-eo'); if (!t) return;
+      if (t === 'all') { saveConsent({necessary:true,preferences:true,analytics:true,marketing:true}); finish(); }
+      else if (t === 'necessary') { saveConsent({necessary:true,preferences:false,analytics:false,marketing:false}); finish(); }
+      else if (t === 'customize') { openModal(); }
+    });
+    m.addEventListener('click', function (e) {
+      var t = e.target.getAttribute('data-eo'); if (!t) return;
+      if (t === 'modal-close') closeModal();
+      if (t === 'modal-save') {
+        saveConsent({
+          necessary:true,
+          preferences:m.querySelector('[data-eo-pref="preferences"]').checked,
+          analytics:m.querySelector('[data-eo-pref="analytics"]').checked,
+          marketing:m.querySelector('[data-eo-pref="marketing"]').checked
+        }); finish();
+      }
+    });
+    fab.addEventListener('click', openModal);
+    bd.addEventListener('click', closeModal);
+
+    if (!getConsent()) {
+      setTimeout(function () { b.classList.add('show'); }, 400);
+    } else {
+      fab.classList.add('on');
+    }
+  }
+
+  // ---------- 5. FORM CONSENT ----------
+  function injectFormConsent() {
+    var forms = document.querySelectorAll('form');
+    forms.forEach(function (f) {
+      if (f.querySelector('.eo-legal-consent')) return;
+      if (f.closest('#eo-cookie-modal')) return;
+      var lbl = document.createElement('label');
+      lbl.className = 'eo-legal-consent';
+      lbl.innerHTML =
+        '<input type="checkbox" required>' +
+        '<span>He leído y acepto la <a href="' + LEGAL_DIR + 'privacidad.html">Política de Privacidad</a> y los <a href="' + LEGAL_DIR + 'terminos.html">Términos</a>. Comprendo que la consulta no constituye asesoramiento legal personalizado y se realiza con fines orientativos.</span>';
+      // Insert before submit button if any, else append.
+      var submit = f.querySelector('button[type="submit"], input[type="submit"], button:not([type])');
+      if (submit && submit.parentNode === f) f.insertBefore(lbl, submit);
+      else if (submit) submit.parentNode.insertBefore(lbl, submit);
+      else f.appendChild(lbl);
+    });
+  }
+
+  // ---------- 6. FOOTER LEGAL BAR ----------
+  function injectFooterBar() {
+    if (document.getElementById('eo-legal-bar')) return;
+    var bar = document.createElement('div');
+    bar.id = 'eo-legal-bar';
+    bar.innerHTML =
+      '<a href="' + LEGAL_DIR + 'aviso-legal.html">Aviso Legal</a><span class="sep">·</span>' +
+      '<a href="' + LEGAL_DIR + 'privacidad.html">Privacidad</a><span class="sep">·</span>' +
+      '<a href="' + LEGAL_DIR + 'terminos.html">Términos</a><span class="sep">·</span>' +
+      '<a href="' + LEGAL_DIR + 'cookies.html">Cookies</a><span class="sep">·</span>' +
+      '<a href="' + LEGAL_DIR + 'arrepentimiento.html">Arrepentimiento (Ley 24.240)</a><span class="sep">·</span>' +
+      '<a href="mailto:dpo@estudiooro.com?subject=Ejercicio%20de%20derechos%20ARCO">Ejercer derechos ARCO</a><span class="sep">·</span>' +
+      '<a href="https://www.argentina.gob.ar/produccion/consumidor" target="_blank" rel="noopener">Defensa del Consumidor</a><span class="sep">·</span>' +
+      '<a href="https://www.argentina.gob.ar/aaip" target="_blank" rel="noopener">AAIP</a><span class="sep">·</span>' +
+      '<a href="https://www.aepd.es" target="_blank" rel="noopener">AEPD</a><span class="sep">·</span>' +
+      '<a href="https://www.gub.uy/unidad-reguladora-control-datos-personales" target="_blank" rel="noopener">URCDP</a>';
+    var footer = document.querySelector('footer');
+    if (footer) footer.appendChild(bar);
+    else document.body.appendChild(bar);
+  }
+
+  // ---------- 7. URGENCY DISCLAIMER ----------
+  function injectUrgencyDisclaimers() {
+    var sel = '.urgency, .urg, .urgencia';
+    var nodes = document.querySelectorAll(sel);
+    nodes.forEach(function (n) {
+      if (n.querySelector('.eo-pro-note')) return;
+      var note = document.createElement('span');
+      note.className = 'eo-pro-note';
+      note.textContent = 'El contacto inicial no constituye asesoramiento legal personalizado · Confidencial · Sin compromiso';
+      n.appendChild(note);
+    });
+  }
+
+  // ---------- BOOT ----------
+  function boot() {
+    try { ensureMeta(); } catch (e) {}
+    try { injectStyle(); } catch (e) {}
+    try { buildBanner(); } catch (e) {}
+    try { injectFormConsent(); } catch (e) {}
+    try { injectUrgencyDisclaimers(); } catch (e) {}
+    try { injectFooterBar(); } catch (e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+
+</script>
+</head>
+<body>
+
+<div class="scroll-bar"></div>
+<div class="cursor-main"></div>
+<div class="cursor-trail"></div>
+
+<!-- TOP STRIP -->
+<div class="topstrip">
+  <div class="tick-wrap" id="ticker"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">O</span> Estudio Oro</a>
+    <div class="nav-links">
+      <a href="#practice">Áreas</a>
+      <a href="#penal">Penal</a>
+      <a href="#realestate">Real Estate</a>
+      <a href="#ialab">IA Lab</a>
+      <a href="#about">Estudio</a>
+      <a href="#contact">Contacto</a>
+    </div>
+    <a href="https://wa.me/5491168777777" class="cta-btn magnetic" data-magnet>WhatsApp 24/7 <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-mesh">
+    <div class="mesh-blob mb1"></div>
+    <div class="mesh-blob mb2"></div>
+    <div class="mesh-blob mb3"></div>
+    <div class="mesh-blob mb4"></div>
+  </div>
+  <canvas id="particles"></canvas>
+  <div class="hero-spotlight"></div>
+  <div class="hero-inner">
+    <div class="hero-main">
+      <div class="hero-eyebrow">Buenos Aires · Madrid · Punta del Este</div>
+      <h1>
+        <span class="word"><span class="inner">La</span></span>
+        <span class="word"><span class="inner"><em class="typewriter" id="typeword">defensa</em></span></span>
+        <span class="word"><span class="inner">que</span></span>
+        <span class="word"><span class="inner">una</span></span>
+        <span class="word"><span class="inner">firma</span></span>
+        <span class="word"><span class="inner"><em class="accent">resuelve completa.</em></span></span>
+      </h1>
+      <p class="hero-lead">Firma multipráctica integrada por abogados penalistas, corredores inmobiliarios matriculados y especialistas en patrimonio internacional. Una sola estructura para resolver lo que estudios convencionales tercerizan.</p>
+      <div class="hero-cta-row">
+        <a href="#contact" class="cta-btn magnetic" data-magnet>Consulta confidencial <span class="arrow">→</span></a>
+        <a href="#practice" class="cta-btn cta-secondary magnetic" data-magnet>Áreas de práctica</a>
+      </div>
+    </div>
+    <div class="hero-aside">
+      <div class="glass-card stats-card">
+        <div class="stats-card-title"><span class="pulse"></span> Estudio · estado en vivo</div>
+        <div class="stat-row"><span>Consultas atendidas hoy</span><span id="liveConsults">23</span></div>
+        <div class="stat-row"><span>Última hace</span><span id="liveLast">7 min</span></div>
+        <div class="stat-row"><span>Causas activas</span><span id="liveCauses">127</span></div>
+        <div class="stat-row"><span>Sedes en línea</span><span>3 / 3</span></div>
+      </div>
+      <div class="glass-card ai-bubble">
+        <div class="ai-bubble-head">
+          <div class="avatar">α</div>
+          <h4>IA Legal Lab</h4>
+          <div class="status">Activo</div>
+        </div>
+        <div id="aiChat">
+          <div class="ai-msg user">Necesito excarcelación urgente para un familiar detenido.</div>
+          <div class="ai-msg bot typing"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORLD MAP -->
+<section class="world">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Sedes operativas</div>
+      <h2 class="section-title">Tres ciudades. <em>Una sola firma</em>.</h2>
+    </div>
+    <p class="section-sub">Coordinación operativa permanente entre Buenos Aires, Madrid y Punta del Este. Patrimonio, defensa y real estate desde una estructura unificada.</p>
+  </div>
+  <div class="world-inner reveal reveal-d1">
+    <svg class="world-svg" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="arcg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#C9A663" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#C9A663" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#C9A663" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="dotg">
+          <stop offset="0%" stop-color="#C9A663"/>
+          <stop offset="100%" stop-color="#C9A663" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- Simplified continents -->
+      <!-- South America (Argentina/Uruguay area) -->
+      <path d="M310,180 L340,170 L360,200 L380,240 L370,290 L360,340 L340,400 L320,440 L300,460 L285,440 L275,400 L290,360 L300,310 L295,260 L305,220 Z" stroke="#ECE4D2" stroke-opacity=".22" stroke-width="1" fill="rgba(201,166,99,0.03)"/>
+      <!-- Europe / Spain area -->
+      <path d="M570,140 L620,130 L660,140 L680,160 L675,185 L650,200 L620,205 L580,200 L555,180 L555,155 Z" stroke="#ECE4D2" stroke-opacity=".22" stroke-width="1" fill="rgba(201,166,99,0.03)"/>
+      <!-- Africa hint -->
+      <path d="M620,210 L680,205 L710,230 L730,290 L720,350 L690,380 L660,370 L640,330 L625,280 Z" stroke="#ECE4D2" stroke-opacity=".10" stroke-width="1" fill="none"/>
+      <!-- North America hint -->
+      <path d="M180,100 L260,90 L320,120 L310,165 L280,180 L240,170 L200,150 L175,120 Z" stroke="#ECE4D2" stroke-opacity=".10" stroke-width="1" fill="none"/>
+      <!-- Dotted grid -->
+      <g opacity=".15">
+        <line x1="0" y1="260" x2="1200" y2="260" stroke="#ECE4D2" stroke-width=".5" stroke-dasharray="2,8"/>
+        <line x1="600" y1="0" x2="600" y2="520" stroke="#ECE4D2" stroke-width=".5" stroke-dasharray="2,8"/>
+      </g>
+      <!-- Arc paths between sedes: BA(340,400) - MAD(620,160) - PDE(360,400) -->
+      <path d="M340,400 Q480,100 620,160" stroke="url(#arcg)" stroke-width="1.5" fill="none" stroke-dasharray="900" stroke-dashoffset="900">
+        <animate attributeName="stroke-dashoffset" from="900" to="-900" dur="6s" repeatCount="indefinite"/>
+      </path>
+      <path d="M620,160 Q500,320 360,400" stroke="url(#arcg)" stroke-width="1.5" fill="none" stroke-dasharray="900" stroke-dashoffset="900">
+        <animate attributeName="stroke-dashoffset" from="900" to="-900" dur="7s" begin="2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M340,400 Q360,420 360,400" stroke="#C9A663" stroke-width="1" fill="none" opacity=".4"/>
+      <!-- Pulsing dots -->
+      <g>
+        <circle cx="340" cy="400" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.4s" repeatCount="indefinite"/></circle>
+        <circle cx="340" cy="400" r="5" fill="#C9A663"/>
+        <circle cx="620" cy="160" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.4s" begin=".8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.4s" begin=".8s" repeatCount="indefinite"/></circle>
+        <circle cx="620" cy="160" r="5" fill="#C9A663"/>
+        <circle cx="360" cy="400" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.4s" begin="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.4s" begin="1.6s" repeatCount="indefinite"/></circle>
+        <circle cx="360" cy="400" r="5" fill="#E54B2A"/>
+      </g>
+      <!-- Labels -->
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="#ECE4D2">
+        <text x="270" y="430" opacity=".9">Buenos Aires</text>
+        <text x="270" y="444" opacity=".5" font-size="9">-34.6° / -58.4°</text>
+        <text x="640" y="155" opacity=".9">Madrid</text>
+        <text x="640" y="169" opacity=".5" font-size="9">40.4° / -3.7°</text>
+        <text x="380" y="395" opacity=".9">Punta del Este</text>
+        <text x="380" y="409" opacity=".5" font-size="9">-34.9° / -54.9°</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-row">
+    <span>Penal</span><span>Civil</span><span>Comercial</span><span>Laboral</span><span>Tributario</span><span>Familia</span><span>Real Estate</span><span>Patrimonio</span><span>IA Legal</span><span>Compliance</span><span>Mediación</span>
+    <span>Penal</span><span>Civil</span><span>Comercial</span><span>Laboral</span><span>Tributario</span><span>Familia</span><span>Real Estate</span><span>Patrimonio</span><span>IA Legal</span><span>Compliance</span><span>Mediación</span>
+  </div>
+  <div class="marquee-row reverse">
+    <span>Buenos Aires</span><span>Madrid</span><span>Punta del Este</span><span>Defensa 24/7</span><span>Due Diligence</span><span>Fideicomisos</span><span>Excarcelaciones</span><span>Patrimonio Offshore</span>
+    <span>Buenos Aires</span><span>Madrid</span><span>Punta del Este</span><span>Defensa 24/7</span><span>Due Diligence</span><span>Fideicomisos</span><span>Excarcelaciones</span><span>Patrimonio Offshore</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal"><div class="stat-num"><span data-count="15">0</span><span class="suf">+</span></div><div class="stat-label">Años acumulados</div></div>
+    <div class="stat reveal reveal-d1"><div class="stat-num"><span data-count="500">0</span><span class="suf">+</span></div><div class="stat-label">Causas resueltas</div></div>
+    <div class="stat reveal reveal-d2"><div class="stat-num"><span data-count="3">0</span></div><div class="stat-label">Sedes internacionales</div></div>
+    <div class="stat reveal reveal-d3"><div class="stat-num"><span data-count="24">0</span><span class="suf">/7</span></div><div class="stat-label">Urgencias penales</div></div>
+  </div>
+</section>
+
+<!-- PRACTICE AREAS -->
+<section class="practice" id="practice">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">11 áreas · una firma</div>
+      <h2 class="section-title">Práctica integrada de <em>alcance total</em>.</h2>
+    </div>
+    <p class="section-sub">Nuestro equipo cubre defensa penal de alta exposición, real estate matriculado y patrimonio internacional desde una estructura unificada.</p>
+  </div>
+  <div class="practice-grid">
+    <article class="pcard tilt reveal"><div class="pcard-num"><span>01 / Penal</span><div class="pcard-icon">§</div></div><h3>Penal</h3><p>Excarcelaciones urgentes, juicios orales, delitos económicos.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal reveal-d1"><div class="pcard-num"><span>02 / Civil</span><div class="pcard-icon">C</div></div><h3>Civil</h3><p>Daños y perjuicios, responsabilidad civil, contratos.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal reveal-d2"><div class="pcard-num"><span>03 / Comercial</span><div class="pcard-icon">$</div></div><h3>Comercial</h3><p>Sociedades, contratos comerciales, conflictos societarios.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal"><div class="pcard-num"><span>04 / Laboral</span><div class="pcard-icon">L</div></div><h3>Laboral</h3><p>Defensa empresarial y representación individual.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal reveal-d1"><div class="pcard-num"><span>05 / Tributario</span><div class="pcard-icon">T</div></div><h3>Tributario</h3><p>Procedimientos fiscales, planificación impositiva.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal reveal-d2"><div class="pcard-num"><span>06 / Familia</span><div class="pcard-icon">F</div></div><h3>Familia y Sucesiones</h3><p>Divorcios, alimentos, herencias, fideicomisos.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal"><div class="pcard-num"><span>07 / Real Estate</span><div class="pcard-icon">⌂</div></div><h3>Real Estate</h3><p>Corretaje matriculado con due diligence legal incluido.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal reveal-d1"><div class="pcard-num"><span>08 / Patrimonio</span><div class="pcard-icon">P</div></div><h3>Patrimonio</h3><p>Estructuras de protección y planificación sucesoria.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal reveal-d2"><div class="pcard-num"><span>09 / IA Lab</span><div class="pcard-icon">α</div></div><h3>IA Legal Lab</h3><p>Análisis de expedientes y jurisprudencia con IA.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal"><div class="pcard-num"><span>10 / Compliance</span><div class="pcard-icon">✓</div></div><h3>Compliance</h3><p>Programas de integridad y prevención del lavado.</p><span class="pcard-arrow">↗</span></article>
+    <article class="pcard tilt reveal reveal-d1"><div class="pcard-num"><span>11 / Mediación</span><div class="pcard-icon">M</div></div><h3>Mediación</h3><p>Resolución alternativa de conflictos.</p><span class="pcard-arrow">↗</span></article>
+  </div>
+</section>
+
+<!-- PENAL PINNED -->
+<section class="penal" id="penal">
+  <div class="penal-track">
+    <div class="penal-sticky">
+      <div class="penal-inner">
+        <div class="penal-left">
+          <div class="section-eyebrow" style="color:var(--coral)"><span style="background:var(--coral);width:24px"></span> Departamento penal</div>
+          <h2>Detención en curso. <em>Nuestro equipo penalista actúa en las primeras horas.</em></h2>
+          <p>Linea directa 24/7 atendida por abogados penalistas del estudio. Confidencial, sin compromiso, sin costo. Respuesta inmediata por WhatsApp.</p>
+          <div class="urgency-box">
+            <div class="live-clock"><span class="blink"></span><span id="liveClock">Now: 00:00:00 · Línea abierta</span></div>
+            <h3>Urgencia · 24/7</h3>
+            <p>Atención inmediata. Penalistas del estudio en guardia permanente.</p>
+            <div class="urgency-row">
+              <a href="https://wa.me/5491168777777" class="cta-btn magnetic" data-magnet>WhatsApp <span class="arrow">→</span></a>
+              <a href="tel:+5491168777777" class="cta-btn cta-secondary magnetic" data-magnet>Llamar</a>
+            </div>
+          </div>
+        </div>
+        <div class="penal-right">
+          <div class="penal-card penal-anim"><div class="pc-num">01</div><h4>Excarcelación urgente</h4></div>
+          <div class="penal-card penal-anim"><div class="pc-num">02</div><h4>Juicio oral</h4></div>
+          <div class="penal-card penal-anim"><div class="pc-num">03</div><h4>Delitos económicos</h4></div>
+          <div class="penal-card penal-anim"><div class="pc-num">04</div><h4>Tránsito culposo</h4></div>
+          <div class="penal-card penal-anim"><div class="pc-num">05</div><h4>Violencia familiar y de género</h4></div>
+          <div class="penal-card penal-anim"><div class="pc-num">06</div><h4>Empresarial</h4></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL ESTATE -->
+<section class="realestate" id="realestate">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Real Estate · corretaje matriculado</div>
+      <h2 class="section-title">Corretaje con <em>due diligence legal</em> integrado.</h2>
+    </div>
+    <p class="section-sub">Operaciones inmobiliarias premium con verificación jurídica completa. Corredores matriculados y abogados especialistas trabajando en simultáneo.</p>
+  </div>
+  <div class="re-grid">
+    <article class="re-card spotlight reveal"><div class="re-num">→ 01</div><h3>Verificación de títulos</h3><p>Cadena dominial completa, certificados, oposiciones, gravámenes.</p><div class="reveal">Reportes legales firmados</div></article>
+    <article class="re-card spotlight reveal reveal-d1"><div class="re-num">→ 02</div><h3>Compraventa segura</h3><p>Boleto, escritura, acompañamiento integral hasta la inscripción.</p><div class="reveal">Cierre asistido</div></article>
+    <article class="re-card spotlight reveal reveal-d2"><div class="re-num">→ 03</div><h3>Análisis de inversión</h3><p>Rentabilidad, financiamiento, marco regulatorio CABA / Madrid / PDE.</p><div class="reveal">ROI proyectado</div></article>
+    <article class="re-card spotlight reveal"><div class="re-num">→ 04</div><h3>Real estate offshore</h3><p>Operaciones internacionales, tax planning, compliance transfronterizo.</p><div class="reveal">Multi-jurisdiccional</div></article>
+    <article class="re-card spotlight reveal reveal-d1"><div class="re-num">→ 05</div><h3>Negociación</h3><p>Representación en compraventas, arriendos y resolución de conflictos.</p><div class="reveal">Ventaja contractual</div></article>
+    <article class="re-card spotlight reveal reveal-d2"><div class="re-num">→ 06</div><h3>Fideicomisos</h3><p>Estructuración inmobiliaria, fiduciario, vehículos de protección.</p><div class="reveal">Estructura blindada</div></article>
+  </div>
+</section>
+
+<!-- IA LAB -->
+<section class="ialab" id="ialab">
+  <div class="ialab-inner">
+    <div class="reveal">
+      <div class="section-eyebrow" style="color:var(--cyan)">IA Legal Lab · departamento autónomo</div>
+      <h2>Análisis legal con <em>IA aplicada</em>.</h2>
+      <p>Cobertura analítica acelerada sobre expedientes, jurisprudencia y due diligence. Cada hallazgo es revisado por un abogado del equipo antes de transformarse en estrategia.</p>
+      <div class="ialab-feats">
+        <div class="ialab-feat"><div class="lab">Velocidad</div><div class="val">×40</div></div>
+        <div class="ialab-feat"><div class="lab">Cobertura</div><div class="val">∞</div></div>
+        <div class="ialab-feat"><div class="lab">Idiomas</div><div class="val">ES · EN</div></div>
+        <div class="ialab-feat"><div class="lab">Trazabilidad</div><div class="val">100%</div></div>
+      </div>
+    </div>
+    <div class="reveal reveal-d1">
+      <div class="waveform" id="waveform"></div>
+      <div class="ialab-meta"><span>● procesando · expediente_2026.pdf</span><span id="ialabTime">00:00:42</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-body reveal">
+      <div class="section-eyebrow">Nuestro estudio</div>
+      <h2 class="section-title" style="margin-bottom:36px">Una firma. <em>Tres ciudades</em>. Un equipo.</h2>
+      <p>Estudio Oro es una firma multipráctica argentina con sedes operativas en Buenos Aires, Madrid y Punta del Este. Reunimos un equipo de abogados penalistas, corredores inmobiliarios matriculados y especialistas en patrimonio internacional bajo una misma estructura, lo que nos permite resolver desde una sola firma operaciones que estudios tradicionales tercerizan.</p>
+      <p>Combinamos defensa penal de alta exposición, corretaje inmobiliario premium y estructuras patrimoniales internacionales. Más de 500 causas y operaciones resueltas como equipo. Disponibilidad permanente 24/7 para urgencias penales.</p>
+      <p>Estudio Oro incorpora inteligencia artificial aplicada al análisis de expedientes, jurisprudencia y due diligence — una capacidad analítica que multiplica la velocidad y cobertura del equipo. Nuestro IA Legal Lab opera como departamento autónomo.</p>
+      <p>Fundado por el Dr. Diego A. Orosa, Socio Director, el estudio reúne hoy a más de 15 profesionales entre abogados, corredores, contadores y técnicos.</p>
+    </div>
+    <aside class="about-panel reveal reveal-d2">
+      <h4>Departamentos</h4>
+      <p>Penal · Real Estate · Patrimonio · IA Legal Lab · Comercial · Laboral · Tributario · Familia</p>
+      <h4>Sedes</h4>
+      <p><strong>Buenos Aires</strong> — Sede central · Salguero 2835 4B, Palermo<br><strong>Madrid</strong> — Patrimonio y operaciones EU<br><strong>Punta del Este</strong> — Real Estate y fideicomisos</p>
+      <h4>Equipo</h4>
+      <p>+15 profesionales — Abogados penalistas · Corredores inmobiliarios matriculados · Asesores patrimoniales · Compliance officers</p>
+    </aside>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Insights del equipo</div>
+      <h2 class="section-title">Análisis y <em>jurisprudencia aplicada</em>.</h2>
+    </div>
+  </div>
+  <div class="insights-grid">
+    <article class="icard tilt reveal"><div class="tag">Penal</div><h3>Qué hacer si te detienen en Buenos Aires</h3><p>Derechos constitucionales inmediatos y los cinco errores graves que comprometen una defensa antes de llegar al estudio.</p><div class="read">Leer análisis →</div></article>
+    <article class="icard tilt reveal reveal-d1"><div class="tag">Real Estate</div><h3>Due diligence inmobiliario en CABA</h3><p>Los siete pasos legales antes del boleto: verificación dominial, deudas, registros y cargas.</p><div class="read">Leer análisis →</div></article>
+    <article class="icard tilt reveal reveal-d2"><div class="tag">Patrimonio</div><h3>Proteger patrimonio en Argentina 2026</h3><p>Fideicomisos y estructuras societarias frente al nuevo contexto regulatorio y fiscal.</p><div class="read">Leer análisis →</div></article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <div class="section-eyebrow">Contacto · 24/7</div>
+      <h2 class="section-title" style="margin-bottom:36px">Una consulta, <em>una respuesta</em>.</h2>
+      <p>Consulta confidencial, sin compromiso. Atención inmediata para urgencias penales. Nuestro equipo coordina respuesta desde la sede más próxima.</p>
+      <div class="contact-block"><h5>WhatsApp</h5><a href="https://wa.me/5491168777777">+54 9 11 6877-7777</a></div>
+      <div class="contact-block"><h5>Email</h5><a href="mailto:contacto@estudiooro.com">contacto@estudiooro.com</a></div>
+      <div class="contact-block"><h5>Sede central</h5><span>Salguero 2835 4B, Palermo · Buenos Aires</span></div>
+    </div>
+    <form class="form-grid reveal reveal-d1" onsubmit="event.preventDefault();this.querySelector('button').textContent='Enviado · gracias'">
+      <div class="form-row">
+        <input class="input" placeholder="Nombre completo" required>
+        <input class="input" placeholder="Teléfono / WhatsApp" required>
+      </div>
+      <input class="input" type="email" placeholder="Email" required>
+      <select class="input">
+        <option>Área de consulta</option>
+        <option>Penal · urgencia</option>
+        <option>Real Estate</option>
+        <option>Patrimonio</option>
+        <option>IA Legal Lab</option>
+        <option>Otra área</option>
+      </select>
+      <textarea class="input" placeholder="Describí brevemente tu situación. Confidencial."></textarea>
+      <label class="checkbox-row"><input type="checkbox" required> Acepto el tratamiento confidencial de mis datos</label>
+      <button type="submit" class="cta-btn magnetic" data-magnet style="justify-self:start">Enviar consulta <span class="arrow">→</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Estudio Oro</div>
+        <p>Firma multipráctica argentina. Defensa penal, real estate y patrimonio internacional desde una sola estructura.</p>
+        <p style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:16px">Buenos Aires · Madrid · Punta del Este</p>
+      </div>
+      <div>
+        <h6>Áreas</h6>
+        <a href="#penal">Penal</a><a href="#realestate">Real Estate</a><a href="#ialab">IA Legal Lab</a><a href="#about">Patrimonio</a>
+      </div>
+      <div>
+        <h6>Firma</h6>
+        <a href="#about">Estudio</a><a href="#about">Equipo</a><a href="#about">Sedes</a><a href="#contact">Contacto</a>
+      </div>
+      <div>
+        <h6>Urgencias</h6>
+        <a href="https://wa.me/5491168777777">WhatsApp 24/7</a><a href="tel:+5491168777777">Línea directa</a><span style="color:var(--coral);font-family:'JetBrains Mono',monospace;font-size:11px" id="footerClock">Línea abierta · 00:00</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Estudio Oro S.A.S. · Equipo matriculado CPACF / CASI / CUCICBA · Salguero 2835 4B, Palermo, CABA · © 2026</span>
+      <span>Hecho con detalle ·  estudiooro.com</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5491168777777" class="wa-float magnetic" data-magnet aria-label="WhatsApp 24/7">24/7</a>
+
+<script>
+(function(){
+  const isTouch=matchMedia('(hover:none)').matches;
+
+  // SCROLL PROGRESS
+  const scrollUpdate=()=>{
+    const h=document.documentElement;
+    const p=h.scrollTop/(h.scrollHeight-h.clientHeight);
+    document.documentElement.style.setProperty('--scrollProg',p);
+  };
+  scrollUpdate();
+  addEventListener('scroll',scrollUpdate,{passive:true});
+
+  // CUSTOM CURSOR
+  if(!isTouch){
+    const main=document.querySelector('.cursor-main');
+    const trail=document.querySelector('.cursor-trail');
+    let mx=innerWidth/2,my=innerHeight/2,tx=mx,ty=my;
+    addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;main.style.left=mx+'px';main.style.top=my+'px';});
+    function tloop(){tx+=(mx-tx)*.15;ty+=(my-ty)*.15;trail.style.left=tx+'px';trail.style.top=ty+'px';requestAnimationFrame(tloop)}
+    tloop();
+    document.querySelectorAll('a,button,.tilt,.pcard,.re-card,.icard,.input,.magnetic').forEach(el=>{
+      el.addEventListener('mouseenter',()=>main.classList.add('active'));
+      el.addEventListener('mouseleave',()=>main.classList.remove('active'));
+    });
+  }
+
+  // SPOTLIGHT
+  const hero=document.querySelector('.hero');
+  if(hero){hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',(e.clientX-r.left)+'px');hero.style.setProperty('--my',(e.clientY-r.top)+'px')})}
+
+  // MAGNETIC CTAs
+  if(!isTouch){
+    document.querySelectorAll('[data-magnet]').forEach(el=>{
+      el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect();const cx=r.left+r.width/2;const cy=r.top+r.height/2;
+        const dx=e.clientX-cx;const dy=e.clientY-cy;
+        const dist=Math.hypot(dx,dy);
+        if(dist<120){el.style.transform=`translate(${dx*.25}px,${dy*.35}px)`}
+      });
+      el.addEventListener('mouseleave',()=>{el.style.transform=''});
+    });
+  }
+
+  // 3D TILT
+  if(!isTouch){
+    document.querySelectorAll('.tilt').forEach(el=>{
+      el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width;const py=(e.clientY-r.top)/r.height;
+        const rx=(py-.5)*-8;const ry=(px-.5)*8;
+        el.style.transform=`perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+        el.style.setProperty('--cx',(px*100)+'%');el.style.setProperty('--cy',(py*100)+'%');
+      });
+      el.addEventListener('mouseleave',()=>{el.style.transform=''});
+    });
+  }
+
+  // SPOTLIGHT cards
+  document.querySelectorAll('.spotlight').forEach(el=>{
+    el.addEventListener('mousemove',e=>{
+      const r=el.getBoundingClientRect();
+      el.style.setProperty('--cx',((e.clientX-r.left)/r.width*100)+'%');
+      el.style.setProperty('--cy',((e.clientY-r.top)/r.height*100)+'%');
+    });
+  });
+
+  // PARTICLES
+  const canvas=document.getElementById('particles');
+  if(canvas){
+    const ctx=canvas.getContext('2d');
+    let W,H,particles=[];
+    let cursor={x:-9999,y:-9999};
+    function resize(){W=canvas.width=innerWidth;H=canvas.height=hero.offsetHeight;}
+    resize();addEventListener('resize',resize);
+    addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();cursor.x=e.clientX-r.left;cursor.y=e.clientY-r.top});
+    const N=isTouch?40:80;
+    for(let i=0;i<N;i++)particles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5});
+    function loop(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of particles){
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1;
+        if(p.y<0||p.y>H)p.vy*=-1;
+        const dxc=p.x-cursor.x,dyc=p.y-cursor.y,dc=Math.hypot(dxc,dyc);
+        if(dc<120){p.x+=dxc/dc*.4;p.y+=dyc/dc*.4}
+        ctx.fillStyle='rgba(201,166,99,.6)';
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+      }
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a=particles[i],b=particles[j];
+          const d=Math.hypot(a.x-b.x,a.y-b.y);
+          if(d<110){
+            ctx.strokeStyle=`rgba(201,166,99,${(1-d/110)*.25})`;
+            ctx.lineWidth=.4;
+            ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  // TICKER content
+  const ticker=document.getElementById('ticker');
+  if(ticker){
+    const items=['<span class="live"><span class="dot"></span> Línea 24/7 abierta</span>','<span>Buenos Aires · Madrid · Punta del Este</span>','<span>+500 causas resueltas</span>','<span>IA Legal Lab activo</span>','<span>Consulta confidencial sin costo</span>','<span>Equipo matriculado CPACF / CASI / CUCICBA</span>'];
+    ticker.innerHTML=(items.join('')+items.join(''));
+  }
+
+  // TYPEWRITER hero word
+  const tw=document.getElementById('typeword');
+  if(tw){
+    const words=['defensa','estrategia','protección','defensa'];
+    let i=0,j=0,del=false;
+    function type(){
+      const w=words[i];
+      if(!del){
+        j++;tw.textContent=w.slice(0,j);
+        if(j===w.length){del=true;setTimeout(type,1800);return}
+      }else{
+        j--;tw.textContent=w.slice(0,j);
+        if(j===0){del=false;i=(i+1)%words.length}
+      }
+      setTimeout(type,del?40:90);
+    }
+    setTimeout(type,3000);
+  }
+
+  // AI CHAT bubble cycle
+  const aiChat=document.getElementById('aiChat');
+  if(aiChat){
+    const convos=[
+      {u:'Necesito excarcelación urgente para un familiar detenido.',b:'Activo guardia penal. Coordino contacto con el equipo en los próximos 8 minutos.'},
+      {u:'¿Cómo verifico un título antes de comprar?',b:'Cadena dominial 20 años + inhibiciones + deudas. Te paso el checklist Real Estate.'},
+      {u:'Quiero estructurar patrimonio offshore.',b:'Madrid coordina. Te propongo 3 vehículos según tu jurisdicción de origen.'}
+    ];
+    let idx=0;
+    function nextConvo(){
+      idx=(idx+1)%convos.length;
+      const c=convos[idx];
+      aiChat.innerHTML=`<div class="ai-msg user"></div><div class="ai-msg bot typing"></div>`;
+      const u=aiChat.querySelector('.user');const b=aiChat.querySelector('.bot');
+      let k=0;
+      const ti=setInterval(()=>{u.textContent=c.u.slice(0,k);k++;if(k>c.u.length){clearInterval(ti);setTimeout(()=>{b.classList.remove('typing');let l=0;const tj=setInterval(()=>{b.textContent=c.b.slice(0,l);l++;if(l>c.b.length){clearInterval(tj);setTimeout(nextConvo,3500)}},22)},1400)}},30);
+    }
+    setTimeout(nextConvo,4000);
+  }
+
+  // LIVE COUNTERS
+  let consults=23,causes=127,lastMin=7;
+  setInterval(()=>{
+    if(Math.random()<.3){consults++;document.getElementById('liveConsults').textContent=consults;lastMin=Math.floor(Math.random()*4)+1;document.getElementById('liveLast').textContent=lastMin+' min'}
+    if(Math.random()<.1){causes++;document.getElementById('liveCauses').textContent=causes}
+  },4500);
+
+  // LIVE CLOCK
+  function pad(n){return n<10?'0'+n:n}
+  function clock(){
+    const d=new Date();
+    const t=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+    const lc=document.getElementById('liveClock');if(lc)lc.textContent='Now: '+t+' · Línea abierta';
+    const fc=document.getElementById('footerClock');if(fc)fc.textContent='Línea abierta · '+pad(d.getHours())+':'+pad(d.getMinutes());
+  }
+  clock();setInterval(clock,1000);
+
+  // IA LAB timer
+  let labSec=42;
+  setInterval(()=>{labSec++;const m=Math.floor(labSec/60),s=labSec%60;const el=document.getElementById('ialabTime');if(el)el.textContent='00:'+pad(m)+':'+pad(s)},1000);
+
+  // WAVEFORM bars
+  const wf=document.getElementById('waveform');
+  if(wf){
+    for(let i=0;i<32;i++){
+      const b=document.createElement('div');b.className='wave-bar';
+      b.style.animationDelay=(Math.random()*1.5)+'s';
+      b.style.animationDuration=(0.9+Math.random()*1.6)+'s';
+      wf.appendChild(b);
+    }
+  }
+
+  // REVEAL on scroll
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // COUNTERS
+  const counters=document.querySelectorAll('[data-count]');
+  const ioC=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target;const target=+el.dataset.count;const start=performance.now();
+        function step(t){
+          const p=Math.min((t-start)/1600,1);
+          el.textContent=Math.floor(target*(1-Math.pow(1-p,3)));
+          if(p<1)requestAnimationFrame(step);else el.textContent=target;
+        }
+        requestAnimationFrame(step);ioC.unobserve(el);
+      }
+    })
+  },{threshold:.4});
+  counters.forEach(c=>ioC.observe(c));
+
+  // PINNED penal section sub-animations
+  const penalCards=document.querySelectorAll('.penal-anim');
+  const penalSection=document.getElementById('penal');
+  function penalScroll(){
+    if(!penalSection)return;
+    const r=penalSection.getBoundingClientRect();
+    const total=penalSection.offsetHeight-innerHeight;
+    const prog=Math.max(0,Math.min(1,-r.top/total));
+    penalCards.forEach((c,i)=>{
+      const trigger=(i+1)/(penalCards.length+1);
+      if(prog>trigger*.5)c.classList.add('in');
+    });
+  }
+  addEventListener('scroll',penalScroll,{passive:true});
+  penalScroll();
+
+  // HERO scroll color morph
+  function heroMorph(){
+    const sy=scrollY;
+    const v=Math.min(sy/600,1);
+    const accent=document.querySelector('.hero h1 .accent');
+    if(accent){
+      // interpolate gold (#C9A663) -> coral (#E54B2A)
+      const r=Math.round(201+(229-201)*v);
+      const g=Math.round(166+(75-166)*v);
+      const b=Math.round(99+(42-99)*v);
+      accent.style.color=`rgb(${r},${g},${b})`;
+    }
+  }
+  addEventListener('scroll',heroMorph,{passive:true});
+
+})();
+</script>
+</body>
+</html>
