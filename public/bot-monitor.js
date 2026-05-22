@@ -2,7 +2,19 @@
  * bot-monitor.js
  * Real-time bot monitoring dashboard — Estudio Oro
  * Vanilla ES module, no external dependencies.
+ *
+ * Data source: Supabase RPC `get_bot_health_summary(bot_id, hours)` over the
+ * `bot_metrics` table. Falls back to synthetic demo data when the RPC is
+ * unreachable or returns an empty window (no metrics ingested yet).
  */
+
+// ─── Supabase ────────────────────────────────────────────────────────────────
+// Project moljmujlfvtsgkjbtwss — anon key, RLS enforced.
+const SUPABASE_URL = 'https://moljmujlfvtsgkjbtwss.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vbGptdWpsZnZ0c2dramJ0d3NzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMzExNjAsImV4cCI6MjA4OTgwNzE2MH0.SLzQYtec6J39H7gA-XWQFprpIK9f7wpoRwQ4IhfZbhs';
+const HEALTH_WINDOW_HOURS = 24;
+
+let dataSourceState = 'unknown'; // 'live' | 'demo' | 'unknown'
 
 // ─── Bot configuration ───────────────────────────────────────────────────────
 
@@ -142,6 +154,36 @@ function generateDemoSnapshot(base) {
     driftScore:          clamp(base.driftScore          + jitter(0.002), 0, 0.1),
     contractCompliance:  clamp(base.contractCompliance  + jitter(0.0005), 0.98, 1),
     timestamp:           Date.now(),
+  };
+}
+
+/**
+ * Fetch the latest health summary for a bot from Supabase via the
+ * `get_bot_health_summary` RPC. Returns null when the window is empty
+ * (no metrics ingested yet) so the caller can fall back to demo data.
+ * Throws on network / auth failure.
+ */
+async function fetchHealthFromSupabase(botId) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_bot_health_summary`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({ p_bot_id: botId, p_hours: HEALTH_WINDOW_HOURS }),
+  });
+  if (!res.ok) throw new Error(`Supabase RPC ${res.status}`);
+  const rows = await res.json();
+  if (!Array.isArray(rows) || rows.length === 0) return null;
+  const r = rows[0];
+  return {
+    errorRate:          Number(r.avg_error_rate ?? 0),
+    memoryPrecision:    Number(r.avg_memory_precision ?? 1),
+    driftScore:         Number(r.avg_drift_score ?? 0),
+    contractCompliance: Number(r.avg_contract_compliance ?? 1),
+    timestamp:          r.last_measured_at ? Date.parse(r.last_measured_at) : Date.now(),
   };
 }
 
@@ -369,46 +411,85 @@ let countdownTimer = null;
 let refreshTimer   = null;
 
 /**
+ * Resolve the current snapshot for a bot. Tries Supabase first; on failure or
+ * empty window, evolves the stored demo snapshot with jitter so the dashboard
+ * keeps animating even when no real metrics are flowing yet.
+ */
+async function resolveCurrent(botId, existingCurrent) {
+  try {
+    const live = await fetchHealthFromSupabase(botId);
+    if (live) {
+      dataSourceState = 'live';
+      return live;
+    }
+  } catch (_) {
+    // Network / auth / parse failure — fall back to demo silently
+  }
+  dataSourceState = dataSourceState === 'live' ? 'live' : 'demo';
+  const base = DEMO_BASE[botId] || DEMO_BASE.lucrecia;
+  const seed = existingCurrent || generateDemoSnapshot(base);
+  return {
+    errorRate:          clamp(seed.errorRate          + jitter(0.001),   0,    0.1),
+    memoryPrecision:    clamp(seed.memoryPrecision    + jitter(0.001),   0.9,  1),
+    driftScore:         clamp(seed.driftScore         + jitter(0.001),   0,    0.1),
+    contractCompliance: clamp(seed.contractCompliance + jitter(0.0003),  0.98, 1),
+    timestamp:          Date.now(),
+  };
+}
+
+/**
  * Perform one full refresh cycle: load, render, alert.
  */
-function refresh() {
+async function refresh() {
   const allAlerts = [];
+  // Reset per-cycle source signal; resolveCurrent will set it to 'live' if any
+  // RPC call succeeds. We keep the last sticky state until a cycle starts.
+  dataSourceState = 'demo';
 
-  Object.keys(BOT_CONFIGS).forEach((botId) => {
-    const config      = BOT_CONFIGS[botId];
-    const stored      = loadMetrics(botId);
-    const base        = DEMO_BASE[botId] || DEMO_BASE.lucrecia;
+  for (const botId of Object.keys(BOT_CONFIGS)) {
+    const config = BOT_CONFIGS[botId];
+    const stored = loadMetrics(botId);
 
-    // Always generate a fresh snapshot and evolve the stored one slightly
-    const existingCurrent = stored.current || generateDemoSnapshot(base);
-    const evolved = {
-      errorRate:          clamp(existingCurrent.errorRate         + jitter(0.001), 0, 0.1),
-      memoryPrecision:    clamp(existingCurrent.memoryPrecision   + jitter(0.001), 0.9, 1),
-      driftScore:         clamp(existingCurrent.driftScore        + jitter(0.001), 0, 0.1),
-      contractCompliance: clamp(existingCurrent.contractCompliance + jitter(0.0003), 0.98, 1),
-      timestamp:          Date.now(),
-    };
+    const current = await resolveCurrent(botId, stored.current);
 
     // Append new health score to history
-    const newScore  = computeHealthScore(evolved);
-    const history   = Array.isArray(stored.history) ? stored.history : [];
+    const newScore = computeHealthScore(current);
+    const history  = Array.isArray(stored.history) ? stored.history : [];
     history.push(newScore);
     if (history.length > HISTORY_LIMIT) history.splice(0, history.length - HISTORY_LIMIT);
 
-    saveMetrics(botId, evolved, history);
+    saveMetrics(botId, current, history);
 
-    renderCard(botId, evolved, history);
+    renderCard(botId, current, history);
 
-    const botAlerts = checkAlerts(botId, evolved, config.thresholds);
+    const botAlerts = checkAlerts(botId, current, config.thresholds);
     allAlerts.push(botAlerts);
     renderCardAlertIndicator(botId, botAlerts);
-  });
+  }
 
   renderGlobalAlerts(allAlerts);
+  renderDataSourceBadge(dataSourceState);
 
-  // Update last-refresh timestamp
   const tsEl = document.getElementById('last-refresh-ts');
   if (tsEl) tsEl.textContent = 'Última actualización: ' + fmtTime(new Date());
+}
+
+/**
+ * Update the LIVE/DEMO badge in the header so the user can tell at a glance
+ * whether the displayed numbers come from Supabase or from local jitter.
+ */
+function renderDataSourceBadge(state) {
+  const el = document.getElementById('data-source-badge');
+  if (!el) return;
+  if (state === 'live') {
+    el.textContent = 'LIVE';
+    el.className = 'data-source-badge data-source-badge--live';
+    el.title = 'Datos reales desde Supabase (bot_metrics, ventana 24h)';
+  } else {
+    el.textContent = 'DEMO';
+    el.className = 'data-source-badge data-source-badge--demo';
+    el.title = 'Sin métricas reales en la ventana — mostrando datos sintéticos';
+  }
 }
 
 /**

@@ -112,6 +112,24 @@
       min-width: 2ch;
     }
 
+    .data-source-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 20px;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid currentColor;
+      text-transform: uppercase;
+    }
+    .data-source-badge--live {
+      color: #4ade80;
+      background: rgba(74, 222, 128, 0.12);
+    }
+    .data-source-badge--demo {
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.12);
+    }
+
     .btn-back {
       display: inline-flex;
       align-items: center;
@@ -441,6 +459,11 @@
         </div>
       </div>
       <div class="header-actions">
+        <span class="data-source-badge data-source-badge--demo"
+              id="data-source-badge"
+              aria-live="polite"
+              aria-atomic="true"
+              title="Fuente de datos del dashboard">DEMO</span>
         <div class="countdown-badge" aria-live="polite" aria-atomic="true">
           <span aria-hidden="true">↻</span>
           <span>Actualiza en</span>
