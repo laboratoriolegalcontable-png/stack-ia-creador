@@ -9,13 +9,13 @@
 <meta property="og:title" content="Estudio Oro · Tech Lab — IA aplicada al derecho">
 <meta property="og:description" content="Laboratorio de IA y automatización legal. Productos, consultoría y consultoría AI para estudios.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://tech.estudiooro.com">
-<link rel="canonical" href="https://tech.estudiooro.com">
+<meta property="og:url" content="https://estudiooro.com/tech/">
+<link rel="canonical" href="https://estudiooro.com/tech/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Estudio Oro · Tech Lab","description":"Laboratorio de IA aplicada al derecho. Productos legal-tech y consultoría AI.","url":"https://tech.estudiooro.com","telephone":"+5491168777777","email":"tech@estudiooro.com","address":{"@type":"PostalAddress","streetAddress":"Salguero 2835 4B, Palermo","addressLocality":"Buenos Aires","addressCountry":"AR"},"parentOrganization":{"@type":"ProfessionalService","name":"Estudio Oro S.A.S."}}
+{"@context":"https://schema.org","@type":"Organization","name":"Estudio Oro · Tech Lab","description":"Laboratorio de IA aplicada al derecho. Productos legal-tech y consultoría AI.","url":"https://estudiooro.com/tech/","telephone":"+5491168777777","email":"tech@estudiooro.com","address":{"@type":"PostalAddress","streetAddress":"Salguero 2835 4B, Palermo","addressLocality":"Buenos Aires","addressCountry":"AR"},"parentOrganization":{"@type":"ProfessionalService","name":"Estudio Oro S.A.S."}}
 </script>
 <style>
 :root{
@@ -916,12 +916,8 @@ footer{padding:60px 32px 32px;border-top:1px solid var(--line);background:#06070
   const ioC=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const el=e.target;const target=+el.dataset.count;const start=performance.now();function step(t){const p=Math.min((t-start)/1800,1);el.textContent=Math.floor(target*(1-Math.pow(1-p,3))).toLocaleString('es-AR');if(p<1)requestAnimationFrame(step);else el.textContent=target.toLocaleString('es-AR');}requestAnimationFrame(step);ioC.unobserve(el);}})},{threshold:.4});
   counters.forEach(c=>ioC.observe(c));
   const pipeSec=document.getElementById('pipeline');const pipeSteps=document.querySelectorAll('.pstep');
-  function pipeScroll(){if(!pipeSec)return;const r=pipeSec.getBoundingClientRect();const total=pipeSec.offsetHeight-innerHeight;const prog=Math.max(0,Math.min(1,-r.top/total));const stepCount=pipeSteps.length;const activeIdx=Math.min(stepCount-1,Math.floor(prog*stepCount*1.05));pipeSteps.forEach((c,i)=>{if(i<=activeIdx){c.classList.add('in');}c.classList.toggle('active',i===activeIdx && prog>0);});const label=document.getElementById('pipeStepLabel');if(label)label.textContent=`Paso ${Math.min(activeIdx+1,stepCount)} / ${stepCount}`;const bar=document.querySelector('.pipeline-progress .bar');if(bar)bar.style.setProperty('--pipeProg',(prog*100)+'%');const timer=document.getElementById('pipeTimer');if(timer){const sec=Math.floor(prog*8*60);const mm=Math.floor(sec/60),ss=sec%60;timer.textContent=String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0');}}
+  function pipeScroll(){if(!pipeSec)return;const r=pipeSec.getBoundingClientRect();const total=pipeSec.offsetHeight-innerHeight;const prog=Math.max(0,Math.min(1,-r.top/total));const stepCount=pipeSec.offsetHeight?Math.max(0,Math.min(1,-r.top/total)):0;}
   addEventListener('scroll',pipeScroll,{passive:true});pipeScroll();
-  function heroMorph(){const sy=scrollY;const v=Math.min(sy/600,1);const accent=document.querySelector('.hero h1 .accent');if(accent){const r=Math.round(201+(78-201)*v);const g=Math.round(166+(205-166)*v);const b=Math.round(99+(196-99)*v);accent.style.color=`rgb(${r},${g},${b})`;}}
-  addEventListener('scroll',heroMorph,{passive:true});
-  const fs=document.getElementById('footerStatus');
-  if(fs){let on=true;setInterval(()=>{on=!on;fs.style.opacity=on?'1':'.4'},1400)}
 })();
 </script>
 </body>
