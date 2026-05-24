@@ -1,1 +1,1158 @@
-PLACEHOLDER_CONTABLE
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio Oro Capital | Planificación Patrimonial · Compliance · Estructuras · Tax</title>
+<meta name="description" content="Estudio Oro Capital — vertical patrimonial, fiscal y societaria del estudio. Planificación patrimonial internacional, compliance UIF/AFIP/AEAT, fideicomisos, holdings y tax planning multi-jurisdiccional (AR · ES · UY). Banca privada · Family office · Confidencial.">
+<meta name="keywords" content="planificacion patrimonial internacional, family office, fideicomiso comercial, holding multi-jurisdiccional, compliance UIF AFIP, tax planning, due diligence M&A, Estudio Oro Capital">
+<meta property="og:title" content="Estudio Oro Capital | Patrimonio · Compliance · Estructuras · Tax">
+<meta property="og:description" content="La arquitectura que protege capital. Banca privada · Family office · Confidencial.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://estudiooro.com/contable/">
+<link rel="canonical" href="https://estudiooro.com/contable/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FinancialService","name":"Estudio Oro Capital","description":"Vertical de planificación patrimonial internacional, compliance, estructuras societarias y tax planning multi-jurisdiccional.","url":"https://estudiooro.com/contable/","telephone":"+5491168777777","address":{"@type":"PostalAddress","streetAddress":"Salguero 2835 4B, Palermo","addressLocality":"Buenos Aires","addressCountry":"AR"},"areaServed":["AR","ES","UY"],"serviceType":["Wealth Planning","Compliance","Tax Planning","Trust Structuring","Due Diligence"]}
+</script>
+<style>
+:root{
+  --bg:#0A0B0E; --bg2:#0F1B2E; --bone:#ECE4D2; --bone-dim:#ECE4D2cc;
+  --gold:#C9A663; --gold-deep:#8E6B2E;
+  --coral:#7A1F1F; /* burgundy banca privada */
+  --coral-soft:#A33A2E;
+  --cyan:#4ECDC4; --navy:#0F1B2E;
+  --line:rgba(236,228,210,.08); --line2:rgba(236,228,210,.18);
+  --mx:50%; --my:50%; --scrollProg:0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--bone);
+  font-family:'Inter Tight',sans-serif; font-weight:400;
+  overflow-x:hidden; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+@media (hover:none){body{cursor:auto}}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button{font:inherit;background:none;border:none;color:inherit;cursor:none}
+@media (hover:none){button,a{cursor:pointer}}
+
+/* SCROLL PROGRESS */
+.scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));width:calc(var(--scrollProg)*100%);z-index:9999;box-shadow:0 0 12px var(--gold)}
+
+/* CURSOR */
+.cursor-main,.cursor-trail{position:fixed;pointer-events:none;z-index:9998;border-radius:50%;mix-blend-mode:difference;transition:width .25s cubic-bezier(.2,.8,.2,1),height .25s,background-color .25s}
+.cursor-main{width:16px;height:16px;border:1.5px solid var(--bone);transform:translate(-50%,-50%)}
+.cursor-trail{width:4px;height:4px;background:var(--bone);transform:translate(-50%,-50%)}
+.cursor-main.active{width:54px;height:54px;background:var(--gold);border-color:var(--gold)}
+@media (hover:none){.cursor-main,.cursor-trail{display:none}}
+
+/* TOP STRIP — financial ticker */
+.topstrip{position:relative;border-bottom:1px solid var(--line);background:#06070A;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;overflow:hidden;padding:9px 0;color:var(--bone-dim)}
+.tick-wrap{display:flex;animation:tick 52s linear infinite;white-space:nowrap;gap:42px;padding-left:42px}
+.tick-wrap span{display:inline-flex;align-items:center;gap:8px}
+.tick-wrap .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.tick-wrap .up{color:#7ED9A8}
+.tick-wrap .down{color:var(--coral-soft)}
+.tick-wrap .label{color:var(--bone-dim);opacity:.7}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,11,14,.78);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.logo{font-family:'Fraunces',serif;font-size:21px;font-weight:400;letter-spacing:-.005em;display:flex;align-items:center;gap:12px}
+.logo .div{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;border-left:1px solid var(--line2);padding-left:12px;margin-left:4px}
+.logo-mark{width:30px;height:30px;border:1px solid var(--gold);border-radius:50%;position:relative;display:grid;place-items:center;font-size:14px;color:var(--gold);font-family:'Fraunces',serif;font-style:italic}
+.logo-mark::after{content:"";position:absolute;inset:-3px;border:1px solid var(--gold);border-radius:50%;opacity:.25;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.25}50%{transform:scale(1.18);opacity:0}}
+.nav-links{display:flex;gap:26px;font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--bone-dim)}
+.nav-links a{position:relative;padding:6px 0}
+.nav-links a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover::after{width:100%}
+.nav-links a:hover{color:var(--bone)}
+.nav-ctas{display:flex;gap:10px;align-items:center}
+.cta-btn{position:relative;padding:12px 22px;background:var(--gold);color:#0A0B0E;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:transform .15s cubic-bezier(.2,.8,.2,1),background .3s;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.cta-btn:hover{background:var(--bone)}
+.cta-btn .arrow{transition:transform .3s}
+.cta-btn:hover .arrow{transform:translateX(4px)}
+.cta-secondary{background:transparent;color:var(--bone);border:1px solid var(--line2)}
+.cta-secondary:hover{background:var(--bone);color:#0A0B0E;border-color:var(--bone)}
+@media(max-width:1040px){.nav-links{display:none}}
+@media(max-width:700px){.nav-inner{padding:14px 18px}.nav-ctas .cta-secondary{display:none}}
+
+/* HERO */
+.hero{position:relative;min-height:96vh;padding:90px 32px 110px;overflow:hidden;display:flex;align-items:center}
+.hero-mesh{position:absolute;inset:0;overflow:hidden;z-index:0}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(110px);opacity:.42;mix-blend-mode:screen;animation:drift 28s ease-in-out infinite}
+.mb1{width:52vw;height:52vw;background:var(--gold);top:-18%;left:-8%}
+.mb2{width:46vw;height:46vw;background:var(--coral);top:25%;right:-15%;animation-delay:-9s;opacity:.32}
+.mb3{width:40vw;height:40vw;background:var(--navy);bottom:-15%;left:25%;animation-delay:-16s;opacity:.6}
+@keyframes drift{0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}33%{transform:translate(30px,-22px) rotate(14deg) scale(1.05)}66%{transform:translate(-22px,30px) rotate(-10deg) scale(.97)}}
+#particles{position:absolute;inset:0;z-index:1;opacity:.42}
+.hero-spotlight{position:absolute;inset:0;background:radial-gradient(circle 520px at var(--mx) var(--my),rgba(201,166,99,.08),transparent 72%);pointer-events:none;z-index:2}
+.hero-inner{position:relative;z-index:3;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.55fr 1fr;gap:64px;align-items:end}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:36px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:"";width:40px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(46px,6.8vw,102px);line-height:.98;font-weight:400;letter-spacing:-.028em;margin-bottom:34px;font-variation-settings:"opsz" 144}
+.hero h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero h1 .word .inner{display:inline-block;transform:translateY(110%);animation:wordRise .95s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .word:nth-child(2) .inner{animation-delay:.1s}
+.hero h1 .word:nth-child(3) .inner{animation-delay:.2s}
+.hero h1 .word:nth-child(4) .inner{animation-delay:.3s}
+.hero h1 .word:nth-child(5) .inner{animation-delay:.4s}
+.hero h1 .word:nth-child(6) .inner{animation-delay:.5s}
+@keyframes wordRise{to{transform:translateY(0)}}
+.hero h1 .accent{color:var(--gold);font-style:italic;font-weight:300}
+.hero h1 .typewriter{color:var(--gold);font-style:italic;font-weight:300;position:relative}
+.hero h1 .typewriter::after{content:"|";color:var(--coral-soft);animation:blink 1s steps(1) infinite;font-style:normal;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+.hero-lead{font-size:17px;line-height:1.6;color:var(--bone-dim);max-width:620px;margin-bottom:42px;font-weight:300;opacity:0;animation:fadeUp 1s .85s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.hero-cta-row{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1.05s cubic-bezier(.2,.8,.2,1) forwards}
+.hero-aside{display:flex;flex-direction:column;gap:18px;opacity:0;animation:fadeUp 1s 1.25s cubic-bezier(.2,.8,.2,1) forwards}
+
+.glass-card{background:rgba(236,228,210,.035);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid var(--line2);border-radius:4px;padding:24px;position:relative;overflow:hidden}
+.glass-card::before{content:"";position:absolute;inset:0;padding:1px;background:linear-gradient(135deg,rgba(201,166,99,.28),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.stats-card .stat-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px}
+.stats-card .stat-row:last-child{border-bottom:none;padding-bottom:0}
+.stats-card .stat-row span:last-child{color:var(--gold);font-weight:500}
+.stats-card-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.stats-card-title .pulse{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulseDot 2s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(201,166,99,.6)}50%{opacity:.4;box-shadow:0 0 0 8px rgba(201,166,99,0)}}
+
+.ai-bubble{padding:20px}
+.ai-bubble-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ai-bubble-head .avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));display:grid;place-items:center;font-family:'Fraunces',serif;font-size:13px;color:#0A0B0E;font-weight:600;font-style:italic}
+.ai-bubble-head h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone)}
+.ai-bubble-head .status{font-size:10px;color:var(--gold);font-family:'JetBrains Mono',monospace;margin-left:auto;display:flex;align-items:center;gap:6px}
+.ai-bubble-head .status::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold)}
+.ai-msg{font-size:13px;line-height:1.5;padding:10px 13px;border-radius:3px;margin-bottom:8px}
+.ai-msg.user{background:rgba(201,166,99,.10);color:var(--bone);border:1px solid rgba(201,166,99,.22)}
+.ai-msg.bot{background:rgba(236,228,210,.04);color:var(--bone-dim);border:1px solid var(--line2)}
+.ai-msg.typing::after{content:"●●●";letter-spacing:3px;color:var(--gold);animation:typing 1.2s infinite}
+@keyframes typing{0%,100%{opacity:.3}50%{opacity:1}}
+@media(max-width:980px){.hero-inner{grid-template-columns:1fr;gap:36px}.hero{padding:60px 20px 80px;min-height:auto}}
+
+/* WORLD MAP */
+.world{padding:130px 32px;border-top:1px solid var(--line);position:relative;background:linear-gradient(180deg,var(--bg),#07080B)}
+.section-head{max-width:1280px;margin:0 auto 64px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.section-eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(34px,4.8vw,64px);font-weight:400;line-height:1.04;letter-spacing:-.022em;max-width:780px}
+.section-title em{color:var(--gold);font-style:italic;font-weight:300}
+.section-sub{font-size:15px;color:var(--bone-dim);max-width:400px;line-height:1.65}
+.world-inner{max-width:1280px;margin:0 auto;position:relative}
+.world-svg{width:100%;height:auto;max-height:520px}
+.flow-legend{display:flex;gap:32px;margin-top:32px;justify-content:center;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim);letter-spacing:.08em}
+.flow-legend span{display:inline-flex;align-items:center;gap:8px}
+.flow-legend .dot{width:8px;height:8px;border-radius:50%}
+
+/* MARQUEE */
+.marquee{padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#06070A;overflow:hidden}
+.marquee-row{display:flex;animation:mq 60s linear infinite;white-space:nowrap;font-family:'Fraunces',serif;font-size:clamp(38px,5vw,72px);font-weight:300;font-style:italic;color:var(--bone);gap:48px}
+.marquee-row:hover{animation-play-state:paused}
+.marquee-row.reverse{animation:mqR 70s linear infinite;color:var(--gold);font-size:clamp(28px,3.8vw,52px);font-style:normal;font-weight:400;border-top:1px solid var(--line);padding-top:22px;margin-top:22px;letter-spacing:.04em}
+.marquee-row span{display:inline-flex;align-items:center;gap:48px}
+.marquee-row span::after{content:"·";color:var(--gold-deep)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* STATS */
+.stats{padding:130px 32px;border-top:1px solid var(--line)}
+.stats-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:54px 32px;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:none}
+.stat-pre{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.18em;margin-bottom:18px;text-transform:uppercase}
+.stat-num{font-family:'Fraunces',serif;font-size:clamp(52px,6.5vw,98px);font-weight:300;line-height:1;letter-spacing:-.028em;color:var(--bone);margin-bottom:10px}
+.stat-num .suf{color:var(--gold);font-size:.42em;vertical-align:super;font-style:italic;font-weight:400}
+.stat-num .pre{color:var(--gold);font-size:.42em;font-style:italic;font-weight:400;margin-right:.1em}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim)}
+@media(max-width:980px){.stats-inner{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:none}}
+
+/* PRACTICE — services */
+.practice{padding:130px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,var(--bg) 0%,#0A0E15 100%)}
+.practice-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcard{position:relative;background:rgba(236,228,210,.025);border:1px solid var(--line);border-radius:4px;padding:42px 32px;transition:border-color .4s,background .4s;transform-style:preserve-3d;will-change:transform;overflow:hidden;cursor:none;min-height:280px;display:flex;flex-direction:column}
+@media (hover:none){.pcard{cursor:pointer}}
+.pcard::before{content:"";position:absolute;inset:0;background:radial-gradient(circle 220px at var(--cx,50%) var(--cy,50%),rgba(201,166,99,.10),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
+.pcard:hover::before{opacity:1}
+.pcard:hover{border-color:rgba(201,166,99,.38);background:rgba(236,228,210,.04)}
+.pcard-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.14em;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center}
+.pcard-icon{width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-family:'Fraunces',serif;font-size:15px;font-style:italic;transition:transform .55s cubic-bezier(.5,1.6,.4,.9)}
+.pcard:hover .pcard-icon{transform:rotate(180deg) scale(1.12);background:var(--gold);color:#0A0B0E}
+.pcard h3{font-family:'Fraunces',serif;font-size:26px;font-weight:400;letter-spacing:-.015em;margin-bottom:14px;line-height:1.15}
+.pcard p{font-size:14px;color:var(--bone-dim);line-height:1.6;flex:1}
+.pcard-arrow{position:absolute;bottom:28px;right:28px;font-size:20px;color:var(--bone-dim);transition:transform .35s,color .35s}
+.pcard:hover .pcard-arrow{transform:translate(4px,-4px);color:var(--gold)}
+.pcard-jur{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold-deep);letter-spacing:.16em;margin-top:18px;text-transform:uppercase}
+@media(max-width:980px){.practice-grid{grid-template-columns:1fr}}
+
+/* PROCESS — pinned scroll */
+.process{position:relative;border-top:1px solid var(--line);background:#06070A}
+.process-track{height:340vh;position:relative}
+.process-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden;padding:0 32px}
+.process-inner{max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:center}
+.process-left h2{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);font-weight:400;line-height:1.04;letter-spacing:-.022em;margin-bottom:24px}
+.process-left h2 em{color:var(--gold);font-style:italic;font-weight:300}
+.process-left p{font-size:15px;color:var(--bone-dim);line-height:1.65;margin-bottom:28px;max-width:460px}
+.process-counter{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.16em;text-transform:uppercase;display:inline-flex;align-items:center;gap:12px;padding:8px 14px;border:1px solid var(--line2);border-radius:2px}
+.process-counter .bar{width:80px;height:2px;background:var(--line2);position:relative;overflow:hidden}
+.process-counter .bar::after{content:"";position:absolute;left:0;top:0;height:100%;width:var(--cur,16%);background:var(--gold);transition:width .4s}
+.process-right{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.process-card{background:rgba(236,228,210,.03);border:1px solid var(--line);padding:26px 22px;border-radius:4px;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s,border-color .4s;opacity:0;transform:translateY(40px) scale(.96)}
+.process-card.in{opacity:1;transform:translateY(0) scale(1)}
+.process-card.active{border-color:rgba(201,166,99,.4);background:rgba(201,166,99,.05)}
+.process-card .pc-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.16em;margin-bottom:12px}
+.process-card h4{font-family:'Fraunces',serif;font-size:20px;font-weight:500;line-height:1.18;margin-bottom:8px}
+.process-card p{font-size:12.5px;color:var(--bone-dim);line-height:1.55}
+@media(max-width:980px){.process-sticky{position:static;height:auto;padding:90px 20px}.process-track{height:auto}.process-inner{grid-template-columns:1fr;gap:40px}}
+
+/* COMPARE TABLE — vehicle pricing */
+.compare{padding:130px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,#0A0E15,var(--bg))}
+.compare-inner{max-width:1280px;margin:0 auto}
+.compare-table{margin-top:60px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:rgba(236,228,210,.02)}
+.compare-row{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:0;border-bottom:1px solid var(--line);transition:background .3s}
+.compare-row:last-child{border-bottom:none}
+.compare-row.head{background:rgba(201,166,99,.04);border-bottom:1px solid var(--line2)}
+.compare-row.head .cell{padding:24px 22px;font-family:'Fraunces',serif;font-size:20px;font-weight:400;letter-spacing:-.01em;color:var(--bone)}
+.compare-row.head .cell:first-child{color:var(--bone-dim);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+.compare-row.head .cell.featured{color:var(--gold);position:relative}
+.compare-row.head .cell.featured::before{content:"recomendado";position:absolute;top:6px;left:22px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep)}
+.compare-row .cell{padding:18px 22px;font-size:13.5px;color:var(--bone-dim);border-right:1px solid var(--line);font-family:'Inter Tight',sans-serif}
+.compare-row .cell:last-child{border-right:none}
+.compare-row .cell:first-child{color:var(--bone);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center}
+.compare-row:not(.head):hover{background:rgba(236,228,210,.025)}
+.compare-row .cell.featured{background:rgba(201,166,99,.03);color:var(--bone)}
+.dots{display:inline-flex;gap:3px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block}
+.dots i.off{background:var(--line2)}
+@media(max-width:980px){.compare-table{overflow-x:auto}.compare-row{grid-template-columns:160px repeat(4,140px);min-width:760px}}
+
+/* COMPLIANCE — international */
+.compliance{padding:130px 32px;border-top:1px solid var(--line);background:#06070A}
+.compliance-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.compliance-viz{background:rgba(236,228,210,.03);border:1px solid var(--line2);border-radius:6px;padding:32px;position:relative;overflow:hidden}
+.compliance-viz h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.compliance-viz h5 .pulse{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulseDot 2s infinite}
+.frame-rows{display:flex;flex-direction:column;gap:14px}
+.frame-row{display:grid;grid-template-columns:90px 1fr 60px;gap:14px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim)}
+.frame-row .name{color:var(--bone);font-weight:500;letter-spacing:.08em}
+.frame-row .meter{height:5px;background:var(--line);border-radius:2px;overflow:hidden;position:relative}
+.frame-row .meter::after{content:"";position:absolute;left:0;top:0;height:100%;width:var(--lv,80%);background:linear-gradient(90deg,var(--gold),var(--gold-deep));border-radius:2px;animation:fillBar 2s cubic-bezier(.2,.8,.2,1) forwards;transform:scaleX(0);transform-origin:left}
+@keyframes fillBar{to{transform:scaleX(1)}}
+.frame-row .pct{color:var(--gold);text-align:right}
+.compliance h2{font-family:'Fraunces',serif;font-size:clamp(34px,4.8vw,60px);font-weight:400;letter-spacing:-.022em;line-height:1.05;margin-bottom:22px}
+.compliance h2 em{color:var(--gold);font-style:italic;font-weight:300}
+.compliance p{font-size:15.5px;color:var(--bone-dim);line-height:1.65;margin-bottom:24px;max-width:520px}
+.compliance-points{list-style:none;display:grid;gap:14px;margin-top:26px}
+.compliance-points li{padding:16px 18px;background:rgba(236,228,210,.025);border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:2px;font-size:13.5px;color:var(--bone-dim);line-height:1.5}
+.compliance-points li strong{color:var(--bone);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;display:block;margin-bottom:4px;color:var(--gold)}
+@media(max-width:980px){.compliance-inner{grid-template-columns:1fr}}
+
+/* TEAM / ABOUT */
+.about{padding:130px 32px;border-top:1px solid var(--line)}
+.about-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr;gap:64px}
+.about-body p{font-size:16px;color:var(--bone-dim);line-height:1.75;margin-bottom:22px;max-width:680px}
+.about-body p:first-of-type{font-size:18px;color:var(--bone)}
+.about-body .pull{font-family:'Fraunces',serif;font-size:24px;color:var(--bone);font-style:italic;font-weight:300;padding:24px 0 24px 28px;border-left:2px solid var(--gold);margin:32px 0;max-width:620px;line-height:1.35}
+.about-panel{background:rgba(236,228,210,.025);border:1px solid var(--line);border-radius:6px;padding:34px;height:fit-content;position:sticky;top:110px}
+.about-panel h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;margin-top:26px}
+.about-panel h4:first-child{margin-top:0}
+.about-panel p{font-size:13.5px;color:var(--bone-dim);line-height:1.65}
+.about-panel strong{color:var(--bone);font-weight:500}
+@media(max-width:980px){.about-inner{grid-template-columns:1fr}.about-panel{position:static}}
+
+/* INSIGHTS */
+.insights{padding:130px 32px;border-top:1px solid var(--line);background:#06070A}
+.insights-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.icard{position:relative;background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:4px;padding:38px 30px;transition:border-color .4s,background .4s;transform-style:preserve-3d;will-change:transform;overflow:hidden;cursor:none;min-height:340px;display:flex;flex-direction:column}
+@media (hover:none){.icard{cursor:pointer}}
+.icard:hover{border-color:rgba(201,166,99,.35);background:rgba(236,228,210,.05)}
+.icard .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.18em;margin-bottom:28px;text-transform:uppercase;display:inline-block}
+.icard .wp{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold-deep);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
+.icard h3{font-family:'Fraunces',serif;font-size:24px;font-weight:400;line-height:1.2;letter-spacing:-.015em;margin-bottom:14px;flex:1}
+.icard p{font-size:13.5px;color:var(--bone-dim);line-height:1.6;margin-bottom:22px}
+.icard .read{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:8px;padding-top:18px;border-top:1px solid var(--line)}
+@media(max-width:980px){.insights-grid{grid-template-columns:1fr}}
+
+/* CONTACT */
+.contact{padding:130px 32px;border-top:1px solid var(--line)}
+.contact-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:64px}
+.contact-info p{font-size:15px;color:var(--bone-dim);margin-bottom:26px;line-height:1.7;max-width:420px}
+.contact-block{margin-bottom:26px}
+.contact-block h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.contact-block a,.contact-block span{display:block;font-size:15px;color:var(--bone)}
+.contact-block a:hover{color:var(--gold)}
+.confidential-note{margin-top:36px;padding:18px 20px;border:1px solid var(--line2);border-left:2px solid var(--gold);background:rgba(201,166,99,.04);border-radius:2px;font-size:12.5px;color:var(--bone-dim);line-height:1.6;font-style:italic;font-family:'Fraunces',serif}
+.form-grid{display:grid;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.input{background:rgba(236,228,210,.04);border:1px solid var(--line2);color:var(--bone);padding:16px 18px;font:14px 'Inter Tight',sans-serif;border-radius:2px;width:100%;transition:border-color .3s,background .3s}
+.input:focus{outline:none;border-color:var(--gold);background:rgba(236,228,210,.06)}
+.input::placeholder{color:var(--bone-dim)}
+textarea.input{resize:vertical;min-height:120px}
+select.input{cursor:pointer}
+.form-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:4px;display:block}
+.checkbox-row{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:var(--bone-dim);font-family:'Inter Tight',sans-serif;line-height:1.5}
+.checkbox-row input{accent-color:var(--gold);margin-top:3px}
+@media(max-width:980px){.contact-inner{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{padding:64px 32px 32px;border-top:1px solid var(--line);background:#06070A}
+.footer-inner{max-width:1280px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid var(--line);margin-bottom:26px}
+.footer-grid h6{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.footer-grid a,.footer-grid p{display:block;font-size:13px;color:var(--bone-dim);margin-bottom:8px;line-height:1.65}
+.footer-grid a:hover{color:var(--bone)}
+.footer-logo{font-family:'Fraunces',serif;font-size:22px;font-weight:400;margin-bottom:14px;color:var(--bone);display:flex;align-items:center;gap:10px}
+.footer-logo .div{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-left:10px;border-left:1px solid var(--line2)}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--bone-dim);letter-spacing:.06em}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+
+/* WHATSAPP FLOAT — discreet */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:99;background:rgba(10,11,14,.86);color:var(--gold);width:54px;height:54px;border-radius:50%;display:grid;place-items:center;backdrop-filter:blur(16px);border:1px solid var(--gold);font-family:'JetBrains Mono',monospace;font-weight:500;font-size:10px;letter-spacing:.08em;transition:transform .3s,background .3s}
+.wa-float:hover{transform:scale(1.06);background:var(--gold);color:#0A0B0E}
+
+/* REVEALS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .95s cubic-bezier(.2,.8,.2,1),transform .95s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s} .reveal-d2{transition-delay:.2s} .reveal-d3{transition-delay:.3s} .reveal-d4{transition-delay:.4s}
+</style>
+<script defer>
+/* === legal-layer.js inlined === */
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'estudio_oro_consent_v1';
+  var LEGAL_DIR = (function () {
+    try { var p = window.location.pathname; if (p.indexOf('/legal/') >= 0) return ''; return 'legal/'; }
+    catch (e) { return 'legal/'; }
+  })();
+  var css = '' +
+    '.eo-legal-vars{--eo-ink:#0E1A2B;--eo-paper:#FBF8F2;--eo-cream:#F4EFE7;--eo-gold:#B8924D;--eo-gold-deep:#8E6B2E;--eo-soft:#3B4A60;--eo-rule:#D9CFB8}' +
+    '#eo-cookie-banner,#eo-cookie-modal,#eo-cookie-fab,#eo-legal-bar,.eo-legal-consent,.eo-pro-note{font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.55;color:#0E1A2B;box-sizing:border-box}' +
+    '#eo-cookie-backdrop{position:fixed;inset:0;background:rgba(14,26,43,.45);z-index:99998;opacity:0;transition:opacity .25s;pointer-events:none}' +
+    '#eo-cookie-backdrop.on{opacity:1;pointer-events:auto}' +
+    '#eo-cookie-banner{position:fixed;left:0;right:0;bottom:0;background:#FBF8F2;border-top:1px solid #D9CFB8;padding:20px 28px;z-index:99999;transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.7,.2,1);box-shadow:0 -8px 28px rgba(14,26,43,.12)}' +
+    '#eo-cookie-banner.show{transform:translateY(0)}' +
+    '#eo-cookie-banner .eo-wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap}' +
+    '#eo-cookie-banner h4{font-family:"Playfair Display",Georgia,serif;font-weight:400;margin:0 0 4px;font-size:17px;color:#0E1A2B}' +
+    '#eo-cookie-banner p{margin:0;color:#3B4A60;font-size:13px;max-width:640px}' +
+    '#eo-cookie-banner .eo-actions{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}' +
+    '.eo-btn{font-family:inherit;font-size:13px;padding:9px 16px;border:1px solid #D9CFB8;background:#fff;color:#0E1A2B;cursor:pointer;border-radius:2px;letter-spacing:.02em;transition:all .15s}' +
+    '.eo-btn:hover{border-color:#8E6B2E;color:#8E6B2E}' +
+    '.eo-btn.primary{background:#0E1A2B;color:#FBF8F2;border-color:#0E1A2B}' +
+    '.eo-btn.primary:hover{background:#8E6B2E;border-color:#8E6B2E;color:#fff}' +
+    '#eo-cookie-modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);background:#FBF8F2;border:1px solid #D9CFB8;border-radius:3px;padding:32px;width:min(520px,92vw);max-height:90vh;overflow:auto;z-index:100000;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 20px 60px rgba(14,26,43,.25)}' +
+    '#eo-cookie-modal.on{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}' +
+    '#eo-cookie-modal h3{font-family:"Playfair Display",Georgia,serif;font-weight:400;margin:0 0 18px;font-size:24px;color:#0E1A2B}' +
+    '#eo-cookie-modal .eo-row{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 0;border-bottom:1px solid #D9CFB8;gap:18px}' +
+    '#eo-cookie-modal .eo-row:last-of-type{border-bottom:none}' +
+    '#eo-cookie-modal .eo-row .eo-label{font-weight:600;font-size:14px;color:#0E1A2B;display:block;margin-bottom:2px}' +
+    '#eo-cookie-modal .eo-row .eo-desc{font-size:12px;color:#3B4A60}' +
+    '.eo-switch{position:relative;display:inline-block;width:38px;height:22px;flex-shrink:0;margin-top:4px}' +
+    '.eo-switch input{opacity:0;width:0;height:0}' +
+    '.eo-slider{position:absolute;cursor:pointer;inset:0;background:#D9CFB8;transition:.2s;border-radius:22px}' +
+    '.eo-slider:before{position:absolute;content:"";height:16px;width:16px;left:3px;top:3px;background:#fff;transition:.2s;border-radius:50%}' +
+    '.eo-switch input:checked + .eo-slider{background:#B8924D}' +
+    '.eo-switch input:checked + .eo-slider:before{transform:translateX(16px)}' +
+    '.eo-switch input:disabled + .eo-slider{opacity:.6;cursor:not-allowed}' +
+    '#eo-cookie-modal .eo-foot{margin-top:22px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}' +
+    '#eo-cookie-fab{position:fixed;bottom:16px;left:16px;width:42px;height:42px;border-radius:50%;background:#FBF8F2;border:1px solid #D9CFB8;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:99997;box-shadow:0 4px 14px rgba(14,26,43,.12);transition:all .2s;font-size:18px}' +
+    '#eo-cookie-fab:hover{border-color:#8E6B2E;transform:translateY(-1px)}' +
+    '#eo-cookie-fab.on{display:flex}' +
+    '#eo-legal-bar{font-size:12px;color:#6b7180;text-align:center;padding:18px 16px;line-height:2;border-top:1px solid rgba(217,207,184,.5);margin-top:24px}' +
+    '#eo-legal-bar a{color:inherit;text-decoration:none;margin:0 2px}' +
+    '#eo-legal-bar a:hover{color:#8E6B2E;text-decoration:underline}' +
+    '#eo-legal-bar .sep{opacity:.5;margin:0 6px}' +
+    '.eo-legal-consent{display:flex;align-items:flex-start;gap:10px;padding:12px 0;margin:14px 0;font-size:12.5px;color:inherit;line-height:1.5}' +
+    '.eo-legal-consent input[type="checkbox"]{margin-top:3px;flex-shrink:0;accent-color:#B8924D}' +
+    '.eo-legal-consent a{color:#8E6B2E;text-decoration:underline}' +
+    '.eo-pro-note{display:block;margin-top:10px;padding:8px 12px;font-size:11.5px;color:#6b7180;border-left:2px solid rgba(184,146,77,.5);background:rgba(251,248,242,.4);line-height:1.5;font-style:italic}' +
+    '@media (max-width:640px){#eo-cookie-banner{padding:18px 18px}#eo-cookie-banner .eo-actions{margin-left:0;width:100%}#eo-cookie-banner .eo-actions .eo-btn{flex:1 1 auto}}';
+  function injectStyle(){var s=document.createElement('style');s.id='eo-legal-style';s.textContent=css;document.head.appendChild(s);}
+  function ensureMeta(){var head=document.head;
+    if(!head.querySelector('meta[name="robots"]')){var m=document.createElement('meta');m.name='robots';m.content='index, follow';head.appendChild(m);}
+    if(!head.querySelector('meta[http-equiv="X-Frame-Options"]')){var x=document.createElement('meta');x.setAttribute('http-equiv','X-Frame-Options');x.content='SAMEORIGIN';head.appendChild(x);}
+    if(!head.querySelector('meta[http-equiv="Content-Security-Policy"]')){var c=document.createElement('meta');c.setAttribute('http-equiv','Content-Security-Policy');c.content="default-src 'self' 'unsafe-inline' fonts.googleapis.com fonts.gstatic.com wa.me; img-src 'self' data:; ";head.appendChild(c);}
+  }
+  function getConsent(){try{var raw=localStorage.getItem(STORAGE_KEY);return raw?JSON.parse(raw):null;}catch(e){return null;}}
+  function saveConsent(c){c.timestamp=new Date().toISOString();try{localStorage.setItem(STORAGE_KEY,JSON.stringify(c));}catch(e){}}
+  function buildBanner(){
+    var bd=document.createElement('div');bd.id='eo-cookie-backdrop';
+    var b=document.createElement('div');b.id='eo-cookie-banner';b.className='eo-legal-vars';
+    b.innerHTML='<div class="eo-wrap"><div><h4>Privacidad y cookies</h4><p>Utilizamos cookies técnicas necesarias para el funcionamiento del sitio. Con su consentimiento, también utilizamos cookies de preferencias, analíticas y de marketing. Consulte la <a style="color:#8E6B2E" href="'+LEGAL_DIR+'cookies.html">Política de Cookies</a>.</p></div><div class="eo-actions"><button class="eo-btn" data-eo="customize">Personalizar</button><button class="eo-btn" data-eo="necessary">Sólo necesarias</button><button class="eo-btn primary" data-eo="all">Aceptar todas</button></div></div>';
+    document.body.appendChild(bd);document.body.appendChild(b);
+    var m=document.createElement('div');m.id='eo-cookie-modal';m.className='eo-legal-vars';
+    m.innerHTML='<h3>Preferencias de cookies</h3><div class="eo-row"><div><span class="eo-label">Técnicas (necesarias)</span><span class="eo-desc">Imprescindibles para el funcionamiento del sitio. No requieren consentimiento.</span></div><label class="eo-switch"><input type="checkbox" checked disabled><span class="eo-slider"></span></label></div><div class="eo-row"><div><span class="eo-label">Preferencias</span><span class="eo-desc">Recordar opciones del usuario como sede o idioma.</span></div><label class="eo-switch"><input type="checkbox" data-eo-pref="preferences"><span class="eo-slider"></span></label></div><div class="eo-row"><div><span class="eo-label">Analíticas</span><span class="eo-desc">Medir el uso del sitio (Google Analytics) con IP anonimizada.</span></div><label class="eo-switch"><input type="checkbox" data-eo-pref="analytics"><span class="eo-slider"></span></label></div><div class="eo-row"><div><span class="eo-label">Marketing</span><span class="eo-desc">Mostrar contenidos personalizados (Meta Pixel). Sólo con consentimiento explícito.</span></div><label class="eo-switch"><input type="checkbox" data-eo-pref="marketing"><span class="eo-slider"></span></label></div><div class="eo-foot"><button class="eo-btn" data-eo="modal-close">Cancelar</button><button class="eo-btn primary" data-eo="modal-save">Guardar preferencias</button></div>';
+    document.body.appendChild(m);
+    var fab=document.createElement('button');fab.id='eo-cookie-fab';fab.title='Preferencias de cookies';fab.setAttribute('aria-label','Preferencias de cookies');fab.textContent='\u{1F36A}';
+    document.body.appendChild(fab);
+    var openModal=function(){var c=getConsent()||{};m.querySelector('[data-eo-pref="preferences"]').checked=!!c.preferences;m.querySelector('[data-eo-pref="analytics"]').checked=!!c.analytics;m.querySelector('[data-eo-pref="marketing"]').checked=!!c.marketing;bd.classList.add('on');m.classList.add('on');b.classList.remove('show');};
+    var closeModal=function(){m.classList.remove('on');bd.classList.remove('on');if(!getConsent())b.classList.add('show');};
+    var finish=function(){b.classList.remove('show');bd.classList.remove('on');m.classList.remove('on');fab.classList.add('on');};
+    b.addEventListener('click',function(e){var t=e.target.getAttribute('data-eo');if(!t)return;if(t==='all'){saveConsent({necessary:true,preferences:true,analytics:true,marketing:true});finish();}else if(t==='necessary'){saveConsent({necessary:true,preferences:false,analytics:false,marketing:false});finish();}else if(t==='customize'){openModal();}});
+    m.addEventListener('click',function(e){var t=e.target.getAttribute('data-eo');if(!t)return;if(t==='modal-close')closeModal();if(t==='modal-save'){saveConsent({necessary:true,preferences:m.querySelector('[data-eo-pref="preferences"]').checked,analytics:m.querySelector('[data-eo-pref="analytics"]').checked,marketing:m.querySelector('[data-eo-pref="marketing"]').checked});finish();}});
+    fab.addEventListener('click',openModal);bd.addEventListener('click',closeModal);
+    if(!getConsent()){setTimeout(function(){b.classList.add('show');},400);}else{fab.classList.add('on');}
+  }
+  function injectFormConsent(){
+    var forms=document.querySelectorAll('form');
+    forms.forEach(function(f){
+      if(f.querySelector('.eo-legal-consent'))return;
+      if(f.closest('#eo-cookie-modal'))return;
+      var lbl=document.createElement('label');lbl.className='eo-legal-consent';
+      lbl.innerHTML='<input type="checkbox" required><span>He leído y acepto la <a href="'+LEGAL_DIR+'privacidad.html">Política de Privacidad</a> y los <a href="'+LEGAL_DIR+'terminos.html">Términos</a>. La consulta inicial es confidencial y no constituye asesoramiento patrimonial personalizado.</span>';
+      var submit=f.querySelector('button[type="submit"], input[type="submit"], button:not([type])');
+      if(submit&&submit.parentNode===f)f.insertBefore(lbl,submit);
+      else if(submit)submit.parentNode.insertBefore(lbl,submit);
+      else f.appendChild(lbl);
+    });
+  }
+  function injectFooterBar(){
+    if(document.getElementById('eo-legal-bar'))return;
+    var bar=document.createElement('div');bar.id='eo-legal-bar';
+    bar.innerHTML='<a href="'+LEGAL_DIR+'aviso-legal.html">Aviso Legal</a><span class="sep">·</span><a href="'+LEGAL_DIR+'privacidad.html">Privacidad</a><span class="sep">·</span><a href="'+LEGAL_DIR+'terminos.html">Términos</a><span class="sep">·</span><a href="'+LEGAL_DIR+'cookies.html">Cookies</a><span class="sep">·</span><a href="'+LEGAL_DIR+'arrepentimiento.html">Arrepentimiento (Ley 24.240)</a><span class="sep">·</span><a href="mailto:dpo@estudiooro.com?subject=Ejercicio%20de%20derechos%20ARCO">Ejercer derechos ARCO</a><span class="sep">·</span><a href="https://www.argentina.gob.ar/produccion/consumidor" target="_blank" rel="noopener">Defensa del Consumidor</a><span class="sep">·</span><a href="https://www.argentina.gob.ar/aaip" target="_blank" rel="noopener">AAIP</a><span class="sep">·</span><a href="https://www.aepd.es" target="_blank" rel="noopener">AEPD</a><span class="sep">·</span><a href="https://www.gub.uy/unidad-reguladora-control-datos-personales" target="_blank" rel="noopener">URCDP</a>';
+    var footer=document.querySelector('footer');if(footer)footer.appendChild(bar);else document.body.appendChild(bar);
+  }
+  function boot(){try{ensureMeta();}catch(e){}try{injectStyle();}catch(e){}try{buildBanner();}catch(e){}try{injectFormConsent();}catch(e){}try{injectFooterBar();}catch(e){}}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+})();
+</script>
+</head>
+<body>
+
+<div class="scroll-bar"></div>
+<div class="cursor-main"></div>
+<div class="cursor-trail"></div>
+
+<!-- TOP STRIP — financial ticker -->
+<div class="topstrip">
+  <div class="tick-wrap" id="ticker"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">O</span> Estudio Oro <span class="div">Capital</span></a>
+    <div class="nav-links">
+      <a href="#services">Servicios</a>
+      <a href="#process">Proceso</a>
+      <a href="#compare">Estructuras</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#about">Firma</a>
+      <a href="#contact">Contacto</a>
+    </div>
+    <div class="nav-ctas">
+      <a href="https://wa.me/5491168777777" class="cta-btn cta-secondary magnetic" data-magnet>WhatsApp privado</a>
+      <a href="#contact" class="cta-btn magnetic" data-magnet>Reunión confidencial <span class="arrow">→</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-mesh">
+    <div class="mesh-blob mb1"></div>
+    <div class="mesh-blob mb2"></div>
+    <div class="mesh-blob mb3"></div>
+  </div>
+  <canvas id="particles"></canvas>
+  <div class="hero-spotlight"></div>
+  <div class="hero-inner">
+    <div class="hero-main">
+      <div class="hero-eyebrow">Patrimonio · Compliance · Estructuras · Tax</div>
+      <h1>
+        <span class="word"><span class="inner">La</span></span>
+        <span class="word"><span class="inner">arquitectura</span></span>
+        <span class="word"><span class="inner">que</span></span>
+        <span class="word"><span class="inner"><em class="typewriter" id="typeword">protege capital</em></span></span>
+        <span class="word"><span class="inner"><em class="accent">.</em></span></span>
+      </h1>
+      <p class="hero-lead">Estudio Oro Capital es la vertical patrimonial, fiscal y societaria de la firma. Planificación internacional, compliance y estructuras coordinadas desde una sola firma para familias, empresas y vehículos de inversión en Argentina, España y Uruguay.</p>
+      <div class="hero-cta-row">
+        <a href="#contact" class="cta-btn magnetic" data-magnet>Reunión confidencial <span class="arrow">→</span></a>
+        <a href="#services" class="cta-btn cta-secondary magnetic" data-magnet>Servicios patrimoniales</a>
+      </div>
+    </div>
+    <div class="hero-aside">
+      <div class="glass-card stats-card">
+        <div class="stats-card-title"><span class="pulse"></span> El Estudio</div>
+        <div class="stat-row"><span>Jurisdicciones operativas</span><span>AR · ES · UY</span></div>
+        <div class="stat-row"><span>Año fundacional</span><span>2018</span></div>
+      </div>
+      <div class="glass-card ai-bubble">
+        <div class="ai-bubble-head">
+          <div class="avatar">α</div>
+          <h4>Asesor patrimonial privado</h4>
+          <div class="status">Activo</div>
+        </div>
+        <div id="aiChat">
+          <div class="ai-msg user">Tengo activos en AR y propiedades en España. Quiero estructurar todo.</div>
+          <div class="ai-msg bot typing"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORLD MAP — capital flow -->
+<section class="world">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Arquitectura tri-jurisdiccional</div>
+      <h2 class="section-title">Tres jurisdicciones. <em>Una arquitectura patrimonial</em>.</h2>
+    </div>
+    <p class="section-sub">Buenos Aires coordina estructura y compliance argentino. Madrid opera patrimonio europeo y tax planning UE. Punta del Este estructura fideicomisos y vehículos de protección bajo régimen uruguayo.</p>
+  </div>
+  <div class="world-inner reveal reveal-d1">
+    <svg class="world-svg" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="flowg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#C9A663" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#C9A663" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#C9A663" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="flowg2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#7A1F1F" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#A33A2E" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#7A1F1F" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="dotg">
+          <stop offset="0%" stop-color="#C9A663"/>
+          <stop offset="100%" stop-color="#C9A663" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <path d="M310,180 L340,170 L360,200 L380,240 L370,290 L360,340 L340,400 L320,440 L300,460 L285,440 L275,400 L290,360 L300,310 L295,260 L305,220 Z" stroke="#ECE4D2" stroke-opacity=".18" stroke-width="1" fill="rgba(201,166,99,0.025)"/>
+      <path d="M570,140 L620,130 L660,140 L680,160 L675,185 L650,200 L620,205 L580,200 L555,180 L555,155 Z" stroke="#ECE4D2" stroke-opacity=".18" stroke-width="1" fill="rgba(201,166,99,0.025)"/>
+      <path d="M620,210 L680,205 L710,230 L730,290 L720,350 L690,380 L660,370 L640,330 L625,280 Z" stroke="#ECE4D2" stroke-opacity=".08" stroke-width="1" fill="none"/>
+      <path d="M180,100 L260,90 L320,120 L310,165 L280,180 L240,170 L200,150 L175,120 Z" stroke="#ECE4D2" stroke-opacity=".08" stroke-width="1" fill="none"/>
+      <g opacity=".10">
+        <line x1="0" y1="260" x2="1200" y2="260" stroke="#ECE4D2" stroke-width=".5" stroke-dasharray="2,8"/>
+        <line x1="600" y1="0" x2="600" y2="520" stroke="#ECE4D2" stroke-width=".5" stroke-dasharray="2,8"/>
+      </g>
+      <path d="M340,400 Q480,100 620,160" stroke="url(#flowg)" stroke-width="1.6" fill="none" stroke-dasharray="900" stroke-dashoffset="900">
+        <animate attributeName="stroke-dashoffset" from="900" to="-900" dur="7s" repeatCount="indefinite"/>
+      </path>
+      <path d="M620,160 Q500,320 360,400" stroke="url(#flowg)" stroke-width="1.6" fill="none" stroke-dasharray="900" stroke-dashoffset="900">
+        <animate attributeName="stroke-dashoffset" from="900" to="-900" dur="8s" begin="2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M340,400 Q480,100 620,160" stroke="url(#flowg2)" stroke-width="1" fill="none" stroke-dasharray="600" stroke-dashoffset="-600">
+        <animate attributeName="stroke-dashoffset" from="-600" to="600" dur="9s" begin="4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M340,400 Q360,460 360,400" stroke="#C9A663" stroke-width="1" fill="none" opacity=".5"/>
+      <g>
+        <circle cx="340" cy="400" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.6s" repeatCount="indefinite"/></circle>
+        <circle cx="340" cy="400" r="5" fill="#C9A663"/>
+        <circle cx="620" cy="160" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.6s" begin=".9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.6s" begin=".9s" repeatCount="indefinite"/></circle>
+        <circle cx="620" cy="160" r="5" fill="#C9A663"/>
+        <circle cx="360" cy="400" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.6s" begin="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.6s" begin="1.8s" repeatCount="indefinite"/></circle>
+        <circle cx="360" cy="400" r="5" fill="#C9A663"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="#ECE4D2">
+        <text x="260" y="430" opacity=".95">Buenos Aires</text>
+        <text x="260" y="444" opacity=".5" font-size="9">AR · Estructura · Compliance</text>
+        <text x="640" y="155" opacity=".95">Madrid</text>
+        <text x="640" y="169" opacity=".5" font-size="9">ES · Patrimonio EU · Tax</text>
+        <text x="380" y="395" opacity=".95">Punta del Este</text>
+        <text x="380" y="409" opacity=".5" font-size="9">UY · Fideicomisos · Protección</text>
+      </g>
+    </svg>
+    <div class="flow-legend">
+      <span><span class="dot" style="background:#C9A663"></span> Flujo de coordinación operativa</span>
+      <span><span class="dot" style="background:#A33A2E"></span> Reporte fiscal entre jurisdicciones</span>
+      <span><span class="dot" style="background:rgba(236,228,210,.4)"></span> Vehículo en estructura</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-row">
+    <span>Compliance</span><span>UIF</span><span>AFIP</span><span>AEAT</span><span>Fideicomisos</span><span>Sociedades</span><span>Tax Planning</span><span>Family Office</span><span>Sucesorio</span><span>Holdings</span><span>Mediación</span>
+    <span>Compliance</span><span>UIF</span><span>AFIP</span><span>AEAT</span><span>Fideicomisos</span><span>Sociedades</span><span>Tax Planning</span><span>Family Office</span><span>Sucesorio</span><span>Holdings</span><span>Mediación</span>
+  </div>
+  <div class="marquee-row reverse">
+    <span>FATCA</span><span>CRS</span><span>OCDE</span><span>BEPS</span><span>Régimen informativo</span><span>Due diligence M&amp;A</span><span>Estructuras multi-jurisdiccionales</span>
+    <span>FATCA</span><span>CRS</span><span>OCDE</span><span>BEPS</span><span>Régimen informativo</span><span>Due diligence M&amp;A</span><span>Estructuras multi-jurisdiccionales</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal">
+      <div class="stat-pre">Patrimonio gestionado</div>
+      <div class="stat-label">Patrimonio en estructuras</div>
+    </div>
+    <div class="stat reveal reveal-d1">
+      <div class="stat-pre">Familias y grupos</div>
+      <div class="stat-label">Bajo asesoramiento integral</div>
+    </div>
+    <div class="stat reveal reveal-d2">
+      <div class="stat-pre">Vehículos vigentes</div>
+      <div class="stat-num"><span data-count="148">0</span></div>
+      <div class="stat-label">Sociedades · holdings · fideicomisos</div>
+    </div>
+    <div class="stat reveal reveal-d3">
+      <div class="stat-pre">Jurisdicciones</div>
+      <div class="stat-num"><span data-count="3">0</span></div>
+      <div class="stat-label">AR · ES · UY operativas</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES — 6 cards -->
+<section class="practice" id="services">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Seis prácticas · una vertical</div>
+      <h2 class="section-title">El equipo estructura, <em>la firma coordina</em>.</h2>
+    </div>
+    <p class="section-sub">Cada práctica opera bajo una misma supervisión patrimonial. La firma coordina la interacción entre abogados, contadores y compliance officers en cada jurisdicción.</p>
+  </div>
+  <div class="practice-grid">
+    <article class="pcard tilt reveal">
+      <div class="pcard-num"><span>01 / Patrimonial</span><div class="pcard-icon">§</div></div>
+      <h3>Planificación patrimonial internacional</h3>
+      <p>Diseño integral de arquitectura patrimonial coordinando residencia fiscal, vehículos societarios, fideicomisos y planificación sucesoria entre Argentina, España y Uruguay.</p>
+      <div class="pcard-jur">AR · ES · UY</div>
+      <span class="pcard-arrow">↗</span>
+    </article>
+    <article class="pcard tilt reveal reveal-d1">
+      <div class="pcard-num"><span>02 / Compliance</span><div class="pcard-icon">✓</div></div>
+      <h3>Compliance UIF, AFIP y AEAT</h3>
+      <p>Programas de integridad, prevención de lavado, régimen informativo, oficial de cumplimiento y reportes a UIF, AFIP y AEAT. Manuales corporativos y due diligence de contraparte.</p>
+      <div class="pcard-jur">PLA · KYC · FATCA</div>
+      <span class="pcard-arrow">↗</span>
+    </article>
+    <article class="pcard tilt reveal reveal-d2">
+      <div class="pcard-num"><span>03 / Societario</span><div class="pcard-icon">H</div></div>
+      <h3>Estructuras societarias y holdings</h3>
+      <p>Constitución y reorganización societaria, holdings operativos, vehículos de inversión, redomiciliaciones y diseño accionario para grupos familiares y corporativos.</p>
+      <div class="pcard-jur">S.A. · S.A.S. · S.L. · BV</div>
+      <span class="pcard-arrow">↗</span>
+    </article>
+    <article class="pcard tilt reveal">
+      <div class="pcard-num"><span>04 / Fideicomisos</span><div class="pcard-icon">F</div></div>
+      <h3>Fideicomisos · comerciales y patrimoniales</h3>
+      <p>Fideicomisos testamentarios, de administración, de garantía y de inversión. Estructura fiduciaria, contratos, registración y administración bajo legislación AR y UY.</p>
+      <div class="pcard-jur">Testamentario · Garantía · Inversión</div>
+      <span class="pcard-arrow">↗</span>
+    </article>
+    <article class="pcard tilt reveal reveal-d1">
+      <div class="pcard-num"><span>05 / Tax</span><div class="pcard-icon">T</div></div>
+      <h3>Tax planning multi-jurisdiccional</h3>
+      <p>Optimización fiscal integral, convenios de doble imposición, planificación de residencia, salida o ingreso fiscal a una jurisdicción. Cumplimiento OCDE · BEPS · CRS.</p>
+      <div class="pcard-jur">CDI · BEPS · Pillar Two</div>
+      <span class="pcard-arrow">↗</span>
+    </article>
+    <article class="pcard tilt reveal reveal-d2">
+      <div class="pcard-num"><span>06 / M&amp;A</span><div class="pcard-icon">D</div></div>
+      <h3>Due diligence empresarial · M&amp;A boutique</h3>
+      <p>Auditorías legales, financieras y fiscales para operaciones de M&amp;A boutique. Reportes integrales, vendor due diligence y estructuración de cierre con escrows.</p>
+      <div class="pcard-jur">VDD · Buy-side · Cierre</div>
+      <span class="pcard-arrow">↗</span>
+    </article>
+  </div>
+</section>
+
+<!-- PROCESS PINNED — 6 steps -->
+<section class="process" id="process">
+  <div class="process-track">
+    <div class="process-sticky">
+      <div class="process-inner">
+        <div class="process-left">
+          <div class="section-eyebrow">Metodología patrimonial</div>
+          <h2>Una estructura <em>se construye en seis etapas</em>.</h2>
+          <p>El equipo aplica una metodología propia para construir y mantener arquitecturas patrimoniales. Cada etapa queda documentada, auditada y revisable. La firma acompaña antes, durante y después de la implementación.</p>
+          <div class="process-counter"><span id="processStep">01 · Auditoría</span><span class="bar" id="processBar"></span></div>
+        </div>
+        <div class="process-right">
+          <div class="process-card process-anim" data-step="0"><div class="pc-num">01</div><h4>Auditoría inicial</h4><p>Mapeo patrimonial, residencia fiscal, contingencias y objetivos del titular.</p></div>
+          <div class="process-card process-anim" data-step="1"><div class="pc-num">02</div><h4>Diseño de estructura</h4><p>Arquitectura objetivo: jurisdicciones, vehículos, gobierno corporativo y sucesión.</p></div>
+          <div class="process-card process-anim" data-step="2"><div class="pc-num">03</div><h4>Vehículos</h4><p>Sociedades, holdings, fideicomisos y trusts. Documentación, registración, KYC.</p></div>
+          <div class="process-card process-anim" data-step="3"><div class="pc-num">04</div><h4>Implementación</h4><p>Aportes, transferencias intra-grupo, contratos accionarios, banca y custodia.</p></div>
+          <div class="process-card process-anim" data-step="4"><div class="pc-num">05</div><h4>Compliance vigente</h4><p>Régimen informativo, reportes UIF/AFIP/AEAT, FATCA/CRS y libros corporativos.</p></div>
+          <div class="process-card process-anim" data-step="5"><div class="pc-num">06</div><h4>Monitoreo continuo</h4><p>Revisión anual, ajustes ante cambios normativos, planificación sucesoria.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare" id="compare">
+  <div class="compare-inner">
+    <div class="section-head reveal" style="margin-bottom:24px">
+      <div>
+        <div class="section-eyebrow">Vehículos patrimoniales · comparativa</div>
+        <h2 class="section-title">Qué estructura conviene <em>para qué objetivo</em>.</h2>
+      </div>
+      <p class="section-sub">La comparativa orientativa siguiente permite contrastar los cuatro vehículos más utilizados. La elección definitiva depende de objetivos, residencia fiscal y horizonte temporal.</p>
+    </div>
+    <div class="compare-table reveal reveal-d1">
+      <div class="compare-row head">
+        <div class="cell">Variable</div>
+        <div class="cell">Persona física</div>
+        <div class="cell">Sociedad operativa</div>
+        <div class="cell">Fideicomiso</div>
+        <div class="cell featured">Holding multi-jurisd.</div>
+      </div>
+      <div class="compare-row">
+        <div class="cell">Privacidad</div>
+        <div class="cell"><span class="dots"><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span></div>
+        <div class="cell"><span class="dots"><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i></span></div>
+        <div class="cell"><span class="dots"><i></i><i></i><i></i><i></i><i class="off"></i></span></div>
+        <div class="cell featured"><span class="dots"><i></i><i></i><i></i><i></i><i></i></span></div>
+      </div>
+      <div class="compare-row">
+        <div class="cell">Costo de setup</div>
+        <div class="cell">Sin costo</div>
+        <div class="cell">Bajo · medio</div>
+        <div class="cell">Medio</div>
+        <div class="cell featured">Alto inicial</div>
+      </div>
+      <div class="compare-row">
+        <div class="cell">Mantenimiento anual</div>
+        <div class="cell">Mínimo</div>
+        <div class="cell">Contable + societario</div>
+        <div class="cell">Fiduciario + contable</div>
+        <div class="cell featured">Multi-jurisd. coordinado</div>
+      </div>
+      <div class="compare-row">
+        <div class="cell">Complejidad</div>
+        <div class="cell"><span class="dots"><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span></div>
+        <div class="cell"><span class="dots"><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i></span></div>
+        <div class="cell"><span class="dots"><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span></div>
+        <div class="cell featured"><span class="dots"><i></i><i></i><i></i><i></i><i></i></span></div>
+      </div>
+      <div class="compare-row">
+        <div class="cell">Protección frente a contingencias</div>
+        <div class="cell">Baja</div>
+        <div class="cell">Media</div>
+        <div class="cell">Alta</div>
+        <div class="cell featured">Muy alta</div>
+      </div>
+      <div class="compare-row">
+        <div class="cell">Planificación sucesoria</div>
+        <div class="cell">Limitada</div>
+        <div class="cell">Indirecta</div>
+        <div class="cell">Óptima</div>
+        <div class="cell featured">Óptima y escalable</div>
+      </div>
+      <div class="compare-row">
+        <div class="cell">Ideal para</div>
+        <div class="cell">Patrimonio acotado, una jurisdicción</div>
+        <div class="cell">Negocio activo en una jurisdicción</div>
+        <div class="cell">Protección y sucesión familiar</div>
+        <div class="cell featured">Patrimonio multi-jurisdiccional alto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="compliance" id="compliance">
+  <div class="compliance-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Compliance internacional</div>
+      <h2>Estándares OCDE, <em>tres jurisdicciones</em>, una sola firma.</h2>
+      <p>La firma opera bajo los estándares internacionales de transparencia fiscal y prevención del lavado de activos. Cada estructura se diseña desde su origen para cumplir con FATCA, CRS y los principios BEPS de la OCDE.</p>
+      <ul class="compliance-points">
+        <li><strong>FATCA</strong> Identificación y reporte de titulares con conexión fiscal estadounidense. Coordinación con bancos y custodios.</li>
+        <li><strong>CRS · Common Reporting Standard</strong> Intercambio automático de información financiera entre más de 110 jurisdicciones. Clasificación de entidades y due diligence de cuenta.</li>
+        <li><strong>OCDE · BEPS · Pillar Two</strong> Sustancia económica, precios de transferencia y reglas anti-abuso para estructuras multinacionales.</li>
+        <li><strong>UIF · AFIP · AEAT</strong> Régimen informativo en Argentina y España, libros, declaraciones juradas y reportes de operaciones sospechosas.</li>
+      </ul>
+    </div>
+    <div class="compliance-viz reveal reveal-d1">
+      <h5><span class="pulse"></span> Marco regulatorio · cobertura del equipo</h5>
+      <div class="frame-rows">
+        <div class="frame-row"><span class="name">FATCA</span><span class="meter" style="--lv:96%"></span><span class="pct">96%</span></div>
+        <div class="frame-row"><span class="name">CRS</span><span class="meter" style="--lv:94%"></span><span class="pct">94%</span></div>
+        <div class="frame-row"><span class="name">OCDE BEPS</span><span class="meter" style="--lv:88%"></span><span class="pct">88%</span></div>
+        <div class="frame-row"><span class="name">Pillar Two</span><span class="meter" style="--lv:72%"></span><span class="pct">72%</span></div>
+        <div class="frame-row"><span class="name">UIF · AR</span><span class="meter" style="--lv:98%"></span><span class="pct">98%</span></div>
+        <div class="frame-row"><span class="name">AFIP · AR</span><span class="meter" style="--lv:96%"></span><span class="pct">96%</span></div>
+        <div class="frame-row"><span class="name">AEAT · ES</span><span class="meter" style="--lv:90%"></span><span class="pct">90%</span></div>
+        <div class="frame-row"><span class="name">DGI · UY</span><span class="meter" style="--lv:86%"></span><span class="pct">86%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / TEAM -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-body reveal">
+      <div class="section-eyebrow">La firma</div>
+      <h2 class="section-title" style="margin-bottom:36px">Una vertical patrimonial <em>integrada en un estudio</em>.</h2>
+      <p>Estudio Oro Capital es la vertical patrimonial, fiscal y societaria de Estudio Oro. Un equipo integrado de abogados patrimonialistas, contadores y compliance officers asesora a familias, empresas y vehículos de inversión bajo una sola estructura de coordinación.</p>
+      <p>La firma opera con sede central en Buenos Aires y oficinas operativas en Madrid y Punta del Este. Cada jurisdicción cuenta con profesionales locales matriculados que articulan con la coordinación general en Argentina.</p>
+      <div class="pull">"La arquitectura patrimonial no se improvisa. Se diseña, se documenta, se mantiene. Y se revisa cada año, antes que la normativa lo exija."</div>
+      <p>El equipo combina experiencia en derecho tributario, societario y financiero con una práctica continua frente a UIF, AFIP, AEAT y custodios bancarios en las tres jurisdicciones. La firma no opera como intermediaria comercial: estructura, documenta y mantiene.</p>
+      <p>Estudio Oro Capital habla el idioma de la banca privada. Coordinación directa con private bankers, family offices, fiduciarios y custodios institucionales en cada jurisdicción.</p>
+    </div>
+    <aside class="about-panel reveal reveal-d2">
+      <h4>Composición del equipo</h4>
+      <p>Abogados patrimoniales · Contadores públicos · Compliance officers · Especialistas tributarios · Asesores en sucesión</p>
+      <h4>Sede central</h4>
+      <p><strong>Buenos Aires</strong><br>Salguero 2835 · 4B<br>Palermo, CABA · Argentina</p>
+      <h4>Oficinas operativas</h4>
+      <p><strong>Madrid</strong> — Patrimonio EU y tax planning continental<br><strong>Punta del Este</strong> — Fideicomisos y vehículos uruguayos</p>
+      <h4>Confidencialidad</h4>
+      <p>Todo contacto inicial es confidencial. La firma opera bajo secreto profesional y normativa de protección de datos AR · ES · UY.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Insights del equipo</div>
+      <h2 class="section-title">Análisis técnico y <em>posicionamiento normativo</em>.</h2>
+    </div>
+    <p class="section-sub">Notas técnicas elaboradas por el equipo patrimonial. Documentos orientativos · no constituyen asesoramiento personalizado.</p>
+  </div>
+  <div class="insights-grid">
+    <article class="icard tilt reveal">
+      <div class="wp">White paper · 18 páginas</div>
+      <div class="tag">Régimen informativo</div>
+      <h3>Régimen informativo AFIP 2026: lo que cambia y cómo prepararse</h3>
+      <p>Las nuevas resoluciones sobre régimen informativo de patrimonio, criptoactivos y participaciones societarias. Calendario, sujetos obligados y umbrales aplicables.</p>
+      <div class="read">Solicitar acceso →</div>
+    </article>
+    <article class="icard tilt reveal reveal-d1">
+      <div class="wp">White paper · 24 páginas</div>
+      <div class="tag">Estructuras</div>
+      <h3>Holding multi-jurisdiccional: cuándo conviene y cuándo no</h3>
+      <p>Cuatro casos prácticos de estructuras tri-jurisdiccionales AR · ES · UY. Costos reales, cobertura sucesoria y compliance asociado en cada combinación.</p>
+      <div class="read">Solicitar acceso →</div>
+    </article>
+    <article class="icard tilt reveal reveal-d2">
+      <div class="wp">White paper · 16 páginas</div>
+      <div class="tag">Sucesión</div>
+      <h3>Fideicomiso testamentario versus sucesión clásica</h3>
+      <p>Diferencias estructurales entre el fideicomiso testamentario y la apertura sucesoria tradicional. Costos, plazos, privacidad y protección frente a contingencias.</p>
+      <div class="read">Solicitar acceso →</div>
+    </article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <div class="section-eyebrow">Reunión confidencial</div>
+      <h2 class="section-title" style="margin-bottom:36px">Una conversación, <em>en privado</em>.</h2>
+      <p>El contacto inicial es confidencial y sin compromiso. La firma coordina una reunión preliminar para entender el patrimonio actual, los objetivos y las contingencias antes de proponer arquitectura.</p>
+      <div class="contact-block"><h5>WhatsApp privado</h5><a href="https://wa.me/5491168777777">+54 9 11 6877-7777</a></div>
+      <div class="contact-block"><h5>Email reservado</h5><a href="mailto:capital@estudiooro.com">capital@estudiooro.com</a></div>
+      <div class="contact-block"><h5>Sede central</h5><span>Salguero 2835 · 4B · Palermo<br>Buenos Aires · Argentina</span></div>
+      <div class="contact-block"><h5>Coordinación regional</h5><span>Madrid · Punta del Este</span></div>
+      <div class="confidential-note">"Toda comunicación con la firma se realiza bajo secreto profesional. Los datos compartidos durante el contacto inicial no se cruzan con bases comerciales ni de marketing."</div>
+    </div>
+    <form class="form-grid reveal reveal-d1" onsubmit="event.preventDefault();this.querySelector('button').textContent='Recibido · la firma se pondrá en contacto'">
+      <div class="form-row">
+        <input class="input" placeholder="Nombre completo" required>
+        <input class="input" placeholder="Teléfono / WhatsApp" required>
+      </div>
+      <input class="input" type="email" placeholder="Email" required>
+      <div class="form-row">
+        <select class="input" required>
+          <option value="">Jurisdicción principal</option>
+          <option>Argentina</option>
+          <option>España</option>
+          <option>Uruguay</option>
+          <option>Múltiple · multi-jurisdiccional</option>
+          <option>Otra</option>
+        </select>
+        <select class="input">
+          <option value="">Patrimonio bajo asesoramiento (orientativo)</option>
+          <option>Hasta USD 500K</option>
+          <option>USD 500K · 2M</option>
+          <option>USD 2M · 10M</option>
+          <option>USD 10M · 50M</option>
+          <option>Superior a USD 50M</option>
+          <option>Prefiero conversarlo en reunión</option>
+        </select>
+      </div>
+      <select class="input">
+        <option value="">Área de interés</option>
+        <option>Planificación patrimonial internacional</option>
+        <option>Compliance UIF / AFIP / AEAT</option>
+        <option>Estructuras societarias y holdings</option>
+        <option>Fideicomiso comercial o testamentario</option>
+        <option>Tax planning multi-jurisdiccional</option>
+        <option>Due diligence M&amp;A</option>
+        <option>Family office integral</option>
+      </select>
+      <textarea class="input" placeholder="Comentario inicial · confidencial. La firma cubre esta información bajo secreto profesional."></textarea>
+      <label class="checkbox-row"><input type="checkbox" required> Solicito reunión confidencial. Comprendo que el contacto inicial no constituye asesoramiento patrimonial personalizado y se realiza bajo secreto profesional.</label>
+      <button type="submit" class="cta-btn magnetic" data-magnet style="justify-self:start">Solicitar reunión <span class="arrow">→</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Estudio Oro <span class="div">Capital</span></div>
+        <p>Vertical patrimonial, fiscal y societaria de Estudio Oro S.A.S. Planificación internacional, compliance y estructuras desde una sola firma.</p>
+        <p style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:18px">Buenos Aires · Madrid · Punta del Este</p>
+      </div>
+      <div>
+        <h6>Servicios</h6>
+        <a href="#services">Planificación patrimonial</a><a href="#services">Compliance</a><a href="#services">Estructuras societarias</a><a href="#services">Fideicomisos</a><a href="#services">Tax planning</a><a href="#services">Due diligence M&amp;A</a>
+      </div>
+      <div>
+        <h6>Firma</h6>
+        <a href="#about">La vertical</a><a href="#about">Equipo</a><a href="#process">Metodología</a><a href="#compliance">Compliance</a><a href="#contact">Reunión</a>
+      </div>
+      <div>
+        <h6>Contacto reservado</h6>
+        <a href="mailto:capital@estudiooro.com">capital@estudiooro.com</a><a href="https://wa.me/5491168777777">WhatsApp privado</a><span style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em">Confidencial · bajo secreto profesional</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Estudio Oro S.A.S. · Vertical Capital · Salguero 2835 4B, Palermo, CABA · © 2026</span>
+      <span>Coordinación tri-jurisdiccional · estudiooro.com/capital</span>
+    </div>
+  </div>
+<div class="cross-nav" style="border-top:1px solid rgba(236,228,210,.08);padding:18px 32px;display:flex;align-items:center;justify-content:center;gap:24px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;flex-wrap:wrap">
+  <span style="color:rgba(236,228,210,.35)">Estudio Oro:</span>
+  <a href="https://estudiooro.com/" style="color:#C9A663;text-decoration:none">Firma</a>
+  <a href="https://estudiooro.com/inmobiliaria/" style="color:#D4AF6A;text-decoration:none">Real Estate</a>
+  <a href="https://estudiooro.com/tech/" style="color:#4ECDC4;text-decoration:none">Tech Lab</a>
+</div>
+</footer>
+
+<a href="https://wa.me/5491168777777" class="wa-float magnetic" data-magnet aria-label="WhatsApp privado">PRIV</a>
+
+<script>
+(function(){
+  const isTouch=matchMedia('(hover:none)').matches;
+
+  const scrollUpdate=()=>{
+    const h=document.documentElement;
+    const p=h.scrollTop/(h.scrollHeight-h.clientHeight);
+    document.documentElement.style.setProperty('--scrollProg',p);
+  };
+  scrollUpdate();
+  addEventListener('scroll',scrollUpdate,{passive:true});
+
+  if(!isTouch){
+    const main=document.querySelector('.cursor-main');
+    const trail=document.querySelector('.cursor-trail');
+    let mx=innerWidth/2,my=innerHeight/2,tx=mx,ty=my;
+    addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;main.style.left=mx+'px';main.style.top=my+'px';});
+    function tloop(){tx+=(mx-tx)*.14;ty+=(my-ty)*.14;trail.style.left=tx+'px';trail.style.top=ty+'px';requestAnimationFrame(tloop)}
+    tloop();
+    document.querySelectorAll('a,button,.tilt,.pcard,.icard,.input,.magnetic').forEach(el=>{
+      el.addEventListener('mouseenter',()=>main.classList.add('active'));
+      el.addEventListener('mouseleave',()=>main.classList.remove('active'));
+    });
+  }
+
+  const hero=document.querySelector('.hero');
+  if(hero){hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',(e.clientX-r.left)+'px');hero.style.setProperty('--my',(e.clientY-r.top)+'px')})}
+
+  if(!isTouch){
+    document.querySelectorAll('[data-magnet]').forEach(el=>{
+      el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect();const cx=r.left+r.width/2;const cy=r.top+r.height/2;
+        const dx=e.clientX-cx;const dy=e.clientY-cy;
+        const dist=Math.hypot(dx,dy);
+        if(dist<110){el.style.transform=`translate(${dx*.22}px,${dy*.30}px)`}
+      });
+      el.addEventListener('mouseleave',()=>{el.style.transform=''});
+    });
+  }
+
+  if(!isTouch){
+    document.querySelectorAll('.tilt').forEach(el=>{
+      el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width;const py=(e.clientY-r.top)/r.height;
+        const rx=(py-.5)*-5;const ry=(px-.5)*5;
+        el.style.transform=`perspective(1100px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+        el.style.setProperty('--cx',(px*100)+'%');el.style.setProperty('--cy',(py*100)+'%');
+      });
+      el.addEventListener('mouseleave',()=>{el.style.transform=''});
+    });
+  }
+
+  const canvas=document.getElementById('particles');
+  if(canvas){
+    const ctx=canvas.getContext('2d');
+    let W,H,particles=[];
+    let cursor={x:-9999,y:-9999};
+    function resize(){W=canvas.width=innerWidth;H=canvas.height=hero.offsetHeight;}
+    resize();addEventListener('resize',resize);
+    addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();cursor.x=e.clientX-r.left;cursor.y=e.clientY-r.top});
+    const N=isTouch?25:50;
+    for(let i=0;i<N;i++)particles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.3+.4});
+    function loop(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of particles){
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1;
+        if(p.y<0||p.y>H)p.vy*=-1;
+        const dxc=p.x-cursor.x,dyc=p.y-cursor.y,dc=Math.hypot(dxc,dyc);
+        if(dc<110){p.x+=dxc/dc*.3;p.y+=dyc/dc*.3}
+        ctx.fillStyle='rgba(201,166,99,.55)';
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+      }
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a=particles[i],b=particles[j];
+          const d=Math.hypot(a.x-b.x,a.y-b.y);
+          if(d<130){
+            ctx.strokeStyle=`rgba(201,166,99,${(1-d/130)*.18})`;
+            ctx.lineWidth=.4;
+            ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  const ticker=document.getElementById('ticker');
+  if(ticker){
+    function fmt(n,dec){return n.toFixed(dec)}
+    const data=[
+      {l:'USD/ARS',v:1248.50,dec:2,dir:1},
+      {l:'EUR/USD',v:1.0842,dec:4,dir:-1},
+      {l:'MERVAL',v:2186432,dec:0,dir:1},
+      {l:'ITBA 30Y',v:6.85,dec:2,dir:-1,suf:'%'},
+      {l:'BONO AR USD 2035',v:78.20,dec:2,dir:1},
+      {l:'IBEX 35',v:11842.6,dec:1,dir:1},
+      {l:'AUD/USD',v:0.6612,dec:4,dir:-1},
+      {l:'ORO oz',v:2684.30,dec:2,dir:1,suf:' USD'}
+    ];
+    function buildItems(){
+      return data.map(d=>{
+        const cls=d.dir>0?'up':'down';
+        const sign=d.dir>0?'▲':'▼';
+        return `<span><span class="label">${d.l}</span> <strong>${(d.suf==' USD'?'USD ':'') + fmt(d.v,d.dec) + (d.suf&&d.suf!=' USD'?d.suf:'')}</strong> <span class="${cls}">${sign}</span></span>`;
+      }).join('') + '<span><span class="dot"></span> Reunión confidencial · WhatsApp privado</span>';
+    }
+    function render(){ticker.innerHTML=buildItems()+buildItems();}
+    render();
+    setInterval(()=>{
+      data.forEach(d=>{
+        const delta=(Math.random()-.5)*d.v*.0015;
+        d.v+=delta;
+        d.dir=delta>=0?1:-1;
+      });
+      render();
+    },4500);
+  }
+
+  const tw=document.getElementById('typeword');
+  if(tw){
+    const words=['protege capital','asegura sucesión','estructura patrimonio','protege capital'];
+    let i=0,j=tw.textContent.length,del=false;
+    function type(){
+      const w=words[i];
+      if(!del){
+        j++;tw.textContent=w.slice(0,j);
+        if(j===w.length){del=true;setTimeout(type,2200);return}
+      }else{
+        j--;tw.textContent=w.slice(0,j);
+        if(j===0){del=false;i=(i+1)%words.length}
+      }
+      setTimeout(type,del?34:80);
+    }
+    setTimeout(type,3200);
+  }
+
+  const aiChat=document.getElementById('aiChat');
+  if(aiChat){
+    const convos=[
+      {u:'Tengo activos en AR y propiedades en España. Quiero estructurar todo.',b:'Coordino auditoría tri-jurisdiccional. Madrid y Buenos Aires articulan diseño integral.'},
+      {u:'Necesito fideicomiso testamentario para protección sucesoria.',b:'El equipo estructura el vehículo bajo régimen UY o AR según residencia y herederos.'},
+      {u:'Compliance UIF y AFIP para mi holding familiar.',b:'Programa de integridad + oficial de cumplimiento. Reportes y manuales corporativos.'},
+      {u:'Quiero salir fiscalmente de Argentina hacia España.',b:'Planificación CDI AR-ES. Residencia, exit tax, vehículos previos al cambio.'}
+    ];
+    let idx=0;
+    function nextConvo(){
+      idx=(idx+1)%convos.length;
+      const c=convos[idx];
+      aiChat.innerHTML=`<div class="ai-msg user"></div><div class="ai-msg bot typing"></div>`;
+      const u=aiChat.querySelector('.user');const b=aiChat.querySelector('.bot');
+      let k=0;
+      const ti=setInterval(()=>{u.textContent=c.u.slice(0,k);k++;if(k>c.u.length){clearInterval(ti);setTimeout(()=>{b.classList.remove('typing');let l=0;const tj=setInterval(()=>{b.textContent=c.b.slice(0,l);l++;if(l>c.b.length){clearInterval(tj);setTimeout(nextConvo,4200)}},24)},1500)}},32);
+    }
+    setTimeout(nextConvo,4500);
+  }
+
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const counters=document.querySelectorAll('[data-count]');
+  const ioC=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target;const target=+el.dataset.count;const start=performance.now();
+        function step(t){
+          const p=Math.min((t-start)/1800,1);
+          el.textContent=Math.floor(target*(1-Math.pow(1-p,3)));
+          if(p<1)requestAnimationFrame(step);else el.textContent=target;
+        }
+        requestAnimationFrame(step);ioC.unobserve(el);
+      }
+    })
+  },{threshold:.4});
+  counters.forEach(c=>ioC.observe(c));
+
+  const processCards=document.querySelectorAll('.process-anim');
+  const processSection=document.getElementById('process');
+  const stepLabels=['01 · Auditoría','02 · Diseño','03 · Vehículos','04 · Implementación','05 · Compliance','06 · Monitoreo'];
+  const stepEl=document.getElementById('processStep');
+  const barEl=document.getElementById('processBar');
+  function processScroll(){
+    if(!processSection)return;
+    const r=processSection.getBoundingClientRect();
+    const total=processSection.offsetHeight-innerHeight;
+    const prog=Math.max(0,Math.min(1,-r.top/total));
+    const activeIdx=Math.min(5,Math.floor(prog*6));
+    processCards.forEach((c,i)=>{
+      const trigger=(i+1)/(processCards.length+1.5);
+      if(prog>trigger*.4)c.classList.add('in');
+      c.classList.toggle('active',i===activeIdx);
+    });
+    if(stepEl)stepEl.textContent=stepLabels[activeIdx]||stepLabels[0];
+    if(barEl)barEl.style.setProperty('--cur',((activeIdx+1)/6*100)+'%');
+  }
+  addEventListener('scroll',processScroll,{passive:true});
+  processScroll();
+
+  function heroMorph(){
+    const sy=scrollY;
+    const v=Math.min(sy/700,1);
+    const accent=document.querySelector('.hero h1 .typewriter');
+    if(accent){
+      const r=Math.round(201+(142-201)*v);
+      const g=Math.round(166+(107-166)*v);
+      const b=Math.round(99+(46-99)*v);
+      accent.style.color=`rgb(${r},${g},${b})`;
+    }
+  }
+  addEventListener('scroll',heroMorph,{passive:true});
+
+})();
+</script>
+</body>
+</html>

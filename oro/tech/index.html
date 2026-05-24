@@ -1,1 +1,930 @@
-PLACEHOLDER_TECH
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio Oro · Tech Lab | IA aplicada al derecho · Automatización legal</title>
+<meta name="description" content="Estudio Oro Tech Lab — laboratorio interno de IA y automatización legal. Análisis de expedientes con IA, Reclamai, NARAKIA bots, due diligence acelerado, jurisprudencia predictiva.">
+<meta name="keywords" content="IA legal, legal tech Argentina, automatizacion juridica, due diligence IA, Reclamai, NARAKIA, bot WhatsApp legal, Estudio Oro Tech">
+<meta property="og:title" content="Estudio Oro · Tech Lab — IA aplicada al derecho">
+<meta property="og:description" content="Laboratorio de IA y automatización legal. Productos, consultoría y consultoría AI para estudios.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://estudiooro.com/tech/">
+<link rel="canonical" href="https://estudiooro.com/tech/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Estudio Oro · Tech Lab","description":"Laboratorio de IA aplicada al derecho. Productos legal-tech y consultoría AI.","url":"https://estudiooro.com/tech/","telephone":"+5491168777777","email":"tech@estudiooro.com","address":{"@type":"PostalAddress","streetAddress":"Salguero 2835 4B, Palermo","addressLocality":"Buenos Aires","addressCountry":"AR"},"parentOrganization":{"@type":"ProfessionalService","name":"Estudio Oro S.A.S."}}
+</script>
+<style>
+:root{
+  --bg:#0A0B0E; --bg2:#0F1B2E; --bone:#ECE4D2; --bone-dim:#ECE4D2cc;
+  --gold:#C9A663; --coral:#E54B2A; --cyan:#4ECDC4; --navy:#0F1B2E;
+  --line:rgba(236,228,210,.10); --line2:rgba(236,228,210,.20);
+  --cyan-line:rgba(78,205,196,.22);
+  --mx:50%; --my:50%; --scrollProg:0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--bone);
+  font-family:'Inter Tight',sans-serif; font-weight:400;
+  overflow-x:hidden; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+@media (hover:none){body{cursor:auto}}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button{font:inherit;background:none;border:none;color:inherit;cursor:none}
+@media (hover:none){button,a{cursor:pointer}}
+
+/* SCROLL PROGRESS */
+.scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--gold));width:calc(var(--scrollProg)*100%);z-index:9999;box-shadow:0 0 12px var(--cyan)}
+
+/* CURSOR */
+.cursor-main,.cursor-trail{position:fixed;pointer-events:none;z-index:9998;border-radius:50%;mix-blend-mode:difference;transition:width .25s cubic-bezier(.2,.8,.2,1),height .25s,background-color .25s}
+.cursor-main{width:18px;height:18px;border:1.5px solid var(--bone);transform:translate(-50%,-50%)}
+.cursor-trail{width:5px;height:5px;background:var(--bone);transform:translate(-50%,-50%)}
+.cursor-main.active{width:60px;height:60px;background:var(--cyan);border-color:var(--cyan)}
+@media (hover:none){.cursor-main,.cursor-trail{display:none}}
+
+/* TOP STRIP */
+.topstrip{position:relative;border-bottom:1px solid var(--line);background:#06070A;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;overflow:hidden;padding:8px 0;color:var(--bone-dim)}
+.tick-wrap{display:flex;animation:tick 38s linear infinite;white-space:nowrap;gap:48px;padding-left:48px}
+.tick-wrap span{display:inline-flex;align-items:center;gap:8px}
+.tick-wrap .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.tick-wrap .live{color:var(--cyan);font-weight:500}
+.tick-wrap .num{color:var(--gold);font-weight:500}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,11,14,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1340px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.logo{font-family:'Fraunces',serif;font-size:20px;font-weight:500;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.logo-mark{width:28px;height:28px;border:1.5px solid var(--cyan);border-radius:50%;position:relative;display:grid;place-items:center;font-size:13px;color:var(--cyan);font-family:'Fraunces',serif}
+.logo-mark::after{content:"";position:absolute;inset:-3px;border:1px solid var(--cyan);border-radius:50%;opacity:.3;animation:pulse 3s ease-in-out infinite}
+.logo-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:.16em;text-transform:uppercase;margin-left:6px;padding:3px 8px;border:1px solid var(--cyan-line);border-radius:4px}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.2);opacity:0}}
+.nav-links{display:flex;gap:28px;font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--bone-dim)}
+.nav-links a{position:relative;padding:6px 0}
+.nav-links a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--cyan);transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover::after{width:100%}
+.nav-links a:hover{color:var(--bone)}
+.nav-cta-row{display:flex;gap:10px;align-items:center}
+.cta-btn{position:relative;padding:11px 22px;background:var(--cyan);color:#0A0B0E;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;transition:transform .15s cubic-bezier(.2,.8,.2,1),background .3s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.cta-btn:hover{background:var(--bone)}
+.cta-btn .arrow{transition:transform .3s}
+.cta-btn:hover .arrow{transform:translateX(4px)}
+.cta-secondary{background:transparent;color:var(--bone);border:1px solid var(--line2)}
+.cta-secondary:hover{background:var(--bone);color:#0A0B0E}
+.cta-gold{background:var(--gold)}
+@media(max-width:900px){.nav-links{display:none}.nav-inner{padding:14px 20px}.logo-sub{display:none}}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;padding:80px 32px 100px;overflow:hidden;display:flex;align-items:center}
+.hero-mesh{position:absolute;inset:0;overflow:hidden;z-index:0}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55;mix-blend-mode:screen;animation:drift 22s ease-in-out infinite}
+.mb1{width:55vw;height:55vw;background:#4ECDC4;top:-15%;left:-10%;opacity:.45}
+.mb2{width:50vw;height:50vw;background:#0F1B2E;top:20%;right:-15%;animation-delay:-7s}
+.mb3{width:45vw;height:45vw;background:#C9A663;bottom:-20%;left:20%;animation-delay:-14s;opacity:.32}
+.mb4{width:40vw;height:40vw;background:#4ECDC4;bottom:0;right:10%;animation-delay:-4s;opacity:.3}
+@keyframes drift{0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}33%{transform:translate(40px,-30px) rotate(20deg) scale(1.08)}66%{transform:translate(-30px,40px) rotate(-15deg) scale(.95)}}
+#particles{position:absolute;inset:0;z-index:1;opacity:.7}
+.hero-spotlight{position:absolute;inset:0;background:radial-gradient(circle 500px at var(--mx) var(--my),rgba(78,205,196,.12),transparent 70%);pointer-events:none;z-index:2}
+
+/* grid overlay (lab aesthetic) */
+.hero-grid{position:absolute;inset:0;z-index:1;opacity:.18;background-image:linear-gradient(rgba(78,205,196,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(78,205,196,.18) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+
+.hero-inner{position:relative;z-index:3;max-width:1340px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.45fr 1fr;gap:60px;align-items:end}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hero-eyebrow::before{content:"";width:36px;height:1px;background:var(--cyan)}
+.hero-eyebrow .tag{padding:3px 9px;border:1px solid var(--cyan-line);border-radius:999px;color:var(--bone-dim);font-size:10px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(46px,7vw,104px);line-height:.96;font-weight:400;letter-spacing:-.03em;margin-bottom:32px;font-variation-settings:"opsz" 144}
+.hero h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero h1 .word .inner{display:inline-block;transform:translateY(110%);animation:wordRise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .word:nth-child(2) .inner{animation-delay:.1s}
+.hero h1 .word:nth-child(3) .inner{animation-delay:.2s}
+.hero h1 .word:nth-child(4) .inner{animation-delay:.3s}
+.hero h1 .word:nth-child(5) .inner{animation-delay:.4s}
+.hero h1 .word:nth-child(6) .inner{animation-delay:.5s}
+.hero h1 .word:nth-child(7) .inner{animation-delay:.6s}
+@keyframes wordRise{to{transform:translateY(0)}}
+.hero h1 .accent{color:var(--gold);font-style:italic;font-weight:300}
+.hero h1 .typewriter{color:var(--cyan);font-style:italic;font-weight:300;position:relative}
+.hero h1 .typewriter::after{content:"|";color:var(--gold);animation:blink 1s steps(1) infinite;font-style:normal;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+.hero-lead{font-size:18px;line-height:1.5;color:var(--bone-dim);max-width:620px;margin-bottom:42px;font-weight:300;opacity:0;animation:fadeUp 1s .8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.hero-cta-row{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero-meta-line{margin-top:36px;display:flex;gap:28px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim);letter-spacing:.06em;opacity:0;animation:fadeUp 1s 1.4s cubic-bezier(.2,.8,.2,1) forwards}
+.hero-meta-line span b{color:var(--cyan);font-weight:500}
+.hero-aside{display:flex;flex-direction:column;gap:14px;opacity:0;animation:fadeUp 1s 1.2s cubic-bezier(.2,.8,.2,1) forwards}
+
+.glass-card{background:rgba(236,228,210,.04);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--line2);border-radius:18px;padding:22px;position:relative;overflow:hidden}
+.glass-card::before{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;background:linear-gradient(135deg,rgba(78,205,196,.30),transparent 50%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.stats-card .stat-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px}
+.stats-card .stat-row:last-child{border-bottom:none;padding-bottom:0}
+.stats-card .stat-row span:last-child{color:var(--cyan);font-weight:500}
+.stats-card-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.stats-card-title .pulse{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulseDot 1.5s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(78,205,196,.6)}50%{opacity:.4;box-shadow:0 0 0 8px rgba(78,205,196,0)}}
+
+/* TERMINAL */
+.terminal{background:#06070A;border:1px solid var(--cyan-line);border-radius:14px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:12px;position:relative}
+.terminal-head{display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(78,205,196,.05);border-bottom:1px solid var(--cyan-line);font-size:10px;color:var(--bone-dim);letter-spacing:.06em}
+.terminal-dots{display:flex;gap:5px}
+.terminal-dots i{width:9px;height:9px;border-radius:50%;display:inline-block;background:#3a3d44}
+.terminal-dots i:nth-child(1){background:#E54B2A}
+.terminal-dots i:nth-child(2){background:#C9A663}
+.terminal-dots i:nth-child(3){background:#4ECDC4}
+.terminal-head .path{margin-left:auto;color:var(--cyan);font-size:10px}
+.terminal-body{padding:14px 16px;min-height:170px;line-height:1.7;color:var(--bone-dim);font-size:12px}
+.terminal-body .prompt{color:var(--cyan)}
+.terminal-body .cmd{color:var(--bone)}
+.terminal-body .out{color:var(--bone-dim);opacity:.8}
+.terminal-body .ok{color:var(--cyan)}
+.terminal-body .warn{color:var(--gold)}
+.terminal-body .hash{color:var(--gold);font-size:11px}
+.terminal-cursor::after{content:"▊";color:var(--cyan);animation:blink 1s steps(1) infinite;margin-left:2px}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:32px}.hero{padding:60px 20px 80px}.terminal-body{font-size:11px}}
+
+/* WORLD MAP */
+.world{padding:120px 32px;border-top:1px solid var(--line);position:relative;background:linear-gradient(180deg,var(--bg),#08090C)}
+.section-head{max-width:1340px;margin:0 auto 60px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:"";width:24px;height:1px;background:var(--cyan)}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,68px);font-weight:400;line-height:1.02;letter-spacing:-.025em;max-width:780px}
+.section-title em{color:var(--cyan);font-style:italic;font-weight:300}
+.section-title .gold{color:var(--gold);font-style:italic;font-weight:300}
+.section-sub{font-size:15px;color:var(--bone-dim);max-width:380px;line-height:1.6}
+.world-inner{max-width:1340px;margin:0 auto;position:relative}
+.world-svg{width:100%;height:auto;max-height:520px}
+
+/* MARQUEE */
+.marquee{padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#06070A;overflow:hidden}
+.marquee-row{display:flex;animation:mq 50s linear infinite;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:clamp(20px,2vw,28px);font-weight:400;color:var(--bone);gap:48px;text-transform:uppercase;letter-spacing:.06em}
+.marquee-row:hover{animation-play-state:paused}
+.marquee-row.reverse{animation:mqR 60s linear infinite;color:var(--cyan);font-family:'Fraunces',serif;text-transform:none;font-style:italic;font-weight:300;font-size:clamp(38px,4.6vw,68px);border-top:1px solid var(--line);padding-top:24px;margin-top:24px;letter-spacing:-.01em}
+.marquee-row span{display:inline-flex;align-items:center;gap:48px}
+.marquee-row span::after{content:"·";color:var(--cyan)}
+.marquee-row.reverse span::after{content:"·";color:var(--gold)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* STATS */
+.stats{padding:120px 32px;border-top:1px solid var(--line)}
+.stats-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:48px 32px;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Fraunces',serif;font-size:clamp(54px,7vw,104px);font-weight:300;line-height:1;letter-spacing:-.03em;color:var(--bone);margin-bottom:8px}
+.stat-num .suf{color:var(--cyan);font-size:.5em;vertical-align:super;font-style:italic}
+.stat-num .pre{color:var(--cyan);font-size:.5em;font-style:italic;margin-right:4px}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim)}
+@media(max-width:900px){.stats-inner{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:none}}
+
+/* PRODUCTS — 3D tilt */
+.products{padding:120px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,var(--bg) 0%,#0A0E16 100%)}
+.products-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcard{position:relative;background:rgba(236,228,210,.025);border:1px solid var(--line);border-radius:18px;padding:32px 26px;transition:border-color .35s,background .35s;transform-style:preserve-3d;will-change:transform;overflow:hidden;cursor:none;min-height:260px;display:flex;flex-direction:column}
+@media (hover:none){.pcard{cursor:pointer}}
+.pcard::before{content:"";position:absolute;inset:0;background:radial-gradient(circle 220px at var(--cx,50%) var(--cy,50%),rgba(78,205,196,.12),transparent 60%);opacity:0;transition:opacity .35s;border-radius:18px;pointer-events:none}
+.pcard:hover::before{opacity:1}
+.pcard:hover{border-color:rgba(78,205,196,.4);background:rgba(78,205,196,.03)}
+.pcard-head{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:.14em;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase}
+.pcard-id{color:var(--bone-dim);font-size:9px;letter-spacing:.04em}
+.pcard-icon{width:34px;height:34px;border:1px solid var(--cyan);border-radius:8px;display:grid;place-items:center;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;transition:transform .5s cubic-bezier(.5,1.6,.4,.9)}
+.pcard:hover .pcard-icon{transform:scale(1.15) rotate(-6deg);background:var(--cyan);color:#0A0B0E}
+.pcard h3{font-family:'Fraunces',serif;font-size:28px;font-weight:400;letter-spacing:-.02em;margin-bottom:12px}
+.pcard p{font-size:13.5px;color:var(--bone-dim);line-height:1.55;margin-bottom:18px}
+.pcard-meta{margin-top:auto;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--bone-dim);letter-spacing:.08em;padding-top:14px;border-top:1px dashed var(--line)}
+.pcard-meta .stack{color:var(--cyan)}
+.pcard-arrow{position:absolute;top:30px;right:26px;font-size:14px;color:var(--bone-dim);transition:transform .35s,color .35s;font-family:'JetBrains Mono',monospace}
+.pcard:hover .pcard-arrow{transform:translate(4px,-4px);color:var(--cyan)}
+@media(max-width:900px){.products-grid{grid-template-columns:1fr}}
+
+/* PIPELINE pinned scroll */
+.pipeline{position:relative;border-top:1px solid var(--line);background:#06070A}
+.pipeline-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden;padding:0 32px}
+.pipeline-track{height:380vh;position:relative}
+.pipeline-inner{max-width:1340px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:center}
+.pipeline-left h2{font-family:'Fraunces',serif;font-size:clamp(40px,5.5vw,76px);font-weight:400;line-height:1;letter-spacing:-.025em;margin-bottom:24px}
+.pipeline-left h2 em{color:var(--cyan);font-style:italic;font-weight:300}
+.pipeline-left p{font-size:16px;color:var(--bone-dim);line-height:1.6;margin-bottom:28px;max-width:480px}
+.pipeline-progress{display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim);letter-spacing:.08em}
+.pipeline-progress .bar{flex:1;height:2px;background:var(--line2);position:relative;border-radius:2px;overflow:hidden}
+.pipeline-progress .bar::after{content:"";position:absolute;left:0;top:0;height:100%;width:var(--pipeProg,0%);background:linear-gradient(90deg,var(--cyan),var(--gold));transition:width .4s ease}
+.pipeline-progress .step-num{color:var(--cyan);font-weight:500}
+.pipeline-right{display:flex;flex-direction:column;gap:10px}
+.pstep{background:rgba(236,228,210,.03);border:1px solid var(--line);padding:18px 22px;border-radius:12px;display:flex;align-items:center;gap:18px;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s,border-color .6s;opacity:.25;transform:translateX(20px);position:relative}
+.pstep.in{opacity:1;transform:translateX(0)}
+.pstep.active{border-color:var(--cyan);background:rgba(78,205,196,.07);box-shadow:0 0 0 1px rgba(78,205,196,.18)}
+.pstep .pnum{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);min-width:32px;font-weight:700}
+.pstep .pmain{flex:1}
+.pstep .pmain h4{font-family:'Fraunces',serif;font-size:18px;font-weight:500;margin-bottom:2px;letter-spacing:-.01em}
+.pstep .pmain p{font-size:12px;color:var(--bone-dim);line-height:1.4;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+.pstep .ptime{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.06em}
+@media(max-width:900px){.pipeline-sticky{position:static;height:auto;padding:80px 20px}.pipeline-track{height:auto}.pipeline-inner{grid-template-columns:1fr;gap:40px}}
+
+/* LIVE METRICS */
+.livemetrics{padding:120px 32px;border-top:1px solid var(--line)}
+.lm-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.lm-card{background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:18px;padding:28px;position:relative;overflow:hidden;min-height:280px;display:flex;flex-direction:column;cursor:none}
+@media (hover:none){.lm-card{cursor:pointer}}
+.lm-card:hover{border-color:var(--cyan-line)}
+.lm-head{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--bone-dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.lm-head .live-pulse{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulseDot 1.4s ease-in-out infinite}
+.lm-num{font-family:'Fraunces',serif;font-size:54px;font-weight:300;line-height:1;letter-spacing:-.02em;margin-bottom:6px;color:var(--bone)}
+.lm-num .suf{color:var(--cyan);font-size:.45em;font-style:italic;vertical-align:super}
+.lm-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:.08em;margin-bottom:18px}
+.lm-chart{flex:1;display:flex;align-items:flex-end}
+.lm-chart svg{width:100%;height:100%;min-height:90px}
+
+/* gauge */
+.gauge-wrap{display:flex;align-items:center;justify-content:center;flex:1}
+.gauge{width:160px;height:90px;position:relative}
+.gauge svg{width:100%;height:100%}
+.gauge .gv{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-family:'Fraunces',serif;font-size:30px;color:var(--bone);font-weight:400}
+.gauge .gv .pc{color:var(--cyan);font-size:14px;font-style:italic;margin-left:2px}
+
+/* scatter */
+.scatter{flex:1;position:relative;min-height:130px;border:1px dashed var(--line);border-radius:8px}
+.scatter::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(78,205,196,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(78,205,196,.06) 1px,transparent 1px);background-size:20px 20px}
+.scatter svg{width:100%;height:100%;position:relative}
+
+@media(max-width:900px){.lm-grid{grid-template-columns:1fr}}
+
+/* PRIVACY */
+.privacy{padding:120px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,#06070A,#0A0E16)}
+.privacy-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.waveform{display:flex;align-items:center;gap:4px;height:200px;padding:24px;background:rgba(78,205,196,.04);border:1px solid var(--cyan-line);border-radius:18px;margin-bottom:18px;justify-content:center}
+.wave-bar{flex:1;max-width:8px;background:linear-gradient(180deg,var(--cyan),var(--gold));border-radius:3px;min-height:6px;animation:wave 1.6s ease-in-out infinite;transform-origin:center}
+@keyframes wave{0%,100%{transform:scaleY(.15)}50%{transform:scaleY(1)}}
+.privacy-meta{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim);letter-spacing:.06em;margin-top:6px}
+.privacy-meta span:first-child{color:var(--cyan)}
+.privacy h2{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.025em;font-weight:400;margin-bottom:20px}
+.privacy h2 em{color:var(--cyan);font-style:italic;font-weight:300}
+.privacy p{font-size:16px;color:var(--bone-dim);line-height:1.6;margin-bottom:24px;max-width:520px}
+.privacy-feats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.privacy-feat{padding:16px 18px;background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:12px}
+.privacy-feat .lab{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:.12em;margin-bottom:6px;text-transform:uppercase}
+.privacy-feat .val{font-family:'Fraunces',serif;font-size:18px;line-height:1.2}
+.privacy-feat .val em{color:var(--gold);font-style:italic;font-weight:300}
+@media(max-width:900px){.privacy-inner{grid-template-columns:1fr}}
+
+/* TEAM */
+.team{padding:120px 32px;border-top:1px solid var(--line)}
+.team-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr;gap:60px}
+.team-body p{font-size:16px;color:var(--bone-dim);line-height:1.7;margin-bottom:20px;max-width:680px}
+.team-body p:first-child{font-size:18px;color:var(--bone)}
+.team-panel{background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:18px;padding:32px;height:fit-content;position:sticky;top:100px}
+.team-panel h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;margin-top:24px}
+.team-panel h4:first-child{margin-top:0}
+.team-panel p{font-size:14px;color:var(--bone-dim);line-height:1.6}
+.team-panel strong{color:var(--bone);font-weight:500}
+@media(max-width:900px){.team-inner{grid-template-columns:1fr}.team-panel{position:static}}
+
+/* CASES */
+.cases{padding:120px 32px;border-top:1px solid var(--line);background:#06070A}
+.cases-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ccard{position:relative;background:rgba(236,228,210,.03);border:1px solid var(--line);border-radius:18px;padding:32px;transition:border-color .4s,background .4s;transform-style:preserve-3d;will-change:transform;overflow:hidden;cursor:none;min-height:280px;display:flex;flex-direction:column}
+@media (hover:none){.ccard{cursor:pointer}}
+.ccard:hover{border-color:rgba(78,205,196,.35);background:rgba(78,205,196,.04)}
+.ccard .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:.14em;margin-bottom:22px;text-transform:uppercase;display:flex;justify-content:space-between}
+.ccard .tag .id{color:var(--bone-dim);font-size:9px;letter-spacing:.04em}
+.ccard h3{font-family:'Fraunces',serif;font-size:22px;font-weight:500;line-height:1.18;letter-spacing:-.015em;margin-bottom:14px}
+.ccard p{font-size:13.5px;color:var(--bone-dim);line-height:1.55;margin-bottom:20px}
+.ccard .metric{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.06em;margin-bottom:16px}
+.ccard .metric b{color:var(--cyan);font-size:18px;font-weight:500}
+.ccard .read{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+@media(max-width:900px){.cases-grid{grid-template-columns:1fr}}
+
+/* CONTACT */
+.contact{padding:120px 32px;border-top:1px solid var(--line)}
+.contact-inner{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:60px}
+.contact-info p{font-size:15px;color:var(--bone-dim);margin-bottom:24px;line-height:1.6;max-width:420px}
+.contact-block{margin-bottom:24px}
+.contact-block h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+.contact-block a,.contact-block span{display:block;font-size:15px;color:var(--bone)}
+.contact-block a:hover{color:var(--cyan)}
+.form-grid{display:grid;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.input{background:rgba(236,228,210,.04);border:1px solid var(--line2);color:var(--bone);padding:16px 18px;font:14px 'Inter Tight',sans-serif;border-radius:10px;width:100%;transition:border-color .3s,background .3s}
+.input:focus{outline:none;border-color:var(--cyan);background:rgba(78,205,196,.04)}
+.input::placeholder{color:var(--bone-dim)}
+select.input{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--cyan) 50%),linear-gradient(135deg,var(--cyan) 50%,transparent 50%);background-position:calc(100% - 20px) center,calc(100% - 14px) center;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:40px}
+textarea.input{resize:vertical;min-height:120px;font-family:'Inter Tight',sans-serif}
+.checkbox-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--bone-dim);font-family:'JetBrains Mono',monospace}
+.checkbox-row input{accent-color:var(--cyan)}
+@media(max-width:900px){.contact-inner{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{padding:60px 32px 32px;border-top:1px solid var(--line);background:#06070A}
+.footer-inner{max-width:1340px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.footer-grid h6{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.footer-grid a,.footer-grid p{display:block;font-size:13px;color:var(--bone-dim);margin-bottom:8px;line-height:1.6}
+.footer-grid a:hover{color:var(--bone)}
+.footer-logo{font-family:'Fraunces',serif;font-size:22px;font-weight:500;margin-bottom:8px;color:var(--bone);display:flex;align-items:center;gap:10px}
+.footer-logo .tlab{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:.16em;padding:3px 8px;border:1px solid var(--cyan-line);border-radius:4px;text-transform:uppercase}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bone-dim);letter-spacing:.04em}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:99;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;box-shadow:0 12px 40px rgba(37,211,102,.4);transition:transform .3s;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11px}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:#25D366;opacity:.3;animation:pulse 2s ease-in-out infinite;z-index:-1}
+
+/* REVEALS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s} .reveal-d2{transition-delay:.2s} .reveal-d3{transition-delay:.3s} .reveal-d4{transition-delay:.4s}
+</style>
+<script defer src="../legal-layer.js"></script>
+</head>
+<body>
+
+<div class="scroll-bar"></div>
+<div class="cursor-main"></div>
+<div class="cursor-trail"></div>
+
+<!-- TOP STRIP -->
+<div class="topstrip">
+  <div class="tick-wrap" id="ticker"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">O</span> Estudio Oro <span class="logo-sub">Tech Lab</span></a>
+    <div class="nav-links">
+      <a href="#products">Productos</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#livemetrics">Métricas</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#team">Equipo</a>
+      <a href="#cases">Casos</a>
+    </div>
+    <div class="nav-cta-row">
+      <a href="#contact" class="cta-btn cta-secondary magnetic" data-magnet>Docs</a>
+      <a href="#contact" class="cta-btn magnetic" data-magnet>Demo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-mesh">
+    <div class="mesh-blob mb1"></div>
+    <div class="mesh-blob mb2"></div>
+    <div class="mesh-blob mb3"></div>
+    <div class="mesh-blob mb4"></div>
+  </div>
+  <div class="hero-grid"></div>
+  <canvas id="particles"></canvas>
+  <div class="hero-spotlight"></div>
+  <div class="hero-inner">
+    <div class="hero-main">
+      <div class="hero-eyebrow">
+        <span>Lab interno · Productos · Consultoría AI</span>
+        <span class="tag">v.2026.05</span>
+        <span class="tag">build #4781</span>
+      </div>
+      <h1>
+        <span class="word"><span class="inner">La</span></span>
+        <span class="word"><span class="inner">capa</span></span>
+        <span class="word"><span class="inner">de</span></span>
+        <span class="word"><span class="inner"><em class="typewriter" id="typeword">inteligencia</em></span></span>
+        <span class="word"><span class="inner">sobre</span></span>
+        <span class="word"><span class="inner">el</span></span>
+        <span class="word"><span class="inner"><em class="accent">expediente legal.</em></span></span>
+      </h1>
+      <p class="hero-lead">Laboratorio interno de IA, productos legal-tech y consultoría AI para estudios. Construimos software que abogados usan en producción todos los días — análisis de expedientes, bots WhatsApp, due diligence acelerado y compliance automatizado. Cada modelo, revisado por el equipo legal.</p>
+      <div class="hero-cta-row">
+        <a href="#contact" class="cta-btn magnetic" data-magnet>Solicitar demo <span class="arrow">→</span></a>
+        <a href="#products" class="cta-btn cta-secondary magnetic" data-magnet>Ver productos</a>
+        <a href="#pipeline" class="cta-btn cta-secondary magnetic" data-magnet>Cómo funciona</a>
+      </div>
+      <div class="hero-meta-line">
+        <span><b>uptime</b> 99.97%</span>
+        <span><b>p95 latency</b> 412ms</span>
+        <span><b>modelos en producción</b> 7</span>
+        <span><b>SOC2 + Ley 25.326</b></span>
+      </div>
+    </div>
+    <div class="hero-aside">
+      <div class="glass-card stats-card">
+        <div class="stats-card-title"><span class="pulse"></span> Producción · en vivo</div>
+        <div class="stat-row"><span>Requests / min</span><span id="liveRpm">847</span></div>
+        <div class="stat-row"><span>Latencia p95</span><span id="liveLat">412ms</span></div>
+        <div class="stat-row"><span>Modelos activos</span><span>7 / 7</span></div>
+        <div class="stat-row"><span>Accuracy score</span><span id="liveAcc">97.4%</span></div>
+        <div class="stat-row"><span>Última inferencia</span><span id="liveInf">hace 2s</span></div>
+      </div>
+      <div class="terminal">
+        <div class="terminal-head">
+          <div class="terminal-dots"><i></i><i></i><i></i></div>
+          <span>oro-cli · zsh</span>
+          <span class="path">~/lab/cases</span>
+        </div>
+        <div class="terminal-body" id="termBody">
+          <div><span class="prompt">$</span> <span class="cmd terminal-cursor" id="termCmd"></span></div>
+          <div id="termOut"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORLD MAP -->
+<section class="world">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Sedes operativas · 3 nodos</div>
+      <h2 class="section-title">Lab distribuido. <em>Latencia controlada</em>.</h2>
+    </div>
+    <p class="section-sub">Infraestructura desplegada en tres nodos geográficos. Equipos legales y de ingeniería trabajando en paralelo sobre el mismo stack.</p>
+  </div>
+  <div class="world-inner reveal reveal-d1">
+    <svg class="world-svg" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="arcg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#4ECDC4" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#4ECDC4" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#4ECDC4" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="dotg">
+          <stop offset="0%" stop-color="#4ECDC4"/>
+          <stop offset="100%" stop-color="#4ECDC4" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <path d="M310,180 L340,170 L360,200 L380,240 L370,290 L360,340 L340,400 L320,440 L300,460 L285,440 L275,400 L290,360 L300,310 L295,260 L305,220 Z" stroke="#ECE4D2" stroke-opacity=".22" stroke-width="1" fill="rgba(78,205,196,0.03)"/>
+      <path d="M570,140 L620,130 L660,140 L680,160 L675,185 L650,200 L620,205 L580,200 L555,180 L555,155 Z" stroke="#ECE4D2" stroke-opacity=".22" stroke-width="1" fill="rgba(78,205,196,0.03)"/>
+      <path d="M620,210 L680,205 L710,230 L730,290 L720,350 L690,380 L660,370 L640,330 L625,280 Z" stroke="#ECE4D2" stroke-opacity=".10" stroke-width="1" fill="none"/>
+      <path d="M180,100 L260,90 L320,120 L310,165 L280,180 L240,170 L200,150 L175,120 Z" stroke="#ECE4D2" stroke-opacity=".10" stroke-width="1" fill="none"/>
+      <g opacity=".15">
+        <line x1="0" y1="260" x2="1200" y2="260" stroke="#ECE4D2" stroke-width=".5" stroke-dasharray="2,8"/>
+        <line x1="600" y1="0" x2="600" y2="520" stroke="#ECE4D2" stroke-width=".5" stroke-dasharray="2,8"/>
+      </g>
+      <path d="M340,400 Q480,100 620,160" stroke="url(#arcg)" stroke-width="1.5" fill="none" stroke-dasharray="900" stroke-dashoffset="900">
+        <animate attributeName="stroke-dashoffset" from="900" to="-900" dur="6s" repeatCount="indefinite"/>
+      </path>
+      <path d="M620,160 Q500,320 360,400" stroke="url(#arcg)" stroke-width="1.5" fill="none" stroke-dasharray="900" stroke-dashoffset="900">
+        <animate attributeName="stroke-dashoffset" from="900" to="-900" dur="7s" begin="2s" repeatCount="indefinite"/>
+      </path>
+      <g>
+        <circle cx="340" cy="400" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.4s" repeatCount="indefinite"/></circle>
+        <circle cx="340" cy="400" r="5" fill="#4ECDC4"/>
+        <circle cx="620" cy="160" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.4s" begin=".8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.4s" begin=".8s" repeatCount="indefinite"/></circle>
+        <circle cx="620" cy="160" r="5" fill="#4ECDC4"/>
+        <circle cx="360" cy="400" r="20" fill="url(#dotg)" opacity=".4"><animate attributeName="r" values="6;24;6" dur="2.4s" begin="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.4s" begin="1.6s" repeatCount="indefinite"/></circle>
+        <circle cx="360" cy="400" r="5" fill="#C9A663"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="#ECE4D2">
+        <text x="270" y="430" opacity=".9">node-buenosaires</text>
+        <text x="270" y="444" opacity=".5" font-size="9">-34.6° / -58.4° · primary</text>
+        <text x="640" y="155" opacity=".9">node-madrid</text>
+        <text x="640" y="169" opacity=".5" font-size="9">40.4° / -3.7° · eu-replica</text>
+        <text x="380" y="395" opacity=".9">node-pde</text>
+        <text x="380" y="409" opacity=".5" font-size="9">-34.9° / -54.9° · uy-edge</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- MARQUEE STACK -->
+<div class="marquee">
+  <div class="marquee-row">
+    <span>TypeScript</span><span>Next.js 15</span><span>Supabase</span><span>Claude API</span><span>OpenAI</span><span>PostgreSQL</span><span>Whapi</span><span>Vercel</span><span>Edge Functions</span><span>pgvector</span><span>Stripe</span><span>Resend</span>
+    <span>TypeScript</span><span>Next.js 15</span><span>Supabase</span><span>Claude API</span><span>OpenAI</span><span>PostgreSQL</span><span>Whapi</span><span>Vercel</span><span>Edge Functions</span><span>pgvector</span><span>Stripe</span><span>Resend</span>
+  </div>
+  <div class="marquee-row reverse">
+    <span>Inteligencia aplicada</span><span>Automatización legal</span><span>Producto + Servicio</span><span>Trazabilidad total</span><span>Open by default</span>
+    <span>Inteligencia aplicada</span><span>Automatización legal</span><span>Producto + Servicio</span><span>Trazabilidad total</span><span>Open by default</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal"><div class="stat-num"><span class="pre">×</span><span data-count="40">0</span></div><div class="stat-label">Velocidad vs. manual</div></div>
+    <div class="stat reveal reveal-d1"><div class="stat-num"><span data-count="100">0</span><span class="suf">%</span></div><div class="stat-label">Trazabilidad output</div></div>
+    <div class="stat reveal reveal-d2"><div class="stat-num"><span data-count="50000">0</span><span class="suf">+</span></div><div class="stat-label">Documentos procesados</div></div>
+    <div class="stat reveal reveal-d3"><div class="stat-num"><span data-count="7">0</span></div><div class="stat-label">Modelos en producción</div></div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">06 productos · stack interno</div>
+      <h2 class="section-title">Productos que nuestro equipo usa <em>todos los días</em>.</h2>
+    </div>
+    <p class="section-sub">Lo que vendemos es lo mismo que usamos internamente. Cada producto nace de un cuello de botella real del estudio y madura en producción antes de salir al mercado.</p>
+  </div>
+  <div class="products-grid">
+    <article class="pcard tilt reveal">
+      <div class="pcard-head"><span>01 · IA Legal Lab</span><div class="pcard-icon">α</div></div>
+      <span class="pcard-arrow">→</span>
+      <h3>Análisis de expedientes</h3>
+      <p>Ingerí un PDF de 200 fojas. Recibí cronología, hechos relevantes, jurisprudencia aplicable y matriz de riesgo procesal. Revisión humana obligatoria.</p>
+      <div class="pcard-meta"><span class="stack">Claude · pgvector · Next.js</span><span>id #a7f9c2</span></div>
+    </article>
+    <article class="pcard tilt reveal reveal-d1">
+      <div class="pcard-head"><span>02 · Reclamai</span><div class="pcard-icon">R</div></div>
+      <span class="pcard-arrow">→</span>
+      <h3>Cartas de consumidor</h3>
+      <p>Generación de cartas documento bajo Ley 24.240. Más de 50.000 cartas emitidas. Plantillas validadas por abogados, output editable, envío trazable.</p>
+      <div class="pcard-meta"><span class="stack">Next.js · Supabase · OpenAI</span><span>id #b2e8d1</span></div>
+    </article>
+    <article class="pcard tilt reveal reveal-d2">
+      <div class="pcard-head"><span>03 · NARAKIA</span><div class="pcard-icon">N</div></div>
+      <span class="pcard-arrow">→</span>
+      <h3>Bots WhatsApp legales</h3>
+      <p>Asistente conversacional WhatsApp para clientes del estudio. Califica consultas, agenda, envía documentación. 12 meses en producción continua.</p>
+      <div class="pcard-meta"><span class="stack">Whapi · Claude · Edge Fns</span><span>id #c4a1f7</span></div>
+    </article>
+    <article class="pcard tilt reveal">
+      <div class="pcard-head"><span>04 · DD Engine</span><div class="pcard-icon">DD</div></div>
+      <span class="pcard-arrow">→</span>
+      <h3>Due diligence acelerado</h3>
+      <p>Pipeline para real estate y operaciones societarias. Cadena dominial, inhibiciones, gravámenes, cargas — reportes firmados por abogado en horas, no semanas.</p>
+      <div class="pcard-meta"><span class="stack">Python · PostgreSQL · APIs registrales</span><span>id #d8b3e9</span></div>
+    </article>
+    <article class="pcard tilt reveal reveal-d1">
+      <div class="pcard-head"><span>05 · Lex-Search</span><div class="pcard-icon">L§</div></div>
+      <span class="pcard-arrow">→</span>
+      <h3>Jurisprudencia predictiva</h3>
+      <p>Búsqueda semántica sobre fallos CNCP, CSJN y cámaras nacionales. Embeddings entrenados sobre 1.2M de fallos. Cita siempre con link al fallo original.</p>
+      <div class="pcard-meta"><span class="stack">pgvector · Claude · scrapers</span><span>id #e5f2a8</span></div>
+    </article>
+    <article class="pcard tilt reveal reveal-d2">
+      <div class="pcard-head"><span>06 · Compliance OS</span><div class="pcard-icon">C✓</div></div>
+      <span class="pcard-arrow">→</span>
+      <h3>Compliance automatizado</h3>
+      <p>UIF, AFIP, beneficiarios finales, KYC, PEPs. Monitoreo continuo de obligaciones formales. Alertas y reportes con trazabilidad regulatoria.</p>
+      <div class="pcard-meta"><span class="stack">PostgreSQL · cron · APIs gob</span><span>id #f1c9d4</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- PIPELINE PINNED -->
+<section class="pipeline" id="pipeline">
+  <div class="pipeline-track">
+    <div class="pipeline-sticky">
+      <div class="pipeline-inner">
+        <div class="pipeline-left">
+          <div class="section-eyebrow">Pipeline · expediente → estrategia</div>
+          <h2>De PDF a <em>estrategia</em> en 8 minutos.</h2>
+          <p>Seis etapas. Cada output trazable hasta la línea exacta del expediente. El abogado responsable valida cada decisión antes de imprimir cualquier escrito.</p>
+          <div class="pipeline-progress">
+            <span class="step-num" id="pipeStepLabel">Paso 0 / 6</span>
+            <div class="bar"></div>
+            <span id="pipeTimer">00:00</span>
+          </div>
+        </div>
+        <div class="pipeline-right" id="pipeRight">
+          <div class="pstep" data-step="1"><div class="pnum">01</div><div class="pmain"><h4>Ingesta y OCR</h4><p>upload.pdf → tika · ocr · text extraction</p></div><div class="ptime">0:45s</div></div>
+          <div class="pstep" data-step="2"><div class="pnum">02</div><div class="pmain"><h4>Chunking semántico</h4><p>split → embed → pgvector index</p></div><div class="ptime">1:20s</div></div>
+          <div class="pstep" data-step="3"><div class="pnum">03</div><div class="pmain"><h4>Extracción de hechos</h4><p>partes · fechas · montos · jurisdicción</p></div><div class="ptime">2:10s</div></div>
+          <div class="pstep" data-step="4"><div class="pnum">04</div><div class="pmain"><h4>Cruce jurisprudencial</h4><p>retrieval CNCP · CSJN · cámaras nacionales</p></div><div class="ptime">3:40s</div></div>
+          <div class="pstep" data-step="5"><div class="pnum">05</div><div class="pmain"><h4>Matriz de riesgo</h4><p>scoring procesal · plazos · vencimientos</p></div><div class="ptime">5:15s</div></div>
+          <div class="pstep" data-step="6"><div class="pnum">06</div><div class="pmain"><h4>Validación humana</h4><p>review abogado → firma → entrega</p></div><div class="ptime">8:00s</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE METRICS -->
+<section class="livemetrics" id="livemetrics">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Métricas · producción en vivo</div>
+      <h2 class="section-title">Lo que pasa <em>ahora mismo</em> en el lab.</h2>
+    </div>
+    <p class="section-sub">Telemetría real del stack productivo. Auto-refresh cada 4 segundos. Sin maquillaje.</p>
+  </div>
+  <div class="lm-grid">
+    <div class="lm-card reveal">
+      <div class="lm-head"><span class="live-pulse"></span> Consultas atendidas hoy</div>
+      <div class="lm-num"><span id="lmConsults">1247</span></div>
+      <div class="lm-sub">+18% vs. ayer · 87% accuracy</div>
+      <div class="lm-chart">
+        <svg viewBox="0 0 300 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4ECDC4" stop-opacity=".4"/><stop offset="100%" stop-color="#4ECDC4" stop-opacity="0"/></linearGradient>
+          </defs>
+          <path id="lmChart1" d="M0,80 L30,72 L60,68 L90,55 L120,58 L150,40 L180,46 L210,30 L240,35 L270,22 L300,18 L300,100 L0,100 Z" fill="url(#lg1)"/>
+          <path d="M0,80 L30,72 L60,68 L90,55 L120,58 L150,40 L180,46 L210,30 L240,35 L270,22 L300,18" fill="none" stroke="#4ECDC4" stroke-width="1.5"/>
+          <circle cx="300" cy="18" r="3" fill="#4ECDC4"><animate attributeName="r" values="3;6;3" dur="1.5s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+    </div>
+    <div class="lm-card reveal reveal-d1">
+      <div class="lm-head"><span class="live-pulse"></span> Accuracy score · ensemble</div>
+      <div class="gauge-wrap">
+        <div class="gauge">
+          <svg viewBox="0 0 160 90">
+            <path d="M 15 80 A 65 65 0 0 1 145 80" stroke="rgba(236,228,210,.10)" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path id="gaugeArc" d="M 15 80 A 65 65 0 0 1 145 80" stroke="#4ECDC4" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="204" stroke-dashoffset="6" style="transition:stroke-dashoffset 1s ease"/>
+          </svg>
+          <div class="gv"><span id="gaugeVal">97.4</span><span class="pc">%</span></div>
+        </div>
+      </div>
+      <div class="lm-sub" style="text-align:center;margin-top:14px">0 alucinaciones en 30 días</div>
+    </div>
+    <div class="lm-card reveal reveal-d2">
+      <div class="lm-head"><span class="live-pulse"></span> Distribución de inferencias</div>
+      <div class="lm-num" style="font-size:36px">Last <span id="lmWindow">24h</span></div>
+      <div class="lm-sub">expediente · reclamai · bot · dd · lex</div>
+      <div class="scatter">
+        <svg viewBox="0 0 300 130" preserveAspectRatio="none" id="scatterSvg"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy" id="privacy">
+  <div class="privacy-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Privacy & Compliance · vendible por sí solo</div>
+      <h2>Compliance que <em>aprueba auditorías</em>.</h2>
+      <p>Trabajamos con expedientes que contienen datos personales y datos sensibles del Art. 7. Cada componente del stack está diseñado para cumplir simultáneamente GDPR (UE), Ley 25.326 (AR) y Ley 18.331 (UY) — sin parches posteriores.</p>
+      <p>Cifrado en tránsito y reposo. Logs auditables. Borrado bajo derecho ARCO. Sin uso de datos del cliente para entrenamiento.</p>
+      <div class="privacy-feats">
+        <div class="privacy-feat"><div class="lab">GDPR · UE</div><div class="val">Reg. 2016/<em>679</em></div></div>
+        <div class="privacy-feat"><div class="lab">Ley 25.326 · AR</div><div class="val">AAIP · <em>RNPDP</em></div></div>
+        <div class="privacy-feat"><div class="lab">Ley 18.331 · UY</div><div class="val">URCDP · <em>registrado</em></div></div>
+        <div class="privacy-feat"><div class="lab">Auditoría</div><div class="val">SOC2 · <em>en curso</em></div></div>
+      </div>
+    </div>
+    <div class="reveal reveal-d1">
+      <div class="waveform" id="waveform"></div>
+      <div class="privacy-meta"><span>● auditando · audit_stream_a7f9c2.log</span><span id="privacyTime">00:00:42</span></div>
+      <div class="terminal" style="margin-top:18px">
+        <div class="terminal-head">
+          <div class="terminal-dots"><i></i><i></i><i></i></div>
+          <span>audit-log · live</span>
+          <span class="path">tail -f</span>
+        </div>
+        <div class="terminal-body" id="auditLog" style="min-height:140px;font-size:11px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="team-inner">
+    <div class="team-body reveal">
+      <div class="section-eyebrow">Estructura híbrida · derecho + ingeniería</div>
+      <h2 class="section-title" style="margin-bottom:36px">Abogados, devs y <em>ML engineers</em>. Misma mesa.</h2>
+      <p>El Tech Lab es un departamento autónomo del Estudio Oro. Funciona como laboratorio interno y, en paralelo, comercializa sus productos a otros estudios y empresas que necesitan automatizar procesos legales.</p>
+      <p>La combinación es lo que vendemos. Un equipo solo de ingenieros construye software que ignora la realidad procesal argentina. Un equipo solo de abogados nunca llega a producción. Nosotros sentamos a las dos cabezas en la misma mesa.</p>
+      <p>Cada producto que sale al mercado pasó al menos seis meses operando contra causas reales del estudio. La validación legal está integrada en el flujo de desarrollo — no es una capa de QA al final.</p>
+      <p>Trabajamos por proyecto con estudios, escribanías, empresas con áreas legales internas y otras firmas que quieren incorporar IA sin abrir una división tech. Onboarding promedio: 14 días.</p>
+    </div>
+    <aside class="team-panel reveal reveal-d2">
+      <h4>Equipo</h4>
+      <p><strong>3 abogados</strong> validación legal + ontología procesal<br><strong>4 ingenieros</strong> backend, full-stack, edge<br><strong>2 ML engineers</strong> embeddings, RAG, eval<br><strong>1 compliance</strong> data protection officer</p>
+      <h4>Servicios</h4>
+      <p><strong>Productos SaaS</strong> Reclamai · NARAKIA · Lex-Search<br><strong>Consultoría AI</strong> integraciones a medida<br><strong>Lab interno</strong> R&D sobre causas del estudio</p>
+      <h4>Sede central</h4>
+      <p><strong>Buenos Aires</strong><br>Salguero 2835 4B, Palermo<br><strong>tech@estudiooro.com</strong><br>+54 9 11 6877-7777</p>
+      <h4>Nodos</h4>
+      <p><strong>Madrid</strong> · EU replica<br><strong>Punta del Este</strong> · UY edge</p>
+    </aside>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="cases">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Casos · resultados verificables</div>
+      <h2 class="section-title">Qué pasa cuando <em>producto + derecho</em> conviven.</h2>
+    </div>
+  </div>
+  <div class="cases-grid">
+    <article class="ccard tilt reveal">
+      <div class="tag"><span>Due Diligence</span><span class="id">case · #001</span></div>
+      <h3>Due diligence de 40h a 1h.</h3>
+      <div class="metric">resultado · <b>×40</b> velocidad</div>
+      <p>Operación inmobiliaria de USD 4.2M con 187 documentos a revisar. Pipeline DD Engine completó verificación dominial, inhibiciones y gravámenes en 58 minutos. Firma legal humana incluida.</p>
+      <div class="read">Leer detalle →</div>
+    </article>
+    <article class="ccard tilt reveal reveal-d1">
+      <div class="tag"><span>NARAKIA</span><span class="id">case · #002</span></div>
+      <h3>WhatsApp legal IA · 12 meses en producción.</h3>
+      <div class="metric">resultado · <b>23.847</b> conversaciones</div>
+      <p>Bot calificador de leads para áreas penal, real estate y patrimonio. Cero alucinaciones en producción. 73% de consultas calificadas correctamente sin intervención humana.</p>
+      <div class="read">Leer detalle →</div>
+    </article>
+    <article class="ccard tilt reveal reveal-d2">
+      <div class="tag"><span>Reclamai</span><span class="id">case · #003</span></div>
+      <h3>Reclamai · 50.000 cartas generadas.</h3>
+      <div class="metric">resultado · <b>97.4%</b> aprobación</div>
+      <p>Cartas documento bajo Ley 24.240 emitidas por usuarios particulares y estudios pequeños. Plantillas validadas. 97.4% pasan revisión legal sin correcciones de fondo.</p>
+      <div class="read">Leer detalle →</div>
+    </article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <div class="section-eyebrow">Contacto · demos</div>
+      <h2 class="section-title" style="margin-bottom:36px">Demo en 48hs. <em>Onboarding en 14 días</em>.</h2>
+      <p>Si tu estudio o empresa necesita automatizar procesos legales — o si querés evaluar uno de nuestros productos — coordinamos demo técnica con el equipo en menos de 48 horas.</p>
+      <div class="contact-block"><h5>WhatsApp</h5><a href="https://wa.me/5491168777777">+54 9 11 6877-7777</a></div>
+      <div class="contact-block"><h5>Email</h5><a href="mailto:tech@estudiooro.com">tech@estudiooro.com</a></div>
+      <div class="contact-block"><h5>Sede central</h5><span>Salguero 2835 4B, Palermo · Buenos Aires</span></div>
+      <div class="contact-block"><h5>Documentación</h5><a href="#">docs.estudiooro.tech</a></div>
+    </div>
+    <form class="form-grid reveal reveal-d1" onsubmit="event.preventDefault();this.querySelector('button[type=submit]').textContent='Enviado · gracias'">
+      <div class="form-row">
+        <input class="input" placeholder="Nombre completo" required>
+        <input class="input" placeholder="Estudio / empresa" required>
+      </div>
+      <div class="form-row">
+        <input class="input" type="email" placeholder="Email corporativo" required>
+        <input class="input" placeholder="WhatsApp / teléfono" required>
+      </div>
+      <select class="input" required>
+        <option value="">Servicio que te interesa</option>
+        <option>IA Legal Lab · análisis de expedientes</option>
+        <option>Reclamai · cartas de consumidor</option>
+        <option>NARAKIA · bots WhatsApp</option>
+        <option>DD Engine · due diligence acelerado</option>
+        <option>Lex-Search · jurisprudencia predictiva</option>
+        <option>Compliance OS · UIF · AFIP</option>
+        <option>Consultoría AI · integración a medida</option>
+        <option>Otro / no estoy seguro</option>
+      </select>
+      <textarea class="input" placeholder="Contanos brevemente el problema que querés resolver. Confidencial."></textarea>
+      <label class="checkbox-row"><input type="checkbox" required> Acepto el tratamiento confidencial de mis datos</label>
+      <button type="submit" class="cta-btn magnetic" data-magnet style="justify-self:start">Coordinar demo <span class="arrow">→</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Estudio Oro <span class="tlab">Tech Lab</span></div>
+        <p>Laboratorio interno de IA y automatización legal. Sub-marca tecnológica del Estudio Oro S.A.S.</p>
+        <p style="color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:16px">Buenos Aires · Madrid · Punta del Este</p>
+      </div>
+      <div>
+        <h6>Productos</h6>
+        <a href="#products">IA Legal Lab</a><a href="#products">Reclamai</a><a href="#products">NARAKIA</a><a href="#products">DD Engine</a><a href="#products">Lex-Search</a><a href="#products">Compliance OS</a>
+      </div>
+      <div>
+        <h6>Lab</h6>
+        <a href="#pipeline">Pipeline</a><a href="#livemetrics">Métricas</a><a href="#privacy">Privacy</a><a href="#team">Equipo</a><a href="#cases">Casos</a>
+      </div>
+      <div>
+        <h6>Contacto</h6>
+        <a href="mailto:tech@estudiooro.com">tech@estudiooro.com</a><a href="https://wa.me/5491168777777">WhatsApp</a><span style="color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:11px" id="footerStatus">● status · ok</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Estudio Oro S.A.S. · Tech Lab · Salguero 2835 4B, Palermo, CABA · © 2026</span>
+      <span>uptime 99.97% · build #4781 · tech.estudiooro.com</span>
+    </div>
+  </div>
+<div class="cross-nav" style="border-top:1px solid rgba(236,228,210,.08);padding:18px 32px;display:flex;align-items:center;justify-content:center;gap:24px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;flex-wrap:wrap">
+  <span style="color:rgba(236,228,210,.35)">Estudio Oro:</span>
+  <a href="https://estudiooro.com/" style="color:#4ECDC4;text-decoration:none">Firma</a>
+  <a href="https://estudiooro.com/inmobiliaria/" style="color:#D4AF6A;text-decoration:none">Real Estate</a>
+  <a href="https://estudiooro.com/contable/" style="color:#C9A663;text-decoration:none">Capital</a>
+</div>
+</footer>
+
+<a href="https://wa.me/5491168777777" class="wa-float magnetic" data-magnet aria-label="WhatsApp Tech Lab">DEMO</a>
+
+<script>
+(function(){
+  const isTouch=matchMedia('(hover:none)').matches;
+  const scrollUpdate=()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);document.documentElement.style.setProperty('--scrollProg',p);};
+  scrollUpdate();addEventListener('scroll',scrollUpdate,{passive:true});
+  if(!isTouch){
+    const main=document.querySelector('.cursor-main');const trail=document.querySelector('.cursor-trail');
+    let mx=innerWidth/2,my=innerHeight/2,tx=mx,ty=my;
+    addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;main.style.left=mx+'px';main.style.top=my+'px';});
+    function tloop(){tx+=(mx-tx)*.15;ty+=(my-ty)*.15;trail.style.left=tx+'px';trail.style.top=ty+'px';requestAnimationFrame(tloop)}
+    tloop();
+    document.querySelectorAll('a,button,.tilt,.pcard,.ccard,.lm-card,.input,.magnetic').forEach(el=>{
+      el.addEventListener('mouseenter',()=>main.classList.add('active'));
+      el.addEventListener('mouseleave',()=>main.classList.remove('active'));
+    });
+  }
+  const hero=document.querySelector('.hero');
+  if(hero){hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',(e.clientX-r.left)+'px');hero.style.setProperty('--my',(e.clientY-r.top)+'px')})}
+  if(!isTouch){
+    document.querySelectorAll('[data-magnet]').forEach(el=>{
+      el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const cx=r.left+r.width/2;const cy=r.top+r.height/2;const dx=e.clientX-cx;const dy=e.clientY-cy;const dist=Math.hypot(dx,dy);if(dist<120){el.style.transform=`translate(${dx*.25}px,${dy*.35}px)`}});
+      el.addEventListener('mouseleave',()=>{el.style.transform=''});
+    });
+  }
+  if(!isTouch){
+    document.querySelectorAll('.tilt').forEach(el=>{
+      el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const px=(e.clientX-r.left)/r.width;const py=(e.clientY-r.top)/r.height;const rx=(py-.5)*-8;const ry=(px-.5)*8;el.style.transform=`perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;el.style.setProperty('--cx',(px*100)+'%');el.style.setProperty('--cy',(py*100)+'%');});
+      el.addEventListener('mouseleave',()=>{el.style.transform=''});
+    });
+  }
+  const canvas=document.getElementById('particles');
+  if(canvas){
+    const ctx=canvas.getContext('2d');let W,H,particles=[];let cursor={x:-9999,y:-9999};
+    function resize(){W=canvas.width=innerWidth;H=canvas.height=hero.offsetHeight;}
+    resize();addEventListener('resize',resize);
+    addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();cursor.x=e.clientX-r.left;cursor.y=e.clientY-r.top});
+    const N=isTouch?40:90;
+    for(let i=0;i<N;i++)particles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5});
+    function loop(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of particles){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;const dxc=p.x-cursor.x,dyc=p.y-cursor.y,dc=Math.hypot(dxc,dyc);if(dc<120){p.x+=dxc/dc*.4;p.y+=dyc/dc*.4}ctx.fillStyle='rgba(78,205,196,.65)';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}
+      for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const a=particles[i],b=particles[j];const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<110){ctx.strokeStyle=`rgba(78,205,196,${(1-d/110)*.25})`;ctx.lineWidth=.4;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}}
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+  const ticker=document.getElementById('ticker');
+  if(ticker){
+    const items=['<span class="live"><span class="dot"></span> uptime <span class="num">99.97%</span></span>','<span>requests/min <span class="num">847</span></span>','<span>p95 latency <span class="num">412ms</span></span>','<span>accuracy <span class="num">97.4%</span></span>','<span>modelos en producción <span class="num">7</span></span>','<span>docs procesados <span class="num">50.847</span></span>','<span>build <span class="num">#4781</span></span>','<span>last deploy <span class="num">14m ago</span></span>'];
+    ticker.innerHTML=(items.join('')+items.join(''));
+  }
+  const tw=document.getElementById('typeword');
+  if(tw){
+    const words=['inteligencia','velocidad','precisión','trazabilidad','inteligencia'];
+    let i=0,j=tw.textContent.length,del=true;
+    function type(){const w=words[i];if(!del){j++;tw.textContent=w.slice(0,j);if(j===w.length){del=true;setTimeout(type,1800);return}}else{j--;tw.textContent=w.slice(0,j);if(j===0){del=false;i=(i+1)%words.length}}setTimeout(type,del?40:90);}
+    setTimeout(type,3000);
+  }
+  const termCmd=document.getElementById('termCmd');const termOut=document.getElementById('termOut');
+  if(termCmd && termOut){
+    const sequences=[
+      {cmd:'oro-cli analyze --input expediente_2026.pdf',out:['<span class="out">▸ parsing pdf · 187 fojas · ocr layer enabled</span>','<span class="out">▸ chunks generated <span class="hash">2,341</span> · embedding model voyage-3</span>','<span class="out">▸ entities: 14 partes · 47 fechas · 12 montos</span>','<span class="ok">✓ análisis listo · revisión humana pendiente</span>','<span class="hash">→ output: ./reports/a7f9c2.md (7.4kb)</span>']},
+      {cmd:'oro-cli reclamai send --tipo gastronomía',out:['<span class="out">▸ template loaded · Ley 24.240 Art. 4</span>','<span class="out">▸ datos cliente validados · CUIT ok</span>','<span class="warn">⚠ revisión legal · firmar antes de envío</span>','<span class="ok">✓ carta documento generada · id <span class="hash">#b2e8d1</span></span>']},
+      {cmd:'oro-cli narakia --status',out:['<span class="out">▸ uptime <span class="hash">428d 14h 22m</span></span>','<span class="out">▸ active conversations: 87</span>','<span class="out">▸ p95 response 1.2s · accuracy 97.4%</span>','<span class="ok">✓ all systems nominal</span>']},
+      {cmd:'oro-cli dd run --target salguero-2835.json',out:['<span class="out">▸ matrícula cruzada · registro CABA</span>','<span class="out">▸ inhibiciones · 0 hits</span>','<span class="out">▸ gravámenes · 1 hit ⚠ analizar</span>','<span class="warn">⚠ flag manual · usuario.legal@estudiooro</span>','<span class="ok">✓ pipeline completado en 00:00:58</span>']}
+    ];
+    let si=0;
+    async function typeStr(el,str,sp=22){el.textContent='';for(let k=0;k<str.length;k++){el.textContent+=str[k];await new Promise(r=>setTimeout(r,sp))}}
+    async function runSeq(){
+      while(true){
+        const s=sequences[si];si=(si+1)%sequences.length;termOut.innerHTML='';
+        await typeStr(termCmd,s.cmd,30);await new Promise(r=>setTimeout(r,500));
+        for(const line of s.out){const d=document.createElement('div');d.innerHTML=line;d.style.opacity='0';d.style.transition='opacity .3s';termOut.appendChild(d);await new Promise(r=>setTimeout(r,260));d.style.opacity='1';await new Promise(r=>setTimeout(r,140));}
+        await new Promise(r=>setTimeout(r,3200));
+      }
+    }
+    setTimeout(runSeq,1800);
+  }
+  let rpm=847,lat=412,acc=974,infSec=2;
+  setInterval(()=>{
+    if(Math.random()<.6){rpm=Math.max(800,Math.min(920,rpm+Math.round((Math.random()-.5)*16)));document.getElementById('liveRpm').textContent=rpm}
+    if(Math.random()<.4){lat=Math.max(380,Math.min(460,lat+Math.round((Math.random()-.5)*12)));document.getElementById('liveLat').textContent=lat+'ms'}
+    if(Math.random()<.2){acc=Math.max(965,Math.min(984,acc+Math.round((Math.random()-.5)*3)));document.getElementById('liveAcc').textContent=(acc/10).toFixed(1)+'%'}
+    infSec=Math.floor(Math.random()*8)+1;document.getElementById('liveInf').textContent='hace '+infSec+'s';
+  },2200);
+  const auditLog=document.getElementById('auditLog');
+  if(auditLog){
+    const events=[['ok','GET','/api/inference','200','37ms'],['ok','POST','/api/reclamai','201','142ms'],['ok','GET','/api/dd/run','200','58ms'],['warn','POST','/api/audit/flag','200','22ms'],['ok','GET','/api/narakia/status','200','11ms'],['ok','POST','/api/expediente/ingest','201','847ms'],['ok','GET','/api/lex/search','200','94ms'],['warn','POST','/api/compliance/check','200','203ms'],['ok','GET','/api/keys/rotate','200','12ms']];
+    let lines=[];
+    function pushEv(){const e=events[Math.floor(Math.random()*events.length)];const t=new Date();const ts=`${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}:${String(t.getSeconds()).padStart(2,'0')}`;const css=e[0]==='warn'?'warn':'ok';const line=`<div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span class="hash">${ts}</span> <span class="${css}">${e[1]}</span> <span class="cmd">${e[2]}</span> <span class="out">${e[3]} · ${e[4]}</span></div>`;lines.push(line);if(lines.length>8)lines.shift();auditLog.innerHTML=lines.join('');}
+    for(let i=0;i<6;i++)pushEv();setInterval(pushEv,1100);
+  }
+  let pSec=42;
+  setInterval(()=>{pSec++;const m=Math.floor(pSec/60),s=pSec%60;const el=document.getElementById('privacyTime');if(el)el.textContent='00:'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')},1000);
+  const wf=document.getElementById('waveform');
+  if(wf){for(let i=0;i<40;i++){const b=document.createElement('div');b.className='wave-bar';b.style.animationDelay=(Math.random()*1.5)+'s';b.style.animationDuration=(0.9+Math.random()*1.6)+'s';wf.appendChild(b);}}
+  const scatterSvg=document.getElementById('scatterSvg');
+  if(scatterSvg){
+    let html='';const colors=['#4ECDC4','#C9A663','#E54B2A','#4ECDC4','#4ECDC4'];
+    for(let i=0;i<60;i++){const x=Math.random()*295+2;const y=Math.random()*125+2;const r=Math.random()*3+1.5;const c=colors[Math.floor(Math.random()*colors.length)];const op=.4+Math.random()*.55;html+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" opacity="${op}"><animate attributeName="r" values="${r};${r*1.6};${r}" dur="${2+Math.random()*3}s" begin="${Math.random()*2}s" repeatCount="indefinite"/></circle>`;}
+    scatterSvg.innerHTML=html;
+  }
+  let lmConsultsN=1247;
+  setInterval(()=>{if(Math.random()<.55){lmConsultsN+=Math.floor(Math.random()*4)+1;const el=document.getElementById('lmConsults');if(el)el.textContent=lmConsultsN.toLocaleString('es-AR')}},2700);
+  let gv=974;
+  setInterval(()=>{gv=Math.max(965,Math.min(984,gv+Math.round((Math.random()-.5)*3)));const arc=document.getElementById('gaugeArc');const val=document.getElementById('gaugeVal');if(arc){const pc=gv/1000;const dash=204;arc.style.strokeDashoffset=(dash*(1-pc))+'';}if(val)val.textContent=(gv/10).toFixed(1);},3000);
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const counters=document.querySelectorAll('[data-count]');
+  const ioC=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const el=e.target;const target=+el.dataset.count;const start=performance.now();function step(t){const p=Math.min((t-start)/1800,1);el.textContent=Math.floor(target*(1-Math.pow(1-p,3))).toLocaleString('es-AR');if(p<1)requestAnimationFrame(step);else el.textContent=target.toLocaleString('es-AR');}requestAnimationFrame(step);ioC.unobserve(el);}})},{threshold:.4});
+  counters.forEach(c=>ioC.observe(c));
+  const pipeSec=document.getElementById('pipeline');const pipeSteps=document.querySelectorAll('.pstep');
+  function pipeScroll(){if(!pipeSec)return;const r=pipeSec.getBoundingClientRect();const total=pipeSec.offsetHeight-innerHeight;const prog=Math.max(0,Math.min(1,-r.top/total));const stepCount=pipeSec.offsetHeight?Math.max(0,Math.min(1,-r.top/total)):0;}
+  addEventListener('scroll',pipeScroll,{passive:true});pipeScroll();
+})();
+</script>
+</body>
+</html>
