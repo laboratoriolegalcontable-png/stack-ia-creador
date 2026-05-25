@@ -216,17 +216,17 @@
   </div>
 </header>
 <nav class="tabs" role="tablist">
-  <button data-tab="skills" class="active">Skills</button>
-  <button data-tab="prompts">Prompts</button>
-  <button data-tab="programas">Programas</button>
-  <button data-tab="agenda">Agenda</button>
-  <button data-tab="servicios">Servicios</button>
+  <button data-tab="skills" class="active" role="tab" aria-selected="true" aria-controls="tab-skills" id="tab-btn-skills">Skills</button>
+  <button data-tab="prompts" role="tab" aria-selected="false" aria-controls="tab-prompts" id="tab-btn-prompts">Prompts</button>
+  <button data-tab="programas" role="tab" aria-selected="false" aria-controls="tab-programas" id="tab-btn-programas">Programas</button>
+  <button data-tab="agenda" role="tab" aria-selected="false" aria-controls="tab-agenda" id="tab-btn-agenda">Agenda</button>
+  <button data-tab="servicios" role="tab" aria-selected="false" aria-controls="tab-servicios" id="tab-btn-servicios">Servicios</button>
 </nav>
-<section id="tab-skills"><div class="toolbar"><input type="search" id="skillsSearch" placeholder="Buscar skills..." /></div><div id="skillsList"></div></section>
-<section id="tab-prompts" class="hidden"><div class="toolbar"><input type="search" id="promptsSearch" placeholder="Buscar prompts..." /><select id="promptsFilter"><option value="">Todas las etapas</option></select><button class="btn" id="downloadAll">Descargar todos</button></div><div id="promptsList"></div></section>
-<section id="tab-programas" class="hidden"><div class="toolbar"><input type="search" id="programasSearch" placeholder="Buscar herramienta..." /><select id="programasFilter"><option value="">Todas las etapas</option></select></div><div id="programasList" class="grid"></div></section>
-<section id="tab-agenda" class="hidden"><div class="toolbar"><input type="search" id="agendaSearch" placeholder="Buscar comando..." /></div><div id="agendaList"></div></section>
-<section id="tab-servicios" class="hidden">
+<section id="tab-skills" role="tabpanel" aria-labelledby="tab-btn-skills"><div class="toolbar"><input type="search" id="skillsSearch" placeholder="Buscar skills..." /></div><div id="skillsList"></div></section>
+<section id="tab-prompts" role="tabpanel" aria-labelledby="tab-btn-prompts" class="hidden"><div class="toolbar"><input type="search" id="promptsSearch" placeholder="Buscar prompts..." /><select id="promptsFilter"><option value="">Todas las etapas</option></select><button class="btn" id="downloadAll">Descargar todos</button></div><div id="promptsList"></div></section>
+<section id="tab-programas" role="tabpanel" aria-labelledby="tab-btn-programas" class="hidden"><div class="toolbar"><input type="search" id="programasSearch" placeholder="Buscar herramienta..." /><select id="programasFilter"><option value="">Todas las etapas</option></select></div><div id="programasList" class="grid"></div></section>
+<section id="tab-agenda" role="tabpanel" aria-labelledby="tab-btn-agenda" class="hidden"><div class="toolbar"><input type="search" id="agendaSearch" placeholder="Buscar comando..." /></div><div id="agendaList"></div></section>
+<section id="tab-servicios" role="tabpanel" aria-labelledby="tab-btn-servicios" class="hidden">
   <div class="servicios-banner"><h2>&#x1F6E1;&#xFE0F; Escudo Patrimonial</h2><p>Proteccion juridica mensual.</p></div>
   <div class="servicios-grid">
     <div class="plan-card"><span class="plan-nombre bronce">Bronce</span><h3>Plan Bronce</h3><div class="plan-precio">$99.000 <span>ARS/mes</span></div><p>Consultas ilimitadas por WhatsApp.</p><a class="escudo-cta" href="https://deploy-oro.vercel.app/escudo" target="_blank" rel="noopener">Suscribirme</a></div>
@@ -237,7 +237,7 @@
   <div class="newsletter-banner"><h3>&#x1F4E9; Newsletter de IA</h3><p>Las mejores herramientas cada semana.</p><a class="escudo-cta" href="/newsletter.html">Suscribirme gratis</a></div>
 </section>
 <footer>
-  <div>Stack IA Creador v1.9 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
+  <div>Stack IA Creador v2.0 &middot; Skills auto-activos &middot; Prompts tool-agnostic.</div>
   <div style="margin-top:0.4rem"><a href="https://github.com/diego-orosa" target="_blank" rel="noopener">Diego Orosa</a> &middot; Para creadores que viven de su contenido.</div>
   <div style="margin-top:0.4rem"><a href="/newsletter.html">Newsletter</a> &middot; <a href="/prompting-101.html">Prompting 101</a> &middot; <a href="/dashboard.html">Dashboard</a> &middot; <a href="/crm.html">CRM</a> &middot; <a href="https://deploy-oro.vercel.app/escudo">Escudo Patrimonial</a></div>
 </footer>
