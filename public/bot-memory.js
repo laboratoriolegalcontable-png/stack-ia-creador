@@ -2,6 +2,23 @@ const SESSION_ID = crypto.randomUUID();
 const DB_NAME = 'BotMemory';
 const DB_VERSION = 3;
 
+const SUPABASE_URL = 'https://moljmujlfvtsgkjbtwss.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vbGptdWpsZnZ0c2dramJ0d3NzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMzExNjAsImV4cCI6MjA4OTgwNzE2MH0.SLzQYtec6J39H7gA-XWQFprpIK9f7wpoRwQ4IhfZbhs';
+
+const SB_HEADERS = {
+  'Content-Type': 'application/json',
+  apikey: SUPABASE_ANON_KEY,
+  Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+};
+
+function sbPost(path, body) {
+  return fetch(`${SUPABASE_URL}${path}`, {
+    method: 'POST',
+    headers: SB_HEADERS,
+    body: JSON.stringify(body),
+  });
+}
+
 function openDB() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
@@ -82,6 +99,15 @@ export class BotMemory {
       const store = tx.objectStore('events');
       const req = store.add(record);
       await txPromise(tx);
+
+      sbPost('/rest/v1/bot_events', {
+        bot_id: record.botId,
+        type: record.type,
+        data: record.data,
+        ts: new Date(record.ts).toISOString(),
+        session_id: record.sessionId,
+      }).catch(() => {});
+
       return req.result;
     } catch (err) {
       console.warn(`[BotMemory:${this.botId}] append failed`, err);
@@ -90,6 +116,18 @@ export class BotMemory {
   }
 
   async search(query, limit = 20) {
+    try {
+      const res = await sbPost('/rest/v1/rpc/get_bot_memory', {
+        p_bot_id: this.botId,
+        p_query: query,
+        p_limit: limit,
+      });
+      if (res.ok) {
+        const rows = await res.json();
+        if (Array.isArray(rows) && rows.length > 0) return rows;
+      }
+    } catch (_) {}
+
     try {
       if (!this._db) return [];
       const q = query.toLowerCase();
@@ -197,10 +235,36 @@ export class BotMemory {
     try {
       if (!this._db) return null;
       const txE = this._db.transaction('events', 'readonly');
-      const events = await cursorAll(txE.objectStore('events'), 'botId', IDBKeyRange.only(this.botId));
+      const localEvents = await cursorAll(txE.objectStore('events'), 'botId', IDBKeyRange.only(this.botId));
       const txS = this._db.transaction('snapshots', 'readonly');
       const snapshots = await cursorAll(txS.objectStore('snapshots'), 'botId', IDBKeyRange.only(this.botId));
-      return JSON.stringify({ botId: this.botId, exportedAt: new Date().toISOString(), events, snapshots }, null, 2);
+
+      let remoteEvents = [];
+      try {
+        const res = await sbPost('/rest/v1/rpc/get_bot_memory', {
+          p_bot_id: this.botId,
+          p_query: '',
+          p_limit: 10000,
+        });
+        if (res.ok) {
+          const rows = await res.json();
+          if (Array.isArray(rows)) remoteEvents = rows;
+        }
+      } catch (_) {}
+
+      // ts+type+data fingerprint dedup
+      const seen = new Set(localEvents.map((e) => `${e.ts}|${e.type}|${JSON.stringify(e.data ?? null)}`));
+      for (const re of remoteEvents) {
+        const ts = typeof re.ts === 'string' ? new Date(re.ts).getTime() : re.ts;
+        const key = `${ts}|${re.type}|${JSON.stringify(re.data ?? null)}`;
+        if (!seen.has(key)) {
+          localEvents.push({ ...re, ts });
+          seen.add(key);
+        }
+      }
+
+      localEvents.sort((a, b) => b.ts - a.ts);
+      return JSON.stringify({ botId: this.botId, exportedAt: new Date().toISOString(), events: localEvents, snapshots }, null, 2);
     } catch (err) {
       console.warn(`[BotMemory:${this.botId}] exportJSON failed`, err);
       return null;

@@ -108,3 +108,12 @@ npm run build    # Build (si aplica)
 - LCP < 2.5s, INP < 200ms, CLS < 0.1
 - Service Worker siempre registrado y actualizado
 - Assets optimizados (WebP para imágenes, gzip para JS/CSS)
+
+## NARAKIA Nucleus — ACTIVO AUTOMATICAMENTE
+
+Nucleus se activa al inicio de cada sesion. Clasifica el intent del usuario,
+selecciona max 3 sub-agentes, consulta memoria en Supabase y elige el modelo
+correcto (Haiku/Sonnet/Opus). Para decisiones criticas activa Kairos Legendario.
+
+Edge Function: https://moljmujlfvtsgkjbtwss.supabase.co/functions/v1/narakia-nucleus
+Panel: /narakia-nucleus-panel.html
