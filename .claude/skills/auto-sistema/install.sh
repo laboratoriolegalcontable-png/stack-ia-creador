@@ -24,13 +24,29 @@ BLD="\033[1m"
 # ── DESTINO ──
 TARGET="${1:-.}"
 TARGET="$(realpath "$TARGET" 2>/dev/null || echo "$TARGET")"
+IS_NEW_PROJECT=0
 
-if [ "$TARGET" != "." ] && [ ! -d "$TARGET" ]; then
-  mkdir -p "$TARGET"
-  echo -e "${GRN}✓ Directorio creado: $TARGET${RST}"
+if [ "$TARGET" != "." ]; then
+  if [ ! -d "$TARGET" ]; then
+    mkdir -p "$TARGET"
+    IS_NEW_PROJECT=1
+    echo -e "${GRN}✓ Directorio creado: $TARGET${RST}"
+  elif [ -z "$(ls -A "$TARGET" 2>/dev/null)" ]; then
+    IS_NEW_PROJECT=1
+  fi
 fi
 
 cd "$TARGET"
+
+# Protección: no correr en proyecto existente con muchas deps sin --target explícito
+if [ "$IS_NEW_PROJECT" = "0" ] && [ -f "package.json" ]; then
+  DEP_COUNT=$(python3 -c "import json; d=json.load(open('package.json')); print(len(d.get('dependencies',{})))" 2>/dev/null || echo "0")
+  if [ "$DEP_COUNT" -gt 10 ]; then
+    echo -e "${ORO}${BLD}⚠ Proyecto existente detectado (${DEP_COUNT} deps)${RST}"
+    echo -e "${BLU}  Solo se crearán archivos .claude/ y CLAUDE.md — npm NO se tocará${RST}"
+    echo ""
+  fi
+fi
 PROJECT_NAME="$(basename "$(pwd)")"
 
 echo -e "${ORO}${BLD}"
@@ -292,9 +308,15 @@ echo -e "\n${BLD}[5/6] Claude SDK${RST}"
 
 if [[ "$STACK" == "nextjs" || "$STACK" == "express" || "$STACK" == "node" || "$STACK" == "react" ]]; then
   if [ -f "package.json" ] && ! grep -q '"@anthropic-ai/sdk"' package.json 2>/dev/null; then
-    npm install @anthropic-ai/sdk --save --quiet 2>/dev/null \
-      && echo -e "${GRN}  ✓ @anthropic-ai/sdk instalado${RST}" \
-      || echo -e "${RED}  ⚠ Instalar manualmente: npm install @anthropic-ai/sdk${RST}"
+    # Solo instalar en proyectos nuevos — jamás tocar deps de proyectos existentes
+    if [ "$IS_NEW_PROJECT" = "1" ]; then
+      npm install @anthropic-ai/sdk --save --quiet 2>/dev/null \
+        && echo -e "${GRN}  ✓ @anthropic-ai/sdk instalado${RST}" \
+        || echo -e "${RED}  ⚠ Instalar manualmente: npm install @anthropic-ai/sdk${RST}"
+    else
+      echo -e "${GRN}  ✓ Proyecto existente — agregar manualmente si lo necesitás:${RST}"
+      echo -e "     npm install @anthropic-ai/sdk"
+    fi
   else
     echo -e "${GRN}  ✓ Claude SDK ya presente o no aplica${RST}"
   fi

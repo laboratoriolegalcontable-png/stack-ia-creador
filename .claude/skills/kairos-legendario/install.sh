@@ -48,9 +48,16 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Ir al destino si se especificó --target
+IS_NEW_PROJECT=0
 if [ -n "$TARGET" ]; then
   TARGET="$(realpath "$TARGET" 2>/dev/null || echo "$TARGET")"
-  [ ! -d "$TARGET" ] && mkdir -p "$TARGET" && echo -e "${KAIROS_GREEN}✓ Directorio creado: ${TARGET}${KAIROS_RESET}"
+  if [ ! -d "$TARGET" ]; then
+    mkdir -p "$TARGET"
+    IS_NEW_PROJECT=1
+    echo -e "${KAIROS_GREEN}✓ Directorio creado: ${TARGET}${KAIROS_RESET}"
+  elif [ -z "$(ls -A "$TARGET" 2>/dev/null)" ]; then
+    IS_NEW_PROJECT=1
+  fi
   cd "$TARGET"
 fi
 
@@ -229,11 +236,20 @@ GITIGN
   echo -e "${KAIROS_GREEN}✓ .gitignore creado${KAIROS_RESET}"
 fi
 
-# ── INSTALAR CLAUDE SDK SI ES NODE ──
+# ── INSTALAR CLAUDE SDK — solo en proyectos NUEVOS (--target creó el dir) ──
+# NUNCA modificar node_modules/package-lock.json de proyectos existentes
 if [ "$STACK" = "nextjs" ] || [ "$STACK" = "express" ] || [ "$STACK" = "node" ] || [ "$STACK" = "react" ]; then
   if [ -f "package.json" ] && ! grep -q '"@anthropic-ai/sdk"' package.json 2>/dev/null; then
-    echo -e "\n${KAIROS_BOLD}Instalando Claude SDK...${KAIROS_RESET}"
-    npm install @anthropic-ai/sdk --save 2>/dev/null && echo -e "${KAIROS_GREEN}✓ @anthropic-ai/sdk instalado${KAIROS_RESET}" || echo -e "${KAIROS_RED}⚠ Instalar manualmente: npm install @anthropic-ai/sdk${KAIROS_RESET}"
+    # Solo instalar si el proyecto es nuevo (package.json tiene <5 deps) o --target creó el dir
+    DEP_COUNT=$(python3 -c "import json,sys; d=json.load(open('package.json')); print(len(d.get('dependencies',{})))" 2>/dev/null || echo "99")
+    if [ "${IS_NEW_PROJECT:-0}" = "1" ] || [ "$DEP_COUNT" -lt 5 ]; then
+      echo -e "\n${KAIROS_BOLD}Instalando Claude SDK...${KAIROS_RESET}"
+      npm install @anthropic-ai/sdk --save --quiet 2>/dev/null \
+        && echo -e "${KAIROS_GREEN}✓ @anthropic-ai/sdk instalado${KAIROS_RESET}" \
+        || echo -e "${KAIROS_RED}⚠ Instalar manualmente: npm install @anthropic-ai/sdk${KAIROS_RESET}"
+    else
+      echo -e "${KAIROS_GREEN}✓ Claude SDK: agregar manualmente si lo necesitás: npm install @anthropic-ai/sdk${KAIROS_RESET}"
+    fi
   fi
 fi
 
