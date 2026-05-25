@@ -5,6 +5,12 @@
         "hooks": [
           {
             "type": "command",
+            "command": "bash /home/user/stack-ia-creador/.claude/skills/sistema-autonomo/hooks/session-start.sh",
+            "timeout": 15,
+            "statusMessage": "🤖 SAA v1.0 — cargando memoria y sub-agentes..."
+          },
+          {
+            "type": "command",
             "command": "bash /home/user/stack-ia-creador/.claude/hooks/ads-start.sh",
             "timeout": 10,
             "statusMessage": "Cargando Claude Ads v2.4.0..."
@@ -18,12 +24,10 @@
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(echo \"$TOOL_RESULT\" | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d.get('file_path',''))\" 2>/dev/null); if [[ \"$FILE\" == *.js || \"$FILE\" == *.css || \"$FILE\" == *.html ]]; then cd $CLAUDE_PROJECT_DIR && npx prettier --write \"$FILE\" 2>/dev/null || true; fi",
-            "timeout": 15,
-            "continueOnBlock": true,
             "command": "FILE=$(echo \"$TOOL_RESULT\" | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d.get('file_path',''))\" 2>/dev/null); if [[ \"$FILE\" == *.js || \"$FILE\" == *.css || \"$FILE\" == *.html ]]; then cd /home/user/stack-ia-creador && npx prettier --write \"$FILE\" 2>/dev/null || true; fi",
             "timeout": 15,
-            "statusMessage": "Aplicando Prettier..."
+            "continueOnBlock": true,
+            "statusMessage": "@guardian + Prettier auto-format..."
           }
         ]
       }
@@ -42,6 +46,7 @@
       "Bash(find*)",
       "Bash(echo*)",
       "Bash(npx prettier*)",
+      "Bash(bash .claude/skills/sistema-autonomo/install.sh*)",
       "Edit(src/**)",
       "Edit(public/**)",
       "Edit(.claude/**)",

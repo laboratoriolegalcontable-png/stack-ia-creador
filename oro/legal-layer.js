@@ -1,7 +1,7 @@
 /*! Estudio Oro — Legal Layer
  *  Cookie consent + form consent + footer legal bar + professional disclaimers.
  *  Vanilla JS, scoped CSS, safe to inject on any page.
- *  v1 — 2026-05-21
+ *  v1.1 — 2026-05-25 (+ BreadcrumbList Schema)
  */
 (function () {
   'use strict';
@@ -94,4 +94,38 @@
 
   function boot(){try{ensureMeta();}catch(e){}try{injectStyle();}catch(e){}try{buildBanner();}catch(e){}try{injectFormConsent();}catch(e){}try{injectFooterBar();}catch(e){}}
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+})();
+
+/* ─── BreadcrumbList Schema ───────────────────────────────────────────── */
+/* Auto-inyectado por Kairos v1.1 · 2026-05-25                           */
+(function(){
+  'use strict';
+  var B={
+    '/inmobiliaria/':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Derecho Inmobiliario',u:'https://estudiooro.com/inmobiliaria/'}],
+    '/tech/':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Derecho Tech & Digital',u:'https://estudiooro.com/tech/'}],
+    '/contable/':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Derecho Contable & Tributario',u:'https://estudiooro.com/contable/'}],
+    '/penal/':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Derecho Penal',u:'https://estudiooro.com/penal/'}],
+    '/legal/aviso-legal.html':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Aviso Legal',u:'https://estudiooro.com/legal/aviso-legal.html'}],
+    '/legal/privacidad.html':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Política de Privacidad',u:'https://estudiooro.com/legal/privacidad.html'}],
+    '/legal/terminos.html':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Términos y Condiciones',u:'https://estudiooro.com/legal/terminos.html'}],
+    '/legal/cookies.html':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Política de Cookies',u:'https://estudiooro.com/legal/cookies.html'}],
+    '/legal/arrepentimiento.html':[{n:'Inicio',u:'https://estudiooro.com/'},{n:'Botón de Arrepentimiento',u:'https://estudiooro.com/legal/arrepentimiento.html'}]
+  };
+  function run(){
+    var p=window.location.pathname;
+    var norm=p.replace(/([^\/])$/,'$1/');
+    var items=B[norm]||B[p]||B[p.replace(/\/$/,'')];
+    if(!items||items.length<2)return;
+    var s=document.createElement('script');
+    s.type='application/ld+json';
+    s.textContent=JSON.stringify({
+      '@context':'https://schema.org',
+      '@type':'BreadcrumbList',
+      'itemListElement':items.map(function(it,i){
+        return{'@type':'ListItem','position':i+1,'name':it.n,'item':it.u};
+      })
+    });
+    document.head.appendChild(s);
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}else{run();}
 })();
