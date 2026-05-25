@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Narakia Nucleus — Estudio Oro</title>
+  <style>
+    :root {
+      --color-primary: #e91e8c;
+      --color-secondary: #9c27b0;
+      --color-accent-blue: #2196f3;
+      --color-accent-orange: #ff9800;
+      --bg-dark: #0a0a0a;
+      --bg-card: #1a1a2e;
+      --bg-card-hover: #16213e;
+      --text-primary: #f0f0f0;
+      --text-secondary: #aaaaaa;
+      --text-muted: #666666;
+      --border-color: #2a2a4a;
+      --badge-green: #4caf50;
+      --badge-yellow: #ff9800;
+      --badge-red: #f44336;
+      --radius: 12px;
+      --radius-sm: 6px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --transition: 0.2s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ─── Header ─── */
+    .site-header {
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      height: 64px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .brand-text p {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 0.3rem 0.85rem;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .btn-nav:hover,
+    .btn-nav:focus-visible {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      outline: none;
+    }
+
+    .countdown-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+    }
+
+    .countdown-value {
+      color: var(--color-primary);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      min-width: 2ch;
+    }
+
+    /* ─── Main layout ─── */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* ─── Status banner ─── */
+    .nucleus-status-banner {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+    }
+
+    .nucleus-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--badge-green);
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .nucleus-dot.inactive {
+      background: var(--badge-red);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .nucleus-status-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .nucleus-status-ts {
+      margin-left: auto;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── Stats grid ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-card-value {
+      font-size: 2rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .stat-card-sub {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── Sections ─── */
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ─── Decisions table ─── */
+    .decisions-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .decisions-panel-header {
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .decisions-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .decisions-table th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .decisions-table td {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid rgba(42,42,74,0.4);
+      color: var(--text-primary);
+      vertical-align: top;
+    }
+
+    .decisions-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .decisions-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+
+    .skill-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(233,30,140,0.12);
+      color: var(--color-primary);
+      margin: 0.1rem 0.15rem 0.1rem 0;
+      white-space: nowrap;
+    }
+
+    .model-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(33,150,243,0.12);
+      color: var(--color-accent-blue);
+      white-space: nowrap;
+    }
+
+    .intent-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(156,39,176,0.12);
+      color: var(--color-secondary);
+      text-transform: capitalize;
+    }
+
+    .empty-row td {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 2rem 1rem;
+      font-style: italic;
+    }
+
+    /* ─── Sub-agents panel ─── */
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .agent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      box-shadow: var(--shadow);
+      transition: border-color var(--transition);
+    }
+
+    .agent-card:hover {
+      border-color: var(--bot-color, var(--color-primary));
+    }
+
+    .agent-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .agent-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .agent-role {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+    }
+
+    .agent-status {
+      margin-left: auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .agent-status.online { background: var(--badge-green); }
+    .agent-status.standby { background: var(--badge-yellow); }
+    .agent-status.offline { background: var(--badge-red); }
+
+    /* ─── Quick actions ─── */
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .action-btn:hover,
+    .action-btn:focus-visible {
+      border-color: var(--color-primary);
+      background: var(--bg-card-hover);
+      outline: none;
+    }
+
+    .action-btn:active {
+      transform: scale(0.97);
+    }
+
+    .action-btn .icon {
+      font-size: 1rem;
+    }
+
+    /* ─── Action result ─── */
+    .action-result {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .action-result.visible { display: block; }
+
+    .action-result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+    }
+
+    .action-result-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .action-result-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.2rem;
+    }
+
+    .action-result-body {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    /* ─── Status bar ─── */
+    .status-bar {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .status-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--badge-green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* ─── Loading spinner ─── */
+    .loading {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border-color);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      .brand-text p { display: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .agents-grid { grid-template-columns: 1fr; }
+      .decisions-table { font-size: 0.72rem; }
+      .decisions-table th,
+      .decisions-table td { padding: 0.4rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="brand-icon" aria-hidden="true">N</div>
+        <div class="brand-text">
+          <h1>Narakia Nucleus</h1>
+          <p>Centro de decisiones del ecosistema NARAKIA</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="countdown-badge" aria-live="polite" aria-atomic="true">
+          <span aria-hidden="true">&#8635;</span>
+          <span>Actualiza en</span>
+          <span class="countdown-value" id="countdown-display">30</span>
+          <span>s</span>
+        </div>
+        <a href="bot-monitor.html" class="btn-nav" aria-label="Monitor de Bots">
+          <span aria-hidden="true">&#9881;</span> Monitor
+        </a>
+        <a href="index.html" class="btn-nav" aria-label="Volver al panel principal">
+          <span aria-hidden="true">&#8592;</span> Inicio
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main-content">
+
+    <!-- Nucleus status banner -->
+    <div class="nucleus-status-banner" id="nucleus-banner">
+      <div class="nucleus-dot" id="nucleus-dot"></div>
+      <span class="nucleus-status-text" id="nucleus-status-text">Consultando estado...</span>
+      <span class="nucleus-status-ts" id="nucleus-status-ts"></span>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card-label">Dreaming Facts</div>
+        <div class="stat-card-value" id="stat-facts">--</div>
+        <div class="stat-card-sub">Hechos en memoria</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Bot Events</div>
+        <div class="stat-card-value" id="stat-events">--</div>
+        <div class="stat-card-sub">Eventos registrados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Decisiones Hoy</div>
+        <div class="stat-card-value" id="stat-decisions-today">--</div>
+        <div class="stat-card-sub">nucleus_decision</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Bots Activos</div>
+        <div class="stat-card-value" id="stat-bots-active">--</div>
+        <div class="stat-card-sub">De 4 totales</div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <h2 class="section-title">Acciones rapidas</h2>
+    <div class="quick-actions">
+      <button class="action-btn" data-action="briefing" type="button">
+        <span class="icon" aria-hidden="true">&#9776;</span> Briefing matutino
+      </button>
+      <button class="action-btn" data-action="bot-status" type="button">
+        <span class="icon" aria-hidden="true">&#9881;</span> Status de bots
+      </button>
+      <button class="action-btn" data-action="pendientes" type="button">
+        <span class="icon" aria-hidden="true">&#9745;</span> Pendientes
+      </button>
+    </div>
+
+    <!-- Action result -->
+    <div class="action-result" id="action-result">
+      <div class="action-result-header">
+        <span class="action-result-title" id="action-result-title"></span>
+        <button class="action-result-close" id="action-result-close" type="button" aria-label="Cerrar">&#10005;</button>
+      </div>
+      <div class="action-result-body" id="action-result-body"></div>
+    </div>
+
+    <!-- Sub-agents -->
+    <h2 class="section-title">Sub-agentes activos</h2>
+    <div class="agents-grid" id="agents-grid">
+      <div class="agent-card" style="--bot-color: #e91e8c">
+        <div class="agent-avatar" style="background: #e91e8c" aria-hidden="true">L</div>
+        <div>
+          <div class="agent-name">Lucrecia</div>
+          <div class="agent-role">Coordinadora General</div>
+        </div>
+        <div class="agent-status standby" id="agent-lucrecia" title="Standby"></div>
+      </div>
+      <div class="agent-card" style="--bot-color: #9c27b0">
+        <div class="agent-avatar" style="background: #9c27b0" aria-hidden="true">O</div>
+        <div>
+          <div class="agent-name">Oraculo</div>
+          <div class="agent-role">Orquestador Central</div>
+        </div>
+        <div class="agent-status standby" id="agent-oraculo" title="Standby"></div>
+      </div>
+      <div class="agent-card" style="--bot-color: #2196f3">
+        <div class="agent-avatar" style="background: #2196f3" aria-hidden="true">V</div>
+        <div>
+          <div class="agent-name">Valentina</div>
+          <div class="agent-role">ReclamaIA</div>
+        </div>
+        <div class="agent-status standby" id="agent-valentina" title="Standby"></div>
+      </div>
+      <div class="agent-card" style="--bot-color: #ff9800">
+        <div class="agent-avatar" style="background: #ff9800" aria-hidden="true">M</div>
+        <div>
+          <div class="agent-name">Megan</div>
+          <div class="agent-role">Experta Inmobiliaria</div>
+        </div>
+        <div class="agent-status standby" id="agent-megan" title="Standby"></div>
+      </div>
+    </div>
+
+    <!-- Last 10 decisions -->
+    <h2 class="section-title">Ultimas 10 decisiones del Nucleus</h2>
+    <div class="decisions-panel">
+      <div class="decisions-panel-header">
+        <span class="section-title" style="margin-bottom:0">Historial de decisiones</span>
+        <span id="decisions-loading" class="loading" style="display:none"></span>
+      </div>
+      <table class="decisions-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Intent</th>
+            <th>Skills</th>
+            <th>Modelo</th>
+            <th>Facts</th>
+          </tr>
+        </thead>
+        <tbody id="decisions-tbody">
+          <tr class="empty-row"><td colspan="5">Cargando decisiones...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Status bar -->
+    <div class="status-bar" role="status" aria-label="Estado del sistema">
+      <div class="status-bar-left">
+        <div class="status-dot" aria-hidden="true"></div>
+        <span>Narakia Nucleus activo</span>
+      </div>
+      <span id="last-refresh-ts">--</span>
+    </div>
+
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var SUPABASE_URL = 'https://moljmujlfvtsgkjbtwss.supabase.co';
+      var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vbGptdWpsZnZ0c2dramJ0d3NzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMzExNjAsImV4cCI6MjA4OTgwNzE2MH0.SLzQYtec6J39H7gA-XWQFprpIK9f7wpoRwQ4IhfZbhs';
+      var EDGE_FN_URL = SUPABASE_URL + '/functions/v1/narakia-nucleus';
+      var REFRESH_INTERVAL = 30;
+      var countdown = REFRESH_INTERVAL;
+      var timer = null;
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      };
+
+      // ─── Supabase REST helpers ───
+      function supaRest(table, query) {
+        return fetch(SUPABASE_URL + '/rest/v1/' + table + '?' + query, { headers: headers })
+          .then(function (r) { return r.json(); });
+      }
+
+      function nucleusCall(action, params) {
+        var body = Object.assign({ action: action }, params || {});
+        return fetch(EDGE_FN_URL, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(body),
+        }).then(function (r) { return r.json(); });
+      }
+
+      // ─── Load status ───
+      function loadStatus() {
+        nucleusCall('status')
+          .then(function (res) {
+            if (res.ok && res.result) {
+              var r = res.result;
+
+              // Banner
+              var dot = document.getElementById('nucleus-dot');
+              var text = document.getElementById('nucleus-status-text');
+              var ts = document.getElementById('nucleus-status-ts');
+              if (r.nucleus === 'active') {
+                dot.classList.remove('inactive');
+                text.textContent = 'Nucleus ACTIVO';
+              } else {
+                dot.classList.add('inactive');
+                text.textContent = 'Nucleus INACTIVO';
+              }
+              ts.textContent = new Date(r.timestamp).toLocaleString('es-AR');
+
+              // Stats
+              document.getElementById('stat-facts').textContent = r.memory_stats.dreaming_facts;
+              document.getElementById('stat-events').textContent = r.memory_stats.bot_events;
+
+              // Bots active
+              if (r.bot_health && Array.isArray(r.bot_health)) {
+                var active = r.bot_health.filter(function (b) { return b.health_status === 'green'; }).length;
+                document.getElementById('stat-bots-active').textContent = active;
+
+                // Update agent status dots
+                r.bot_health.forEach(function (b) {
+                  var el = document.getElementById('agent-' + b.bot_id);
+                  if (el) {
+                    el.className = 'agent-status ' +
+                      (b.health_status === 'green' ? 'online' :
+                       b.health_status === 'yellow' ? 'standby' : 'offline');
+                    el.title = b.health_status;
+                  }
+                });
+              } else {
+                document.getElementById('stat-bots-active').textContent = '--';
+              }
+
+              // Decisions today count
+              var today = new Date().toISOString().slice(0, 10);
+              var todayCount = (r.last_decisions || []).filter(function (d) {
+                return d.created_at && d.created_at.startsWith(today);
+              }).length;
+              document.getElementById('stat-decisions-today').textContent = todayCount;
+
+              document.getElementById('last-refresh-ts').textContent =
+                'Actualizado: ' + new Date().toLocaleTimeString('es-AR');
+            }
+          })
+          .catch(function (err) {
+            document.getElementById('nucleus-status-text').textContent = 'Error conectando con Nucleus';
+            document.getElementById('nucleus-dot').classList.add('inactive');
+            console.error('Nucleus status error:', err);
+          });
+      }
+
+      // ─── Load decisions ───
+      function loadDecisions() {
+        var loading = document.getElementById('decisions-loading');
+        loading.style.display = 'inline-block';
+
+        supaRest('bot_events',
+          'event_type=eq.nucleus_decision&order=created_at.desc&limit=10&select=id,created_at,event_data')
+          .then(function (rows) {
+            loading.style.display = 'none';
+            var tbody = document.getElementById('decisions-tbody');
+
+            if (!rows || rows.length === 0) {
+              tbody.innerHTML = '<tr class="empty-row"><td colspan="5">Sin decisiones registradas</td></tr>';
+              return;
+            }
+
+            tbody.innerHTML = rows.map(function (row) {
+              var d = row.event_data || {};
+              var date = row.created_at
+                ? new Date(row.created_at).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+                : '--';
+              var skills = (d.skills || []).map(function (s) {
+                return '<span class="skill-tag">' + escHtml(s) + '</span>';
+              }).join('');
+              var model = d.model
+                ? '<span class="model-tag">' + escHtml(d.model) + '</span>'
+                : '--';
+              var intent = d.intent
+                ? '<span class="intent-tag">' + escHtml(d.intent) + '</span>'
+                : '--';
+              var facts = d.facts_consulted !== undefined ? d.facts_consulted : '--';
+
+              return '<tr>' +
+                '<td>' + date + '</td>' +
+                '<td>' + intent + '</td>' +
+                '<td>' + skills + '</td>' +
+                '<td>' + model + '</td>' +
+                '<td>' + facts + '</td>' +
+                '</tr>';
+            }).join('');
+          })
+          .catch(function (err) {
+            loading.style.display = 'none';
+            console.error('Decisions load error:', err);
+          });
+      }
+
+      function escHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+      }
+
+      // ─── Quick actions ───
+      function runQuickAction(action) {
+        var resultPanel = document.getElementById('action-result');
+        var resultTitle = document.getElementById('action-result-title');
+        var resultBody = document.getElementById('action-result-body');
+
+        resultTitle.textContent = 'Ejecutando: ' + action + '...';
+        resultBody.textContent = 'Consultando Nucleus...';
+        resultPanel.classList.add('visible');
+
+        var params = {};
+        if (action === 'briefing') {
+          params = { context: 'briefing matutino', intent: 'generico', entities: ['briefing'] };
+        } else if (action === 'bot-status') {
+          nucleusCall('status').then(function (res) {
+            resultTitle.textContent = 'Status de Bots';
+            resultBody.textContent = JSON.stringify(res.result || res, null, 2);
+          }).catch(function (err) {
+            resultTitle.textContent = 'Error';
+            resultBody.textContent = err.message;
+          });
+          return;
+        } else if (action === 'pendientes') {
+          params = { context: 'revisar pendientes del dia', intent: 'generico', entities: ['pendientes'] };
+        }
+
+        nucleusCall('decide', params).then(function (res) {
+          resultTitle.textContent = action.charAt(0).toUpperCase() + action.slice(1);
+          resultBody.textContent = JSON.stringify(res.result || res, null, 2);
+          loadDecisions();
+        }).catch(function (err) {
+          resultTitle.textContent = 'Error';
+          resultBody.textContent = err.message;
+        });
+      }
+
+      // ─── Event listeners ───
+      document.querySelectorAll('.action-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          runQuickAction(btn.getAttribute('data-action'));
+        });
+      });
+
+      document.getElementById('action-result-close').addEventListener('click', function () {
+        document.getElementById('action-result').classList.remove('visible');
+      });
+
+      // ─── Countdown + auto refresh ───
+      function tick() {
+        countdown--;
+        if (countdown <= 0) {
+          countdown = REFRESH_INTERVAL;
+          loadAll();
+        }
+        document.getElementById('countdown-display').textContent = countdown;
+      }
+
+      function loadAll() {
+        loadStatus();
+        loadDecisions();
+      }
+
+      // Init
+      loadAll();
+      timer = setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>
