@@ -159,7 +159,6 @@ import { renderDecisionMatrix }      from '/decision-matrix.js';
 import { renderExperimentLog }       from '/experiment-log.js';
 import { renderWeeklyDigest }        from '/weekly-digest.js';
 import { renderPatternRecognizer } from '/pattern-recognizer.js';
-import { renderTimeMachine }       from '/time-machine.js';
 import { renderTokenBudget }       from '/token-budget.js';
 import { getFlags }                                     from '/flags.js';
 import { getConfig }                                    from '/bot-config.js';
