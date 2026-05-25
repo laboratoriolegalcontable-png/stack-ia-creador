@@ -1,4 +1,115 @@
 /** budget-tracker.js — Control de presupuesto · KAIROS browser module */
+
+// ── renderBudgetTracker (new ia-panel style) ──────────────────────────────────
+const KEY = 'kairos:budgets';
+function _load() { const d = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(d) ? d : []; }
+function _save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+function _uid() { return crypto.randomUUID(); }
+function _now() { return new Date().toISOString(); }
+
+const CAT_ICON = { technology: '💻', marketing: '📣', operations: '⚙️', hr: '👥', legal: '⚖️', travel: '✈️', other: '📋' };
+
+export function renderBudgetTracker() {
+  let panel = document.getElementById('budget-tracker-panel');
+  if (panel) { panel.style.display = panel.style.display === 'none' ? '' : 'none'; if (panel.style.display !== 'none') _btRefresh(); return; }
+  panel = document.createElement('div');
+  panel.id = 'budget-tracker-panel';
+  panel.className = 'ia-panel';
+  const today = new Date().toISOString().slice(0, 10);
+  panel.innerHTML = `
+    <div class="ia-panel-header"><h2>💰 Budget Tracker</h2><button class="ia-close" onclick="document.getElementById('budget-tracker-panel').style.display='none'">✕</button></div>
+    <div class="ia-panel-body">
+      <form id="bt-form" class="ia-form">
+        <div style="display:flex;gap:8px">
+          <input id="bt-name" placeholder="Nombre *" required style="flex:2" />
+          <select id="bt-category" style="flex:1">
+            <option value="technology">💻 Technology</option><option value="marketing">📣 Marketing</option><option value="operations">⚙️ Operations</option><option value="hr">👥 HR</option><option value="legal">⚖️ Legal</option><option value="travel">✈️ Travel</option><option value="other">📋 Other</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px">
+          <select id="bt-period" style="flex:1">
+            <option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="annual">Annual</option><option value="project">Project</option>
+          </select>
+          <input id="bt-amount" type="number" placeholder="Total *" min="0" step="0.01" required style="flex:1" />
+          <input id="bt-currency" placeholder="Moneda" value="ARS" style="flex:1" />
+        </div>
+        <div style="display:flex;gap:8px">
+          <input id="bt-start" type="date" value="${today}" style="flex:1" />
+          <input id="bt-owner" placeholder="Responsable *" required style="flex:1" />
+        </div>
+        <textarea id="bt-notes" placeholder="Notas (opcional)" rows="2"></textarea>
+        <button type="submit" class="ia-btn">Crear presupuesto</button>
+      </form>
+      <div id="bt-stats" class="ia-stats-bar"></div>
+      <div id="bt-list" class="ia-list"></div>
+    </div>`;
+  document.body.appendChild(panel);
+  document.getElementById('bt-form').onsubmit = e => {
+    e.preventDefault();
+    const items = _load();
+    items.unshift({
+      id: _uid(),
+      name: document.getElementById('bt-name').value.trim(),
+      category: document.getElementById('bt-category').value,
+      period: document.getElementById('bt-period').value,
+      totalAmount: Number(document.getElementById('bt-amount').value) || 0,
+      currency: document.getElementById('bt-currency').value.trim() || 'ARS',
+      startDate: document.getElementById('bt-start').value,
+      owner: document.getElementById('bt-owner').value.trim(),
+      notes: document.getElementById('bt-notes').value.trim(),
+      expenses: [],
+      createdAt: _now()
+    });
+    _save(items);
+    e.target.reset();
+    document.getElementById('bt-currency').value = 'ARS';
+    document.getElementById('bt-start').value = new Date().toISOString().slice(0, 10);
+    _btRefresh();
+  };
+  _btRefresh();
+}
+
+function _btRefresh() {
+  const all = _load();
+  const stats = document.getElementById('bt-stats');
+  const list = document.getElementById('bt-list');
+  if (!stats || !list) return;
+
+  const totalAllocated = all.reduce((s, i) => s + i.totalAmount, 0);
+  const totalSpent = all.reduce((s, i) => s + (i.expenses || []).filter(e => e.status === 'approved' || e.status === 'paid').reduce((ss, e) => ss + e.amount, 0), 0);
+  stats.textContent = 'Total presupuestos: ' + all.length + ' | Asignado: $' + totalAllocated.toLocaleString() + ' | Gastado: $' + totalSpent.toLocaleString();
+
+  list.innerHTML = '';
+  all.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'ia-list-item';
+    const icon = CAT_ICON[item.category] || '📋';
+    const spent = (item.expenses || []).filter(e => e.status === 'approved' || e.status === 'paid').reduce((s, e) => s + e.amount, 0);
+    const pct = item.totalAmount > 0 ? Math.round(spent / item.totalAmount * 100) : 0;
+    const utilizCol = pct >= 100 ? 'red' : pct >= 80 ? 'blue' : 'green';
+    el.innerHTML = '<div class="ia-list-item-header"><strong></strong><span class="ia-badge gray"></span><span class="ia-badge gray"></span><span class="ia-badge ' + utilizCol + '"></span><button class="ia-btn-sm blue">+ gasto</button><button class="ia-btn-sm red">✕</button></div><small></small>';
+    el.querySelector('strong').textContent = icon + ' ' + item.name;
+    const badges = el.querySelectorAll('.ia-badge');
+    badges[0].textContent = item.period;
+    badges[1].textContent = item.currency + ' ' + item.totalAmount.toLocaleString();
+    badges[2].textContent = pct + '% usado';
+    const [expBtn, delBtn] = el.querySelectorAll('button');
+    expBtn.onclick = () => {
+      const raw = prompt('Gasto (description|amount|vendor):');
+      if (!raw) return;
+      const [description, amountStr, vendor] = raw.split('|').map(s => s.trim());
+      if (!description) return;
+      const d = _load(); const r = d.find(x => x.id === item.id);
+      if (r) { r.expenses = r.expenses || []; r.expenses.push({ description, amount: Number(amountStr) || 0, vendor: vendor || '', status: 'pending', date: new Date().toISOString().slice(0,10) }); _save(d); _btRefresh(); }
+    };
+    delBtn.onclick = () => { _save(_load().filter(x => x.id !== item.id)); _btRefresh(); };
+    const totalExp = (item.expenses || []).length;
+    el.querySelector('small').textContent = 'Gastado: $' + spent.toLocaleString() + ' / $' + item.totalAmount.toLocaleString() + ' (' + totalExp + ' gastos)';
+    list.appendChild(el);
+  });
+}
+
+// ── renderBudgetPanel (legacy ia-panel style) ──────────────────────────────────
 const BT_KEY = 'kairos:budget';
 
 function loadTxs() { try { const d = JSON.parse(localStorage.getItem(BT_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch { return []; } }

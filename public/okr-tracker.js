@@ -1,6 +1,123 @@
 /** okr-tracker.js — OKR Tracker · KAIROS browser module */
 const OKR_KEY = 'kairos:okrs';
 
+// ── New panel (batch37 pattern) ────────────────────────────────────────────
+const KEY = 'kairos:okrs';
+function _load() { const d = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(d) ? d : []; }
+function _save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+function _uid() { return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function _now() { return new Date().toISOString(); }
+
+const STATUS_COLORS = { 'not-started': 'gray', 'on-track': 'green', 'at-risk': 'blue', 'behind': 'red', 'completed': 'green', 'cancelled': 'red' };
+const CYCLE_ORDER = { Q1: 0, Q2: 1, Q3: 2, Q4: 3, annual: 4, custom: 5 };
+
+export function renderOkrTracker() {
+  let panel = document.getElementById('okr-tracker-panel');
+  if (panel) { panel.style.display = panel.style.display === 'none' ? '' : 'none'; if (panel.style.display !== 'none') _ot_refresh(); return; }
+  panel = document.createElement('div');
+  panel.id = 'okr-tracker-panel';
+  panel.className = 'ia-panel';
+  const yr = new Date().getFullYear();
+  panel.innerHTML = `
+    <div class="ia-panel-header"><h2>🎯 OKR Tracker</h2><button class="ia-close" onclick="document.getElementById('okr-tracker-panel').style.display='none'">✕</button></div>
+    <div class="ia-panel-body">
+      <form id="ot-form" class="ia-form">
+        <input id="ot-title" placeholder="Objetivo *" required />
+        <div style="display:flex;gap:8px">
+          <select id="ot-cycle" style="flex:1">
+            <option value="Q1">Q1</option><option value="Q2" selected>Q2</option><option value="Q3">Q3</option><option value="Q4">Q4</option><option value="annual">Annual</option><option value="custom">Custom</option>
+          </select>
+          <input id="ot-year" type="number" value="${yr}" style="flex:1;width:80px" />
+        </div>
+        <input id="ot-owner" placeholder="Owner *" required />
+        <input id="ot-description" placeholder="Descripción (opcional)" />
+        <input id="ot-tags" placeholder="Tags (separados por coma)" />
+        <button type="submit" class="ia-btn">Agregar objetivo</button>
+      </form>
+      <div id="ot-stats" class="ia-stats-bar"></div>
+      <div id="ot-list" class="ia-list"></div>
+    </div>`;
+  document.body.appendChild(panel);
+  document.getElementById('ot-form').onsubmit = e => {
+    e.preventDefault();
+    const items = _load();
+    items.push({
+      id: _uid(),
+      title: document.getElementById('ot-title').value.trim(),
+      cycle: document.getElementById('ot-cycle').value,
+      year: Number(document.getElementById('ot-year').value) || yr,
+      owner: document.getElementById('ot-owner').value.trim(),
+      description: document.getElementById('ot-description').value.trim(),
+      tags: document.getElementById('ot-tags').value.split(',').map(s => s.trim()).filter(Boolean),
+      status: 'not-started',
+      keyResults: [],
+      createdAt: _now()
+    });
+    _save(items);
+    e.target.reset();
+    document.getElementById('ot-cycle').value = 'Q2';
+    document.getElementById('ot-year').value = yr;
+    _ot_refresh();
+  };
+  _ot_refresh();
+}
+
+function _ot_refresh() {
+  const all = _load();
+  const stats = document.getElementById('ot-stats');
+  const list = document.getElementById('ot-list');
+  if (!stats || !list) return;
+  const onTrack = all.filter(o => o.status === 'on-track').length;
+  const completed = all.filter(o => o.status === 'completed').length;
+  const totalKRs = all.reduce((s, o) => s + (o.keyResults?.length || 0), 0);
+  stats.textContent = 'Total: ' + all.length + ' | On track: ' + onTrack + ' | Completed: ' + completed + ' | Total KRs: ' + totalKRs;
+  list.innerHTML = '';
+  const sorted = [...all].sort((a, b) => {
+    if (b.year !== a.year) return b.year - a.year;
+    return (CYCLE_ORDER[a.cycle] ?? 99) - (CYCLE_ORDER[b.cycle] ?? 99);
+  });
+  sorted.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'ia-list-item';
+    const stColor = STATUS_COLORS[item.status] || 'gray';
+    el.innerHTML = '<div class="ia-list-item-header"><strong></strong><span class="ia-badge gray"></span><span class="ia-badge gray"></span><span class="ia-badge ' + stColor + '"></span><button class="ia-btn-sm blue">+ KR</button><button class="ia-btn-sm red">✕</button></div><div class="ot-kr-list"></div>';
+    el.querySelector('strong').textContent = item.title;
+    const badges = el.querySelectorAll('.ia-badge');
+    badges[0].textContent = item.owner;
+    badges[1].textContent = item.cycle + ' ' + item.year;
+    badges[2].textContent = item.status;
+    const [addKrBtn, delBtn] = el.querySelectorAll('button');
+    addKrBtn.onclick = () => {
+      const raw = window.prompt('KR description|target|unit (ej: "Active users|1000|users"):');
+      if (!raw?.trim()) return;
+      const parts = raw.split('|').map(s => s.trim());
+      const [description, target, unit] = parts;
+      if (!description) return;
+      const d = _load(); const r = d.find(x => x.id === item.id);
+      if (r) {
+        r.keyResults.push({ id: _uid(), description, target: Number(target) || 0, current: 0, unit: unit || '', status: 'not-started' });
+        _save(d); _ot_refresh();
+      }
+    };
+    delBtn.onclick = () => { _save(_load().filter(x => x.id !== item.id)); _ot_refresh(); };
+    const krDiv = el.querySelector('.ot-kr-list');
+    (item.keyResults || []).forEach(kr => {
+      const krEl = document.createElement('div');
+      krEl.style.cssText = 'font-size:0.8rem;color:var(--color-text-muted,#9ca3af);padding:2px 0;cursor:pointer';
+      krEl.textContent = '• ' + kr.description + ': ' + kr.current + '/' + kr.target + ' ' + kr.unit + ' [' + kr.status + ']';
+      krEl.onclick = () => {
+        const val = window.prompt('Nuevo valor actual para "' + kr.description + '":');
+        if (val === null || val.trim() === '') return;
+        const d = _load(); const r = d.find(x => x.id === item.id);
+        if (r) { const k = r.keyResults.find(x => x.id === kr.id); if (k) { k.current = Number(val) || 0; _save(d); _ot_refresh(); } }
+      };
+      krDiv.appendChild(krEl);
+    });
+    list.appendChild(el);
+  });
+}
+// ── End batch37 panel ────────────────────────────────────────────────────
+
 function loadOkrs() { try { const d = JSON.parse(localStorage.getItem(OKR_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch { return []; } }
 function saveOkrs(list) { localStorage.setItem(OKR_KEY, JSON.stringify(list)); }
 function uid() { return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2); }

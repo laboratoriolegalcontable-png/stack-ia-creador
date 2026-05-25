@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selector · Estudio Oro · 10 modelos</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter Tight',sans-serif;background:#0A0B0E;color:#ECE4D2;line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased}
+.mono{font-family:'JetBrains Mono',monospace}
+.serif{font-family:'Fraunces',serif}
+a{color:inherit;text-decoration:none}
+
+/* progress bar */
+.bar{position:fixed;top:0;left:0;height:2px;width:0;background:#C9A663;z-index:9999;transition:width .08s}
+
+/* HERO */
+.hero{padding:5rem 2rem 3rem;max-width:1440px;margin:0 auto;position:relative}
+.hero::before{content:"";position:absolute;top:0;right:5%;width:380px;height:380px;background:radial-gradient(circle,rgba(201,166,99,0.15),transparent 70%);filter:blur(40px);pointer-events:none}
+.tag{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#C9A663;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.9rem}
+.tag::before{content:"";width:32px;height:1px;background:#C9A663}
+.tag .live{display:inline-flex;align-items:center;gap:0.4rem;color:#00E08F}
+.tag .live::before{content:"";width:7px;height:7px;background:#00E08F;border-radius:50%;box-shadow:0 0 8px rgba(0,224,143,0.6);animation:p 1.6s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.8rem,6.5vw,5rem);line-height:0.98;letter-spacing:-0.025em;margin-bottom:1.2rem;max-width:22ch}
+h1 em{font-style:italic;color:#C9A663;font-weight:500}
+h1 .num{color:#E54B2A;font-style:italic;font-weight:500}
+.lead{color:#A8A299;font-size:1.15rem;line-height:1.7;max-width:64ch;margin-bottom:2.5rem}
+.lead strong{color:#ECE4D2;font-weight:500}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(236,228,210,0.08);border:1px solid rgba(236,228,210,0.08);border-radius:14px;overflow:hidden;margin-bottom:3rem}
+@media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#101218;padding:1.4rem 1.5rem}
+.stat .n{font-family:'Fraunces',serif;font-size:2.2rem;color:#C9A663;font-style:italic;line-height:1}
+.stat .l{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1.5px;color:#8C8175;text-transform:uppercase;margin-top:0.6rem}
+
+/* legend */
+.legend{background:linear-gradient(135deg,rgba(201,166,99,0.06),rgba(229,75,42,0.04));border:1px solid rgba(201,166,99,0.18);border-radius:14px;padding:1.5rem 1.8rem;margin-bottom:3rem;font-size:0.94rem;color:#C8BFAC;line-height:1.75}
+.legend strong{color:#ECE4D2}
+.legend code{font-family:'JetBrains Mono',monospace;background:rgba(236,228,210,0.06);padding:0.15rem 0.45rem;border-radius:4px;color:#C9A663;font-size:0.86em}
+
+/* GRID */
+.section-h{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:500;margin-bottom:1.5rem;color:#ECE4D2;display:flex;align-items:center;gap:1rem}
+.section-h .n{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:#C9A663;letter-spacing:1.5px;font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:3rem}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+.card{background:#101218;border:1px solid rgba(236,228,210,0.08);border-radius:18px;overflow:hidden;transition:all .35s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;position:relative}
+.card:hover{transform:translateY(-4px);border-color:rgba(201,166,99,0.35);box-shadow:0 20px 50px -25px rgba(201,166,99,0.25)}
+.preview{aspect-ratio:16/10;position:relative;overflow:hidden;border-bottom:1px solid rgba(236,228,210,0.05)}
+.previewC{position:absolute;inset:0;padding:1.2rem;display:flex;flex-direction:column;justify-content:space-between}
+
+/* preview themes */
+.p-bufete{background:linear-gradient(160deg,#F4EFE7 0%,#EBE3D3 100%)}
+.p-bufete .eb{font-size:0.5rem;color:#8E6B2E;letter-spacing:2px;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:0.4rem}
+.p-bufete .eb::before{content:"";width:14px;height:1px;background:#B8924D}
+.p-bufete .ttl{font-family:'Fraunces',serif;font-size:1.4rem;color:#0E1A2B;font-weight:500;line-height:1.05;letter-spacing:-0.01em}
+.p-bufete .ttl em{font-style:italic;color:#8E6B2E}
+.p-bufete .ctas{display:flex;gap:0.4rem;font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.p-bufete .ctas span:first-child{background:#0E1A2B;color:#F4EFE7;padding:0.3rem 0.55rem}
+.p-bufete .ctas span:last-child{color:#0E1A2B;border-bottom:1px solid #0E1A2B;padding:0.3rem 0 0.2rem}
+
+.p-concierge{background:radial-gradient(ellipse at 25% 40%,rgba(168,142,85,0.3) 0%,transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(90,30,30,0.4) 0%,transparent 60%),#0B0B0B}
+.p-concierge .eb{font-size:0.5rem;color:#A88E55;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:0.4rem}
+.p-concierge .eb::before{content:"";width:18px;height:1px;background:#A88E55}
+.p-concierge .ttl{font-family:'Fraunces',serif;font-size:1.55rem;color:#F2EAD8;font-weight:400;font-style:italic;line-height:1.05;letter-spacing:-0.01em}
+.p-concierge .ttl b{font-style:italic;color:#E8DCC0;font-weight:500}
+.p-concierge .ctas{display:flex;gap:0.5rem;font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.p-concierge .ctas span:first-child{background:#E8DCC0;color:#0B0B0B;padding:0.3rem 0.55rem}
+.p-concierge .ctas span:last-child{color:#E8DCC0;border-bottom:1px solid #E8DCC0;padding:0.3rem 0 0.2rem;align-self:end}
+
+.p-lab{background:#FAFAF8;background-image:radial-gradient(circle,rgba(10,10,10,0.07) 1px,transparent 1px);background-size:14px 14px}
+.p-lab .eb{display:flex;gap:0.3rem;font-family:'JetBrains Mono',monospace;font-size:0.5rem;color:#6B6B6B}
+.p-lab .eb code{background:#F0EEE8;border:1px solid #E4E2DD;padding:0.15rem 0.35rem;border-radius:3px;color:#0A0A0A;font-weight:500}
+.p-lab .ttl{font-family:'Inter Tight',sans-serif;font-size:1.45rem;color:#0A0A0A;font-weight:600;line-height:0.98;letter-spacing:-0.03em}
+.p-lab .ttl .m{position:relative;color:#FF4D2E}
+.p-lab .ttl .m::after{content:"";position:absolute;left:-3%;right:-3%;bottom:5%;height:18%;background:#FF4D2E;opacity:0.18;z-index:-1;border-radius:2px}
+.p-lab .ttl .d{color:#9A9A95}
+.p-lab .ctas{display:flex;gap:0.4rem;font-size:0.55rem;font-weight:600}
+.p-lab .ctas span:first-child{background:#0A0A0A;color:#fff;padding:0.3rem 0.6rem;border-radius:50px}
+.p-lab .ctas span:last-child{padding:0.3rem 0.55rem;border:1px solid #E4E2DD;border-radius:50px;color:#0A0A0A}
+
+.p-diario{background:#F8F4ED;background-image:linear-gradient(rgba(108,39,55,0.04) 1px,transparent 1px);background-size:100% 14px;position:relative}
+.p-diario::before{content:"ESTUDIO ORO";position:absolute;top:0.6rem;left:50%;transform:translateX(-50%);font-family:'Fraunces',serif;font-size:0.65rem;letter-spacing:7px;color:#1A1612;font-weight:600}
+.p-diario .eb{font-family:'Fraunces',serif;font-style:italic;font-size:0.55rem;color:#6B2737;margin-top:0.7rem}
+.p-diario .ttl{font-family:'Fraunces',serif;font-size:1.5rem;color:#1A1612;font-weight:500;line-height:1.05;letter-spacing:-0.01em}
+.p-diario .ttl em{font-style:italic;color:#6B2737}
+.p-diario .ctas{font-family:'Fraunces',serif;font-size:0.5rem;color:#6B2737;font-style:italic;border-top:1px solid #D8CDB5;padding-top:0.3rem}
+
+.p-manifest{background:#F2EFE6;position:relative}
+.p-manifest::before{content:"";position:absolute;top:0;left:0;width:25px;height:100%;background:#E62E2E}
+.p-manifest .eb{font-size:0.5rem;color:#1C1C1C;letter-spacing:2.5px;font-weight:800;text-transform:uppercase;padding-left:1.5rem}
+.p-manifest .ttl{font-family:'Inter Tight',sans-serif;font-size:1.6rem;color:#1C1C1C;font-weight:900;line-height:0.88;letter-spacing:-0.045em;padding-left:1.5rem;text-transform:uppercase}
+.p-manifest .ttl b{color:#E62E2E}
+.p-manifest .ctas{font-size:0.55rem;font-weight:800;text-transform:uppercase;display:flex;gap:0.4rem;padding-left:1.5rem}
+.p-manifest .ctas span:first-child{background:#1C1C1C;color:#F2EFE6;padding:0.35rem 0.6rem}
+.p-manifest .ctas span:last-child{border:2px solid #E62E2E;color:#E62E2E;padding:0.3rem 0.55rem}
+
+.p-showroom{background:#ECE6D9;position:relative;overflow:hidden}
+.p-showroom::before{content:"";position:absolute;top:0;right:0;width:50%;height:100%;background:linear-gradient(135deg,#9B7A38 0%,#C4A057 50%,#1F1B16 100%)}
+.p-showroom .eb{font-size:0.5rem;color:#786C5B;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;position:relative;z-index:1}
+.p-showroom .ttl{font-family:'Fraunces',serif;font-size:1.5rem;color:#1F1B16;font-weight:500;line-height:1.05;letter-spacing:-0.01em;position:relative;z-index:1}
+.p-showroom .ttl em{font-style:italic;color:#9B7A38}
+.p-showroom .ctas{font-size:0.55rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;display:flex;gap:0.4rem;position:relative;z-index:1}
+.p-showroom .ctas span:first-child{background:#1F1B16;color:#FBF6E9;padding:0.3rem 0.55rem}
+.p-showroom .ctas span:last-child{color:#1F1B16;border-bottom:1px solid #C4A057;padding-bottom:2px;padding-top:0.3rem}
+
+.p-anuario{background:#FBF8F0;background-image:linear-gradient(180deg,#0A0A0A 1.5px,transparent 1.5px);background-size:100% 12px;background-position:0 24px;position:relative}
+.p-anuario::after{content:"";position:absolute;top:1.8rem;left:1rem;right:1rem;border-top:2px double #0A0A0A;border-bottom:1px solid #0A0A0A;height:0}
+.p-anuario .eb{font-family:'Fraunces',serif;font-size:0.5rem;letter-spacing:1.5px;color:#5C5C5C;text-transform:uppercase}
+.p-anuario .ttl{font-family:'Fraunces',serif;font-size:1.5rem;color:#0A0A0A;font-weight:500;line-height:1.02;letter-spacing:-0.01em}
+.p-anuario .ttl em{font-style:italic;color:#B72A2A}
+.p-anuario .ctas{font-family:'Fraunces',serif;font-style:italic;font-size:0.55rem;color:#B72A2A;display:flex;justify-content:space-between}
+
+.p-atelier{background:radial-gradient(circle at 30% 30%,rgba(166,83,43,0.25),transparent 50%),radial-gradient(circle at 70% 75%,rgba(91,102,67,0.22),transparent 55%),#FAF4E9}
+.p-atelier .eb{font-family:'Fraunces',serif;font-style:italic;font-size:0.55rem;color:#A6532B}
+.p-atelier .ttl{font-family:'Fraunces',serif;font-size:1.5rem;color:#2A2218;font-weight:500;line-height:1.05;letter-spacing:-0.01em}
+.p-atelier .ttl em{font-style:italic;color:#A6532B}
+.p-atelier .ctas{font-size:0.55rem;font-weight:500;letter-spacing:1px;display:flex;gap:0.4rem}
+.p-atelier .ctas span:first-child{background:#A6532B;color:#FAF4E9;padding:0.3rem 0.6rem;border-radius:50px}
+.p-atelier .ctas span:last-child{border:1px solid #5B6643;color:#5B6643;padding:0.3rem 0.55rem;border-radius:50px}
+
+.p-corporate{background:#FFFFFF;border-left:4px solid #0E2545;position:relative}
+.p-corporate::before{content:"";position:absolute;top:0;right:0;width:35%;height:100%;background:linear-gradient(180deg,#DCE6F3 0%,#fff 100%)}
+.p-corporate .eb{font-size:0.5rem;color:#0E2545;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;position:relative}
+.p-corporate .ttl{font-family:'Inter Tight',sans-serif;font-size:1.5rem;color:#0E2545;font-weight:600;line-height:1.05;letter-spacing:-0.025em;position:relative}
+.p-corporate .ttl b{color:#4A6FA5}
+.p-corporate .ctas{font-size:0.55rem;font-weight:600;letter-spacing:1px;display:flex;gap:0.4rem;position:relative}
+.p-corporate .ctas span:first-child{background:#0E2545;color:#fff;padding:0.3rem 0.6rem}
+.p-corporate .ctas span:last-child{border:1px solid #0E2545;color:#0E2545;padding:0.3rem 0.55rem}
+
+.p-hibrido{background:linear-gradient(135deg,#0F1115 0%,#1B2840 100%);position:relative;overflow:hidden}
+.p-hibrido::before{content:"";position:absolute;top:-30%;right:-15%;width:200px;height:200px;background:radial-gradient(circle,rgba(201,166,99,0.3),transparent 70%);filter:blur(20px)}
+.p-hibrido::after{content:"";position:absolute;bottom:-20%;left:-10%;width:160px;height:160px;background:radial-gradient(circle,rgba(229,75,42,0.25),transparent 70%);filter:blur(20px)}
+.p-hibrido .eb{font-family:'JetBrains Mono',monospace;font-size:0.5rem;color:#C9A663;letter-spacing:1.5px;display:flex;gap:0.4rem;position:relative;z-index:1}
+.p-hibrido .eb code{background:rgba(236,228,210,0.08);border:1px solid rgba(201,166,99,0.3);padding:0.15rem 0.35rem;border-radius:3px;color:#ECE4D2}
+.p-hibrido .ttl{font-size:1.45rem;color:#ECE4D2;font-weight:600;line-height:1.02;letter-spacing:-0.025em;position:relative;z-index:1}
+.p-hibrido .ttl em{font-family:'Fraunces',serif;font-style:italic;color:#C9A663;font-weight:500}
+.p-hibrido .ttl b{color:#E54B2A;font-weight:700}
+.p-hibrido .ctas{font-size:0.55rem;font-weight:600;display:flex;gap:0.4rem;position:relative;z-index:1}
+.p-hibrido .ctas span:first-child{background:#C9A663;color:#0F1115;padding:0.3rem 0.6rem;border-radius:50px}
+.p-hibrido .ctas span:last-child{color:#ECE4D2;border:1px solid rgba(236,228,210,0.2);padding:0.3rem 0.55rem;border-radius:50px}
+
+/* card body */
+.body{padding:1.5rem;display:flex;flex-direction:column;gap:0.7rem;flex:1}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:0.8rem}
+.nm{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#C9A663;letter-spacing:1.5px;font-weight:500}
+.size{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#6C6358}
+h2.t{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:500;color:#ECE4D2;letter-spacing:-0.01em;line-height:1.15}
+.body p{font-size:0.88rem;color:#A8A299;line-height:1.6}
+.tokens{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.4rem}
+.tokens span{font-family:'JetBrains Mono',monospace;font-size:0.65rem;background:rgba(236,228,210,0.06);border:1px solid rgba(236,228,210,0.1);color:#A88E55;padding:0.15rem 0.5rem;border-radius:4px}
+.mix{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#6C6358;letter-spacing:0.5px;line-height:1.5;margin-top:0.3rem}
+.mix b{color:#C9A663;font-weight:500}
+.motion{font-size:0.78rem;color:#8C8175;line-height:1.5;margin-top:0.3rem}
+.motion b{color:#ECE4D2;font-weight:500}
+.cta-row{display:flex;gap:0.6rem;margin-top:auto;padding-top:1rem}
+.btn{flex:1;padding:0.75rem 0.9rem;text-align:center;border-radius:50px;font-size:0.78rem;font-weight:600;transition:all .25s cubic-bezier(.2,.7,.2,1);display:inline-flex;align-items:center;justify-content:center;gap:0.4rem}
+.btn-open{background:#C9A663;color:#0A0B0E}
+.btn-open:hover{background:#ECE4D2;transform:translateY(-2px)}
+.btn-ext{border:1px solid rgba(236,228,210,0.18);color:#ECE4D2;background:transparent;flex:0 0 44px;padding:0.75rem}
+.btn-ext:hover{border-color:#C9A663;background:rgba(201,166,99,0.08)}
+
+/* footer */
+.foot{padding:3rem 2rem 4rem;max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;font-size:0.84rem;color:#6C6358;border-top:1px solid rgba(236,228,210,0.08);margin-top:2rem}
+.foot strong{color:#C9A663}
+.foot code{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:#ECE4D2;background:rgba(236,228,210,0.06);padding:0.15rem 0.4rem;border-radius:3px}
+</style>
+<script src="legal-layer.js" defer></script>
+</head>
+<body>
+
+<div class="bar" id="bar"></div>
+
+<section class="hero">
+  <div class="tag"><span class="live">10 modelos listos</span> · Restore J364L</div>
+  <h1>Diez rediseños <em>impecables</em> para Estudio Oro. <span class="num">Elegí uno.</span></h1>
+  <p class="lead">Cada modelo conserva el mismo SEO, el mismo JSON-LD, el mismo contenido, las mismas 11 áreas de práctica y voz de firma (Estudio Oro = equipo, no Diego solo). <strong>Cero matrículas visibles, cero CUIT.</strong> Lo que cambia es el ADN visual y la mezcla de las 9 referencias que pasaste.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">10</div><div class="l">Modelos</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">Referencias mezcladas</div></div>
+    <div class="stat"><div class="n">11</div><div class="l">Áreas de práctica</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Sedes globales</div></div>
+  </div>
+
+  <div class="legend">
+    <strong>Cómo navegar:</strong> abrí cada uno haciendo click en <code>Abrir</code>. Cuando elijas el ganador, replico ese lenguaje visual en las 3 páginas verticales pendientes (Inmobiliaria · Automatización & Tech · Comercial & Contable).
+    <br><br>
+    <strong>Estado:</strong> los 10 modelos viven en <code>estudiooro-landing/modelos/</code>. El <code>index.html</code> original de Estudio Oro queda intacto hasta que confirmes.
+  </div>
+</section>
+
+<section class="hero">
+  <div class="section-h"><span class="n">// MODELO ULTRA · CON INNOVACIONES REALES ★★★</span></div>
+  <div class="grid" style="grid-template-columns:1fr">
+    <a class="card" href="m11-ultra.html" style="border-color:rgba(229,75,42,0.45);box-shadow:0 0 60px -15px rgba(229,75,42,0.35),0 0 30px -10px rgba(201,166,99,0.3)">
+      <div class="preview p-hibrido" style="aspect-ratio:21/9"><div class="previewC">
+        <div class="eb"><code>ULTRA</code><code>WEBGL</code><code>AI CHAT</code><code>3D TILT</code><code>MAGNETIC</code></div>
+        <div class="ttl" style="font-size:2.2rem">Estudio Oro <em>Ultra</em>. <b>Cursor custom · Magnetic CTAs · Particle field · Mapa SVG animado · AI chat live · 3D tilt cards.</b></div>
+        <div class="ctas"><span>Abrir m11 Ultra ★</span><span>Ver innovaciones →</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm" style="color:#E54B2A">// m11-ultra — INNOVATION SHOWCASE</span><span class="size">62 KB</span></div>
+        <h2 class="t" style="font-size:1.8rem">Ultra · Innovation Showcase</h2>
+        <p style="font-size:1rem">El modelo con innovaciones reales que faltaban. Canvas particle field con cursor-repel, custom cursor con mix-blend-mode, CTAs magnéticos, cards con tilt 3D perspective-1000, mapa SVG animado con 3 sedes y arcos dibujándose, AI chat bubble con typewriter, sección Penal pinned con scroll-driven sub-cards, gradient mesh, glassmorphism con backdrop-filter, marquee bidireccional, reloj real-time, contadores en vivo, typewriter cyclando "defensa/estrategia/protección".</p>
+        <div class="mix"><b>Mezcla:</b> Best of all + interacciones avanzadas</div>
+        <div class="tokens"><span>Canvas particles</span><span>Custom cursor</span><span>Magnetic CTAs</span><span>3D tilt</span><span>SVG world map</span><span>AI typewriter</span><span>Glassmorphism</span><span>Pinned scroll</span></div>
+        <div class="cta-row"><span class="btn btn-open" style="background:linear-gradient(135deg,#C9A663,#E54B2A);color:#0A0B0E">Abrir m11 Ultra ★</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="section-h"><span class="n">// SERIE PRINCIPAL</span>Diez direcciones · una elección</div>
+  <div class="grid">
+
+    <a class="card" href="m01.html">
+      <div class="preview p-bufete"><div class="previewC">
+        <div class="eb">I · Práctica</div>
+        <div class="ttl">Defensa penal y <em>real estate</em> con disciplina internacional.</div>
+        <div class="ctas"><span>Consulta confidencial</span><span>Conocer →</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m01 — El Bufete</span><span class="size">41 KB</span></div>
+        <h2 class="t">Sobrio Kirkland</h2>
+        <p>Bufete prestigioso. Editorial restrained. Numeración romana, white space, gold acento. SVG line-draw en dividers, hero word-reveal 0.15s stagger.</p>
+        <div class="mix"><b>Mezcla:</b> Kirkland · Intergest · DOSS</div>
+        <div class="tokens"><span>#F4EFE7</span><span>#0E1A2B</span><span>#B8924D</span><span>Playfair</span><span>Inter</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m01</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m02.html">
+      <div class="preview p-concierge"><div class="previewC">
+        <div class="eb">II · Concierge</div>
+        <div class="ttl">La defensa <b>silenciosa</b>. El patrimonio protegido.</div>
+        <div class="ctas"><span>Consulta privada</span><span>Ver firma →</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m02 — El Concierge</span><span class="size">44 KB</span></div>
+        <h2 class="t">Cinemático HBA</h2>
+        <p>Hotelería de lujo. Ken-burns 24s en hero, letter-by-letter clip-path reveal, parallax, marquee 80s con ◆/❖.</p>
+        <div class="mix"><b>Mezcla:</b> HBA · Hubtown · La Revoltosa</div>
+        <div class="tokens"><span>#0B0B0B</span><span>#E8DCC0</span><span>#5A1E1E</span><span>Cormorant</span><span>Inter</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m02</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m03.html">
+      <div class="preview p-lab"><div class="previewC">
+        <div class="eb"><code>CPACF</code><code>CUCICBA</code><code>IA</code></div>
+        <div class="ttl">Defensa penal <span class="m">una sola</span> firma + <span class="d">IA aplicada</span>.</div>
+        <div class="ctas"><span>Consulta urgente →</span><span>Ver capacidades</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m03 — El Lab</span><span class="size">41 KB</span></div>
+        <h2 class="t">Tech Dirac/Aircenter</h2>
+        <p>Bento grid moderno. Animated dotted grid bg, marker swipe-in, live green pulse, monospace counters, cursor spotlight.</p>
+        <div class="mix"><b>Mezcla:</b> Dirac · Aircenter · Strawberry</div>
+        <div class="tokens"><span>#FAFAF8</span><span>#0A0A0A</span><span>#FF4D2E</span><span>Inter Tight</span><span>JetBrains</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m03</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m04.html">
+      <div class="preview p-diario"><div class="previewC">
+        <div class="eb">Vol. XV · No. 142</div>
+        <div class="ttl">Una firma. Once <em>especialidades</em>. Una sola estructura.</div>
+        <div class="ctas"><span>Por Equipo Estudio Oro</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m04 — El Diario</span><span class="size">49 KB</span></div>
+        <h2 class="t">Editorial Español</h2>
+        <p>Revista de papel. Multi-columna, dropped caps animadas, pull quotes, masthead serif, byline con dateline.</p>
+        <div class="mix"><b>Mezcla:</b> Editorial español · La Revoltosa · Newspaper</div>
+        <div class="tokens"><span>#F8F4ED</span><span>#6B2737</span><span>#C8A050</span><span>Cormorant</span><span>Libre Baskerville</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m04</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m05.html">
+      <div class="preview p-manifest"><div class="previewC">
+        <div class="eb">Manifest · 2026</div>
+        <div class="ttl">Una firma. <b>Once</b> especialidades.</div>
+        <div class="ctas"><span>Contacto</span><span>Ver →</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m05 — El Manifest</span><span class="size">36 KB</span></div>
+        <h2 class="t">Brutalist Strawberry</h2>
+        <p>Tipografía gigante. Bloques de color hard-swap en hover, marquee mega-bold, strawberry red bar barriendo dividers.</p>
+        <div class="mix"><b>Mezcla:</b> Strawberry · Aircenter brutalist</div>
+        <div class="tokens"><span>#F2EFE6</span><span>#1C1C1C</span><span>#E62E2E</span><span>Inter 900</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m05</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m06.html">
+      <div class="preview p-showroom"><div class="previewC">
+        <div class="eb">Showroom · Real Estate</div>
+        <div class="ttl">Una firma. <em>Real estate</em> con due diligence.</div>
+        <div class="ctas"><span>Ver propiedades</span><span>Conocer →</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m06 — El Showroom</span><span class="size">53 KB</span></div>
+        <h2 class="t">Hubtown Premium</h2>
+        <p>Listings inmobiliarios. Galería horizontal scroll-snap, filter chips, hover overlay con "Ver más", CSS-art imagery brass+stone.</p>
+        <div class="mix"><b>Mezcla:</b> Hubtown · HBA · gallery boutique</div>
+        <div class="tokens"><span>#ECE6D9</span><span>#1F1B16</span><span>#C4A057</span><span>Cormorant</span><span>Inter</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m06</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m07.html">
+      <div class="preview p-anuario"><div class="previewC">
+        <div class="eb">Lunes 2 de mayo · Vol. XV · Ed. 142</div>
+        <div class="ttl">Estudio Oro: <em>la firma</em> que une once áreas.</div>
+        <div class="ctas"><span>Por Equipo · Buenos Aires</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m07 — El Anuario</span><span class="size">44 KB</span></div>
+        <h2 class="t">Periódico Legal</h2>
+        <p>Diario denso. Masthead serif centrado, multi-columna 3-col, drop caps animadas, page-turn perspective entre secciones.</p>
+        <div class="mix"><b>Mezcla:</b> Newspaper editorial · Kirkland gravitas</div>
+        <div class="tokens"><span>#FBF8F0</span><span>#0A0A0A</span><span>#B72A2A</span><span>Tinos</span><span>Inter</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m07</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m08.html">
+      <div class="preview p-atelier"><div class="previewC">
+        <div class="eb">Atelier · Boutique</div>
+        <div class="ttl">Estudio Oro: <em>defensa</em> con calidez.</div>
+        <div class="ctas"><span>Consulta cálida</span><span>Conocer</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m08 — El Atelier</span><span class="size">38 KB</span></div>
+        <h2 class="t">La Revoltosa Boutique</h2>
+        <p>Cálido Mediterranean. Gradient orbs drifting, SVG hand-drawn dividers, curvy section transitions, warm pulsing radial.</p>
+        <div class="mix"><b>Mezcla:</b> La Revoltosa · boutique hospitality</div>
+        <div class="tokens"><span>#FAF4E9</span><span>#A6532B</span><span>#5B6643</span><span>Playfair</span><span>Inter</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m08</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m09.html">
+      <div class="preview p-corporate"><div class="previewC">
+        <div class="eb">Corporate · Multi-jurisdictional</div>
+        <div class="ttl">Una firma. <b>Tres sedes</b>. Once áreas.</div>
+        <div class="ctas"><span>Contact us</span><span>Capabilities →</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m09 — El Corporate</span><span class="size">40 KB</span></div>
+        <h2 class="t">Intergest International</h2>
+        <p>Consulting clean. Trust-bar infinite scroll, nav underline grow, big number counters, lift+steel-blue hover. Cero serif.</p>
+        <div class="mix"><b>Mezcla:</b> Intergest · DOSS · consulting</div>
+        <div class="tokens"><span>#0E2545</span><span>#FFFFFF</span><span>#4A6FA5</span><span>Inter only</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m09</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="m10.html" style="border-color:rgba(201,166,99,0.4);box-shadow:0 0 30px -10px rgba(201,166,99,0.2)">
+      <div class="preview p-hibrido"><div class="previewC">
+        <div class="eb"><code>SEDE BA</code><code>+15 PRO</code><code>IA</code></div>
+        <div class="ttl">Defensa <em>penal</em> y <b>real estate</b> + IA.</div>
+        <div class="ctas"><span>Consulta urgente</span><span>Capacidades →</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// m10 — El Híbrido ★</span><span class="size">43 KB</span></div>
+        <h2 class="t">Maximalist Showcase</h2>
+        <p>Lo mejor de todo. Ken-burns + bento + mouse spotlight + serif italic + tech mono + brutalist + light/dark toggle. Showcase total.</p>
+        <div class="mix"><b>Mezcla:</b> Kirkland + HBA + Dirac + Aircenter + Strawberry + Hubtown</div>
+        <div class="tokens"><span>#0F1115</span><span>#ECE4D2</span><span>#C9A663</span><span>#E54B2A</span><span>Fraunces</span><span>Inter Tight</span><span>JetBrains</span></div>
+        <div class="cta-row"><span class="btn btn-open">Abrir m10 ★</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-h"><span class="n">// SERIE BONUS · v2 con motion y voz de firma</span></div>
+  <div class="grid">
+    <a class="card" href="modelo-a.html">
+      <div class="preview p-bufete"><div class="previewC">
+        <div class="eb">v2 · Sobrio</div>
+        <div class="ttl">Versión v2 con motion + voz de firma.</div>
+        <div class="ctas"><span>Abrir</span><span>↗</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// modelo-a (v2)</span><span class="size">38 KB</span></div>
+        <h2 class="t">Sobrio v2</h2>
+        <p>Versión actualizada del original Modelo A con motion completo y sin matrículas.</p>
+        <div class="cta-row"><span class="btn btn-open">Abrir</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+    <a class="card" href="modelo-b.html">
+      <div class="preview p-concierge"><div class="previewC">
+        <div class="eb">v2 · Concierge</div>
+        <div class="ttl">Versión v2 con ken-burns + parallax.</div>
+        <div class="ctas"><span>Abrir</span><span>↗</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// modelo-b (v2)</span><span class="size">40 KB</span></div>
+        <h2 class="t">Cinemático v2</h2>
+        <p>Versión actualizada del original Modelo B con ken-burns, parallax, mouse spotlight y voz de firma.</p>
+        <div class="cta-row"><span class="btn btn-open">Abrir</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+    <a class="card" href="modelo-c.html">
+      <div class="preview p-lab"><div class="previewC">
+        <div class="eb"><code>v2</code><code>Tech</code><code>IA</code></div>
+        <div class="ttl">Versión <span class="m">v2</span> con bento + cursor.</div>
+        <div class="ctas"><span>Abrir</span><span>↗</span></div>
+      </div></div>
+      <div class="body">
+        <div class="row"><span class="nm">// modelo-c (v2)</span><span class="size">41 KB</span></div>
+        <h2 class="t">Tech v2</h2>
+        <p>Versión actualizada del original Modelo C con bento, grid animado, cursor follower y voz de firma.</p>
+        <div class="cta-row"><span class="btn btn-open">Abrir</span><span class="btn btn-ext">↗</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="foot">
+  <span>Branch · <code>claude/restore-estudiooro-page-J364L</code></span>
+  <span><strong>Decime cuál modelo seguimos</strong> y replico el lenguaje en las 3 verticales (Inmobiliaria · Tech · Contable).</span>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('bar').style.width=(s/h*100)+'%';
+});
+</script>
+
+</body>
+</html>
