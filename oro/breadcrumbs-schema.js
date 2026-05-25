@@ -49,14 +49,15 @@
   };
 
   function getItems() {
-    var path = window.location.pathname.replace(/\/?$/, '/').replace('//', '/');
-    // try exact, then trailing slash, then without
-    return MAP[path] || MAP[path.replace(/\/$/, '')] || MAP[path.replace(/\/$/, '') + '/'] || MAP['/'];
+    var path = window.location.pathname;
+    // normalize: add trailing slash for directories
+    var p = path.replace(/\/?$/, '/');
+    return MAP[p] || MAP[p.replace(/\/$/, '')] || MAP[path] || MAP['/'];
   }
 
   function inject() {
     var items = getItems();
-    if (!items || items.length < 2) return; // no breadcrumb needed for home
+    if (!items || items.length < 2) return; // no breadcrumb en homepage
 
     var schema = {
       "@context": "https://schema.org",
@@ -73,7 +74,7 @@
 
     var script = document.createElement('script');
     script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schema);
+    script.textContent = JSON.stringify(schema, null, 2);
     document.head.appendChild(script);
   }
 
