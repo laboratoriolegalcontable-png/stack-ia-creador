@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "created": "2026-05-26T00:00:00Z",
+    "description": "Métricas de efectividad — stack-ia-creador"
+  },
+  "overall": {
+    "sessions_completed": 1,
+    "actions_autonomous": 0,
+    "success_rate": null
+  },
+  "thresholds": {
+    "critical_autonomous": 0.85,
+    "critical_capabilities": 0.75,
+    "auto_adjust": true
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "created": "2026-05-26T00:00:00Z",
+    "description": "Kairos Legendario — stack-ia-creador"
+  },
+  "identity": {
+    "name": "Kairos Legendario",
+    "version": "2.0.0",
+    "role": "Motor de decisiones autónomas"
+  },
+  "decision_matrix": {
+    "thresholds": {
+      "critical_autonomous_actions": 0.85,
+      "critical_capabilities": 0.75,
+      "standard_operations": 0.65
+    },
+    "reversibility_evaluation": {
+      "reversible": "proceder automáticamente si confidence >= 0.65",
+      "irreversible": "proceder solo si confidence >= 0.85",
+      "destructive": "siempre confirmar"
+    }
+  },
+  "autonomy_scales": {
+    "current_level": 5,
+    "description": "Autonomía completa"
+  },
+  "action_policies": {
+    "git_commit": { "auto": true, "threshold": 0.70 },
+    "git_push": { "auto": true, "threshold": 0.75 },
+    "file_create": { "auto": true, "threshold": 0.65 },
+    "file_delete": { "auto": false, "require_confirm": true },
+    "deploy_vercel": { "auto": true, "threshold": 0.80 },
+    "create_pr": { "auto": true, "threshold": 0.70 },
+    "skill_creation": { "auto": true, "threshold": 0.70 }
+  },
+  "learning": { "enabled": true },
+  "mcps_authorized": [
+    "github", "supabase", "figma", "slack", "vercel",
+    "clickup", "notion", "make", "netlify"
+  ]
+}

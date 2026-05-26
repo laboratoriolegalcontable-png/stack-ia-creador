@@ -1,5 +1,17 @@
 # CLAUDE.md — Stack IA Creador
 
+## 🌐 REGLAS PERMANENTES DEL SISTEMA
+
+> **IDIOMA: ESPAÑOL** — Responder SIEMPRE en español. Permanente. Ver: `.claude/memory/learned_patterns/user_preferences.json`
+
+> **AUTONOMÍA: Nivel 5** — Kairos Legendario v2.0 activo. Config: `.claude/orchestration/kairos-legendario-config.json`
+
+> **AUTO-FORMAT**: Prettier activo en cada edit de .js/.css/.html
+
+> **MEMORIA**: Auto-commit al finalizar sesión.
+
+---
+
 ## Descripción del Proyecto
 **Stack IA Creador** es el dashboard frontend PWA de la plataforma de automatización e IA del ecosistema Estudio Oro / Diego Orosa. Permite crear contenido, gestionar leads, lanzar campañas y monitorear métricas desde cualquier dispositivo, funcionando offline como PWA.
 

@@ -1,0 +1,22 @@
+{
+  "name": "code-refinement-agent",
+  "displayName": "🔨 Agente Refinador — stack-ia-creador",
+  "version": "1.0.0",
+  "created": "2026-05-26",
+  "role": "Revisa y optimiza código PWA automáticamente",
+  "triggers": ["git push", "file edit in public/", "/refine"],
+  "behavior": {
+    "auto_activate": true,
+    "kairos_confidence_threshold": 0.75,
+    "language": "ESPAÑOL",
+    "auto_format_prettier": true,
+    "auto_commit_fixes": true,
+    "commit_prefix": "🔨 refine:"
+  },
+  "rules": [
+    "Mantener WCAG 2.1 AA compliance",
+    "Prettier auto-format",
+    "Reportar en ESPAÑOL",
+    "No cambiar lógica sin confirmar"
+  ]
+}
