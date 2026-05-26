@@ -1,21 +1,35 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ⚡ kairos-install.sh — Sistema Autónomo v2.0
-# Instala Kairos Supremo en cualquier proyecto nuevo
+# Compatible: macOS (zsh/bash) + Linux
 # Uso: bash kairos-install.sh [nombre-proyecto] [stack]
 # Ejemplo: bash kairos-install.sh mi-app nextjs
 
 set -e
-PROYECTO=${1:-"nuevo-proyecto"}
-STACK=${2:-"custom"}
-DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-DATE_SHORT=$(date +"%Y-%m-%d")
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_REPO="/home/user/Diego-Orosa"
 
-echo "⚡ Kairos Supremo — Instalando en: $PROYECTO"
+PROYECTO="${1:-nuevo-proyecto}"
+STACK="${2:-custom}"
+DATE_UTC=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+DATE_SHORT=$(date +"%Y-%m-%d")
+TARGET_DIR="$(pwd)"
+
+echo ""
+echo "⚡ Kairos Supremo — Instalando en: $(pwd)/$PROYECTO"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# 1. Crear estructura de directorios
+# Crear directorio del proyecto si se pasó nombre
+if [ "$PROYECTO" != "." ]; then
+  mkdir -p "$PROYECTO"
+  cd "$PROYECTO"
+  TARGET_DIR="$(pwd)"
+fi
+
+# Inicializar git si no existe
+if [ ! -d ".git" ]; then
+  git init
+  echo "✅ git init"
+fi
+
+# 1. Estructura .claude/
 mkdir -p \
   ".claude/memory/learned_patterns" \
   ".claude/memory/skill_evolution" \
@@ -26,13 +40,15 @@ mkdir -p \
   ".claude/skills/kairos-legendario" \
   ".claude/skills/skill-auto-installer" \
   ".claude/skills/skill-memory-persistence" \
+  ".claude/skills/pipeline-supremo" \
+  ".claude/skills/diagnostico-supremo" \
   ".claude/subagents"
-echo "✅ Estructura de directorios creada"
+echo "✅ Estructura .claude/ creada"
 
-# 2. user_preferences.json — IDIOMA: ESPAÑOL (crítico)
+# 2. user_preferences.json — IDIOMA: ESPAÑOL (CRÍTICO)
 cat > ".claude/memory/learned_patterns/user_preferences.json" << EOF
 {
-  "_meta": { "created": "$DATE", "project": "$PROYECTO" },
+  "_meta": { "created": "$DATE_UTC", "project": "$PROYECTO" },
   "IDIOMA": "ESPAÑOL",
   "language": {
     "primary": "es",
@@ -40,7 +56,12 @@ cat > ".claude/memory/learned_patterns/user_preferences.json" << EOF
     "rule": "SIEMPRE en español — permanente e irrevocable",
     "priority": "MAXIMA"
   },
-  "autonomy_settings": { "level": 5 },
+  "autonomy_settings": {
+    "level": 5,
+    "auto_install_skills": true,
+    "auto_commit_memory": true,
+    "require_confirmation": "solo acciones destructivas irreversibles"
+  },
   "kairos_legendario": {
     "enabled": true,
     "confidence_threshold_critical": 0.85,
@@ -52,35 +73,166 @@ cat > ".claude/memory/learned_patterns/user_preferences.json" << EOF
 EOF
 echo "✅ IDIOMA: ESPAÑOL guardado en memoria"
 
-# 3. Copiar skills base desde Diego-Orosa
-for skill in kairos-supremo kairos-legendario skill-auto-installer skill-memory-persistence; do
-  SRC="$SOURCE_REPO/.claude/skills/$skill"
-  if [ -d "$SRC" ]; then
-    cp -r "$SRC/." ".claude/skills/$skill/"
-    echo "✅ Skill copiada: $skill"
-  fi
-done
+# 3. project_specifics.json
+cat > ".claude/memory/learned_patterns/project_specifics.json" << EOF
+{
+  "_meta": { "created": "$DATE_UTC" },
+  "$PROYECTO": {
+    "type": "$STACK",
+    "installed": "$DATE_SHORT",
+    "autonomy_level": 5
+  },
+  "generic_new_project": {
+    "auto_detect": true,
+    "auto_install_system": true,
+    "autonomy_level": 4
+  }
+}
+EOF
 
-# 4. Copiar subagentes
-for agent in code-refinement-agent mcp-orchestration-agent skill-evolution-agent; do
-  SRC="$SOURCE_REPO/.claude/subagents/${agent}.json"
-  if [ -f "$SRC" ]; then
-    cp "$SRC" ".claude/subagents/"
-    echo "✅ Subagente copiado: $agent"
-  fi
-done
+# 4. skill_updates.json
+cat > ".claude/memory/skill_evolution/skill_updates.json" << EOF
+{
+  "_meta": { "created": "$DATE_UTC" },
+  "installed_skills": [
+    { "name": "kairos-supremo", "version": "1.0.0", "installed": "$DATE_SHORT", "status": "active" },
+    { "name": "kairos-legendario", "version": "2.0.0", "installed": "$DATE_SHORT", "status": "active" },
+    { "name": "skill-auto-installer", "version": "1.0.0", "installed": "$DATE_SHORT", "status": "active" },
+    { "name": "skill-memory-persistence", "version": "1.0.0", "installed": "$DATE_SHORT", "status": "active" }
+  ],
+  "auto_evolution": { "enabled": true, "auto_create": true }
+}
+EOF
 
-# 5. Copiar orchestration
-cp "$SOURCE_REPO/.claude/orchestration/kairos-legendario-config.json" ".claude/orchestration/" 2>/dev/null && echo "✅ Kairos config copiado" || true
+# 5. Kairos Legendario config
+cat > ".claude/orchestration/kairos-legendario-config.json" << EOF
+{
+  "_meta": { "version": "2.0.0", "created": "$DATE_UTC" },
+  "identity": { "name": "Kairos Legendario", "version": "2.0.0" },
+  "decision_matrix": {
+    "thresholds": {
+      "critical_autonomous_actions": 0.85,
+      "critical_capabilities": 0.75,
+      "standard_operations": 0.65
+    }
+  },
+  "autonomy_scales": { "current_level": 5 },
+  "action_policies": {
+    "git_commit": { "auto": true, "threshold": 0.70 },
+    "git_push":   { "auto": true, "threshold": 0.75 },
+    "file_create": { "auto": true, "threshold": 0.65 },
+    "file_delete": { "auto": false, "require_confirm": true },
+    "deploy_vercel": { "auto": true, "threshold": 0.80 },
+    "create_pr": { "auto": true, "threshold": 0.70 }
+  },
+  "learning": { "enabled": true }
+}
+EOF
+echo "✅ Kairos Legendario config instalado"
 
-# 6. settings.json
+# 6. Skills base (contenido inline — sin dependencias externas)
+cat > ".claude/skills/kairos-supremo/kairos-supremo.md" << 'EOF'
+---
+name: kairos-supremo
+version: 1.0.0
+description: Cerebro central del ecosistema. Coordina todos los agentes, MCPs y skills.
+autonomy_level: 5
+---
+# ⚡ Kairos Supremo
+
+## Reglas Supremas (inmutables)
+- 🌐 IDIOMA: ESPAÑOL — siempre, sin excepción
+- 🤖 AUTONOMÍA: Nivel 5
+- 🧠 MEMORIA: persistir vía git en cada sesión
+
+## Umbrales
+| ≥ 0.85 | Acciones críticas autónomas |
+| ≥ 0.75 | Capacidades críticas |
+| ≥ 0.65 | Operaciones reversibles |
+
+## Comandos
+/kairos-supremo status   → dashboard completo
+/kairos-supremo evolve   → auto-perfeccionamiento
+/kairos-supremo memory   → memoria de sesiones
+EOF
+
+cat > ".claude/skills/skill-auto-installer/skill-auto-installer.md" << 'EOF'
+---
+name: skill-auto-installer
+version: 1.0.0
+description: Auto-registro de skills desde MCPs disponibles.
+---
+# 🔧 Skill Auto-Installer
+Detecta MCPs disponibles y crea skills automáticamente.
+Umbral Kairos: 0.70 | Reversible: SÍ | Auto-commit: SÍ
+EOF
+
+cat > ".claude/skills/skill-memory-persistence/skill-memory-persistence.md" << 'EOF'
+---
+name: skill-memory-persistence
+version: 1.0.0
+description: Persistencia de memoria entre sesiones vía git. IDIOMA ESPAÑOL permanente.
+---
+# 🧠 Skill Memory Persistence
+- IDIOMA: ESPAÑOL — permanente, nunca cambiar
+- Auto-carga al inicio de sesión
+- Auto-commit al finalizar sesión
+EOF
+
+cat > ".claude/skills/pipeline-supremo/pipeline-supremo.md" << 'EOF'
+---
+name: pipeline-supremo
+version: 1.0.0
+description: Commit + Push + Deploy + PR en un solo comando.
+---
+# 🚀 Pipeline Supremo
+/pipeline-supremo "descripción"  → pipeline completo automático
+EOF
+
+cat > ".claude/skills/diagnostico-supremo/diagnostico-supremo.md" << 'EOF'
+---
+name: diagnostico-supremo
+version: 1.0.0
+description: Diagnóstico completo del ecosistema con auto-fix.
+---
+# 🔍 Diagnóstico Supremo
+/diagnostico-supremo        → escaneo completo
+/diagnostico-supremo --fix  → diagnosticar + auto-fix
+EOF
+echo "✅ Skills base instaladas"
+
+# 7. Subagentes
+cat > ".claude/subagents/code-refinement-agent.json" << EOF
+{
+  "name": "code-refinement-agent",
+  "version": "1.0.0",
+  "created": "$DATE_UTC",
+  "role": "Revisa y optimiza código automáticamente",
+  "triggers": ["git push", "/refine"],
+  "behavior": { "language": "ESPAÑOL", "auto_commit_fixes": true }
+}
+EOF
+
+cat > ".claude/subagents/mcp-orchestration-agent.json" << EOF
+{
+  "name": "mcp-orchestration-agent",
+  "version": "1.0.0",
+  "created": "$DATE_UTC",
+  "role": "Mapea MCPs disponibles como skills",
+  "triggers": ["session_start"],
+  "behavior": { "auto_create_skills": true, "language": "ESPAÑOL" }
+}
+EOF
+echo "✅ Subagentes configurados"
+
+# 8. settings.json
 cat > ".claude/settings.json" << 'EOF'
 {
   "hooks": {
     "SessionStart": [{
       "hooks": [{
         "type": "command",
-        "command": "python3 -c \"import json,os; f='.claude/memory/learned_patterns/user_preferences.json'; d=json.load(open(f)) if os.path.exists(f) else {}; print(f\\\"⚡ Kairos Supremo ACTIVO | IDIOMA: {d.get('IDIOMA','ESPAÑOL')}\\\")\" 2>/dev/null || echo '⚡ Kairos Supremo ACTIVO'",
+        "command": "python3 -c \"import json,os; f='.claude/memory/learned_patterns/user_preferences.json'; d=json.load(open(f)) if os.path.exists(f) else {}; print(f\\\"⚡ Kairos Supremo ACTIVO | IDIOMA: {d.get('IDIOMA','ESPAÑOL')} | Autonomía: Nivel {d.get('autonomy_settings',{}).get('level',5)}\\\")\" 2>/dev/null || echo '⚡ Kairos Supremo ACTIVO | IDIOMA: ESPAÑOL | Autonomía: Nivel 5'",
         "timeout": 5,
         "statusMessage": "⚡ Cargando Kairos Supremo..."
       }]
@@ -89,28 +241,28 @@ cat > ".claude/settings.json" << 'EOF'
       "matcher": "",
       "hooks": [{
         "type": "command",
-        "command": "DATE=$(date -u +\"%Y-%m-%dT%H:%M:%SZ\"); mkdir -p .claude/memory/session_logs; F=.claude/memory/session_logs/$(date +%Y-%m-%d).json; python3 -c \"import json,os; f='$F'; d=json.load(open(f)) if os.path.exists(f) else {'IDIOMA':'ESPAÑOL'}; d['session_end']='$DATE'; d['memory_updated']=True; open(f,'w').write(json.dumps(d,indent=2,ensure_ascii=False))\" 2>/dev/null || true; echo '🧠 Memoria guardada'",
+        "command": "DATE=$(date -u +\"%Y-%m-%dT%H:%M:%SZ\"); mkdir -p .claude/memory/session_logs; F=.claude/memory/session_logs/$(date +%Y-%m-%d).json; python3 -c \"import json,os; f='$F'; d=json.load(open(f)) if os.path.exists(f) else {'IDIOMA':'ESPAÑOL'}; d['session_end']='$DATE'; d['memory_updated']=True; open(f,'w').write(json.dumps(d,indent=2,ensure_ascii=False))\" 2>/dev/null || true; echo '🧠 Memoria de sesión guardada'",
         "timeout": 8,
         "statusMessage": "🧠 Guardando memoria..."
       }]
     }]
   },
   "permissions": {
-    "allow": ["Skill","Read","Glob","Grep","Bash(git*)","Bash(npm*)","Bash(ls*)","Bash(find*)","Edit(**/.claude/**)","Write(**/.claude/**)"],
+    "allow": ["Skill","Read","Glob","Grep","Bash(git*)","Bash(npm*)","Bash(node*)","Bash(ls*)","Bash(find*)","Bash(echo*)","Bash(date*)","Bash(mkdir*)","Bash(python3*)","Edit(.claude/**)","Write(.claude/**)"],
     "deny": ["Read(.env)","Read(.env.*)","Edit(.env)","Write(.env)"]
   }
 }
 EOF
 echo "✅ settings.json configurado"
 
-# 7. CLAUDE.md
+# 9. CLAUDE.md
 cat > "CLAUDE.md" << EOF
 # CLAUDE.md — $PROYECTO
 
-## 🌐 REGLAS PERMANENTES
+## 🌐 REGLAS PERMANENTES DEL SISTEMA
 
-> **IDIOMA: ESPAÑOL** — siempre, sin importar el idioma del mensaje.
-> **AUTONOMÍA: Nivel 5** — Kairos Supremo activo.
+> **IDIOMA: ESPAÑOL** — Responder SIEMPRE en español, sin importar el idioma del mensaje. Permanente.
+> **AUTONOMÍA: Nivel 5** — Kairos Supremo activo. Config: \`.claude/orchestration/kairos-legendario-config.json\`
 > **MEMORIA: Auto-persistencia** — git commit al finalizar sesión.
 
 ## Proyecto
@@ -118,26 +270,28 @@ cat > "CLAUDE.md" << EOF
 - **Stack**: $STACK
 - **Instalado**: $DATE_SHORT
 
-## Sistema Instalado
+## Skills Activas
 - ⚡ Kairos Supremo v1.0
-- 🧠 Memory Persistence
+- ⚡ Kairos Legendario v2.0
 - 🔧 Skill Auto-Installer
-- 📦 MCP Orchestration Agent
+- 🧠 Memory Persistence
+- 🚀 Pipeline Supremo
+- 🔍 Diagnóstico Supremo
 EOF
 echo "✅ CLAUDE.md creado"
 
-# 8. Pre-commit hook
+# 10. Pre-commit hook
 mkdir -p ".git/hooks"
 cat > ".git/hooks/pre-commit" << 'HOOK'
-#!/bin/bash
-DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+#!/usr/bin/env bash
+DATE_UTC=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 MEMORY_FILE=".claude/memory/session_logs/$(date +%Y-%m-%d).json"
 mkdir -p ".claude/memory/session_logs"
 python3 -c "
 import json,os
 f='$MEMORY_FILE'
-d=json.load(open(f)) if os.path.exists(f) else {'IDIOMA':'ESPAÑOL'}
-d.setdefault('commits',[]).append({'time':'$DATE','memory_updated':True})
+d=json.load(open(f)) if os.path.exists(f) else {'IDIOMA':'ESPAÑOL','commits':[]}
+d.setdefault('commits',[]).append({'time':'$DATE_UTC','memory_updated':True})
 open(f,'w').write(json.dumps(d,indent=2,ensure_ascii=False))
 " 2>/dev/null || true
 git add ".claude/memory/session_logs/" 2>/dev/null || true
@@ -146,21 +300,26 @@ HOOK
 chmod +x ".git/hooks/pre-commit"
 echo "✅ Pre-commit hook configurado"
 
-# 9. Primer commit
-if git rev-parse --git-dir > /dev/null 2>&1; then
-  git add .claude/ CLAUDE.md 2>/dev/null || true
-  git commit -m "🤖 init: Kairos Supremo v2.0 instalado en $PROYECTO" 2>/dev/null || true
-  echo "✅ Commit inicial creado"
-fi
+# 11. Primer commit
+git add .claude/ CLAUDE.md 2>/dev/null || true
+git commit -m "🤖 init: Kairos Supremo v2.0 — $PROYECTO ($STACK)
+
+- IDIOMA: ESPAÑOL permanente
+- Autonomía: Nivel 5
+- Kairos Supremo + Legendario activos
+- Memory persistence vía git
+- Skills: auto-installer, pipeline-supremo, diagnostico-supremo
+- Subagentes: code-refinement, mcp-orchestration" 2>/dev/null || true
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "⚡ ¡Kairos Supremo instalado en $PROYECTO!"
-echo "🌐 IDIOMA: ESPAÑOL activo"
-echo "🤖 Autonomía: Nivel 5"
-echo "🧠 Memoria: persistente vía git"
+echo "⚡ ¡Kairos Supremo instalado en: $TARGET_DIR"
 echo ""
-echo "Próximos pasos:"
-echo "  → Abrir Claude Code en este directorio"
-echo "  → /kairos-supremo status  (ver estado completo)"
+echo "   🌐 IDIOMA: ESPAÑOL activo"
+echo "   🤖 Autonomía: Nivel 5"
+echo "   🧠 Memoria: persistente vía git"
+echo ""
+echo "   Próximos pasos:"
+echo "   → Abrí Claude Code en este directorio"
+echo "   → /kairos-supremo status"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
