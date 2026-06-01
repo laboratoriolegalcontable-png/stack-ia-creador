@@ -485,7 +485,7 @@ export const CONTRACTS = {
         const errors = [];
         if (!output || typeof output !== 'object') return ['Output must be an object'];
         if (typeof output.roi !== 'number') errors.push('roi debe ser un número');
-        if (typeof output.tir !== 'number') errors.push('tir debe ser un número');
+        if (output.tir !== null && typeof output.tir !== 'number') errors.push('tir debe ser un número o null');
         if (typeof output.capRate !== 'number') errors.push('capRate debe ser un número');
         if (!isNonEmptyString(output.recomendacion)) errors.push('recomendacion es requerida');
         return errors;
@@ -555,7 +555,7 @@ export const CONTRACTS = {
         if (!output || typeof output !== 'object') return ['Output must be an object'];
         if (!Array.isArray(output.flujo_caja_anual)) errors.push('flujo_caja_anual debe ser un array');
         if (typeof output.van !== 'number') errors.push('van (Valor Actual Neto) debe ser un número');
-        if (typeof output.tir !== 'number') errors.push('tir debe ser un número');
+        if (output.tir !== null && typeof output.tir !== 'number') errors.push('tir debe ser un número o null');
         if (typeof output.payback_anios !== 'number') errors.push('payback_anios debe ser un número');
         return errors;
       },
@@ -616,14 +616,10 @@ export class ContractValidator {
       existing.push(record);
       localStorage.setItem(this._storageKey, JSON.stringify(existing.slice(-1000)));
     } else {
-      if (!ContractValidator._nodeStore) ContractValidator._nodeStore = {};
-      if (!ContractValidator._nodeStore[this._storageKey]) {
-        ContractValidator._nodeStore[this._storageKey] = [];
-      }
-      const store = ContractValidator._nodeStore[this._storageKey];
-      store.push(record);
-      if (store.length > 1000) {
-        ContractValidator._nodeStore[this._storageKey] = store.slice(-1000);
+      if (!this._nodeViolations) this._nodeViolations = [];
+      this._nodeViolations.push(record);
+      if (this._nodeViolations.length > 1000) {
+        this._nodeViolations = this._nodeViolations.slice(-1000);
       }
     }
   }
@@ -632,8 +628,7 @@ export class ContractValidator {
     if (typeof localStorage !== 'undefined') {
       return JSON.parse(localStorage.getItem(this._storageKey) || '[]').slice(-limit);
     }
-    const store = ContractValidator._nodeStore?.[this._storageKey] || [];
-    return store.slice(-limit);
+    return (this._nodeViolations || []).slice(-limit);
   }
 
   _getCapability(capability) {
@@ -767,23 +762,41 @@ export class DeterministicKernel {
     const noi = ingresoAnual - gastosOperativos;
     const capRate = precioCompra > 0 ? (noi / precioCompra) * 100 : 0;
 
-    // Newton-Raphson IRR
+    // Newton-Raphson IRR with bisection fallback
     const cashFlows = [-precioCompra];
     for (let y = 1; y <= anios; y++) {
       const cf = ingresoAnual - gastosOperativos + (y === anios ? precioVenta : 0);
       cashFlows.push(cf);
     }
+
+    function npvAt(r) {
+      return cashFlows.reduce((s, cf, i) => s + cf / Math.pow(1 + r, i), 0);
+    }
+
     let tir = 0.1;
-    for (let iter = 0; iter < 100; iter++) {
+    let tirConverged = false;
+    for (let iter = 0; iter < 200; iter++) {
       let npv = 0, dnpv = 0;
       for (let i = 0; i < cashFlows.length; i++) {
         const disc = Math.pow(1 + tir, i);
-        npv += cashFlows[i] / disc;
+        npv  += cashFlows[i] / disc;
         if (i > 0) dnpv -= i * cashFlows[i] / (disc * (1 + tir));
       }
-      if (Math.abs(npv) < 0.01) break;
-      if (dnpv === 0) break;
+      if (Math.abs(npv) < 1e-7) { tirConverged = true; break; }
+      if (dnpv === 0 || !isFinite(tir)) break;
       tir -= npv / dnpv;
+      if (!isFinite(tir)) break;
+    }
+    if (!tirConverged) {
+      let lo = -0.99, hi = 10.0;
+      if (Math.sign(npvAt(lo)) !== Math.sign(npvAt(hi))) {
+        for (let i = 0; i < 200; i++) {
+          const mid = (lo + hi) / 2;
+          if (Math.abs(hi - lo) < 1e-7) { tir = mid; tirConverged = true; break; }
+          Math.sign(npvAt(mid)) === Math.sign(npvAt(lo)) ? (lo = mid) : (hi = mid);
+        }
+        if (!tirConverged) { tir = (lo + hi) / 2; tirConverged = true; }
+      }
     }
 
     const paybackAnios = noi > 0 ? precioCompra / noi : Infinity;
@@ -791,7 +804,8 @@ export class DeterministicKernel {
 
     return {
       roi: Math.round(roi * 100) / 100,
-      tir: Math.round(tir * 10000) / 100,
+      tir: tirConverged ? Math.round(tir * 10000) / 100 : null,
+      tirWarning: tirConverged ? null : 'IRR no convergió: flujo de caja no convencional',
       capRate: Math.round(capRate * 100) / 100,
       vanSimple: Math.round(van),
       paybackAnios: isFinite(paybackAnios) ? Math.round(paybackAnios * 10) / 10 : null,

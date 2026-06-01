@@ -26,7 +26,7 @@ jobs:
 
       - name: Deploy to Vercel (production)
         run: |
-          npm install -g vercel
+          npm install -g vercel@39.0.0
           vercel pull --yes --environment=production \
             --token=${{ secrets.VERCEL_TOKEN }}
           vercel build --prod \
@@ -34,5 +34,5 @@ jobs:
           vercel deploy --prebuilt --prod \
             --token=${{ secrets.VERCEL_TOKEN }}
         env:
-          VERCEL_ORG_ID: team_5rpugWZZr9e0MTXNhR9Xc2a9
-          VERCEL_PROJECT_ID: prj_qoGv0Lf71t69tRowJrZPtj5hAXr3
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || 'team_5rpugWZZr9e0MTXNhR9Xc2a9' }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID || 'prj_qoGv0Lf71t69tRowJrZPtj5hAXr3' }}
