@@ -42,7 +42,7 @@ lines = [
     "",
     "## Sub-agentes activos:",
     "| Agente | Estado | Función |",
-    "|--------|--------|---------|",
+    "|--------|--------|---------|" ,
     "| @memoria | ✅ | Lee/escribe .claude/memory/sistema-autonomo.md |",
     "| @guardian | ✅ | Calidad automática post-Edit/Write |",
     "| @deployer | ✅ | Deploys con CI check automático |",
@@ -61,7 +61,6 @@ lines += [
     "`/saa` `/saa status` `/saa memoria` `/gen-module [X]` `/gen-ui [X]` `/deploy` `/guardian` `/mejorar`",
     "",
     "## 🔗 KAIROS LEGENDARIO: activo — protocolo EON vigente",
-    "Alertas: FB/IG tokens Make.com vencen 29/05/2026 | Paula bot sin número | MP_WEBHOOK_SECRET pendiente",
 ]
 
 if memory and len(memory) > 50:

@@ -17,25 +17,6 @@ recuerda contexto, aprendizajes y estado de proyectos.
 4. Alertar sobre tareas pendientes
 ```
 
-### DURANTE LA SESIÓN:
-```
-Guardar cuando:
-- El usuario dice "recordá esto"
-- Se descubre algo importante sobre el proyecto
-- Hay una decisión arquitectural relevante
-- Se resuelve un bug recurrente
-- Se completa una tarea importante
-```
-
-### AL TERMINAR SESIÓN (con /saa memoria):
-```
-1. Resumir qué se hizo
-2. Listar aprendizajes nuevos
-3. Actualizar estado de sub-agentes
-4. Registrar tareas pendientes
-5. Escribir al archivo de memoria
-```
-
 ## Formato de escritura
 
 Siempre agregar, nunca sobreescribir:
@@ -45,19 +26,7 @@ Siempre agregar, nunca sobreescribir:
 **Tareas completadas:** [lista]
 **Aprendizajes:** [lista]
 **Pendientes:** [lista]
-**Notas importantes:** [texto libre]
 ```
-
-## Qué recordar siempre
-
-- Estructura de archivos del proyecto
-- Decisiones arquitecturales tomadas
-- Bugs resueltos y su causa raíz
-- Patrones de código preferidos por el usuario
-- Errores que NO se deben repetir
-- Alertas activas de KAIROS LEGENDARIO
-- Estado de bots en producción
-- Tokens y credenciales a renovar (fechas)
 
 ## Qué NO guardar en memoria
 
