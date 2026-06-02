@@ -11,10 +11,18 @@
 - @kairos-link: ✅ activo
 - @mejorador: ✅ activo
 
+## PRs Activos (2026-06-01)
+| PR | Rama | Contenido | Estado |
+|----|------|-----------|--------|
+| #79 | claude/code-session-H4Pul | ARIA a11y + BreadcrumbList SEO + Auto Mode + SAA v1.0 | ✅ Cerrado — contenido integrado en #86 |
+| #77 | claude/wizardly-goodall-3XYEN | Narakia System v2.0 — 5 nuevos skills + dashboard v2.0 | ✅ Mergeado |
+
 ## Sesiones
 | Fecha | Tareas | Sub-agentes | Aprendizajes |
 |-------|--------|-------------|--------------|
 | 2026-05-25 | Instalación SAA v1.0 | todos | Sistema instalado en ambos repos |
+| 2026-05-25 | ARIA WCAG 2.1 AA + BreadcrumbList + SAA | todos | v2.0 publicado, PR #79 creado |
+| 2026-06-01 | Integración de PRs pendientes | todos | PR #77 mergeado, #79 integrado via #86 |
 
 ## Proyectos del Ecosistema
 - **stack-ia-creador**: PWA Vanilla JS, Vercel, v2.0 (post ARIA fix)
@@ -22,13 +30,14 @@
 - **deploy-oro**: Frontend estático (subproject de Diego-Orosa)
 - **reclamai**: Next.js (subproject de Diego-Orosa)
 
-## Hitos Recientes (2026-05-25)
-- ✅ batch42: 12 rutas API nuevas (affiliate, changelog, contact-crm, contract, feedback-journal, incident, onboarding, price, proposal, standup, testimonial, vendor)
-- ✅ fix vercelignore: reclamai/ excluida causaba ENOENT en build
+## Hitos Recientes (2026-06-01)
+- ✅ PR #77 mergeado: Narakia System v2.0 + 16 skills en dashboard
+- ✅ PR #79 integrado via #86: SAA v1.0 + sistema-autonomo skills
 - ✅ ARIA tabs WCAG 2.1 AA: stack-ia-creador v2.0
 - ✅ BreadcrumbList SEO: JSON-LD inyectado via legal-layer.js v1.1
 - ✅ Auto Mode skill: 3 modos de permisos Claude Code
 - ✅ KAIROS LEGENDARIO v3.5 (EON): 42 submódulos
+- ✅ SAA v1.0: instalado en stack-ia-creador
 
 ## Alertas KAIROS Activas
 | Alerta | Vencimiento | Estado |
@@ -43,21 +52,21 @@
 2. ARIA tabs: `role="tab"`, `aria-selected`, `aria-controls` en botones; `role="tabpanel"`, `aria-labelledby` en secciones
 3. Patrón batch: módulo en `src/shared/*.ts` → import en routes.ts → CRUD + acciones específicas
 4. PR workflow: branch → push → draft PR → CI → squash merge
+5. `git stash` requiere índice limpio — si hay conflictos: `git checkout --ours <file> && git add <file>` primero
+6. `git add -A` puede capturar repos git anidados — verificar con `git status` antes
+7. Instalar SAA: usar `bash install.sh .` desde DENTRO del repo (seguro); nunca `bash install.sh <nombre-del-repo>` estando adentro
+8. PRs con base muy vieja: integrar contenido nuevo via branch en sesión actual en lugar de intentar merge directo
 
 ## Errores Frecuentes a Evitar
 - No agregar `reclamai` a `.vercelignore` raíz
 - No pushear a `main` directamente
 - No importar módulo en routes.ts sin agregar las rutas
+- No correr `git add -A` con repos anidados sin revisar primero
 
 ## Mejoras Pendientes
 - [ ] Agregar tests automáticos para batch42 (12 módulos)
 - [ ] Dashboard de estado del sistema SAA
-- [ ] Integración Make.com para renovar tokens FB/IG antes del 29/05
-
-## Notas de Arquitectura
-- Diego-Orosa: `src/shared/*.ts` es la capa de lógica, `src/api/routes.ts` es la capa de presentación
-- stack-ia-creador: todo en `public/app.js` (IIFE), sin bundler, sin framework
-- Vercel monorepo: `.vercelignore` aplica a todos los subprojects
+- [ ] Integración Make.com para renovar tokens FB/IG
 
 ## Skills del Sistema SAA
 ```

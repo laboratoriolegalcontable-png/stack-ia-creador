@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Security ya está en fase beta pública | Anthropic</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --clay: #cc785c;
+      --cream: #f5f0e8;
+      --charcoal: #1a1a1a;
+      --mid: #4a4a4a;
+      --light: #8a8a8a;
+      --border: #e0d9ce;
+      --white: #ffffff;
+      --accent: #cc785c;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Georgia', serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--mid);
+      text-decoration: none;
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .nav-cta {
+      background: var(--charcoal);
+      color: var(--white) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #2a1f3d 0%, #1a3a2a 50%, #3d2a1a 100%);
+      color: var(--white);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(204,120,92,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 30%, rgba(50,100,80,0.2) 0%, transparent 60%);
+    }
+
+    .hero-inner { position: relative; max-width: 780px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: normal;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* ARTICLE */
+    .article-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .article-wrap p {
+      font-size: 1.1rem;
+      margin-bottom: 1.6rem;
+      color: var(--mid);
+    }
+
+    .article-wrap h2 {
+      font-size: 1.6rem;
+      font-weight: normal;
+      letter-spacing: -0.02em;
+      margin: 3rem 0 1rem;
+      color: var(--charcoal);
+    }
+
+    .article-wrap h3 {
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin: 2rem 0 0.75rem;
+      color: var(--charcoal);
+      font-family: system-ui, sans-serif;
+    }
+
+    .article-wrap ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .article-wrap li {
+      font-size: 1.05rem;
+      color: var(--mid);
+      margin-bottom: 0.5rem;
+    }
+
+    .lead {
+      font-size: 1.25rem !important;
+      color: var(--charcoal) !important;
+      font-weight: normal;
+      line-height: 1.6;
+      border-left: 3px solid var(--clay);
+      padding-left: 1.5rem;
+      margin-bottom: 2.5rem !important;
+    }
+
+    /* CALLOUT BOX */
+    .callout {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--clay);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .callout p { margin-bottom: 0; font-size: 1rem; }
+
+    /* HOW IT WORKS */
+    .steps {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .step {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1.25rem 1.5rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--clay);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, sans-serif;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .step-text strong {
+      display: block;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      color: var(--charcoal);
+    }
+
+    .step-text p {
+      font-size: 0.95rem !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      margin: 3rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .testimonial {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .testimonial blockquote {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--mid);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      quotes: '\201C' '\201D';
+    }
+
+    .testimonial blockquote::before { content: open-quote; }
+    .testimonial blockquote::after  { content: close-quote; }
+
+    .testimonial-author {
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-author strong { color: var(--charcoal); display: block; }
+    .testimonial-author span   { color: var(--light); }
+
+    /* PARTNERS */
+    .partners-section { margin: 2rem 0; }
+
+    .partners-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .partner-chip {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--mid);
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    /* HIGHLIGHT BOX */
+    .highlight-box {
+      background: linear-gradient(135deg, #2a1f3d, #1a3a2a);
+      color: var(--white);
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    .highlight-box h2 {
+      color: var(--white) !important;
+      margin-top: 0 !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .highlight-box p {
+      color: rgba(255,255,255,0.75) !important;
+      max-width: 500px;
+      margin: 0 auto 2rem !important;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border-radius: 100px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    .btn-primary {
+      background: var(--clay);
+      color: var(--white);
+      margin-right: 1rem;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.15);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* RELATED */
+    .related { margin-top: 4rem; }
+    .related h2 { margin-bottom: 1.5rem !important; }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .related-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .related-card:hover {
+      border-color: var(--clay);
+      transform: translateY(-2px);
+    }
+
+    .related-card .card-date {
+      font-family: system-ui, sans-serif;
+      font-size: 0.78rem;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+
+    .related-card .card-title {
+      font-size: 1rem;
+      color: var(--charcoal);
+      line-height: 1.4;
+      font-family: 'Georgia', serif;
+    }
+
+    .related-card .card-tag {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.75rem;
+      color: var(--clay);
+      background: rgba(204,120,92,0.08);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      padding: 3rem 2rem;
+      text-align: center;
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+    }
+
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    footer a:hover { color: var(--white); }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .article-wrap { padding: 2.5rem 1.25rem 4rem; }
+      .highlight-box { padding: 2rem 1.5rem; }
+      .btn-primary { margin-right: 0; margin-bottom: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Anthropic</a>
+  <ul class="nav-links">
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">Productos</a></li>
+    <li><a href="#">Investigación</a></li>
+    <li><a href="#">Empresa</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Prueba con Claude</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Beta pública disponible
+    </div>
+    <h1>Claude Security ya está en fase beta pública</h1>
+    <div class="hero-meta">
+      <span>Anuncios de productos</span>
+      <span>·</span>
+      <span>Seguridad de Claude</span>
+      <span>·</span>
+      <span>30 de abril de 2026</span>
+      <span>·</span>
+      <span>5 min de lectura</span>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE -->
+<article class="article-wrap">
+
+  <p class="lead">
+    Claude Security ya está disponible en versión beta pública para los clientes de Claude Enterprise. Analice el código en busca de vulnerabilidades y genere soluciones propuestas con Opus 4.7, en la plataforma Claude o a través de socios tecnológicos y de servicios que colaboran con Claude.
+  </p>
+
+  <p>
+    Las capacidades de ciberseguridad de la IA avanzan rápidamente. Los modelos actuales ya son muy eficaces para detectar fallos en el código de software; la próxima generación será aún más capaz y particularmente eficaz para explotar estos fallos de forma autónoma. Es hora de que las organizaciones tomen medidas para mejorar su seguridad y se preparen para un mundo en el que las vulnerabilidades de software sean mucho más fáciles de descubrir.
+  </p>
+
+  <p>
+    Recientemente, como parte del Proyecto Glasswing, pusimos a disposición de varios socios <strong>Claude Mythos Preview</strong>, una herramienta que puede igualar o incluso superar a los expertos humanos de élite tanto en la detección como en la explotación de vulnerabilidades de software.
+  </p>
+
+  <p>
+    Pero nuestros esfuerzos en ciberseguridad van más allá de Glasswing: con Claude Security, un número mucho mayor de organizaciones puede utilizar nuestro modelo más potente y de mayor disponibilidad, <strong>Claude Opus 4.7</strong>, en sus bases de código. Opus 4.7 es uno de los modelos más robustos disponibles para detectar y corregir vulnerabilidades de software, así como para descubrir problemas complejos y dependientes del contexto que, de otro modo, podrían pasar desapercibidos.
+  </p>
+
+  <p>
+    Claude Security, antes conocido como Claude Code Security, ya ha sido probado por cientos de organizaciones de todos los tamaños en una fase de investigación preliminar limitada, ayudando a los equipos a analizar sus bases de código en busca de vulnerabilidades y generar parches específicos. Sus comentarios han sido fundamentales para la versión actual, que pone Claude Security a disposición de todos los clientes empresariales.
+  </p>
+
+  <div class="callout">
+    <p>La nueva versión incluye análisis programados y dirigidos, una integración más sencilla con los sistemas de auditoría y un seguimiento mejorado de los hallazgos priorizados. <strong>No se requiere integración de API ni la creación de un agente personalizado</strong>: si su organización utiliza Claude, puede comenzar a analizar hoy mismo.</p>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Cómo funciona Claude Security</h2>
+
+  <p>
+    Puedes acceder a Claude Security directamente desde la barra lateral de Claude.ai o en <code>claude.ai/security</code>. Para empezar, selecciona uno de tus repositorios (o define el alcance a un directorio o rama específicos) y, a continuación, inicia un análisis.
+  </p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-text">
+        <strong>Selecciona el repositorio</strong>
+        <p>Elige el repositorio, directorio o rama que deseas analizar desde la interfaz de Claude.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-text">
+        <strong>Claude razona sobre el código</strong>
+        <p>En lugar de buscar patrones conocidos, Claude comprende cómo interactúan los componentes entre archivos y módulos, rastreando los flujos de datos y leyendo el código fuente como lo haría un investigador de seguridad experto.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-text">
+        <strong>Recibe hallazgos priorizados</strong>
+        <p>Claude proporciona una explicación detallada de cada hallazgo: certeza de la vulnerabilidad, gravedad, impacto probable y cómo reproducirla. Incluye un índice de confianza.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-text">
+        <strong>Aplica el parche en contexto</strong>
+        <p>Claude genera instrucciones para un parche específico, que puedes abrir en Claude Code en la web para aplicar la solución directamente.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Lo que aprendimos desde nuestra vista previa inicial</h2>
+
+  <p>En los últimos dos meses, perfeccionamos Claude Security basándonos en el uso en producción real en cientos de empresas. Estos son los principales aprendizajes:</p>
+
+  <h3>La calidad de la detección es fundamental</h3>
+  <p>Los equipos nos han comentado que los hallazgos con alta confianza son los que realmente aceleran el trabajo de seguridad. El sistema de validación multietapa de Claude Security examina de forma independiente cada hallazgo antes de que llegue a un analista, lo que reduce los falsos positivos.</p>
+
+  <h3>El tiempo entre escaneo y corrección es la métrica clave</h3>
+  <p>Varios equipos lograron pasar del escaneo a la aplicación del parche en una sola sesión, en lugar de días de idas y venidas entre los equipos de seguridad e ingeniería.</p>
+
+  <h3>Los equipos necesitan cobertura continua, no auditorías puntuales</h3>
+  <p>Hemos añadido la opción de programar análisis para que los equipos puedan establecer una periodicidad regular, revisar los resultados y tomar medidas al respecto.</p>
+
+  <p>Con esta versión también añadimos:</p>
+  <ul>
+    <li>Análisis dirigido a un directorio específico dentro de un repositorio</li>
+    <li>Descarte de hallazgos con razones documentadas para futuros revisores</li>
+    <li>Exportación de hallazgos como CSV o Markdown para sistemas de seguimiento y auditoría</li>
+    <li>Envío de resultados a Slack, Jira u otras herramientas mediante webhooks</li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2>Lo que dicen las organizaciones que lo usan</h2>
+
+  <div class="testimonials">
+
+    <div class="testimonial">
+      <blockquote>Estamos adaptando nuestros esfuerzos de seguridad proactiva a través de nuestra asociación con Anthropic. Claude Security nos ayuda a acelerar la forma en que generamos y aseguramos el nuevo código a la escala y velocidad de DoorDash: detecta vulnerabilidades profundas con precisión y canaliza los hallazgos directamente a nuestros flujos de trabajo para que los ingenieros puedan actuar sobre ellos en contexto.</blockquote>
+      <div class="testimonial-author">
+        <strong>Suha Can</strong>
+        <span>Vicepresidente y Director de Seguridad — DoorDash</span>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <blockquote>Claude Security arrojó hallazgos novedosos y de alta calidad durante nuestras pruebas tempranas de la vista previa de investigación que nos ayudaron a identificar y abordar posibles problemas de seguridad antes de que pudieran afectar a nuestro entorno o a nuestros clientes. Vemos un gran potencial a medida que ampliamos su uso.</blockquote>
+      <div class="testimonial-author">
+        <strong>Krzysztof Katowicz-Kowalewski</strong>
+        <span>Staff Product Security Engineer</span>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <blockquote>Claude Security comprende la lógica de negocio real detrás de nuestro código. Nuestro equipo de seguridad ahora puede pasar del análisis a las correcciones en unos pocos clics dentro de nuestras herramientas de confianza.</blockquote>
+      <div class="testimonial-author">
+        <strong>Greg Janowiak</strong>
+        <span>Information Security Officer</span>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <blockquote>La calidad del análisis es la razón por la que estamos trabajando para integrar Claude Security directamente en nuestro programa de gestión de vulnerabilidades, para que los problemas reales lleguen a ingeniería más rápido, con menos sobrecarga de triaje en el medio.</blockquote>
+      <div class="testimonial-author">
+        <strong>Chiara La Valle</strong>
+        <span>Directora de Seguridad</span>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <blockquote>Dado el ritmo creciente del descubrimiento de vulnerabilidades, la señal más fuerte para nosotros es la rapidez con que un hallazgo se convierte en un PR que realmente podemos fusionar, no en un ticket. Hemos utilizado parches construidos con Claude Security para cerrar vulnerabilidades reales en minutos, no en días.</blockquote>
+      <div class="testimonial-author">
+        <strong>Matt Aromatorio</strong>
+        <span>Director de Seguridad</span>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <h2>Llegando a los defensores donde trabajan</h2>
+
+  <p>Claude Security es una parte de nuestro esfuerzo más amplio por poner capacidades de frontera en manos de los defensores. Gran parte de su alcance viene a través de las plataformas y servicios en los que los equipos ya confían hoy.</p>
+
+  <div class="partners-section">
+    <h3>Socios tecnológicos</h3>
+    <p>Estos socios están integrando las capacidades de Opus 4.7 en las plataformas de seguridad que las empresas ya utilizan:</p>
+    <div class="partners-grid">
+      <span class="partner-chip">CrowdStrike</span>
+      <span class="partner-chip">Microsoft Security</span>
+      <span class="partner-chip">Palo Alto Networks</span>
+      <span class="partner-chip">SentinelOne</span>
+      <span class="partner-chip">TrendAI</span>
+      <span class="partner-chip">Wiz</span>
+    </div>
+  </div>
+
+  <div class="partners-section" style="margin-top:2rem">
+    <h3>Socios de servicios</h3>
+    <p>Estos socios trabajan con organizaciones para implementar soluciones de seguridad integradas con Claude para gestión de vulnerabilidades, revisión segura de código y programas de respuesta a incidentes:</p>
+    <div class="partners-grid">
+      <span class="partner-chip">Accenture</span>
+      <span class="partner-chip">BCG</span>
+      <span class="partner-chip">Deloitte</span>
+      <span class="partner-chip">Infosys</span>
+      <span class="partner-chip">PwC</span>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h2>Comience hoy</h2>
+    <p>Claude Security está disponible en beta pública para clientes de Claude Enterprise. El acceso para clientes de Claude Team y Max estará disponible próximamente.</p>
+    <a href="#" class="btn btn-primary">Activar Claude Security</a>
+    <a href="#" class="btn btn-secondary">Ver guía de inicio</a>
+  </div>
+
+  <p style="font-size:0.85rem; color: var(--light); font-family: system-ui, sans-serif;">
+    ¹ Claude Opus 4.7 utiliza nuevas medidas de ciberseguridad que detectan y bloquean automáticamente las solicitudes que sugieren usos prohibidos o de alto riesgo. Las organizaciones que realizan trabajos que podrían activar estas medidas pueden participar en el <strong>Programa de Verificación Cibernética</strong>, parte de nuestro esfuerzo por poner capacidades de vanguardia a disposición de los defensores.
+  </p>
+
+  <hr class="divider">
+
+  <div class="related">
+    <h2>Publicaciones relacionadas</h2>
+    <div class="related-grid">
+      <a href="#" class="related-card">
+        <div class="card-date">28 de mayo de 2026</div>
+        <div class="card-title">Introducción a los flujos de trabajo dinámicos en Claude Code</div>
+        <span class="card-tag">Anuncios de productos</span>
+      </a>
+      <a href="#" class="related-card">
+        <div class="card-date">26 de mayo de 2026</div>
+        <div class="card-title">Código con Claude Londres 2026: Repensando cómo construimos</div>
+        <span class="card-tag">Anuncios de productos</span>
+      </a>
+      <a href="#" class="related-card">
+        <div class="card-date">19 de mayo de 2026</div>
+        <div class="card-title">Novedades en Claude Managed Agents: entornos de pruebas autohospedados y túneles MCP</div>
+        <span class="card-tag">Anuncios de productos</span>
+      </a>
+      <a href="#" class="related-card">
+        <div class="card-date">12 de mayo de 2026</div>
+        <div class="card-title">Resumen de Code con Claude SF 2026: Aprovechando el crecimiento exponencial de la IA</div>
+        <span class="card-tag">Anuncios de productos</span>
+      </a>
+    </div>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <ul class="footer-links">
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">Investigación</a></li>
+    <li><a href="#">Carreras</a></li>
+    <li><a href="#">Política de privacidad</a></li>
+    <li><a href="#">Condiciones de servicio</a></li>
+    <li><a href="#">Política de uso</a></li>
+  </ul>
+  <p>&copy; 2026 Anthropic PBC</p>
+</footer>
+
+</body>
+</html>

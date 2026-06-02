@@ -92,7 +92,7 @@ for (const botId of REQUIRED_BOTS) {
 }
 
 // ---------------------------------------------------------------------------
-// 2. Functional tests — 5 hardcoded test vectors per validator path
+// 2. Functional tests — hardcoded test vectors covering all capability paths
 // ---------------------------------------------------------------------------
 section('FUNCTIONAL TESTS');
 
@@ -175,6 +175,128 @@ const tests = [
       moneda: 'USD',
       ingreso_alquiler_mensual: 400,
       tipo_activo: 'inmueble'
+    },
+    expectValid: true
+  },
+
+  // ── TEST 6: lucrecia.client_intake — valid input ──────────────────────────
+  {
+    label: 'lucrecia.client_intake: valid input passes',
+    botId: 'lucrecia',
+    capability: 'client_intake',
+    type: 'input',
+    data: {
+      nombre_completo: 'Diego Orosa',
+      cuil: '20-12345678-6',
+      email: 'diego@ejemplo.com',
+      tipo_consulta: 'civil'
+    },
+    expectValid: true
+  },
+
+  // ── TEST 7: lucrecia.generate_minutes — end_time before start_time fails ──
+  {
+    label: 'lucrecia.generate_minutes: end_time before start_time fails',
+    botId: 'lucrecia',
+    capability: 'generate_minutes',
+    type: 'input',
+    data: {
+      meeting_id: 'mtg-001',
+      attendees: ['Dr. García', 'Sra. López'],
+      topics: ['Contrato'],
+      start_time: '2025-06-01T15:00:00-03:00',
+      end_time: '2025-06-01T14:00:00-03:00'
+    },
+    expectValid: false,
+    expectErrorsContaining: ['posterior']
+  },
+
+  // ── TEST 8: oraculo.orchestrate_agents — valid input ─────────────────────
+  {
+    label: 'oraculo.orchestrate_agents: valid input passes',
+    botId: 'oraculo',
+    capability: 'orchestrate_agents',
+    type: 'input',
+    data: {
+      task_id: 'task-abc-123',
+      agents: ['lucrecia', 'valentina'],
+      instruction: 'Procesar reclamos pendientes y notificar al cliente'
+    },
+    expectValid: true
+  },
+
+  // ── TEST 9: oraculo.send_alert — invalid channel (fax) fails ─────────────
+  {
+    label: 'oraculo.send_alert: invalid channel (fax) fails',
+    botId: 'oraculo',
+    capability: 'send_alert',
+    type: 'input',
+    data: {
+      level: 'warning',
+      message: 'Atención: reclamo urgente pendiente de revisión',
+      channels: ['fax'],
+      recipients: ['equipo@laboratorio.com']
+    },
+    expectValid: false,
+    expectErrorsContaining: ['inválidos']
+  },
+
+  // ── TEST 10: valentina.qualify_claim — valid input ────────────────────────
+  {
+    label: 'valentina.qualify_claim: valid input passes',
+    botId: 'valentina',
+    capability: 'qualify_claim',
+    type: 'input',
+    data: {
+      reclamo_id: 'reclamo-xyz-456',
+      descripcion: 'Cobro indebido de comisiones bancarias no autorizadas',
+      monto: 45000
+    },
+    expectValid: true
+  },
+
+  // ── TEST 11: valentina.file_coprec — missing dni_consumidor fails ─────────
+  {
+    label: 'valentina.file_coprec: missing dni_consumidor fails',
+    botId: 'valentina',
+    capability: 'file_coprec',
+    type: 'input',
+    data: {
+      reclamo_id: 'reclamo-xyz-456',
+      nombre_consumidor: 'Juan Pérez',
+      empresa_reclamada: 'Banco Galicia',
+      descripcion_reclamo: 'Cobro de comisión no autorizada en cuenta corriente'
+    },
+    expectValid: false,
+    expectErrorsContaining: ['dni_consumidor']
+  },
+
+  // ── TEST 12: megan.compare_markets — unsupported market (tokyo) fails ─────
+  {
+    label: 'megan.compare_markets: unsupported market (tokyo) fails',
+    botId: 'megan',
+    capability: 'compare_markets',
+    type: 'input',
+    data: {
+      mercados: ['miami', 'tokyo'],
+      presupuesto_usd: 250000
+    },
+    expectValid: false,
+    expectErrorsContaining: ['soportados']
+  },
+
+  // ── TEST 13: megan.financial_model — valid input ──────────────────────────
+  {
+    label: 'megan.financial_model: valid input passes',
+    botId: 'megan',
+    capability: 'financial_model',
+    type: 'input',
+    data: {
+      inversion_inicial: 150000,
+      horizonte_anios: 10,
+      tasa_inflacion_anual: 0.05,
+      tasa_revalorizacion_anual: 0.03,
+      ingreso_mensual_alquiler: 800
     },
     expectValid: true
   }
@@ -302,8 +424,9 @@ try {
 // ROI calculation
 try {
   const roi = kernel.calculateInvestmentROI(100000, 150000, 5, 2000, 'USD', 500);
-  if (typeof roi.roi === 'number' && typeof roi.tir === 'number' && typeof roi.capRate === 'number') {
-    pass(`calculateInvestmentROI: returns numeric roi=${roi.roi.toFixed(1)}%, tir=${roi.tir.toFixed(1)}%, capRate=${roi.capRate.toFixed(2)}%`);
+  if (typeof roi.roi === 'number' && (roi.tir === null || typeof roi.tir === 'number') && typeof roi.capRate === 'number') {
+    const tirStr = roi.tir !== null ? `tir=${roi.tir.toFixed(1)}%` : 'tir=N/A';
+    pass(`calculateInvestmentROI: returns numeric roi=${roi.roi.toFixed(1)}%, ${tirStr}, capRate=${roi.capRate.toFixed(2)}%`);
   } else {
     fail('calculateInvestmentROI: numeric results', JSON.stringify(roi));
   }

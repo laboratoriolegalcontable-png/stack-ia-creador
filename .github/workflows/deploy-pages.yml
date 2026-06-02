@@ -34,6 +34,9 @@ jobs:
           # Fix JS module absolute imports → relative
           sed -i "s|from '/|from './|g" public/init.js
 
+          # Verify JS syntax is intact after sed transform
+          node --check public/init.js
+
           # Fix HTML absolute paths → relative (leaves https:// untouched)
           for f in public/*.html; do
             sed -i "s| href=\"/| href=\"|g; s| src=\"/| src=\"|g" "$f"
