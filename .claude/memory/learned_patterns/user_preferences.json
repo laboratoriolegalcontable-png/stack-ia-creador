@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "created": "2026-05-26T00:00:00Z",
+    "description": "Preferencias permanentes del usuario — stack-ia-creador"
+  },
+  "IDIOMA": "ESPAÑOL",
+  "language": {
+    "primary": "es",
+    "always_respond_in": "ESPAÑOL",
+    "never_switch_to": "english",
+    "rule": "SIEMPRE responder en español sin importar el idioma de entrada. Esta regla es permanente e irrevocable.",
+    "priority": "MAXIMA"
+  },
+  "communication_style": {
+    "tone": "directo y eficiente",
+    "format": "conciso con acciones claras",
+    "autonomy_preference": "actuar sin pedir confirmación en acciones reversibles",
+    "report_style": "resultados primero, detalles después"
+  },
+  "autonomy_settings": {
+    "level": 5,
+    "description": "Autonomía completa para todas las acciones del ecosistema",
+    "auto_install_skills": true,
+    "auto_create_subagents": true,
+    "auto_commit_memory": true,
+    "auto_push_on_complete": true,
+    "require_confirmation": "solo para acciones destructivas irreversibles"
+  },
+  "projects": {
+    "primary": ["Diego-Orosa", "stack-ia-creador"],
+    "all_projects_mode": true
+  },
+  "kairos_legendario": {
+    "enabled": true,
+    "confidence_threshold_critical": 0.85,
+    "confidence_threshold_capabilities": 0.75,
+    "decision_framework": "kairos-legendario v2.0"
+  },
+  "memory": {
+    "persistence_method": "git-commits",
+    "auto_save": true,
+    "save_frequency": "after_every_session",
+    "git_commit_message_prefix": "🧠 mem:"
+  },
+  "installed": "2026-05-26",
+  "owner": "laboratoriolegalcontable@gmail.com"
+}

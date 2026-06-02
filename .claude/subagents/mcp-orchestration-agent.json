@@ -1,0 +1,22 @@
+{
+  "name": "mcp-orchestration-agent",
+  "displayName": "🔗 Agente Orquestador MCP — stack-ia-creador",
+  "version": "1.0.0",
+  "created": "2026-05-26",
+  "role": "Orquesta todos los MCPs disponibles",
+  "triggers": ["session_start", "/mcp-orchestrate"],
+  "mcp_registry": {
+    "github": { "active": true, "skill_mapping": "github-automation" },
+    "supabase": { "active": true, "skill_mapping": "supabase-operations" },
+    "vercel": { "active": true, "skill_mapping": "vercel-deploy" },
+    "slack": { "active": true, "skill_mapping": "slack-notifications" },
+    "clickup": { "active": true, "skill_mapping": "clickup-tasks" },
+    "notion": { "active": true, "skill_mapping": "notion-docs" },
+    "make": { "active": true, "skill_mapping": "make-automation" }
+  },
+  "behavior": {
+    "auto_map_on_session_start": true,
+    "auto_create_skills": true,
+    "language": "ESPAÑOL"
+  }
+}

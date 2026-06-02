@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "created": "2026-05-26T00:00:00Z",
+    "description": "Registro de evolución de skills — stack-ia-creador"
+  },
+  "installed_skills": [
+    { "name": "kairos-legendario", "version": "2.0.0", "installed": "2026-05-26", "status": "active" },
+    { "name": "sistema-autonomo", "version": "1.0.0", "installed": "2026-05-25", "status": "active" },
+    { "name": "kairos-supremo", "version": "1.0.0", "installed": "2026-05-26", "status": "active" },
+    { "name": "skill-auto-installer", "version": "1.0.0", "installed": "2026-05-26", "status": "active" },
+    { "name": "skill-memory-persistence", "version": "1.0.0", "installed": "2026-05-26", "status": "active" },
+    { "name": "pipeline-supremo", "version": "1.0.0", "installed": "2026-05-26", "status": "active" },
+    { "name": "diagnostico-supremo", "version": "1.0.0", "installed": "2026-05-26", "status": "active" }
+  ],
+  "auto_evolution": {
+    "enabled": true,
+    "auto_create": true
+  }
+}

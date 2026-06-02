@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "created": "2026-05-26T00:00:00Z",
+    "description": "Configuraciones específicas por proyecto — stack-ia-creador"
+  },
+  "Diego-Orosa": {
+    "type": "fullstack-node",
+    "stack": ["Express", "Firebase", "Supabase", "Vercel", "Node.js"],
+    "deploy_target": "Vercel + Netlify",
+    "autonomy_level": 5,
+    "primary_language": "JavaScript",
+    "subprojects": ["reclamai", "deploy-oro", "agente-pagokit"]
+  },
+  "stack-ia-creador": {
+    "type": "pwa-vanilla",
+    "stack": ["Vanilla JS", "CSS3", "HTML5", "Vercel", "Supabase"],
+    "version": "v2.0",
+    "deploy_target": "Vercel",
+    "auto_format": true,
+    "formatter": "prettier",
+    "special_modules": ["ARIA-WCAG2.1", "BreadcrumbList-SEO", "sistema-autonomo"],
+    "autonomy_level": 5,
+    "primary_language": "JavaScript"
+  },
+  "generic_new_project": {
+    "auto_detect": true,
+    "auto_install_system": true,
+    "inherit_skills": ["kairos-legendario", "skill-auto-installer", "skill-memory-persistence"],
+    "autonomy_level": 4
+  }
+}

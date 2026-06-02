@@ -1,0 +1,18 @@
+{
+  "name": "skill-evolution-agent",
+  "displayName": "🌱 Agente Evolución de Skills — stack-ia-creador",
+  "version": "1.0.0",
+  "created": "2026-05-26",
+  "role": "Crea y mejora skills automáticamente",
+  "triggers": ["session_end", "/evolve-skills"],
+  "evolution_actions": {
+    "create_new_skill": { "enabled": true, "kairos_threshold": 0.70 },
+    "upgrade_existing_skill": { "enabled": true, "kairos_threshold": 0.75 },
+    "auto_install_from_mcp": { "enabled": true }
+  },
+  "behavior": {
+    "language": "ESPAÑOL",
+    "auto_commit": true,
+    "commit_prefix": "🌱 skill:"
+  }
+}
