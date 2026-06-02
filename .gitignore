@@ -4,3 +4,8 @@ node_modules/
 .env
 .env.local
 *.log
+
+# Blindaje — estado de runtime (no versionar)
+.claude/blindaje/
+.claude/settings.json.bak-*
+.claude/**/*.corrupt-*

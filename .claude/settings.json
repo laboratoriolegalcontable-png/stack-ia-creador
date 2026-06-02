@@ -16,6 +16,28 @@
             "statusMessage": "Cargando Claude Ads v2.4.0..."
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/skills/blindaje/scripts/backup.sh\"",
+            "timeout": 15,
+            "statusMessage": "[blindaje] snapshot de memoria..."
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/skills/blindaje/scripts/repair.sh\"",
+            "timeout": 15,
+            "statusMessage": "[blindaje] auto-reparacion..."
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/skills/blindaje/scripts/verify.sh\"",
+            "timeout": 15,
+            "statusMessage": "[blindaje] verificacion de integridad..."
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -28,6 +50,18 @@
             "timeout": 15,
             "continueOnBlock": true,
             "statusMessage": "@guardian + Prettier auto-format..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/skills/blindaje/scripts/guard.sh\"",
+            "timeout": 10
           }
         ]
       }
