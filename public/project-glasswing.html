@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Ala de Cristal — Anthropic</title>
+  <meta name="description" content="Garantizar la seguridad del software crítico para la era de la IA. Claude Mythos Preview y el Proyecto Glasswing.">
+  <meta property="og:title" content="Proyecto Ala de Cristal — Anthropic">
+  <meta property="og:description" content="AWS, Apple, Cisco, CrowdStrike, Google, Microsoft, NVIDIA y más se unen para proteger el software más crítico del mundo.">
+  <meta property="og:type" content="article">
+  <style>
+    :root {
+      --crema: #f5f0e8;
+      --arcilla: #c17f59;
+      --carbon: #1a1a1a;
+      --gris: #4a4a4a;
+      --gris-claro: #e8e3d8;
+      --azul: #2d4a7a;
+      --verde: #2d6a4a;
+      --rojo-alerta: #8b1a1a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--crema);
+      color: var(--carbon);
+      line-height: 1.7;
+    }
+    /* NAV */
+    nav {
+      background: var(--carbon);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .nav-tag {
+      background: var(--arcilla);
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+    }
+    /* HERO */
+    .hero {
+      background: var(--carbon);
+      color: #fff;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 120%, rgba(193,127,89,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--arcilla);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 300;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.6rem 1.2rem;
+      border-radius: 100px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.9);
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    /* PARTNERS */
+    .partners-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--gris-claro);
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+    .partners-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin-bottom: 1rem;
+    }
+    .partners-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem 1.5rem;
+    }
+    .partner-chip {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--carbon);
+      letter-spacing: 0.03em;
+    }
+    /* LAYOUT */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .container-wide {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    /* ARTICLE */
+    article {
+      padding: 4rem 0;
+    }
+    article h2 {
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin: 3rem 0 1rem;
+      color: var(--carbon);
+      border-left: 3px solid var(--arcilla);
+      padding-left: 1rem;
+    }
+    article h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: var(--carbon);
+    }
+    article p {
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+      color: #2a2a2a;
+    }
+    article ul {
+      margin: 1rem 0 1.5rem 1.5rem;
+    }
+    article li {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    /* ALERT BOX */
+    .alert-box {
+      background: #fff8f0;
+      border: 1px solid #e8c09a;
+      border-left: 4px solid var(--arcilla);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .alert-box p {
+      margin: 0;
+      font-size: 1rem;
+    }
+    /* STATS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--arcilla);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      color: var(--gris);
+      margin-top: 0.25rem;
+    }
+    /* BENCHMARK */
+    .benchmark-section {
+      background: var(--carbon);
+      color: #fff;
+      padding: 3rem 0;
+      margin: 3rem 0;
+    }
+    .benchmark-section h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      border: none;
+      padding: 0;
+      color: #fff;
+    }
+    .bench-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .bench-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+    .bench-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--arcilla);
+      margin-bottom: 1rem;
+    }
+    .bench-bar-wrap {
+      margin-bottom: 0.75rem;
+    }
+    .bench-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      margin-bottom: 0.3rem;
+    }
+    .bench-model { color: rgba(255,255,255,0.8); }
+    .bench-pct { font-weight: 700; }
+    .bench-pct.mythos { color: #4ade80; }
+    .bench-pct.opus { color: rgba(255,255,255,0.5); }
+    .bench-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .bench-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+    .bench-fill.mythos { background: #4ade80; }
+    .bench-fill.opus { background: rgba(255,255,255,0.25); }
+    /* VULNERABILITIES */
+    .vuln-list {
+      margin: 1.5rem 0;
+    }
+    .vuln-item {
+      background: #fff;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .vuln-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .vuln-text strong {
+      display: block;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--carbon);
+      margin-bottom: 0.25rem;
+    }
+    .vuln-text p {
+      font-size: 0.92rem;
+      margin: 0;
+      color: var(--gris);
+    }
+    /* QUOTES */
+    .quotes-section {
+      background: #fff;
+      padding: 3rem 0;
+      margin: 3rem 0;
+    }
+    .quotes-section h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      color: var(--carbon);
+    }
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .quote-card {
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+    .quote-card blockquote {
+      font-size: 0.92rem;
+      color: var(--gris);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .quote-card blockquote::before {
+      content: '\201C';
+      font-size: 2rem;
+      color: var(--arcilla);
+      line-height: 0;
+      vertical-align: -0.4em;
+      margin-right: 0.2em;
+    }
+    .quote-author strong {
+      display: block;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--carbon);
+    }
+    .quote-author span {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      color: var(--gris);
+    }
+    /* PLANS */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .plan-item {
+      background: #fff;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      padding: 1.25rem;
+    }
+    .plan-item h4 {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--arcilla);
+      margin-bottom: 0.5rem;
+    }
+    .plan-item p {
+      font-size: 0.88rem;
+      color: var(--gris);
+      margin: 0;
+    }
+    /* CTA */
+    .cta-section {
+      background: var(--arcilla);
+      color: #fff;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      font-size: 1rem;
+      opacity: 0.9;
+      max-width: 550px;
+      margin: 0 auto 2rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #fff;
+      color: var(--arcilla);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      padding: 0.85rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.9; }
+    /* APPENDIX */
+    .appendix {
+      background: var(--gris-claro);
+      padding: 2rem;
+      border-radius: 6px;
+      margin: 3rem 0;
+    }
+    .appendix h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .appendix p {
+      font-size: 0.88rem;
+      color: var(--gris);
+      margin-bottom: 0.75rem;
+    }
+    .appendix p:last-child { margin-bottom: 0; }
+    /* FOOTER */
+    footer {
+      background: var(--carbon);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+    }
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .hero { padding: 3rem 1.5rem 2.5rem; }
+      article h2 { font-size: 1.4rem; }
+      .bench-grid { grid-template-columns: 1fr; }
+      .quotes-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Stack IA Creador</a>
+  <span class="nav-tag">Investigación · Seguridad</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Futuros Económicos · Investigación</div>
+  <h1>Proyecto Ala de Cristal</h1>
+  <p class="hero-sub">Garantizar la seguridad del software crítico para la era de la IA.</p>
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Claude Mythos Preview — Modelo de Vanguardia
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<div class="partners-bar">
+  <p class="partners-label">Socios Fundadores</p>
+  <div class="partners-list">
+    <span class="partner-chip">Amazon Web Services</span>
+    <span class="partner-chip">Anthropic</span>
+    <span class="partner-chip">Apple</span>
+    <span class="partner-chip">Broadcom</span>
+    <span class="partner-chip">Cisco</span>
+    <span class="partner-chip">CrowdStrike</span>
+    <span class="partner-chip">Google</span>
+    <span class="partner-chip">JPMorganChase</span>
+    <span class="partner-chip">Linux Foundation</span>
+    <span class="partner-chip">Microsoft</span>
+    <span class="partner-chip">NVIDIA</span>
+    <span class="partner-chip">Palo Alto Networks</span>
+  </div>
+</div>
+
+<!-- MAIN ARTICLE -->
+<article>
+  <div class="container">
+
+    <p>Hoy anunciamos el <strong>Proyecto Glasswing</strong>, una nueva iniciativa que reúne a Amazon Web Services, Anthropic, Apple, Broadcom, Cisco, CrowdStrike, Google, JPMorganChase, la Linux Foundation, Microsoft, NVIDIA y Palo Alto Networks en un esfuerzo por proteger el software más crítico del mundo.</p>
+
+    <p>Creamos el Proyecto Glasswing debido a las capacidades que hemos observado en un nuevo modelo de vanguardia entrenado por Anthropic, el cual creemos que podría transformar la ciberseguridad. <strong>Claude Mythos Preview</strong> es un modelo de vanguardia de propósito general, aún no publicado, que revela una cruda realidad: los modelos de IA han alcanzado un nivel de capacidad de programación que les permite superar a todos, excepto a los humanos más expertos, en la detección y explotación de vulnerabilidades de software.</p>
+
+    <div class="alert-box">
+      <p>Mythos Preview ya ha detectado <strong>miles de vulnerabilidades de alta gravedad</strong>, incluyendo algunas en todos los principales sistemas operativos y navegadores web. Dado el ritmo de avance de la IA, no pasará mucho tiempo antes de que estas capacidades se extiendan, posiblemente más allá de los actores comprometidos con su implementación segura.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">$100M</span>
+        <span class="stat-label">en créditos de uso de Mythos Preview</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">$4M</span>
+        <span class="stat-label">en donaciones a seguridad open source</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">40+</span>
+        <span class="stat-label">organizaciones con acceso ampliado</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">12</span>
+        <span class="stat-label">socios fundadores globales</span>
+      </div>
+    </div>
+
+    <h2>Ciberseguridad en la Era de la IA</h2>
+
+    <p>El software del que todos dependemos cada día —responsable de los sistemas bancarios, el almacenamiento de historiales médicos, la gestión de redes logísticas, el funcionamiento de las redes eléctricas y mucho más— siempre ha contenido errores. Muchos son menores, pero algunos son fallas de seguridad graves que, si se descubren, podrían permitir a los ciberatacantes secuestrar sistemas, interrumpir operaciones o robar datos.</p>
+
+    <p>Ya hemos visto las graves consecuencias de los ciberataques para redes corporativas, sistemas de salud, infraestructura energética, centros de transporte y la seguridad de la información de agencias gubernamentales de todo el mundo. En el escenario global, los ataques patrocinados por estados como China, Irán, Corea del Norte y Rusia han amenazado con comprometer la infraestructura que sustenta tanto la vida civil como la preparación militar. Los costos financieros globales del cibercrimen podrían rondar los <strong>$500 mil millones anuales</strong>.</p>
+
+    <p>Con los últimos modelos de IA de vanguardia, el costo, el esfuerzo y el nivel de experiencia necesarios para encontrar y explotar vulnerabilidades de software han caído drásticamente. Claude Mythos Preview demuestra un salto en estas habilidades cibernéticas — las vulnerabilidades que ha detectado en algunos casos sobrevivieron décadas de revisión humana y millones de pruebas de seguridad automatizadas.</p>
+
+    <h2>Vulnerabilidades Identificadas con Claude Mythos Preview</h2>
+
+    <p>Durante las últimas semanas, utilizamos Claude Mythos Preview para identificar miles de vulnerabilidades zero-day en todos los principales sistemas operativos y navegadores web. Lo siguiente son tres ejemplos:</p>
+
+    <div class="vuln-list">
+      <div class="vuln-item">
+        <div class="vuln-icon">🔓</div>
+        <div class="vuln-text">
+          <strong>OpenBSD — Vulnerabilidad de 27 años</strong>
+          <p>Detectada en uno de los sistemas operativos más endurecidos del mundo, usado en firewalls e infraestructura crítica. La vulnerabilidad permitía a un atacante bloquear remotamente cualquier máquina con solo conectarse a ella.</p>
+        </div>
+      </div>
+      <div class="vuln-item">
+        <div class="vuln-icon">🎬</div>
+        <div class="vuln-text">
+          <strong>FFmpeg — Vulnerabilidad de 16 años</strong>
+          <p>Encontrada en una línea de código que las herramientas de testing automatizado habían ejecutado cinco millones de veces sin detectar el problema. FFmpeg es usado por innumerables piezas de software para codificar y decodificar video.</p>
+        </div>
+      </div>
+      <div class="vuln-item">
+        <div class="vuln-icon">🐧</div>
+        <div class="vuln-text">
+          <strong>Linux Kernel — Escalada de privilegios</strong>
+          <p>El modelo encontró y encadenó de forma autónoma varias vulnerabilidades en el kernel de Linux —el software que corre la mayoría de los servidores del mundo— para permitir a un atacante escalar desde acceso ordinario al control total de la máquina.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>Todas las vulnerabilidades anteriores fueron reportadas a los mantenedores del software relevante y ya han sido parchadas.</p>
+
+  </div><!-- /container -->
+</article>
+
+<!-- BENCHMARKS -->
+<section class="benchmark-section">
+  <div class="container-wide">
+    <h2>Rendimiento de Claude Mythos Preview</h2>
+    <div class="bench-grid">
+
+      <div class="bench-card">
+        <div class="bench-title">🛡️ Ciberseguridad — CyberGym</div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Mythos Preview</span><span class="bench-pct mythos">83.1%</span></div>
+          <div class="bench-bar"><div class="bench-fill mythos" style="width:83.1%"></div></div>
+        </div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Opus 4.6</span><span class="bench-pct opus">66.6%</span></div>
+          <div class="bench-bar"><div class="bench-fill opus" style="width:66.6%"></div></div>
+        </div>
+      </div>
+
+      <div class="bench-card">
+        <div class="bench-title">💻 Codificación Agéntica — SWE-bench Verified</div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Mythos Preview</span><span class="bench-pct mythos">93.9%</span></div>
+          <div class="bench-bar"><div class="bench-fill mythos" style="width:93.9%"></div></div>
+        </div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Opus 4.6</span><span class="bench-pct opus">80.8%</span></div>
+          <div class="bench-bar"><div class="bench-fill opus" style="width:80.8%"></div></div>
+        </div>
+      </div>
+
+      <div class="bench-card">
+        <div class="bench-title">🖥️ Terminal-Bench 2.0</div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Mythos Preview</span><span class="bench-pct mythos">82.0%</span></div>
+          <div class="bench-bar"><div class="bench-fill mythos" style="width:82%"></div></div>
+        </div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Opus 4.6</span><span class="bench-pct opus">65.4%</span></div>
+          <div class="bench-bar"><div class="bench-fill opus" style="width:65.4%"></div></div>
+        </div>
+      </div>
+
+      <div class="bench-card">
+        <div class="bench-title">🧠 Razonamiento — GPQA Diamond</div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Mythos Preview</span><span class="bench-pct mythos">94.6%</span></div>
+          <div class="bench-bar"><div class="bench-fill mythos" style="width:94.6%"></div></div>
+        </div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Opus 4.6</span><span class="bench-pct opus">91.3%</span></div>
+          <div class="bench-bar"><div class="bench-fill opus" style="width:91.3%"></div></div>
+        </div>
+      </div>
+
+      <div class="bench-card">
+        <div class="bench-title">🌐 Búsqueda — BrowseComp</div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Mythos Preview</span><span class="bench-pct mythos">86.9%</span></div>
+          <div class="bench-bar"><div class="bench-fill mythos" style="width:86.9%"></div></div>
+        </div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Opus 4.6</span><span class="bench-pct opus">83.7%</span></div>
+          <div class="bench-bar"><div class="bench-fill opus" style="width:83.7%"></div></div>
+        </div>
+      </div>
+
+      <div class="bench-card">
+        <div class="bench-title">🖱️ Computadora — OSWorld-Verified</div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Mythos Preview</span><span class="bench-pct mythos">79.6%</span></div>
+          <div class="bench-bar"><div class="bench-fill mythos" style="width:79.6%"></div></div>
+        </div>
+        <div class="bench-bar-wrap">
+          <div class="bench-label"><span class="bench-model">Opus 4.6</span><span class="bench-pct opus">72.7%</span></div>
+          <div class="bench-bar"><div class="bench-fill opus" style="width:72.7%"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- QUOTES -->
+<section class="quotes-section">
+  <div class="container-wide">
+    <h2>Lo Que Dicen los Socios</h2>
+    <div class="quotes-grid">
+
+      <div class="quote-card">
+        <blockquote>Las capacidades de la IA han cruzado un umbral que cambia fundamentalmente la urgencia de proteger la infraestructura crítica de las amenazas cibernéticas, y no hay vuelta atrás.</blockquote>
+        <div class="quote-author">
+          <strong>Anthony Grieco</strong>
+          <span>SVP & Chief Security & Trust Officer, Cisco</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <blockquote>En AWS, construimos defensas antes de que emerjan las amenazas, desde nuestro silicio personalizado hasta la pila tecnológica. La seguridad no es una fase para nosotros; es continua y está integrada en todo lo que hacemos.</blockquote>
+        <div class="quote-author">
+          <strong>Amy Herzog</strong>
+          <span>Vice President and CISO, Amazon Web Services</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <blockquote>La ventana entre el descubrimiento de una vulnerabilidad y su explotación por un adversario se ha colapsado — lo que antes tomaba meses ahora ocurre en minutos con la IA.</blockquote>
+        <div class="quote-author">
+          <strong>Elia Zaitsev</strong>
+          <span>Chief Technology Officer, CrowdStrike</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <blockquote>El software de código abierto constituye la gran mayoría del código en los sistemas modernos. El Proyecto Glasswing ofrece un camino creíble para cambiar esa ecuación, haciendo de la seguridad aumentada por IA un aliado de confianza para cada mantenedor.</blockquote>
+        <div class="quote-author">
+          <strong>Jim Zemlin</strong>
+          <span>CEO, The Linux Foundation</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <blockquote>El Proyecto Glasswing proporciona una oportunidad única y temprana para evaluar herramientas de IA de próxima generación para la ciberseguridad defensiva en infraestructura crítica.</blockquote>
+        <div class="quote-author">
+          <strong>Pat Opet</strong>
+          <span>Chief Information Security Officer, JPMorganChase</span>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <blockquote>Está claro que estos modelos necesitan estar en manos de propietarios de código abierto y defensores en todo el mundo para encontrar y corregir estas vulnerabilidades antes de que los atacantes tengan acceso.</blockquote>
+        <div class="quote-author">
+          <strong>Lee Klarich</strong>
+          <span>Chief Product & Technology Officer, Palo Alto Networks</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<article>
+  <div class="container">
+
+    <h2>Planes para el Proyecto Glasswing</h2>
+
+    <p>El anuncio de hoy es el comienzo de un esfuerzo a más largo plazo. Para tener éxito, requerirá una amplia participación de toda la industria tecnológica y más allá.</p>
+
+    <p>Los socios del Proyecto Glasswing recibirán acceso a Claude Mythos Preview para encontrar y corregir vulnerabilidades en sus sistemas fundamentales, que representan una porción muy grande de la superficie de ciberataque compartida del mundo. Se anticipa que este trabajo se centrará en:</p>
+
+    <div class="plans-grid">
+      <div class="plan-item">
+        <h4>Detección local</h4>
+        <p>Detección local de vulnerabilidades en sistemas propios y de código abierto.</p>
+      </div>
+      <div class="plan-item">
+        <h4>Testing de caja negra</h4>
+        <p>Pruebas de caja negra de binarios y sistemas críticos.</p>
+      </div>
+      <div class="plan-item">
+        <h4>Seguridad de endpoints</h4>
+        <p>Aseguramiento de endpoints y puntos de entrada críticos.</p>
+      </div>
+      <div class="plan-item">
+        <h4>Pen testing</h4>
+        <p>Pruebas de penetración de sistemas de infraestructura crítica.</p>
+      </div>
+    </div>
+
+    <h3>Compromisos Financieros</h3>
+    <ul>
+      <li><strong>$100M</strong> en créditos de uso de Mythos Preview para el Proyecto Glasswing y participantes adicionales</li>
+      <li><strong>$2.5M</strong> donados a Alpha-Omega y OpenSSF a través de la Linux Foundation</li>
+      <li><strong>$1.5M</strong> a la Apache Software Foundation para mantenedores de código abierto</li>
+      <li>Precio post-preview: <strong>$25/$125</strong> por millón de tokens input/output (disponible en API de Claude, Amazon Bedrock, Google Cloud Vertex AI y Microsoft Foundry)</li>
+    </ul>
+
+    <h3>Transparencia y Próximos Pasos</h3>
+    <p>Dentro de 90 días, Anthropic reportará públicamente sobre los aprendizajes, vulnerabilidades corregidas y mejoras realizadas. También se colaborará con organizaciones de seguridad líderes para producir recomendaciones prácticas sobre cómo deben evolucionar las prácticas de seguridad en la era de la IA.</p>
+
+    <div class="appendix">
+      <h3>Apéndice — Origen del Nombre</h3>
+      <p>El proyecto recibe su nombre de la mariposa <em>Greta oto</em>, conocida como la mariposa de alas transparentes. Esta metáfora se aplica de dos maneras: las alas transparentes de la mariposa le permiten esconderse a plena vista, al igual que las vulnerabilidades analizadas en esta publicación; también le permiten evitar el peligro, como la transparencia que defendemos en nuestro enfoque.</p>
+      <p><em>Mythos</em>: del griego antiguo, que significa «enunciado» o «narración»: el sistema de historias a través del cual las civilizaciones daban sentido al mundo.</p>
+    </div>
+
+  </div>
+</article>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Actuar Ahora</h2>
+  <p>Para que los ciberdefensores salgan victoriosos, debemos actuar antes de que las capacidades de la IA de vanguardia avancen aún más. Ninguna organización puede resolver estos problemas de ciberseguridad por sí sola.</p>
+  <a href="https://claude.ai" class="cta-btn">Explorar Claude →</a>
+</section>
+
+<footer>
+  <p>Proyecto Glasswing · Anthropic PBC · 2026 · <a href="index.html" style="color:inherit">Stack IA Creador</a></p>
+</footer>
+
+</body>
+</html>
