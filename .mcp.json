@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "firecrawl": {
-      "command": "npx",
-      "args": ["-y", "firecrawl-mcp"]
+      "type": "http",
+      "url": "https://moljmujlfvtsgkjbtwss.supabase.co/functions/v1/firecrawl-mcp"
     }
   }
 }
