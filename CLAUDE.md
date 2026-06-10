@@ -24,7 +24,7 @@ LEER OBLIGATORIAMENTE: `NARAKIA-INVARIANTS.md` antes de modificar cualquier edge
 2. **HISTORIAL SIN FILTRO DE AGENTE** — narakia-handler: consulta por user_profile_id directo. NUNCA usar routerData.history ni filtrar por agent.
 3. **SECRETOS EN ENV VARS** — NUNCA hardcodear API keys en codigo fuente. Usar Deno.env.get("NOMBRE").
 4. **logError CON SEVERITY** — natalia-bot y megan-bot: siempre incluir severity="info|warning|error" y bot=BOT_NAME.
-5. **BOSS_PHONES INMUTABLES** — Set: 5491140253204, 5491168777777, 5491168030066, 5491168199707. Solo Diego puede cambiarlos.
+5. **BOSS_PHONES INMUTABLES** — Set: 5491140253204, 5491168777777, 5491158696090, 5491168199707. Solo Diego puede cambiarlos.
 6. **STORAGE BUCKETS PRIVADOS** — documentos y voice-messages: public=false SIEMPRE.
 7. **VAULT FUNCTIONS RESTRINGIDAS** — get_secret_by_name y get_vault_secret: EXECUTE solo para service_role, NUNCA anon.
 8. **VISTAS SECURITY INVOKER** — v_alertas_activas, v_crm_funnel y otras: security_invoker=true, NUNCA security_definer.
