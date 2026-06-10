@@ -18,7 +18,7 @@ Mac, Windows y Linux. Detecta el OS automaticamente y actua.
 ## Modos disponibles
 
 | Comando | Que hace |
-|---------|----------|
+|---------|---------|
 | `/system-doctor` | Menu interactivo + health check rapido |
 | `/system-doctor diagnostico` | Panel de salud completo (score 0-100) |
 | `/system-doctor limpiar` | Limpieza profunda del disco |
@@ -47,16 +47,24 @@ Escanea rutas seguras, muestra cuanto va a liberar y ejecuta con confirmacion.
 ```
 /system-doctor emergencia
 ```
-Triage en 60 segundos: mata los 3 top offenders, purga RAM, libera temp.
+Triage en 60 segundos: mata los 3 top offenders, purga RAM, libera temp. Para cuando
+el sistema no responde y necesitas actuar ya.
 
 ```
 /system-doctor diagnostico
 ```
 Score 0-100 en 7 dimensiones: CPU, RAM, disco, temperatura, arranque, seguridad, backup.
 
+```
+/system-doctor blindar
+```
+Scan en 5 capas con Doctor Blindaje + Cyber Neo. Notifica a Kairos si detecta amenaza.
+
 ---
 
 ## Modo autonomo (sin confirmaciones)
+
+Para limpiezas programadas o uso en scripts:
 
 ```
 /system-doctor limpiar --autonomo
@@ -65,7 +73,7 @@ Score 0-100 en 7 dimensiones: CPU, RAM, disco, temperatura, arranque, seguridad,
 ```
 
 En modo autonomo:
-- Ejecuta solo rutas 100% seguras
+- Ejecuta solo rutas 100% seguras (RUTAS_SEGURAS_LIMPIEZA de REFERENCE.md)
 - No mata procesos de usuario (solo libera RAM inactiva)
 - Notifica resultado a Kairos via WhatsApp al terminar
 - Registra en LEARNINGS.md automaticamente
@@ -74,7 +82,7 @@ En modo autonomo:
 
 ## Sub-agentes en paralelo
 
-Para diagnostico completo en < 60 segundos:
+Para diagnostico completo en < 60 segundos, lanza los 3 sub-agentes simultaneamente:
 
 ```
 /system-doctor diagnostico --paralelo
@@ -85,6 +93,8 @@ Esto ejecuta en paralelo:
 - Agent(doctor-limpieza) → estado del disco
 - Agent(doctor-procesos) → estado de CPU
 
+Y luego consolida el health score final.
+
 ---
 
 ## Integracion con Kairos
@@ -94,22 +104,64 @@ El sistema notifica automaticamente a Diego via WhatsApp cuando:
 - Se libera > 5 GB de disco
 - Se detecta una amenaza de seguridad
 - El backup falla o no se ejecuto en > 7 dias
+- El sistema esta en modo EMERGENCIA
 
-Configura el webhook:
+Configura el webhook en variable de entorno:
 ```bash
 export MAKE_WEBHOOK_SYSTEM_DOCTOR="https://hook.us2.make.com/[tu-webhook]"
 ```
 
 ---
 
-## Instalacion
+## Integracion con /schedule
 
-```bash
-# Mac / Linux:
-curl -fsSL https://raw.githubusercontent.com/laboratoriolegalcontable-png/stack-ia-creador/main/.claude/skills/system-doctor/setup.sh | bash
+Para programar limpiezas automaticas semanales:
 
-# Windows (PowerShell como Administrador):
-irm https://raw.githubusercontent.com/laboratoriolegalcontable-png/stack-ia-creador/main/.claude/skills/system-doctor/setup.ps1 | iex
+```
+/schedule domingo 3am /system-doctor limpiar --autonomo
+```
+
+El agente `/schedule` crea el cron job (Mac/Linux) o Task Scheduler (Windows)
+y configura la notificacion a Kairos al terminar.
+
+---
+
+## Integracion con automejora
+
+El sistema se auto-mejora despues de cada sesion:
+
+```
+/system-doctor aprender
+```
+
+Esto:
+1. Lee LEARNINGS.md de sesiones anteriores
+2. Detecta patrones recurrentes (carpetas que siempre se llenan, procesos siempre pesados)
+3. Actualiza REFERENCE.md con comandos nuevos
+4. Verifica actualizaciones de herramientas instaladas
+5. Aplica la logica de automejora del ecosistema Claude
+
+---
+
+## Donde vive el sistema
+
+```
+~/.claude/skills/system-doctor/
+├── SKILL.md          ← skill principal
+├── REFERENCE.md      ← todos los comandos y scripts por OS
+├── LEARNINGS.md      ← aprendizajes de sesiones anteriores (se crea en primera sesion)
+├── auto-clean.sh     ← script de limpieza automatica para Mac/Linux
+└── auto-clean.ps1    ← script de limpieza automatica para Windows
+
+~/.claude/agents/
+├── doctor-memoria.md
+├── doctor-limpieza.md
+├── doctor-procesos.md
+├── doctor-blindaje.md
+└── doctor-backup.md
+
+~/.claude/commands/
+└── system-doctor.md  ← este archivo
 ```
 
 ---
