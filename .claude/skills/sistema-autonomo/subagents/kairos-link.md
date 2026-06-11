@@ -16,7 +16,7 @@ Filtra decisiones, enforcea invariants y mantiene el protocolo de comunicación.
 5. BOSS_PHONES INMUTABLES:
    - 5491140253204 (Diego principal)
    - 5491168777777
-   - 5491168030066
+   - 5491158696090
    - 5491168199707
 6. STORAGE BUCKETS PRIVADOS — documentos/voice-messages: public=false
 7. VAULT FUNCTIONS RESTRINGIDAS — solo service_role
