@@ -3,6 +3,20 @@
     "firecrawl": {
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"]
+    },
+    "claude-code-ultimate-guide": {
+      "command": "node",
+      "args": ["/home/user/claude-code-ultimate-guide/mcp-server/dist/index.js"],
+      "env": {
+        "GUIDE_ROOT": "/home/user/claude-code-ultimate-guide"
+      }
+    },
+    "harness": {
+      "command": "node",
+      "args": ["/home/user/mcp-server/build/index.js", "stdio"],
+      "env": {
+        "HARNESS_API_KEY": "${HARNESS_API_KEY}"
+      }
     }
   }
 }
