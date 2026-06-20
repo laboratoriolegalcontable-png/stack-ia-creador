@@ -1,343 +1,260 @@
 # Plan de Implementación — Ecosistema Estudio Oro
 
-**Versión**: 1.0  
-**Fecha**: 2026-05-14  
-**Branch**: `claude/setup-cli-docs-SfVmS`
+**Versión**: 2.0  
+**Fecha**: 2026-06-02  
+**Branch activo**: `claude/amazing-turing-0HvxS`  
+**Estado general**: Infraestructura y Kairos ✅ — Backend API y Dashboard ⏳
 
 ---
 
-## Estado Actual (Post-Setup de Claude Code)
+## Estado Actual al 2 de Junio de 2026
 
-### ✅ Completado en esta sesión
+### ✅ FASE 1 — Infraestructura Claude Code (Completado — Mayo 2026)
 
-#### Infraestructura Global (~/.claude/)
-- [x] `~/.claude/settings.json` — Configuración global con permisos, hooks y modelo por defecto
-- [x] `~/.claude/hooks/protect-secrets.sh` — Hook de protección de archivos sensibles
-- [x] `~/.claude/skills/security-reviewer/` — Auditor OWASP automático
-- [x] `~/.claude/skills/code-reviewer/` — Revisor de calidad Node.js
-- [x] `~/.claude/skills/node-expert/` — Experto Express/Node.js
-- [x] `~/.claude/skills/api-designer/` — Diseñador de APIs REST
-- [x] `~/.claude/skills/frontend-expert/` — Experto PWA/Vanilla JS
-- [x] `~/.claude/agents/security-auditor.md` — Agente auditor (Opus, solo lectura)
-- [x] `~/.claude/agents/code-explorer.md` — Agente explorador (Haiku, rápido)
-- [x] `~/.claude/commands/review.md` — Comando `/review`
-- [x] `~/.claude/commands/audit.md` — Comando `/audit`
-- [x] `~/.claude/commands/deploy-check.md` — Comando `/deploy-check`
-- [x] `~/.claude/commands/test-all.md` — Comando `/test-all`
+#### Global (`~/.claude/`)
+- [x] `settings.json` — permisos, hooks, modelo por defecto
+- [x] `hooks/protect-secrets.sh` — bloquea acceso a `.env`, `*.pem`, `*.key`
+- [x] Skills globales: security-reviewer, code-reviewer, node-expert, api-designer, frontend-expert
+- [x] Agentes: security-auditor (Opus), code-explorer (Haiku)
+- [x] Comandos: `/review`, `/audit`, `/deploy-check`, `/test-all`
 
 #### Diego-Orosa
-- [x] `.claude/settings.json` — Hooks ESLint + Jest reminder + protección
-- [x] `.mcp.json` — Make.com + GitHub + Supabase agregados
-- [x] `.claude/skills/estudio-oro-domain/` — Lógica de negocio legal/inmobiliaria
-- [x] `.claude/skills/express-patterns/` — Patrones Express del proyecto
-- [x] `CLAUDE_CODE_MANUAL.md` — Manual completo en español
-- [x] `PRD.md` — Product Requirements Document del ecosistema
-- [x] `IMPLEMENTATION_PLAN.md` — Este archivo
+- [x] `.claude/settings.json` — ESLint hook para `*.ts` + Jest reminder
+- [x] `.mcp.json` — Make.com + GitHub + Supabase
+- [x] `.claude/skills/estudio-oro-domain/` — lógica de negocio
+- [x] `.claude/skills/express-patterns/` — patrones Express del proyecto
+- [x] `CLAUDE_CODE_MANUAL.md` — manual completo en español
+- [x] Correcciones de seguridad: helmet, CORS, rate limit, raw body HMAC, API key timing-safe
 
 #### Stack-IA-Creador
-- [x] `CLAUDE.md` — Documentación del proyecto PWA
-- [x] `.claude/settings.json` — Hooks Prettier + protección
-- [x] `.claude/skills/pwa-patterns/` — Patrones PWA del proyecto
-- [x] `CLAUDE_CODE_MANUAL.md` — Manual completo en español (copia)
+- [x] `CLAUDE.md` — documentación del proyecto PWA
+- [x] `.claude/settings.json` — Prettier hook
+- [x] `.claude/skills/pwa-patterns/` — patrones PWA
+- [x] `vercel.json` — CSP, HSTS, Permissions-Policy, COOP
+- [x] `public/sw.js` — precache completo (incluye agenda.json)
+- [x] `public/app.js` — safeUrl(), Promise.allSettled, cache:default
 
 ---
 
-## Próximas Fases
+### ✅ FASE 2 — Ecosistema Kairos / Narakia (Completado — Mayo 2026)
 
-### FASE 1: API REST Backend (Prioridad ALTA)
-**Objetivo**: Tener una API funcional para el dashboard PWA
+- [x] **Kairos Legendario** — orquestador autónomo con memoria Supabase
+- [x] **Narakia Nucleus** — edge function Supabase + panel en el dashboard PWA
+- [x] **Bot-Memory** — sincronización de memoria cross-sesión a Supabase
+- [x] **Kairos Forge** — fábrica de skills instalables públicamente (sin credenciales)
+- [x] **Kairos Sentinel** — monitoreo y alertas del ecosistema
+- [x] **Kairos Genesis** — bootstrapping de stack para proyectos nuevos
+- [x] **Kairos Memory v4** — sistema de memoria con tablas Supabase
+- [x] **30+ skills Narakia** — agentes especializados por dominio:
+  - narakia-lexia (legal), narakia-megamark (marketing)
+  - narakia-leadhunter (leads), narakia-content-creator (contenido)
+  - narakia-seo-expert (SEO), narakia-ads (publicidad)
+  - narakia-valentina, narakia-lucrecia, narakia-megan, narakia-paula
+  - narakia-zeus, narakia-capitalis, narakia-finxas, narakia-contabot
+  - narakia-analytics, narakia-helpdesk, narakia-teamcoordinator
+- [x] `narakia-skills/` en repo público (versiones sanitizadas sin credenciales)
 
-**Tareas**:
-```
-1. Crear src/routes/leads.routes.js con CRUD completo
-2. Crear src/controllers/leads.controller.js
-3. Crear src/services/leads.service.js (Firebase)
-4. Crear src/middlewares/auth.middleware.js (JWT)
-5. Crear src/middlewares/validate.middleware.js (Zod)
-6. Crear src/middlewares/errorHandler.js
-7. Crear src/config/firebase.js
-8. Actualizar server.js con todas las rutas
-9. Crear tests/leads.test.js
-10. Documentar con OpenAPI/Swagger
-```
+---
+
+### ⏳ FASE 3 — Seguridad Backend Pendiente (Sprint Actual)
+
+**Prioridad CRÍTICA** — El backend no puede ir a producción sin estos fixes.
+
+| Tarea | Archivo | Impacto |
+|-------|---------|--------|
+| Verificación firma Whapi en webhook | `src/api/routes.ts`, `src/api/middleware/auth.ts` | ALTO seguridad |
+| Fail-fast `DATABASE_URL`/`REDIS_URL` en producción | `src/config/database.ts`, `src/config/redis.ts` | ALTO estabilidad |
+| `tsconfig.json` para compilar TypeScript | raíz del repo | CRÍTICO — sin esto no arranca |
+| DLQ (dead-letter queue) para webhooks fallidos | `src/api/webhooks.ts` | ALTO confiabilidad |
+| Zod schemas en todos los endpoints admin | `src/api/routes.ts` | MEDIO seguridad |
+| `payload.entry[0]` — verificar longitud antes de acceder | `src/api/webhooks.ts` | MEDIO estabilidad |
+| Whitelist campos en `customerService.update()` | `src/services/customer.service.ts` | MEDIO seguridad |
+| `unhandledRejection` / `uncaughtException` | `src/index.ts` | MEDIO estabilidad |
 
 **Cómo ejecutar con Claude Code**:
 ```bash
-cd /home/user/Diego-Orosa
-claude "Implementa la API REST completa para leads según PRD.md sección 3.1. 
-Usa los patrones en .claude/skills/express-patterns/SKILL.md y 
-.claude/skills/estudio-oro-domain/SKILL.md. 
-Incluye tests con Jest. Protege rutas con JWT."
+cd /home/user/diego-orosa
+claude "Implementa los fixes de seguridad pendientes del AUDITORIA-PRD-PLAN.md:
+1. verifyWhapiWebhook() con X-Whapi-Token HMAC
+2. Fail-fast para DATABASE_URL y REDIS_URL
+3. tsconfig.json con outDir=dist, strict=true
+4. unhandledRejection + uncaughtException en index.ts
+Sigue los patrones en .claude/skills/express-patterns/SKILL.md"
 ```
-
-**Estimación**: 2-4 horas de Claude Code
 
 ---
 
-### FASE 2: Dashboard PWA v1 (Prioridad ALTA)
-**Objetivo**: Dashboard operativo para ver y gestionar leads
+### ⏳ FASE 4 — API REST Backend Completa
 
-**Tareas**:
-```
-1. Refactorizar index.html con estructura semántica
-2. Crear src/api.js (cliente HTTP para el backend)
-3. Crear src/store.js (state management reactivo)
-4. Crear src/components/leads-table.js
-5. Crear src/components/stats-cards.js
-6. Actualizar sw.js con estrategia óptima
-7. Actualizar styles.css con CSS custom properties
-8. Tests básicos de integración
-```
+**Objetivo**: API funcional con todos los endpoints del PRD.md
 
-**Cómo ejecutar con Claude Code**:
-```bash
-cd /home/user/stack-ia-creador
-claude "Implementa el Dashboard PWA v1 según CLAUDE.md y PRD.md. 
-Vanilla JS puro, sin frameworks. Service Worker con stale-while-revalidate.
-El backend está definido en el repo diego-orosa."
-```
+| Tarea | Archivo a crear |
+|-------|---------------|
+| CRUD de leads completo | `src/routes/leads.routes.ts` + `src/controllers/leads.controller.ts` + `src/services/leads.service.ts` |
+| Auth middleware JWT | `src/middlewares/auth.middleware.ts` |
+| Validación con Zod | `src/middlewares/validate.middleware.ts` |
+| Error handler global | `src/middlewares/errorHandler.ts` |
+| Endpoint de analytics | `src/routes/analytics.routes.ts` |
+| Endpoint de content/generate | `src/routes/content.routes.ts` (llama a Claude API) |
+| Tests con Jest | `tests/leads.test.ts`, `tests/webhooks.test.ts` |
+| Migración UNIQUE constraints | `migrations/005_customer_unique_channels.sql` |
+| Configuración Firebase | `src/config/firebase.ts` |
 
-**Estimación**: 3-6 horas de Claude Code
-
----
-
-### FASE 3: Integración WhatsApp y Notificaciones (Prioridad MEDIA)
-**Objetivo**: Notificaciones automáticas cuando llega un lead
-
-**Tareas**:
-```
-1. Endpoint POST /api/v1/webhooks/whatsapp
-2. Servicio de scoring automático de leads
-3. Integración con Make.com escenario s4562333
-4. Tests de integración para el flujo completo
-5. Monitoreo de errores en notificaciones
-```
+**Estimación**: 4-6 horas de Claude Code
 
 **Cómo ejecutar**:
 ```bash
-claude "Implementa el sistema de notificaciones automáticas de leads. 
-Ver .claude/skills/estudio-oro-domain/SKILL.md para el scoring y 
-el flujo de notificación. Usar s4562333 de Make.com."
+cd /home/user/diego-orosa
+claude "Implementa la API REST completa de leads según PRD.md sección 3.1.
+Usa .claude/skills/express-patterns/SKILL.md y
+.claude/skills/estudio-oro-domain/SKILL.md.
+Incluye tests con Jest. Protege rutas con JWT.
+Fail-fast si DATABASE_URL no está definida."
 ```
 
 ---
 
-### FASE 4: Contenido con IA (Prioridad MEDIA)
-**Objetivo**: Generar y programar contenido para las 3 marcas
+### ⏳ FASE 5 — Dashboard PWA v2 con Datos Reales
 
-**Tareas**:
-```
-1. Integración de Claude API en el backend para generación de contenido
-2. UI en el dashboard para input de brief
-3. Endpoints POST /api/v1/content/generate
-4. Integración con Make.com para publicación en redes
-5. Historial de contenido generado
-```
+**Objetivo**: Dashboard conectado al backend con autenticación
 
----
+| Tarea | Archivo |
+|-------|--------|
+| Cliente HTTP para el backend | `public/src/api.js` |
+| State management reactivo | `public/src/store.js` |
+| Componente tabla de leads | `public/src/components/leads-table.js` |
+| Componente tarjetas de stats | `public/src/components/stats-cards.js` |
+| Login con JWT cookie HttpOnly | `public/src/auth.js` |
+| ARIA tabs + navegación por teclado | `public/app.js` |
+| Shortcuts en manifest.json | `public/manifest.json` |
+| Cache-Control para JS/CSS | `vercel.json` |
 
-### FASE 5: Analytics y Reportes (Prioridad MEDIA)
-**Objetivo**: Métricas accionables del negocio
+**Estimación**: 4-8 horas de Claude Code
 
-**Tareas**:
-```
-1. Endpoint GET /api/v1/analytics con filtros
-2. Componente de charts en el dashboard (usando Chart.js o canvas nativo)
-3. Reporte semanal automatizado (Make.com s4562335 mejorado)
-4. Dashboard de Meta Ads integrado
-```
-
----
-
-### FASE 6: Portal de Clientes (Prioridad BAJA — Q4 2026)
-**Objetivo**: Self-service para clientes del estudio
-
-**Tareas**:
-```
-1. Autenticación separada para clientes
-2. Vista de estado de expedientes
-3. Subida de documentos
-4. Comunicación encriptada con el estudio
-5. Integración con PJN (Poder Judicial)
-```
-
----
-
-## Comandos de Claude Code por Fase
-
-### Setup rápido para nueva feature
+**Cómo ejecutar**:
 ```bash
-# Siempre en el branch correcto
-git checkout claude/setup-cli-docs-SfVmS  # o crear branch de feature
+cd /home/user/stack-ia-creador
+claude "Implementa el Dashboard PWA v2 según PRD.md sección 3.2.
+Vanilla JS puro, sin frameworks. Service Worker con stale-while-revalidate.
+Conecta al backend en diego-orosa. Incluye autenticación JWT.
+Sigue .claude/skills/pwa-patterns/SKILL.md para los patrones."
+```
 
-# Activar plan mode primero
+---
+
+### ⏳ FASE 6 — Contenido Automatizado + Calendar Editorial
+
+**Objetivo**: Generar y programar contenido para las 3 marcas desde el celular
+
+| Tarea | Descripción |
+|-------|------------|
+| Endpoint `POST /api/v1/content/generate` | Recibe `{tipo, pilar, plataforma}` → Claude API → copy listo |
+| Tab "Publicar Hoy" en PWA | Muestra agenda del día con botón "Generar con IA" |
+| Integración Make.com para publicación | Envía el contenido generado a Instagram/Facebook |
+| Historial de contenido generado | Tabla `content_history` en Firebase |
+
+**Estimación**: 3-5 días
+
+---
+
+### ⏳ FASE 7 — Funcionalidades Nuevas (Q3-Q4 2026)
+
+| Feature | Impacto | Esfuerzo |
+|---------|---------|----------|
+| Lead scoring automático en WhatsApp | ALTO — responder primero al lead caliente | 1-2 días |
+| Notificaciones Push PWA para leads ALTA | ALTO — Diego se entera en 30 segundos | 2-3 días |
+| Portal de causas judiciales para clientes | ALTO — diferenciador vs estudio tradicional | 3-5 días |
+| Separar worker Bull en proceso dedicado | MEDIO — performance bajo carga | 1 día |
+| Módulo UIF Compliance | ALTO — obligatorio legal | Q4 2026 |
+
+---
+
+## Comandos Útiles de Claude Code
+
+### Flujo diario de trabajo
+```bash
+# Al iniciar una sesión
+# Kairos carga automáticamente el contexto de Supabase
+# Revisar estado del ecosistema:
+claude "Kairos, briefing del ecosistema"
+
+# Auditoría de seguridad semanal
+claude --agent security-auditor "Audita el proyecto completo"
+
+# Check de dependencias
+/audit --deps
+```
+
+### Para implementar una nueva feature
+```bash
+# 1. Activar plan mode
 claude --plan "Implementar [feature]"
 
-# Después de revisar el plan, ejecutar
+# 2. Revisar el plan, aprobar
+# 3. Ejecutar
 claude --auto "Implementar [feature] según el plan"
 
-# Review y push
+# 4. Review y verificación
 /review
 /deploy-check
 git add -A && git commit -m "feat: [descripción]"
 git push -u origin [branch]
 ```
 
-### Flujo diario de mantenimiento
+### Variables de entorno necesarias (diego-orosa)
 ```bash
-# Auditoría de seguridad semanal
-claude --agent security-auditor "Audita el proyecto completo"
-
-# Check de dependencias
-/audit --deps
-
-# Revisar deuda técnica
-claude "Lista la deuda técnica prioritaria en src/ con estimación de tiempo"
-```
-
----
-
-## Configuración de Entorno
-
-### Variables de Entorno Necesarias (diego-orosa)
-```bash
-# .env (ver .env.example para la lista completa)
+# Infraestructura
 NODE_ENV=production
 PORT=3000
-JWT_SECRET=         # min 256 bits, usar: openssl rand -base64 32
-JWT_REFRESH_SECRET= # diferente al JWT_SECRET
+JWT_SECRET=           # openssl rand -base64 32
+JWT_REFRESH_SECRET=   # diferente al JWT_SECRET
 
 # Firebase
 FIREBASE_PROJECT_ID=
 FIREBASE_CLIENT_EMAIL=
-FIREBASE_PRIVATE_KEY=  # La key completa con \n escapados
+FIREBASE_PRIVATE_KEY= # con \n escapados
 
 # WhatsApp
 WHAPI_TOKEN=
-WHATSAPP_NUMERO_DIEGO=  # formato: 5491112345678
+WHAPI_WEBHOOK_SECRET= # para verificar firma
+WHATSAPP_NUMERO_DIEGO=
+
+# Meta
+META_APP_SECRET=      # para verificar firma webhooks
+META_ACCESS_TOKEN=
 
 # Make.com
 MAKE_API_KEY=
 
-# Meta Ads
-META_ACCESS_TOKEN=
-META_APP_ID=
-META_APP_SECRET=
-```
-
-### Variables de Entorno Necesarias (stack-ia-creador)
-```bash
-# .env (para desarrollo local con el backend local)
-API_BASE_URL=http://localhost:3000
+# CORS
+ALLOWED_ORIGINS=https://stack-ia-creador.vercel.app,https://estudiooro.com
 ```
 
 ---
 
-## Guía de Uso de Claude Code para el Equipo
+## Reglas del Ecosistema (No Negociables)
 
-### Para implementar una nueva feature
-```
-1. Leer PRD.md sección relevante
-2. `claude --plan "Implementar X"` — revisar el plan
-3. Shift+Tab para activar modo Auto
-4. Ejecutar el plan
-5. `/review` para code review
-6. `/test-all` para verificar tests
-7. `/deploy-check` antes de pushear
-```
-
-### Para debugging
-```
-1. Dar contexto específico: archivo + línea + error + log
-2. `claude "El error es: [error]. Está en [archivo]:[línea]"`
-3. Claude propone y ejecuta el fix
-4. Verificar con `/test-all`
-```
-
-### Para auditoría de seguridad
-```
-/audit
-# O para auditoría profunda:
-@security-auditor "Audita el módulo de autenticación completo"
-```
+1. **NO TOCAR** `reclamai/` en diego-orosa
+2. **NO TOCAR** `oro/index.html` en main (producción)
+3. **NO MERGEAR** PRs viejos sin confirmación de Diego
+4. **NO BORRAR** archivos sin confirmación
+5. **NO HARDCODEAR** credenciales — siempre variables de entorno
+6. **NO USAR** `git add -A` sin revisar qué archivos incluye
+7. **NO PUSHEAR** a main directamente — siempre via PR
+8. **RESPALDAR** antes de sobreescribir cualquier archivo importante
 
 ---
 
-## Estrategia de Auto-Activacion
+## Links del Ecosistema
 
-Este ecosistema esta disenado para que **todo se active automaticamente sin intervencion manual**. Hay dos mecanismos complementarios:
-
-### Mecanismo 1: Hooks — Activacion Deterministica
-
-Los hooks se ejecutan en respuesta a **eventos del ciclo de vida** de Claude Code. No dependen del modelo ni del LLM: se activan siempre, sin excepcion.
-
-| Evento | Cuando se activa | Uso en este proyecto |
-|--------|-----------------|---------------------|
-| `PreToolUse` | Antes de CADA operacion de herramienta | Proteccion de secretos: bloquea acceso a `.env`, `*.pem`, `*.key` |
-| `PostToolUse` | Despues de CADA Edit o Write | Formateo automatico con Prettier para JS/CSS/HTML |
-| `Stop` | Al terminar cada turno | Verificacion de estado git |
-
-**Garantia:** Los hooks SIEMPRE se ejecutan. No requieren que el usuario diga nada. Son el mecanismo mas confiable de automatizacion.
-
-**Nuevo en v2.1.139:** Con `continueOnBlock: true` en los hooks PostToolUse, si el formateo falla (archivo no soportado), Claude no se interrumpe y continua trabajando sin friccion.
-
-**Nuevo en v2.1.139:** Los hooks pueden usar `$CLAUDE_PROJECT_DIR` para referenciar la raiz del proyecto dinamicamente, eliminando problemas de paths relativos.
-
-### Mecanismo 2: Skills — Activacion Contextual por LLM
-
-Las skills se activan cuando el **LLM reconoce** que el contexto de la conversacion coincide con las frases de activacion del campo `description` de la skill.
-
-**Como funciona:**
-1. El usuario hace una pregunta o da una instruccion
-2. Claude lee el campo `description` de cada skill disponible
-3. Si detecta coincidencia semantica, activa la skill automaticamente
-4. La skill se ejecuta sin que el usuario tenga que escribir `/skill-name`
-
-**Frases de activacion por skill:**
-
-| Skill | Se activa automaticamente cuando... |
-|-------|-------------------------------------|
-| `security-reviewer` | Se revisa codigo de auth, APIs, JWT, validacion de input |
-| `code-reviewer` | Se pide revision de PR, code review, calidad de codigo |
-| `frontend-expert` | Se trabaja con PWA, Service Workers, CSS, accesibilidad |
-| `api-designer` | Se disenan endpoints, rutas REST, comunicacion con backend |
-| `pwa-patterns` | Se trabaja con Service Workers, manifest, offline, Vercel |
-
-**Como optimizar la descripcion para auto-activacion:**
-
-```markdown
----
-description: >
-  Se activa automaticamente cuando se trabaja con Service Workers,
-  Web App Manifest, estrategias de cache offline, instalacion de PWA,
-  performance de Lighthouse, Vercel deployment, o cuando se menciona
-  "funcionamiento offline", "cache-first", "app instalable".
----
-```
-
-Cuanto mas especificas sean las frases de activacion en `description`, mas precisa es la auto-activacion.
-
-### Regla de Oro
-
-- **Para automatizacion garantizada** (formateo, proteccion, verificaciones): usar **hooks**
-- **Para conocimiento especializado** (dominio, patrones, arquitectura): usar **skills**
-- **Para tareas complejas de larga duracion**: combinar `/goal` + hooks Stop para verificacion automatica
-
-### Verificacion de la Auto-Activacion
-
-```bash
-# Verificar que los hooks esten configurados
-cat ~/.claude/settings.json | python3 -m json.tool | grep -A5 "hooks"
-
-# Verificar que las skills esten presentes
-ls ~/.claude/skills/
-ls .claude/skills/
-
-# Test de skill auto-activacion:
-# Escribir "el Service Worker no esta cacheando los assets correctamente"
-# La skill pwa-patterns debe activarse sola
-```
+| Servicio | URL / ID |
+|---------|----------|
+| Dashboard PWA | https://stack-ia-creador.vercel.app |
+| Landing estudiooro.com | https://estudiooro.com |
+| Supabase (Kairos) | proyecto `moljmujlfvtsgkjbtwss` |
+| Make.com | 6 escenarios activos (ver PRD sección 3.3) |
+| Vercel (estudiooro) | `prj_ZHOBJhlaKAYq6xQdQJtSXOAtBrwW` |
 
 ---
 
-*Plan generado el 2026-05-14 | Claude Code v2.1.141*
+*Plan v2.0 — actualizado 2026-06-02 | Ecosistema Estudio Oro*
