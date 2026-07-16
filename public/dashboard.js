@@ -3,6 +3,7 @@ var BL={abogacia:'Abogacía',inmobiliaria:'Inmobiliaria',ia:'Estudio Oro IA'};
 var BC={abogacia:'#6366f1',inmobiliaria:'#16a34a',ia:'#f59e0b'};
 var SC={nuevo:'#6366f1',contactado:'#0ea5e9',calificado:'#f59e0b',propuesta:'#8b5cf6',ganado:'#16a34a',perdido:'#ef4444'};
 
+function escapeHTML(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function loadLeads(){var r=localStorage.getItem('crm:leads');return r?JSON.parse(r):[];}
 function initials(n){return n.split(' ').slice(0,2).map(function(x){return x[0];}).join('').toUpperCase();}
 function fmtDate(d){if(!d)return'';var parts=d.split('-');return parts[2]+'/'+parts[1]+'/'+parts[0].slice(2);}
@@ -47,9 +48,9 @@ function renderRecent(leads){
   document.getElementById('recentLeads').innerHTML=sorted.map(function(l){
     return '<a href="/crm.html" style="text-decoration:none;color:inherit">'+
       '<div class="lead-row">'+
-      '<div class="avatar" style="background:'+(BC[l.biz]||'#6366f1')+'">'+ initials(l.name) +'</div>'+
-      '<div class="lead-info"><div class="n">'+l.name+'</div><div class="m">'+(BL[l.biz]||l.biz)+' · '+fmtDate(l.date)+'</div></div>'+
-      '<span class="chip chip-'+l.status+'">'+SL[l.status]+'</span>'+
+      '<div class="avatar" style="background:'+(BC[l.biz]||'#6366f1')+'">'+ escapeHTML(initials(l.name)) +'</div>'+
+      '<div class="lead-info"><div class="n">'+escapeHTML(l.name)+'</div><div class="m">'+escapeHTML(BL[l.biz]||l.biz)+' · '+escapeHTML(fmtDate(l.date))+'</div></div>'+
+      '<span class="chip chip-'+escapeHTML(l.status)+'">'+escapeHTML(SL[l.status])+'</span>'+
       '</div></a>';
   }).join('');
 }
