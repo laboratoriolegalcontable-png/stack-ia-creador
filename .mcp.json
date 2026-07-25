@@ -1,5 +1,12 @@
 {
   "mcpServers": {
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {
+        "MEMORY_FILE_PATH": "/home/user/stack-ia-creador/.claude/memory/knowledge-graph.jsonl"
+      }
+    },
     "firecrawl": {
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"]

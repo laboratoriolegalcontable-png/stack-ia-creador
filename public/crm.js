@@ -3,6 +3,7 @@ const BIZ={abogacia:'Abogacía',inmobiliaria:'Inmobiliaria',ia:'Estudio Oro IA'}
 const SRC={whatsapp:'WhatsApp','meta-ads':'Meta Ads',web:'Web',instagram:'Instagram',referido:'Referido'};
 const DEMO=[{id:'l1',name:'María González',phone:'+54 11 4500-1234',email:'maria@gmail.com',biz:'abogacia',source:'whatsapp',status:'nuevo',company:'Caso sucesorio',notes:'Heredera en disputa familiar. Consulta urgente.',date:'2026-05-14'},{id:'l2',name:'Carlos Rodríguez',phone:'+54 11 3300-5678',email:'carlos@empresa.com',biz:'inmobiliaria',source:'meta-ads',status:'calificado',company:'Corp. Azul SA',notes:'Busca local comercial en Palermo. Budget $200k USD.',date:'2026-05-12'},{id:'l3',name:'Laura Martínez',phone:'+54 11 5500-9012',email:'laura@startup.io',biz:'ia',source:'instagram',status:'contactado',company:'LauraDesigns',notes:'Quiere automatizar su agencia con IA. 3 clientes activos.',date:'2026-05-13'},{id:'l4',name:'Juan Pérez',phone:'+54 11 2200-3456',email:'juan@outlook.com',biz:'abogacia',source:'referido',status:'propuesta',company:'Accidente laboral',notes:'Referido por María G. Propuesta de honorarios enviada.',date:'2026-05-10'},{id:'l5',name:'Ana García',phone:'+54 11 1100-7890',email:'ana@correo.com',biz:'inmobiliaria',source:'web',status:'ganado',company:'Depto. 3 amb. Recoleta',notes:'Compra cerrada. Escritura en proceso.',date:'2026-05-08'},{id:'l6',name:'Rodrigo Silva',phone:'+54 11 6600-2345',email:'rsilva@empresa.ar',biz:'abogacia',source:'meta-ads',status:'perdido',company:'Divorcio conflictivo',notes:'Eligió otro estudio por precio.',date:'2026-05-05'},{id:'l7',name:'Valeria Torres',phone:'+54 11 7700-6789',email:'val@freelance.com',biz:'ia',source:'whatsapp',status:'nuevo',company:'Agencia de contenido',notes:'5 reels/semana. Quiere stack IA completo.',date:'2026-05-15'},{id:'l8',name:'Martín López',phone:'+54 11 8800-0123',email:'martin@gmail.com',biz:'inmobiliaria',source:'referido',status:'contactado',company:'Casa unifamiliar GBA',notes:'Zona norte. Referido por Ana G.',date:'2026-05-14'}];
 
+function escapeHTML(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function loadLeads(){const r=localStorage.getItem('crm:leads');if(!r){saveLeads(DEMO);return DEMO;}return JSON.parse(r);}
 function saveLeads(l){localStorage.setItem('crm:leads',JSON.stringify(l));}
 function uid(){return 'l'+Date.now()+Math.random().toString(36).slice(2,5);}
@@ -38,10 +39,10 @@ function renderBoard(leads){
     return '<div class="kanban-col '+s.cls+'">'+
       '<div class="col-header"><span class="col-title">'+s.label+'</span><span class="col-badge">'+cols.length+'</span></div>'+
       (cols.length===0?'<div class="col-empty">Sin leads</div>':cols.map(function(l){
-        return '<div class="lead-card" data-lid="'+l.id+'">'+
-          '<div class="lead-name">'+l.name+'</div>'+
-          '<div class="lead-biz"><span class="biz-dot '+l.biz+'"></span>'+(BIZ[l.biz]||l.biz)+(l.company?' · '+l.company:'')+'</div>'+
-          '<div class="lead-foot"><span class="lead-source">'+(SRC[l.source]||l.source)+'</span><span class="lead-date">'+fmtDate(l.date)+'</span></div>'+
+        return '<div class="lead-card" data-lid="'+escapeHTML(l.id)+'">'+
+          '<div class="lead-name">'+escapeHTML(l.name)+'</div>'+
+          '<div class="lead-biz"><span class="biz-dot '+escapeHTML(l.biz)+'"></span>'+escapeHTML(BIZ[l.biz]||l.biz)+(l.company?' · '+escapeHTML(l.company):'')+'</div>'+
+          '<div class="lead-foot"><span class="lead-source">'+escapeHTML(SRC[l.source]||l.source)+'</span><span class="lead-date">'+escapeHTML(fmtDate(l.date))+'</span></div>'+
           '</div>';
       }).join(''))+
       '</div>';
