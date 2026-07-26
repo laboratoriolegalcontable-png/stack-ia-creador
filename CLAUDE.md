@@ -28,7 +28,12 @@ sistema). Si el pedido es ambiguo ("auditá esto"), Claude puede disparar la ski
 equivocada. Al pedir una auditoría, especificar el dominio: "auditoría de seguridad"
 (`cyber-neo`), "auditoría de base de datos" (`db-audit`), "auditoría SEO" (`audit`/
 `seo-orchestrator`), "auditoría de sobre-ingeniería" (`ponytail-audit`), "chequeo
-production-ready de DB" (`checklist`).
+production-ready de DB" (`db-checklist`).
+
+Todas las sub-skills de `claude-db` usan prefijo `db-*` (db-audit, db-fix, db-score,
+db-design, db-start, db-checklist, db-explain, db-migrate, db-next, db-seed,
+db-introspect, db-stack-detect, db-orchestrator + las ~22 db-* de auditoría
+especializada) para evitar choques con nombres genericos de otras skills.
 
 ---
 
