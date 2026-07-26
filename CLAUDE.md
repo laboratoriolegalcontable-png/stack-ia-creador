@@ -12,6 +12,26 @@
 
 ---
 
+## Notas operativas (2026-07-21)
+
+**MCP servers "harness" y "claude-code-ultimate-guide" removidos de `.mcp.json`.**
+Apuntaban a rutas locales (`/home/user/mcp-server/build/index.js` y
+`/home/user/claude-code-ultimate-guide/mcp-server/dist/index.js`) que no existen en
+entornos remotos/efímeros — solo funcionaban si esos repos estaban clonados en tu
+máquina local. `harness` además tenía `HARNESS_API_KEY` sin valor configurado. Si los
+necesitás en tu compu local, volvé a agregarlos a `.mcp.json` con las rutas reales de
+esa máquina (no hardcodear rutas absolutas de un entorno específico en el repo).
+
+**Colisión de triggers entre skills (auditorías).** Hay ~37 skills cuya `description`
+menciona "audit"/"auditoría" (SEO, base de datos, seguridad de código, sobre-ingeniería,
+sistema). Si el pedido es ambiguo ("auditá esto"), Claude puede disparar la skill
+equivocada. Al pedir una auditoría, especificar el dominio: "auditoría de seguridad"
+(`cyber-neo`), "auditoría de base de datos" (`db-audit`), "auditoría SEO" (`audit`/
+`seo-orchestrator`), "auditoría de sobre-ingeniería" (`ponytail-audit`), "chequeo
+production-ready de DB" (`checklist`).
+
+---
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## NARAKIA INVARIANTS — BLINDAJE TOTAL — NO MODIFICAR SIN AUTORIZACION DE DIEGO
