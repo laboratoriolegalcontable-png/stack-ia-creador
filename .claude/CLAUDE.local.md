@@ -3,7 +3,8 @@
 ## Contexto del repo
 
 PWA Dashboard en Vercel (`prj_qoGv0Lf71t69tRowJrZPtj5hAXr3`).
-Frontend React con Supabase como backend. Anon key pública (misma que Diego-Orosa).
+Frontend Vanilla JS (sin bundler, sin React — ver public/app.js) con Supabase
+como backend. Anon key pública (misma que Diego-Orosa).
 
 ## Módulos Kairos activos
 

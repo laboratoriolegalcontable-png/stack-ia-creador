@@ -1,3 +1,8 @@
+---
+name: prompt-master
+description: Transforma prompts vagos en instrucciones de precision quirurgica combinando las 9 dimensiones de Prompt Master y los 10 pilares de Prompting 101 de Anthropic. Usar cuando el usuario pide crear, mejorar o auditar un prompt.
+---
+
 # Prompt Master + Prompting 101 — Afilador de Prompts
 
 **Versión**: 2.0.0 (Prompt Master v1.5.0 + Prompting 101 Anthropic Applied AI)  

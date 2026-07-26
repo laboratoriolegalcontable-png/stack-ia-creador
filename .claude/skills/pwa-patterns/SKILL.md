@@ -1,3 +1,8 @@
+---
+name: pwa-patterns
+description: Patrones de Progressive Web App (Service Workers, manifest, offline, cache, performance) para el stack Vanilla HTML5/CSS3/JS de stack-ia-creador. Usar cuando el usuario menciona PWA, Service Worker, manifest, offline, cache, frontend, Vercel, deploy, responsive, accesibilidad, LCP, CLS o INP.
+---
+
 # PWA Patterns — Patrones Progressive Web App (stack-ia-creador)
 
 ## Activación Automática
