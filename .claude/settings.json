@@ -14,6 +14,12 @@
             "command": "bash /home/user/stack-ia-creador/.claude/hooks/ads-start.sh",
             "timeout": 10,
             "statusMessage": "Cargando Claude Ads v2.4.0..."
+          },
+          {
+            "type": "command",
+            "command": "bash /home/user/stack-ia-creador/.claude/hooks/kairos-autostart.sh",
+            "timeout": 20,
+            "statusMessage": "Kairos Forge — auto-instalando ecosistema autonomo..."
           }
         ]
       },
